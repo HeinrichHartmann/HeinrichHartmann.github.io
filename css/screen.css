@@ -24,10 +24,8 @@ body {
 
 h1, h2, h3, h4, h5, h6 {
   font-size: 100%;
-}
-
-h1 {
   margin-bottom: 1em;
+  margin-top: 2em;
 }
 
 p {
@@ -133,7 +131,7 @@ ul.posts {
       }
 
     .site .footer .rss {
-      margin-top: 1.1em;
+/*      margin-top: 1.1em; */
       margin-right: -.2em;
       float: right;
     }
