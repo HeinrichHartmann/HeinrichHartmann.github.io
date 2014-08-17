@@ -8,8 +8,8 @@ title: Heinrich Hartmann
 * 2007 Diploma in Mathematics from University of Mainz
 * 2011 PhD from University of Bonn
 * 2012 Researcher at Univeristy of Oxford
-* 2013 Researcher at WeST Institute for WebScience and Technologies
-  - Project Lead <a href="http://liveandgov.eu">Live and Gov</a> EU Project
+* 2013 Researcher at WeST Institute for WebScience and Technologies  
+  Project Lead <a href="http://liveandgov.eu">Live and Gov</a> EU Project
 * 2014 Freelance IT Consultant
 
 ## Mathematical Writings
