@@ -14,14 +14,14 @@ I am offering consulting in mathematical and algorithmical problems.
 * Data Visualizations
 * Review of mathematical literaure
 * Development and implementation of methods
-* Management of developmer teams
+* Management of developer teams
 
 ## Technologies
 
 In past projects I have been using the following technologies.
 
 * Data Analysis: Python (NumPy, pandas, SciPy, matplotlib), R, Matlab
-* Data Mining: Weka, Rapid Miner
+* Data Mining: Weka
 * Programming Languages: Java (Android, Tomcat), Python (Django)
 * Databases: Postgres, MySQL, Neo4J
 * Messaging: ZeroMQ
