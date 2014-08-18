@@ -1,6 +1,6 @@
 ---
 layout: default
-title: Heinrich Hartmann
+title: Heinrich Hartmann - about
 ---
 
 ## Vita
@@ -12,7 +12,22 @@ title: Heinrich Hartmann
   Team Leader at <a href="http://liveandgov.eu">Live and Gov</a> EU Project
 * 2014 Freelance IT Consultant
 
-## Mathematical Writings
-* Mirror symmetry and stability conditions on K3 surfaces, PhD thesis, Bonn 2011, [pdf](http://hss.ulb.uni-bonn.de/2011/2598/2598.pdf)
-* Cusps of the Kähler moduli space, Mathematische Annalen 2012, [doi](http://dx.doi.org/10.1007/s00208-011-0719-3), [arxiv](http://arxiv.org/abs/1012.3121)
-* Period and Mirror Maps for the Quartic K3, Manuscripta Mathematica 2013, [doi](http://dx.doi.org/10.1007/s00229-012-0577-7), [arxiv](http://arxiv.org/abs/1101.4601)
+## Work for gifted pupils
+
+* 2011 "Wie wird meine Webseite so gut wie facebook?" - Course on open web services with Rene Pickhardt.
+* 2012 "Effektive algorithms" - Course on algorithms with Prof. Baumeister
+* 2013 Lead of Pupils Academy in Meisenheim
+
+## Media
+
+* Schubert - Auf der Bruck
+
+<iframe width="560" height="315" src="//www.youtube-nocookie.com/embed/Qq4MduJTKTg" frameborder="0" allowfullscreen></iframe>
+
+* Schubert - An die Musik
+
+<iframe width="560" height="315" src="//www.youtube-nocookie.com/embed/w9WpCkuPuLA" frameborder="0" allowfullscreen></iframe>
+
+* Stern TV - 1000'ste Sendung
+
+<iframe style='overflow: hidden; border: 0; width: 560px; height: 315px' src='http://embed.novamov.com/embed.php?v=2wl0guw3e0jtn' scrolling='no'></iframe>
