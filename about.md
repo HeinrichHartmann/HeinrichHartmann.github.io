@@ -3,6 +3,8 @@ layout: default
 title: Heinrich Hartmann - about
 ---
 
+<img src="/images/profile.jpg" style="float: right" width="150px">
+
 ## Vita
 
 * 2007 Diploma in Mathematics from University of Mainz
@@ -24,7 +26,7 @@ an active supporter of this concept and have been involeved with these
 acedemies over the last years in different roles.
 
 * DSA Schulpforte 2011 - [Course on web services](http://www.deutsche-schuelerakademie.de/download/dsa-programm-2011) with Rene Pickhardt.
-* DJA Meisenheim 2012 -  [Course on efficient algorithms](http://www.deutsche-juniorakademien.de/download/2012/DJA_Rheinland-Pfalz_2012.pdf) Prof. Hans Baumeister
+* DJA Meisenheim 2012 -  [Course on efficient algorithms](http://www.deutsche-juniorakademien.de/download/2012/DJA_Rheinland-Pfalz_2012.pdf) Prof. Johann Baumeister
 * DJA Meisenheim 2013 - [Lead of Academy](http://www.deutsche-juniorakademien.de/download/2013/DJA_Rheinland-Pfalz_2013.pdf)
 
 ## Media

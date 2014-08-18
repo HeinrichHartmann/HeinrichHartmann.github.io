@@ -13,8 +13,8 @@ I am offering consulting in mathematical and algorithmical problems.
 * Statistical analysis
 * Data Visualizations
 * Review of mathematical literaure
-* Development and implementation of new algorithms
-* Performance optimization of Java and Python applications
+* Development and implementation of methods
+* Management of developmer teams
 
 ## Technologies
 
