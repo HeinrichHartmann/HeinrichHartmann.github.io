@@ -20,14 +20,6 @@ title: Heinrich Hartmann - about
 
 ## Media
 
-* Schubert - Auf der Bruck
-
-<iframe width="560" height="315" src="//www.youtube-nocookie.com/embed/Qq4MduJTKTg" frameborder="0" allowfullscreen></iframe>
-
-* Schubert - An die Musik
-
-<iframe width="560" height="315" src="//www.youtube-nocookie.com/embed/w9WpCkuPuLA" frameborder="0" allowfullscreen></iframe>
-
-* Stern TV - 1000'ste Sendung
-
-<iframe style='overflow: hidden; border: 0; width: 560px; height: 315px' src='http://embed.novamov.com/embed.php?v=2wl0guw3e0jtn' scrolling='no'></iframe>
+* [Schubert - Auf der Bruck (video)](https://www.youtube.com/watch?v=Qq4MduJTKTg)
+* [Schubert - An die Musik (video)](https://www.youtube.com/watch?v=w9WpCkuPuLA)
+* [Stern TV - 1000'ste Sendung (video)](http://embed.novamov.com/embed.php?v=2wl0guw3e0jtnK)
