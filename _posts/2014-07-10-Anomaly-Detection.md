@@ -279,7 +279,9 @@ Log likelihood ratio $$\lambda=-103.5$$ for plotted time series Y
 # Test for changes in mean
 
 For given $$b_0 < b_1$$ we consider the hypotheses:
+
 * $$H_0$$: Constant mean model $$\IY_t = b_0 + \eps_t$$
+
 * $$H_1$$: Change in mean at a time $$k \in \{ 0, \dots, T\}$$:
   $$ \IY_t = b_0 + \eps_t, \text{ for } t \leq k $$
   $$ \IY_t = b_1 + \eps_t, \text{ for } t > k $$
