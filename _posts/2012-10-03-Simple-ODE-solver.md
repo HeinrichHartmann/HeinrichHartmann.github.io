@@ -15,7 +15,7 @@ Given a (vector valued) differential equation
 $$ \dot{x} = F(x,t) $$
 
 it computes an approximate $$x(t)$$ on discrete time steps using
-[http://en.wikipedia.org/wiki/Euler_method Eulers method]:
+[Eulers method](http://en.wikipedia.org/wiki/Euler_method):
 
 $$ x_{n+1} = x_n + \Delta t \cdot  F(x_{n},t) $$
 
