@@ -15,9 +15,7 @@ includes:
 
 You can either trust all of those people to treat your communication
 confidential, or you can choose to protect yourself and your
-constitutional rights to private communication.  The NewYorker has
-nicely summarized the problem
-[here](http://www.newyorker.com/tech/elements/the-daunting-challenge-of-secure-e-mail).
+constitutional rights to private communication.
 
 The only real protection against infringement of email contents is
 end-to-end encryption (E2EE). This means you encrypt yout messages
@@ -50,9 +48,8 @@ Binary distributions are available for all popular operating systems:
 
 Unfortunately, GnuPG is not entirely easy to use.
 Even worse, I was not able to find a good tutorial on the web which explains the basic use cases for the non-expert user.
-[The New
-Yorker](http://www.newyorker.com/tech/elements/the-daunting-challenge-of-secure-e-mail)
-describes the problem as follows:
+[Matthew Green](https://twitter.com/matthew_d_green) explained the problem very well for the [The New
+Yorker](http://www.newyorker.com/tech/elements/the-daunting-challenge-of-secure-e-mail):
 
 > Encrypting e-mail is just hard. Before you can send your friend an encrypted message, she must first install the software, generate an encryption key pair, and deliver the public portion to you. You must then download and install that key on your own computer and verify that it’s the right key—not a fake one sent to trick you. You must repeat this process for everyone else you want to talk to. And that’s before sending a single message.
 
@@ -60,9 +57,18 @@ Edward Snowden has recorded a famous
 [video](http://vimeo.com/56881481) in which he explains how to setup a
 secure email account to Glenn Greenwald.
 
-However, in this note I want to show that the basic tasks are actually not all that bad!
+## Sending a Secure Messages with <Encrypt.to>
 
-## Sending a Secure Message using GPG
+On the plus side, sending a secure message to somebody who has already
+setup his GPG system, is actually very simple! I was very surprised to
+learn that these steps can be entirely automated using web
+technologies. Use the following form to write secure messages to me.
+
+<https://encrypt.to/consulting@heinrichhartmann.com>
+
+What happens under the hood is explained in the next sections.
+
+## Sending a Secure Message with GOG
 
 If you want to sent a secure message to me via email, you have to (1)
 get my public key (2) encrypt the message using gpg and my public key
@@ -86,6 +92,7 @@ in any way that you like. Email is fine, you can also put it into the
 newspaper, nobody will be able to decrypt it except me, who created
 the public key in the first place.
 
+
 ## Fingerprints
 
 It is theoretically possible, that someone intercepts your
@@ -101,6 +108,7 @@ tweet](https://twitter.com/HeinrichHartman/status/534009605567688705)?
 Then you can be a bit more sure, that you have the my key and not a
 modified copy. If you are paranoid, please give me a call and ask for
 the fingerprint.
+
 
 ## Coming Up ...
 
