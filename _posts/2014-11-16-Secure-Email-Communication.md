@@ -121,3 +121,5 @@ the fingerprint.
 * [Justin Ellingwood -- How To Use GPG](https://www.digitalocean.com/community/tutorials/how-to-use-gpg-to-encrypt-and-sign-messages-on-an-ubuntu-12-04-vps)
 * [GNUPG Manual](https://www.gnupg.org/gph/en/manual.html)
 * [Edward Snowden -- GPG for Grennwald](http://vimeo.com/56881481)
+* [PGP Best Practices](https://help.riseup.net/en/security/message-security/openpgp/best-practices)
+* [FSF -- EMail Self Defense](https://emailselfdefense.fsf.org/en/)
