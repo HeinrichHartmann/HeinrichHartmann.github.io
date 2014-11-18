@@ -14,8 +14,6 @@ changers. Opening up the research literature is the next logical step.
 
 ## Open publishing
 
-<img title="Books - by Hash Milhan's" src="http://heinrich-hartmann.net/wp-content/uploads/2013/01/936394705_3de472288a-300x180.jpg">
-
 We believe that the current academic publishing model – whereby
 researchers give their content to commercial publishers and then buy
 it back from them at enormous cost by means of journal subscription
