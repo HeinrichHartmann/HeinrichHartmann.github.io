@@ -5,14 +5,23 @@ title: Heinrich Hartmann - about
 
 <img src="/images/profile.jpg" style="float: right" width="150px">
 
+## Contact
+
+Dr. Heirnich Hartmann  
+Gutenbergstr. 7  
+56073 Koblenz  
+Germany
+
+<a href="mailto:heinrich@heinrichhartmann.com">heinrich@heinrichhartmann.com</a>
+
 ## Vita
 
-* 2007 Diploma in Mathematics from University of Mainz
-* 2011 PhD from University of Bonn
-* 2012 Researcher at Univeristy of Oxford
+* 2014 Math & IT Consultant
 * 2013 Researcher at WeST Institute for WebScience and Technologies  
   Team Leader at <a href="http://liveandgov.eu">Live and Gov</a> EU Project
-* 2014 Freelance IT Consultant
+* 2012 Researcher at Univeristy of Oxford
+* 2011 PhD from University of Bonn
+* 2007 Diploma in Mathematics from University of Mainz
 
 ## Pupil work
 
