@@ -12,7 +12,9 @@ Gutenbergstr. 7
 56073 Koblenz  
 Germany
 
-<a href="mailto:heinrich@heinrichhartmann.com">heinrich@heinrichhartmann.com</a>
+* Mail: <a href="mailto:heinrich@heinrichhartmann.com">heinrich@heinrichhartmann.com</a>
+* Twitter: <a href="https://twitter.com/HeinrichHartman/">@HeinrichHartman</a>
+
 
 ## Vita
 
