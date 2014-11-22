@@ -12,7 +12,4 @@ git add _site/
 git commit -m "Added _site"
 git filter-branch --subdirectory-filter _site/ -f
 git push origin master -f
-
-rm _site -r
-
 git checkout source
