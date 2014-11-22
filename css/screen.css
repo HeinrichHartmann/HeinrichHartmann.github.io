@@ -203,3 +203,22 @@ ul.posts {
   }
 
 
+
+/**
+* Figure Plugin: https://github.com/lmullen/jekyll_figure
+**/
+
+figure img {
+       border: 1px solid #ccc;
+       padding: 5px;
+       border-radius: 5px;
+}
+
+figure {
+       text-align: center;
+}
+
+figure figcaption {
+ font-style: italic;
+ text-align: center;
+}
