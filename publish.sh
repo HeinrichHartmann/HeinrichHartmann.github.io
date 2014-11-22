@@ -2,9 +2,16 @@
 
 set -e # fail on error
 
+if [ ! -z "$(git status --porcelain)" ]; then
+    # working directory not clean
+    echo "Working directory is not clean"
+    exit 1
+fi
+
 git checkout source
 
-jekyll build
+echo "Building source tree"
+jekyll build > /dev/null
 
 git branch -D master
 git checkout -b master
