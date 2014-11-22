@@ -1,4 +1,4 @@
-# Raspberry Pi GPIO Layout
+# Raspberry Pi SunFounder GPIO Layout
 
 I have recently bought a [Raspberry Pi](http://www.raspberrypi.org/)
 together with a [SunFounder LCD Starter
