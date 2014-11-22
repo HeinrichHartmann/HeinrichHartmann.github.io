@@ -118,7 +118,7 @@ board that grately simplifys access to the pins.
 {% figure GPIO_files/extension_board jpg 'GPIO Extension Board' 'width="400px"' %}
 
 Surprisingly the lables on the SunFounder extension board do not match
-the BCM, nor the BOARD referencing scheme.  Manuall checking based
+the BCM, nor the BOARD referencing scheme.  Manuall checking 
 with the LED Probe reveals the following table:
 
  BCM | BOARD | EXT.  | EXT.  | BOARD | BCM
