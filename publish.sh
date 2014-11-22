@@ -15,7 +15,7 @@ jekyll build > /dev/null
 
 git branch -D master
 git checkout -b master
-git add _site/
+git add _site/ -f
 git commit -m "Added _site"
 git filter-branch --subdirectory-filter _site/ -f
 git push origin master -f
