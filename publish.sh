@@ -10,6 +10,10 @@ fi
 
 git checkout source
 
+echo "Pushing source branch to github"
+git push origin source
+
+
 echo "Building source tree"
 jekyll build > /dev/null
 
