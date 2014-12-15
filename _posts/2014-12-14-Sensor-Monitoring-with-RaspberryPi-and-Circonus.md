@@ -4,11 +4,12 @@ The [RaspberryPi](http://www.raspberrypi.org) mini-computer can be
 used to connect all kind of devices to the internet. The only
 challenge is to find a way to hook the device up to the
 [IO-pins](/2014/11/22/Raspberry-Pi-SunFounder-GPIO-Layout.html) of the
-RPi, and configure the webserver to communicate with the device.  One
-interesting class of devices, which can be easily connected to the
+RPi, and setup a webserver on the RPi to communicate with the device.
+One interesting class of devices, which can be easily connected to the
 IO-pins are sensors. There is a great variety of sensors cheaply
 available online
-(e.g. [here](http://www.amazon.com/s/ref=sr_nr_n_25/185-4387700-7719321?fst=as%3Aoff&rh=n%3A172282%2Ck%3ASensors&keywords=Sensors)) which are perfectly suited for this purpose.
+(e.g. [here](http://www.amazon.com/s/ref=sr_nr_n_25/185-4387700-7719321?fst=as%3Aoff&rh=n%3A172282%2Ck%3ASensors&keywords=Sensors))
+which are perfectly suited for this purpose.
 
 {% figure SensorMonitoring_files/Setup jpg 'RasperryPI connected to Circonus Dashboard' 'width="400px"' %}
 
