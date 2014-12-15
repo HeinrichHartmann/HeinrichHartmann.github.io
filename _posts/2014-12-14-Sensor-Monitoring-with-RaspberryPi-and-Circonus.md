@@ -1,22 +1,21 @@
-
 # Sensor Monitoring with RaspberryPi and Circonus
 
-The [RaspberryPi](http://www.raspberrypi.org) mini-computer can
-comfortably run a webserver and connect all kind of devices to the
-internet. The remaining challenge is to find a way to hook the device
-up to the
+The [RaspberryPi](http://www.raspberrypi.org) mini-computer can be
+used to connect all kind of devices to the internet. The only
+challenge is to find a way to hook the device up to the
 [IO-pins](/2014/11/22/Raspberry-Pi-SunFounder-GPIO-Layout.html) of the
-RPi, and configure the webserver to communicate with the device.
-There are various sensors cheaply available online
-(e.g. [here](http://www.amazon.com/s/ref=sr_nr_n_25/185-4387700-7719321?fst=as%3Aoff&rh=n%3A172282%2Ck%3ASensors&keywords=Sensors))
-which are perfectly suited for this purpose.
+RPi, and configure the webserver to communicate with the device.  One
+interesting class of devices, which can be easily connected to the
+IO-pins are sensors. There is a great variety of sensors cheaply
+available online
+(e.g. [here](http://www.amazon.com/s/ref=sr_nr_n_25/185-4387700-7719321?fst=as%3Aoff&rh=n%3A172282%2Ck%3ASensors&keywords=Sensors)) which are perfectly suited for this purpose.
 
 {% figure SensorMonitoring_files/Setup jpg 'RasperryPI connected to Circonus Dashboard' 'width="400px"' %}
 
 In combination with a monitoring tool like
-[Ganglia](/2014/01/01/Monitoring-with-Ganglia.html)
-or [circonus](http://circonus.com) these little sensors can become a
-very powerful tool. The monitoring service captures the data from the
+[Ganglia](/2014/01/01/Monitoring-with-Ganglia.html) or
+[circonus](http://circonus.com) these little sensors can become a very
+powerful tool. The monitoring service captures the data from the
 sensors on regular intervals and provides export, plot and analytics
 functionality. Just imagine what you could do when you had the
 following quantities conveniently available for analysis:
@@ -27,25 +26,28 @@ following quantities conveniently available for analysis:
 * air quality/smoke
 * noise-levels.
 
-
-In this note provide a small tutorial of how to hookup temperature and
-light sensors to [circonus](http://circonus.com). Moreover, we
-setup an alerting rule to sent us an email once the temperature
-falls below a threshold.
+In this note provide a small tutorial of how to connect temperature
+and light sensors to the [circonus](http://circonus.com) monitoring
+system. As a small application we will setup an alerting rule to sent
+us an email once the temperature falls below a threshold.
 
 ## Reading Sensor Values from the RPi
 
 There are several excellent tutorials available of how to connect
-sensors to a RaspberryPi using a ACD-changer chip. I roughly followed
-[adafruit.com](https://learn.adafruit.com/reading-a-analog-in-and-controlling-audio-volume-with-the-raspberry-pi),
-with minor changes.  Since the [SunFounder LCD Starter
+sensors to a RaspberryPi using a ACD-changer chip, and I will not
+make the effort of duplicating their writing, but focus on the differences.
+As a starting point I used [this
+tutorial](https://learn.adafruit.com/reading-a-analog-in-and-controlling-audio-volume-with-the-raspberry-pi)
+on [adafruit.com](http://adafruit.com).  Since the
+[SunFounder LCD Starter
 Kit](http://www.sunfounder.com/index.php?c=show&id=21&model=LCD%20Starter%20Kit)
 ships with a
 [ADC0832-N](http://www.futurlec.com/ADConv/ADC0832.shtml)-chip instead
 of the [MCP3008](https://www.adafruit.com/products/856) there were
 some adjustments necessary.
 
-The following wiring for the ADC0832 chip was used:
+I installed the chip on the breakout board and used the following
+wiring:
 
 | ADC0832 Pin | Breakout Pin | RPi Pin BCM |
 |-------------|--------------|-------------|
@@ -58,19 +60,19 @@ The following wiring for the ADC0832 chip was used:
 | 7 CLK       | P1           | 18          |
 | 8 VCC       | 3.3V         | 3.3V        |
 
-See [IO-pins](/2014/11/22/Raspberry-Pi-SunFounder-GPIO-Layout.html) for
-more information about the Pin labels.
+See [IO-pins](/2014/11/22/Raspberry-Pi-SunFounder-GPIO-Layout.html)
+for more information about the Pin labels.  The basic idea is that
+`CH0` and `CH1` pins are able to sense electric potential between 0V
+and 5V which can be read out as a binary signal from the DO pin.
 
-The provided [script](https://gist.github.com/ladyada/3151375) was modified
-as follows:
-<style type="text/css">
-  .gist {width:600px !important;}
-  .gist-file
-  .gist-data {max-height: 300px;max-width: 600px;}
-</style>
+The precise addressing scheme is explained in the
+[datasheet](http://www.ti.com/lit/ds/symlink/adc0831-n.pdf) and the
+[adafruit script](https://gist.github.com/ladyada/3151375) was
+modified accordingly.
+
 <script src="https://gist.github.com/HeinrichHartmann/27f33798d12317575c6c.js"></script>
 
-It can be used as follows:
+The script can be used as follows:
 
     pi@pi ~ $ sudo python ADC8032.py
     ADC[0]: 33   ADC[1]: 71
@@ -78,7 +80,7 @@ It can be used as follows:
     ADC[0]: 33   ADC[1]: 72
     ADC[0]: 33   ADC[1]: 78
 
-Congratulations, we have just read out sensor data from the command line.
+As you can see, we have just read out analog sensors from the command line.
 
 ## Publishing Sensor data on the Web
 
@@ -105,15 +107,16 @@ data as follows:
     {"light": 71, "temperature": 34}
 
 This should also be working from other machines on the local network.
-Assuming the RPi has IP address `192.168.0.18` we can test this as
-follows:
+Assuming the RPi has IP address `192.168.0.18` you can test this
+as follows:
 
     hartmann@x230: curl 192.168.0.18:8081
     {"light": 73, "temperature": 34}
 
-You will probably want to shutdown your RPi from time to time.
-In order to have the web server starting at book you can use an [init
-script](http://www.stuffaboutcode.com/2012/06/raspberry-pi-run-program-at-start-up.html).
+If you are planning to use this script over an extended period of
+time, you might want to setup an [init
+script](http://www.stuffaboutcode.com/2012/06/raspberry-pi-run-program-at-start-up.html). to
+start the service at boot time.
 
 Now that your webserver is working on the local network, we need to
 open a port at your internet router and allow external connections to
@@ -125,11 +128,11 @@ Since the IP address assigned to your home connection is likely to
 change every day or two, it is advised to use a dynamic DNS service
 which will allow to connect to your router using a fixed hostname.
 Unfortunately appears as if good and free dynamic DNS providers are
-very hard to find.  I used [noip.com](http://www.noip.com/) though I
+very hard to find.  I used [no-ip.biz](http://no-ip.biz/) though I
 am not sure I would recommend to do so.
 
-If everything went well then the following should work on _any
-machine connected to the internet_:
+If everything went well then the following should work on any
+machine connected to the internet (!):
 
     hartmann@X230: curl hostname.no-ip.biz:8081
     {"light": 73, "temperature": 34}
@@ -139,10 +142,19 @@ Where we assumed that your dynamic hostname is `hostname.no-ip.biz`.
 ## Monitoring setup with Circonus
 
 Now that we have setup our web server we are ready to import the data
-into the circonus monitoring system.  There are many ways to import
-data into circonus, which are listed, e.g. at the following [blog
+into the [circonus](http://circonus.com) monitoring system. Circonus
+is a very advanced monitoring tool aimed at used in large data-centers,
+and comes with a price tag of 20$/month minimum (as of
+2014-12-15). Fortunately, there are [free
+account](https://login.circonus.com/promo) available for home use:
+
+<blockquote class="twitter-tweet tw-align-center" lang="en"><p>Awesome <a href="https://twitter.com/HeinrichHartman">@HeinrichHartman</a>! <a href="https://t.co/H4ktjrMnVI">https://t.co/H4ktjrMnVI</a> 20 metrics free for all makers: <a href="https://t.co/2cc2jazelZ">https://t.co/2cc2jazelZ</a></p>&mdash; Theo Schlossnagle (@postwait) <a href="https://twitter.com/postwait/status/544137674316328960">December 14, 2014</a></blockquote>
+<script async src="//platform.twitter.com/widgets.js" charset="utf-8"></script>
+
+Once you have setup your account with circonus, there are many ways to
+import your data. Some of them are listed in the following [blog
 post](http://www.circonus.com/ways-to-collect-systems-data-in-circonus/). Surprisingly
-my favorite method is not described there: JSON-pull. Using this
+my favorite method is not described there: `JSON-pull`. Using this
 method a circonus server will visit a given URL in regular time
 intervals. The response content is assumed to be valid JSON and the
 system will make a best effort to parse all numbers from the provided
@@ -183,3 +195,5 @@ the user `me`) when a temperature below 20 is detected.
 
 So now I can sleep well, knowing that an email will remind me when I
 am freezing in the office.
+
+Thats it!
