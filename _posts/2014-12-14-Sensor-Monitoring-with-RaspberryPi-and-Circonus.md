@@ -35,12 +35,12 @@ us an email once the temperature falls below a threshold.
 ## Reading Sensor Values from the RPi
 
 There are several excellent tutorials available of how to connect
-sensors to a RaspberryPi using a ACD-changer chip, and I will not
-make the effort of duplicating their writing, but focus on the differences.
+sensors to a RaspberryPi using a AD-changer chip, and I will not make
+the effort of duplicating their writing, but focus on the differences.
 As a starting point I used [this
 tutorial](https://learn.adafruit.com/reading-a-analog-in-and-controlling-audio-volume-with-the-raspberry-pi)
-on [adafruit.com](http://adafruit.com).  Since the
-[SunFounder LCD Starter
+on [adafruit.com](http://adafruit.com).  Since the [SunFounder LCD
+Starter
 Kit](http://www.sunfounder.com/index.php?c=show&id=21&model=LCD%20Starter%20Kit)
 ships with a
 [ADC0832-N](http://www.futurlec.com/ADConv/ADC0832.shtml)-chip instead
