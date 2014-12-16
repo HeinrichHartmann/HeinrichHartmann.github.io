@@ -170,11 +170,11 @@ and import the data into the system.
 
 **Graphing**
 
-When the data import is figured correctly we will be able to see the
-data streaming into circonus. Several kinds of plots can be produced
-on the web front end. Circonus even allows sharing and embedding of
-the customized graphs. The following graph shows the temperature (red)
-and light levels (yellow) in my room in the last hours.
+When the data import is working we will be able to see the data
+streaming into circonus. Several kinds of plots can be produced on the
+web front end. Circonus even allows sharing and embedding of the
+customized graphs. The following graph shows the temperature (red) and
+light levels (yellow) in my room in the last hours.
 
 <div style="border:1px solid #ccc">
 <iframe height="294px" width="600px" scrolling="no" frameborder="0" src="https://share.circonus.com/embedded/graphs/0c56cd62-f8f4-4f38-8200-354af0d903bc/mGemDP"></iframe>
@@ -196,5 +196,3 @@ the user `me`) when a temperature below 20 is detected.
 
 So now I can sleep well, knowing that an email will remind me when I
 am freezing in the office.
-
-Thats it!
