@@ -1,7 +1,15 @@
 ---
 layout: default
 ---
+
 <div id="post">
+<h1>
+  {{ page.title }}
+  <span class='date'><span class='quo'>&laquo;</span>
+    {{ page.date | date: "%Y-%m-%d" }}
+  <span class='quo'>&raquo;</span></span>
+</h1>
+
 {{ content }}
 </div>
 
