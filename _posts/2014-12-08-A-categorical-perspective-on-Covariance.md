@@ -2,7 +2,7 @@
 <style> .center { margin-right: auto; margin-left:auto; display: block } </style>
 <style src="/css/coderay.css"></style>
 
-# A categorical perspective on Covariance
+<!-- # A categorical perspective on Covariance -->
 
 For functions $$f,g$$ on a measure space $$\Omega, \mu$$ (e.g. a real
 interval $$[0,1]$$) there is a well known scalar product

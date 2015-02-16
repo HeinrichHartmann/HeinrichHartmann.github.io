@@ -1,5 +1,4 @@
-
-# Distributed Scraper Design
+<!-- # Distributed Scraper Design -->
 
 We are am confronted with the following situation:
 

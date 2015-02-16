@@ -1,4 +1,4 @@
-# Sensor Monitoring with RaspberryPi and Circonus
+<!-- # Sensor Monitoring with RaspberryPi and Circonus -->
 
 The [RaspberryPi](http://www.raspberrypi.org) mini-computer can be
 used to connect all kind of devices to the internet. The only

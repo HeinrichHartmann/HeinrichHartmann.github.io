@@ -1,4 +1,4 @@
-# Secure Email Communication
+<!-- # Secure Email Communication -->
 
 This note explains how to write and receive private email messages.
 It will be updated in the future and is ultimately aimed at the

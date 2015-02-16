@@ -13,7 +13,7 @@ MathJax.Hub.Config({
 <style> .center { margin-right: auto; margin-left:auto; display: block; max-width:600px } </style>
 <style src="/css/coderay.css"></style>
     
-# Generative Models for Time Series
+<!-- # Generative Models for Time Series -->
 
 In this note we explore several mechanisms of how to construct time series.
 For us a time series is a sequence of real numbers 

@@ -1,4 +1,4 @@
-# Virtual Cluster
+<!-- # Virtual Cluster -->
 
 When playing around with distributed technologies like hadoop or
 databases, it becomes at some point important to have a number of

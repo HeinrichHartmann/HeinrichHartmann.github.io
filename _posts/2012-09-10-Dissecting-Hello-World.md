@@ -1,4 +1,4 @@
-# Dissecting Hello World
+<!-- # Dissecting Hello World -->
 
 This note is part of an effort to understand how a PC works. What
 happens from the writing of code until the actual physical comptation

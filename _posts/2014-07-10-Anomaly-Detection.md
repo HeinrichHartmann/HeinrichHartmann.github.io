@@ -2,7 +2,7 @@
 <style> .center { margin-right: auto; margin-left:auto; display: block } </style>
 <style src="/css/coderay.css"></style>
 
-# Anomaly Detection in Time Series data
+<!-- # Anomaly Detection in Time Series data -->
 
 ## Definition of Time Series
 

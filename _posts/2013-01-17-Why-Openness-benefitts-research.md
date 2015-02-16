@@ -1,4 +1,4 @@
-# Why openness benefits research
+<!-- # Why openness benefits research -->
 
 The following text is jointly authored by David Shotton (david.shotton@zoo.ox.ac.uk) and Heinrich Hartmann (hartmann@uni-koblenz.de).
 

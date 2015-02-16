@@ -1,7 +1,7 @@
 <!-- EMACS PREAMBLE: -->
 <!-- (global-set-key (kbd "C-c C-e") 'ess-eval-paragraph) -->
 
-# Digging into R
+<!-- # Digging into R -->
 
 I was advised to use
 [R](http://cran.r-project.org/doc/manuals/r-release/R-lang.html) for

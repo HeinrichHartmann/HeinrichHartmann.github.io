@@ -1,4 +1,4 @@
-# Ganglia
+<!-- # Ganglia -->
 
 In this note we are going to install the Ganglia monitoring system on
 a Virtual Cluster.
