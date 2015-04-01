@@ -7,7 +7,7 @@ title: Heinrich Hartmann - about
 
 ## Contact
 
-Dr. Heirnich Hartmann  
+Dr. Heinrich Hartmann  
 Gutenbergstr. 7  
 56073 Koblenz  
 Germany
