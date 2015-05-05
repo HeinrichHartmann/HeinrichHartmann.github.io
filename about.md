@@ -8,9 +8,9 @@ title: Heinrich Hartmann - about
 ## Contact
 
 Dr. Heinrich Hartmann  
-Gutenbergstr. 7  
-56073 Koblenz  
-Germany
+Stefan-George-Ring 41  
+81929 Munich  
+Germany  
 
 * Mail: <a href="mailto:heinrich@heinrichhartmann.com">heinrich@heinrichhartmann.com</a>
 * Twitter: <a href="https://twitter.com/HeinrichHartman/">@HeinrichHartman</a>
@@ -45,3 +45,7 @@ acedemies over the last years in different roles.
 * [Schubert - Auf der Bruck (video)](https://www.youtube.com/watch?v=Qq4MduJTKTg)
 * [Schubert - An die Musik (video)](https://www.youtube.com/watch?v=w9WpCkuPuLA)
 * [Stern TV - 1000'ste Sendung (video)](http://embed.novamov.com/embed.php?v=2wl0guw3e0jtnK)
+
+## Impressum
+
+<a href="impressum.html">Impressum</a> - statment of ownership is legally mandated in Germany.

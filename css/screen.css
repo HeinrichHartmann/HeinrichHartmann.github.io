@@ -136,7 +136,7 @@ ul.posts {
 
     .site .footer .contact {
       float: left;
-      margin-right: 3em;
+      margin-right: 1em;
     }
 
       .site .footer .contact a {
@@ -144,8 +144,6 @@ ul.posts {
       }
 
     .site .footer .rss {
-/*      margin-top: 1.1em; */
-      margin-right: -.2em;
       float: right;
     }
 

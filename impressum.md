@@ -14,9 +14,9 @@ Betreiber und Kontakt:
 
 Dr. Heinrich Hartmann
 
-Gutenbergstr. 7  
-56073 Koblenz
+Stefan-George Ring 41  
+81929 Munich  
 
 Telefonnummer: +49 1525 3638134  
-E-Mail-Adresse: heinrich_hartmann@gmx.net  
+E-Mail-Adresse: heinrich@heinrichhartmann.com  
 USt-IdNr.: DE295519544  
