@@ -18,7 +18,8 @@ Germany
 
 ## Vita
 
-* 2014 Math & IT Consultant
+* 2014 Data Scientist at Circonus
+* 2014 IT Consultant
 * 2013 Researcher at WeST Institute for WebScience and Technologies  
   Team Leader at <a href="http://liveandgov.eu">Live and Gov</a> EU Project
 * 2012 Researcher at Univeristy of Oxford
