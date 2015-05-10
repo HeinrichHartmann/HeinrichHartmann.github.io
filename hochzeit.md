@@ -34,12 +34,12 @@ Wir haben in folgenden Hotels Zimmer für unsere Feier bis Mitte Juni vorreservi
 Trauzeugen
 
 * Ina Stegemöller (<a href="mailto:ina.stegemoeller@yahoo.de">ina.stegemoeller@yahoo.de</a> )
-* Rene Pickhardt (<a href="rene@rene-pickhart.de">rene@rene-pickhart.de</a>)
+* Rene Pickhardt (<a href="mailto:rene@rene-pickhart.de">rene@rene-pickhart.de</a>)
 
 Brautpaar
 
-* Lena Hegerfeld (<a href="lena.hegerfeld@web.de">lena.hegerfeld@web.de</a>)
-* Heinrich Hartmann (<a href="heinrich@heinrichhartmann.com">heinrich@heinrichhartmann.com</a>)
+* Lena Hegerfeld (<a href="mailto:lena.hegerfeld@web.de">lena.hegerfeld@web.de</a>)
+* Heinrich Hartmann (<a href="mailto:heinrich@heinrichhartmann.com">heinrich@heinrichhartmann.com</a>)
 
 ## Weiteres
 
