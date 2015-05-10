@@ -41,10 +41,10 @@ Brautpaar
 * Lena Hegerfeld (<a href="lena.hegerfeld@web.de">lena.hegerfeld@web.de</a>)
 * Heinrich Hartmann (<a href="heinrich@heinrichhartmann.com">heinrich@heinrichhartmann.com</a>)
 
-## Coming Soon
+## Weiteres
 
-* Wunschliste
-
+* Eine Wunschliste ist noch in Arbeit.
+* Beiträge zum Programm bitte mit Ina abstimmen.
 
 <hr/>
 <a name="rueckmeldung"/>
