@@ -4,9 +4,9 @@ permalink: 2015-09-12_hochzeit/
 title: Hochzeit
 ---
 
-# Hochzeit von Lena und Heinrich
+# Lena <span id='red'>und</span> Heinrich trauen sich
 
-Auf dieser Seite findet ihr die wichtigsten Informationen im Überblick.
+<img src="/images/hochzeit_banner.png">
 
 ## Wann?
 
@@ -40,6 +40,11 @@ Brautpaar
 
 * Lena Hegerfeld (<a href="lena.hegerfeld@web.de">lena.hegerfeld@web.de</a>)
 * Heinrich Hartmann (<a href="heinrich@heinrichhartmann.com">heinrich@heinrichhartmann.com</a>)
+
+## Coming Soon
+
+* Wunschliste
+
 
 <hr/>
 <a name="rueckmeldung"/>
