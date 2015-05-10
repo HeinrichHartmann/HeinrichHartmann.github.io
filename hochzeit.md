@@ -31,7 +31,7 @@ Wir haben in folgenden Hotels Zimmer für unsere Feier bis Mitte Juni vorreservi
 
 ## Kontakte
 
-Trauzeugen
+Brautführer / Trauzeugen
 
 * Ina Stegemöller (<a href="mailto:ina.stegemoeller@yahoo.de">ina.stegemoeller@yahoo.de</a> )
 * Rene Pickhardt (<a href="mailto:rene@rene-pickhart.de">rene@rene-pickhart.de</a>)
