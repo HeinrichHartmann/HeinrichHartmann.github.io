@@ -175,6 +175,7 @@ $$\def\half{\frac{1}{2}}$$
 
 Take $$b_0 < b_1 \in \IR$$, a time series $$y$$ and $$\theta = b_0, \theta' = b_1$$.
 To test the hypothesis
+
 * $$H_0$$: The instance $$y$$ was drawn from $$\IY_t = b_0 + \eps_t$$
 * $$H_1$$: The instance $$y$$ was drawn from $$\IY_t = b_1 + \eps_t$$
 

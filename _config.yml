@@ -1,6 +1,6 @@
 name: "Heinrich Hartmann's Blog"
 description: "I blog about mathematics, statistics and tinkering."
-url: "https://heinrichhartmann.com"
+url: "http://heinrichhartmann.com"
 
 # markdown: rdiscount
 markdown: kramdown
