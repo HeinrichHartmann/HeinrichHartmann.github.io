@@ -121,11 +121,11 @@ $$
     \rho(x,y) = \frac{Cov(x,y)}{\sqrt{Cov(x,x) Cov(y,y)}}.
 $$
 
-It measures the 'linear dependece' between two random variables. In
+It measures the linear dependece between two random variables. E.g. In
  the case of a discrete probability measure obtained from a sample,
  the correlation is the ratio between explained variance in a linear
  regression and total variance of the sample
- cf. <http://en.wikipedia.org/wiki/Coefficient_of_determination>.
+ cf. [wikipedia](http://en.wikipedia.org/wiki/Coefficient_of_determination).
 
 <figure>
     <img src="/assets/Covariance_files/cor.png">
@@ -133,17 +133,16 @@ It measures the 'linear dependece' between two random variables. In
     <figcaption>Correlated (\rho ~ 0.88) and non-corrleated (\rho ~ -0.14) samples.</figcaption>
 </figure>
 
-In analogy to the geometry of the Euclidean plane, we define the angle
-$$\theta(x,y)$$ between two functions by
+In analogy to the Euclidean plane, we define the cosine similarity between two functions by
 
 $$
-    \cos(\theta(x,y)) = \frac{S(x,y)}{\sqrt{S(x,x) S(y,y)}}.
+    cossim(x,y) = \frac{S(x,y)}{\sqrt{S(x,x) S(y,y)}}.
 $$
 
-Hence for centered functions $$x,y, \in \LL_0$$ we have
+Hence for centered functions $$x,y \in \LL_0$$ we have
 
 $$
-    \cos(\theta(x,y)) = \rho(x,y),
+    cossim(x,y) = \rho(x,y),
 $$
 
 which gives a surprising relation between two different geometric
@@ -159,6 +158,6 @@ $$ \hat{a}(x,y) = Cov(x,y)/Cov(x,x). $$
 
 However, at the moment I do not see how this helps to understand the
 above observation. My feeling is, that there should be a more
-conceptual reason for it. E.g. by interpreting $$x,y$$ as maps $$\IR^2
+conceptual reason for it. By interpreting $$x,y$$ as maps $$\IR^2
 \lra \IR^n$$ we can bring duality theory for vector spaces into play
 and maybe gain more insight form this perspective.
