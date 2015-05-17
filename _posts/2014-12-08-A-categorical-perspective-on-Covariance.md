@@ -102,7 +102,7 @@ projection $$N(x) = x - I(x)$$.
 ## Conclusion
 
 * The space of integral-0 function $$\LL_0$$ together with the
-  covariance product $$Cov $$ is a Hilbert Space.
+  covariance product $$Cov$$ is a Hilbert Space.
 
 * The natural inclusion $$\LL_0 \rightarrow \LL$$ is isometric
   with adjoint linear operator $$N(x) = x - I(x)$$.
@@ -111,3 +111,54 @@ projection $$N(x) = x - I(x)$$.
 
   $$ \LL \cong \IR \oplus  \LL_0, \quad f \mapsto (I(f),N(f)) $$
 
+## Update 2015-05-17: Correlation as Cosine
+
+The [Pearson
+correlation](http://en.wikipedia.org/wiki/Pearson_product-moment_correlation_coefficient)
+is defined as:
+
+$$
+    \rho(x,y) = \frac{Cov(x,y)}{\sqrt{Cov(x,x) Cov(y,y)}}.
+$$
+
+It measures the 'linear dependece' between two random variables. In
+ the case of a discrete probability measure obtained from a sample,
+ the correlation is the ratio between explained variance in a linear
+ regression and total variance of the sample
+ cf. <http://en.wikipedia.org/wiki/Coefficient_of_determination>.
+
+<figure>
+    <img src="/assets/Covariance_files/cor.png">
+    <img src="/assets/Covariance_files/nocor.png">
+    <figcaption>Correlated (\rho ~ 0.88) and non-corrleated (\rho ~ -0.14) samples.</figcaption>
+</figure>
+
+In analogy to the geometry of the Euclidean plane, we define the angle
+$$\theta(x,y)$$ between two functions by
+
+$$
+    \cos(\theta(x,y)) = \frac{S(x,y)}{\sqrt{S(x,x) S(y,y)}}.
+$$
+
+Hence for centered functions $$x,y, \in \LL_0$$ we have
+
+$$
+    \cos(\theta(x,y)) = \rho(x,y),
+$$
+
+which gives a surprising relation between two different geometric
+interpretations of the same data:
+
+* Regrssion line of coefficient pairs $$(x_i,y_i)$$ in $$\IR^2$$
+* Angle between vectors $$(x_1,\dots,x_n)$$ and $$(y_1,\dots,y_n)$$ in $$\IR^n$$.
+
+Note, that for cetnered functions ($$I(x) = I(y) = 0$$) the regression line
+will always pass through the origin and the slope can be calculated to
+
+$$ \hat{a}(x,y) = Cov(x,y)/Cov(x,x). $$
+
+However, at the moment I do not see how this helps to understand the
+above observation. My feeling is, that there should be a more
+conceptual reason for it. E.g. by interpreting $$x,y$$ as maps $$\IR^2
+\lra \IR^n$$ we can bring duality theory for vector spaces into play
+and maybe gain more insight form this perspective.
