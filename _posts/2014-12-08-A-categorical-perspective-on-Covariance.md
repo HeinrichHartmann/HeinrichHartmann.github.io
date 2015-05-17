@@ -121,7 +121,7 @@ $$
     \rho(x,y) = \frac{Cov(x,y)}{\sqrt{Cov(x,x) Cov(y,y)}}.
 $$
 
-It measures the linear dependece between two random variables. E.g. In
+It measures the linear dependece between two random variables. E.g. in
  the case of a discrete probability measure obtained from a sample,
  the correlation is the ratio between explained variance in a linear
  regression and total variance of the sample
