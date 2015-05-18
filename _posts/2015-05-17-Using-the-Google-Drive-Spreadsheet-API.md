@@ -3,32 +3,44 @@
     
 <!--# Using the Google Spreadsheets Python API -->
 
-In this note we will receive and send rows to a Google Drive
-Spreadsheet. I use Google Spreadsheets to store all kinds of tables
-e.g. for expenses or contacts in csv like files and want to access
-and mofify them from within a python script.
+In this note we will receive and send rows to a Google Spreadsheet.
+
+[Google Spreadsheets](https://www.google.com/sheets/about/) is a great
+tool to store all kinds of tables e.g. for expenses or contacts, in a
+human readable and editable and globally accessible form.  With the
+[Google Drive API](https://developers.google.com/drive/web/about-sdk)
+it is possible to automate access to Google Spreadsheets and use these
+worksheets as little databases. The API is much more powerfull and
+supports applications to access Drive data from third party users
+(e.g. for a image manipulation tool). This power however, brings a lot
+of complexity, in particular to the authentification process, that
+makes the documentation hard to understand. This note walks you
+through this simple scenario.
 
 ##Step 1: Install gdata Library
 
-We will be using the [`gdata python client`](https://github.com/google/gdata-python-client/).
-You can either install it from source or using a package manager, e.g. for me worked
+We will be using the [gdata-python-client](https://github.com/google/gdata-python-client/).
+You can either install it from source or using a package manager, e.g. using
 
     $ pip install gdata
 
 ## Step 2: Get an application specific password
 
 We will need to access your Google Drive data but do not require to
-access data from third parties.  Therefore we don't need the complex
-[OAuth2](https://developers.google.com/identity/protocols/OAuth2) for
-this use case. Instead we can use application specific passwords:
+access data from third parties.  Therefore we don't need 
+[OAuth2](https://developers.google.com/identity/protocols/OAuth2)
+but can use application specific passwords:
 
 1. Generate a password at <https://security.google.com/settings/security/apppasswords>
 
-2. Store it an a json file (do not check it into git!) e.g. using   
+2. Store it an a json file (do not check it into version control) e.g. using
 
-    $echo '{ "email": "<put your email here>",\
-             "password" : "<put generated password here>" }' \
-     > GoogleAppPw.json
+    $ cat <<EOF > GoogleAppPw.json
+    > {
+    >    "email": "<put your email here>", 
+    >    "password" : "<put generated password here>"
+    > }
+    > EOF
 
 We can read the password from a python script as follows:
 
@@ -72,14 +84,16 @@ for document_entry in documents_feed.entry:
 
 ## Step 4: Select the right Spreadsheet
 
-Read the name of the spreadsheet and the worksheet into variables.
-I have added them to the config file to leave the code more generic.
+First, we read the name of the spreadsheet and the worksheet we want to access into variables.
+I have added them to the config file to leave the code more generic, feel free to use
+string literals instead.
 
 {% highlight python %}
 spreadsheet_name = config['spreadsheet']
 worksheet_name   = config['worksheet']
 {% endhighlight %}
 
+Now we iterate through the document feed and select the spreadsheet entry with matching title:
 
 {% highlight python %}
 for entry in documents_feed.entry:
@@ -90,68 +104,56 @@ else: # no-break
     print "Spreadsheet not found!"
 {% endhighlight %}
 
-
-Unfortunately, there is no easy way to obtain a spreadsheet object, which we can query.
-We have to manually extract the key field from the id (this is no joke. cf. [example](https://github.com/google/gdata-python-client/blob/master/samples/spreadsheets/spreadsheetExample.py#L52))
-
+Unfortunately, there is no easy way to obtain a spreadsheet object,
+from the entry which we can query for cells. Instead, we have to
+manually extract the key field from the id (this is no
+joke. cf. [example](https://github.com/google/gdata-python-client/blob/master/samples/spreadsheets/spreadsheetExample.py#L52))
+and pass it back to the client library:
 
 {% highlight python %}
 spreadsheet_key = spreadsheet_entry.id.text.split('/')[-1]
+worksheet_feed  = client.GetWorksheetsFeed(spreadsheet_key)
 {% endhighlight %}
-
-
-{% highlight python %}
-print spreadsheet_entry.id.text
-print spreadsheet_key
-{% endhighlight %}
-
-    https://spreadsheets.google.com/feeds/spreadsheets/private/full/oiawdnawd0209d3woideae
-    oiawdnawd0209d3woideae
 
 Now we can iterate over the worksheets in a similar way:
-
 {% highlight python %}
-worksheet_feed = client.GetWorksheetsFeed(spreadsheet_key)
-
 for entry in worksheet_feed.entry:
     if entry.title.text == worksheet_name:
         worksheet_entry = entry
         break
 else: # no-break
     print "Worksheet not found!"
-{% endhighlight %}
 
-
-{% highlight python %}
 worksheet_key = worksheet_entry.id.text.split('/')[-1]
 {% endhighlight %}
 
+Now we have found the keys of the worksheet and spreadsheet.
+
 ## Step 5: List rows in the Worksheet
 
-We retrieve the rows of a worksheet as iterator of dictionaries.
-The first row (header) defines the key of the dictionary the
-following rows provide the subsequent values.
+We retrieve the rows of a worksheet as iterator of dictionaries.  For
+this to work, the spreadsheet has to comply to a format.  The first
+row (header) defines the key of the dictionary the following rows
+provide the subsequent values.
 
 Here is an example:
 
-    date       | comment    | amount   | currency |
-    2015-01-10 | Dinner     | 29.30    | EUR      |
-    2015-01-10 | Taxi       | 12.00    | EUR      |
+    | date       | comment    | amount   | currency |
+    | 2015-01-10 | Dinner     | 29.30    | EUR      |
+    | 2015-01-10 | Taxi       | 12.00    | EUR      |
 
 The worksheet can be accessed as follows:
 
 {% highlight python %}
 list_feed = client.GetListFeed(spreadsheet_key, worksheet_key)
-{% endhighlight %}
 
-
-{% highlight python %}
 # Iterator that lists all rows as
 def rows():
     for entry in list_feed.entry:
         yield dict( (key, entry.custom[key].text) for key in entry.custom )
 {% endhighlight %}
 
+Now, we print out all rows in the sheet:
 
 {% highlight python %}
 print rows().next().keys() # col names
@@ -167,9 +169,13 @@ for row in rows():
 
 ## Step 6: Append a row to the Worksheet
 
+This is surprisingly straight forward.
+
 {% highlight python %}
-record = {'date':'2015-05-15', 'comment':'Bus', 'amount':'10', 'currency':'EUR'}
-result = client.InsertRow(record, spreadsheet_key, worksheet_key)
+row = {'date':'2015-05-15', 'comment':'Bus', 'amount':'10', 'currency':'EUR'}
+
+result = client.InsertRow(row, spreadsheet_key, worksheet_key)
+
 if isinstance(result, gdata.spreadsheet.SpreadsheetsList): print "success"
 {% endhighlight %}
 
