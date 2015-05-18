@@ -1,5 +1,4 @@
 <style> .center { margin-right: auto; margin-left:auto; display: block; max-width:600px } </style>
-<style src="/css/coderay.css"></style>
     
 <!--# Using the Google Spreadsheets Python API -->
 
@@ -7,15 +6,18 @@ In this note we will receive and send rows to a Google Spreadsheet.
 
 [Google Spreadsheets](https://www.google.com/sheets/about/) is a great
 tool to store all kinds of tables e.g. for expenses or contacts, in a
-human readable and editable and globally accessible form.  With the
+human readable, editable and globally accessible form.  With the
 [Google Drive API](https://developers.google.com/drive/web/about-sdk)
 it is possible to automate access to Google Spreadsheets and use these
-worksheets as little databases. The API is much more powerfull and
-supports applications to access Drive data from third party users
-(e.g. for a image manipulation tool). This power however, brings a lot
-of complexity, in particular to the authentification process, that
-makes the documentation hard to understand. This note walks you
-through this simple scenario.
+worksheets as little databases that can be modified from the command
+line.
+
+The API is even more powerfull and supports applications to access
+data from third party users (e.g. for a image manipulation tool). This
+power brings a lot of complexity, in particular to the
+authentification process, that makes the documentation hard to
+understand. This note walks you through a simple data access example,
+while avoiding a lot of this complexity.
 
 ##Step 1: Install gdata Library
 
@@ -37,7 +39,7 @@ but can use application specific passwords:
 
     $ cat <<EOF > GoogleAppPw.json
     > {
-    >    "email": "<put your email here>", 
+    >    "email" : "<put your email here>", 
     >    "password" : "<put generated password here>"
     > }
     > EOF
