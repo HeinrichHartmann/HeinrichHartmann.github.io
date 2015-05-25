@@ -18,7 +18,9 @@ Am Samstag, den 12. September 2015 um 16 Uhr.
 Haldemer Straße 5  
 32351 Stemwede  
 
-[Google Maps](https://www.google.com/maps/place/Gasthof+Rosengarten/@52.43134,8.40117,17z)
+* [Google Maps](https://www.google.com/maps/place/Gasthof+Rosengarten/@52.43134,8.40117,17z)
+* Nächster Bahnhof: [Bohmte](https://www.google.de/maps/place/Bohmte/@52.361632,8.307525,17z/data=!3m1!4b1!4m2!3m1!1s0x47b9fefbba4e3207:0x7542ea3fc873f612?hl=en)
+
 
 ## Unterkunft
 
