@@ -26,10 +26,13 @@ Haldemer Straße 5
 
 Wir haben in folgenden Hotels Zimmer für unsere Feier bis Mitte Juni vorreserviert.
 
-* <a href="http://www.berggasthof-wilhelmshoehe.de/?page_id=5">Berggasthof Wilhelmshöhe</a>
-* <a href="http://www.stemwederhof.de/hotel/">Stemweder Hof</a>
-* <a href="http://hotel-meyer-pilz.de/hotel/">Hotel Meyer-Pilz</a>
-* <a href="http://www.erlebnishof-grummert.de/neu/fewo.htm">Erlebnishof Grummert</a>
+* <a href="http://www.stemwederhof.de/hotel/">Stemweder Hof</a> (4.5 km; 8 DZ frei)
+* <a href="http://hotel-meyer-pilz.de/hotel/">Hotel Meyer-Pilz</a> (8 km; 11 DZ, 8 EZ frei)
+* <a href="http://www.erlebnishof-grummert.de/neu/fewo.htm">Erlebnishof Grummert</a> (9 km; 6 DZ frei)
+* <a href="http://www.hotel-knostmann.de/">Hotel Knostmann</a> (12 km; 8 DZ frei)
+* <a href="http://www.berggasthof-wilhelmshoehe.de/?page_id=5">Berggasthof Wilhelmshöhe</a> (2 km; ausgebucht)
+
+Zimmeranzahlen Stand 2015-05-29.
 
 ## Kontakte
 
