@@ -39,7 +39,8 @@ acedemies over the last years in different roles.
 
 * DSA Schulpforte 2011 - [Course on web services](http://www.deutsche-schuelerakademie.de/download/dsa-programm-2011) with Rene Pickhardt.
 * DJA Meisenheim 2012 -  [Course on efficient algorithms](http://www.deutsche-juniorakademien.de/download/2012/DJA_Rheinland-Pfalz_2012.pdf) Prof. Johann Baumeister
-* DJA Meisenheim 2013 - [Lead of Academy](http://www.deutsche-juniorakademien.de/download/2013/DJA_Rheinland-Pfalz_2013.pdf)
+* DJA Meisenheim 2013 - [Lead of Academy](http://www.deutsche-juniorakademien.de/download/2013/DJA_Rheinland-Pfalz_2013.pdf#page=12)
+* DSA Torgelow 2015 - [Lead of Academy](https://secure.bubev.de/dsa/empfehlung/download/2015/DSA-Programm_2015.pdf#page=67)
 
 ## Media
 
