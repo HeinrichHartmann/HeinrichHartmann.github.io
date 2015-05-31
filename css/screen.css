@@ -20,7 +20,12 @@ body {
   font: 13.34px helvetica, arial, clean, sans-serif;
 }
 
-h1, h2, h3, h4, h5, h6 {
+h1 {
+  font-size: 100%;
+  margin-bottom: 1em;
+}
+
+h2, h3, h4, h5, h6 {
   font-size: 100%;
   margin-bottom: 1em;
   margin-top: 2em;
@@ -202,19 +207,24 @@ ul.posts {
     color: white;
   }
 
-  #post pre.terminal code {
+#post pre.terminal code {
     background-color: #333;
-  }
+}
 
 #related {
+  border-top: 4px solid #eee;
   margin-top: 2em;
 }
 
-  #related h2 {
+#related h2 {
     margin-bottom: 1em;
-  }
+}
 
-
+#disqus_thread {
+  border-top: 4px solid #eee;
+  margin-top: 4em;
+  padding-top: 2em;
+}
 
 /**
 * Figure Plugin: https://github.com/lmullen/jekyll_figure
