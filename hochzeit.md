@@ -49,7 +49,7 @@ Brautpaar
 ## Programm
 
 Wir freuen uns natürlich sehr, wenn ihr etwas zum Programm unserer
-Feier betragen möchtet. Bitte stimmt euch diesbezüglich mit unserer
+Feier beitragen möchtet. Bitte stimmt euch diesbezüglich mit unserer
 Brautführerin Ina ab.
 
 ## Geschenke
