@@ -46,10 +46,32 @@ Brautpaar
 * Lena Hegerfeld (<a href="mailto:lena.hegerfeld@web.de">lena.hegerfeld@web.de</a>)
 * Heinrich Hartmann (<a href="mailto:heinrich@heinrichhartmann.com">heinrich@heinrichhartmann.com</a>)
 
-## Weiteres
+## Programm
 
-* Eine Wunschliste ist noch in Arbeit.
-* Beiträge zum Programm bitte mit Ina abstimmen.
+Wir freuen uns natürlich sehr, wenn ihr etwas zum Programm unserer
+Feier betragen möchtet. Bitte stimmt euch diesbezüglich mit unserer
+Brautführerin Ina ab.
+
+## Geschenke
+
+Die größte Freude, die ihr uns zu unserer Hochzeit machen könnt, ist dabei 
+zu sein und mit uns, gut gelaunt, diesen besonderen Tag zu feiern. Wir
+haben gehört, dass uns trotzdem einige von euch etwas schenken wollen.
+Um euch dabei zu helfen, etwas Geeignetes zu finden, haben wir zwei Vorschläge:
+
+1. Gutscheine für unsere Hochzeitsreise.  
+   Wir wollen unsere Flitterwochen im Hotel "Der Westerhof" am Tegernsee
+   verbringen, und freuen uns über Zuschüsse für unseren Aufenthalt.
+   Gutscheine könnt ihr direkt beim Hotel bekommen - bitte sagt dazu, dass 
+   der Gutschein als Hochzeitsgeschenk für uns gedacht ist, die Dame an 
+   der Rezeption weiß dann Bescheid:  
+   <http://www.derwesterhof.de/hotel-garni-tegernsee/kontakt.php>
+
+2. Amazon Wunschliste.  
+   Für alle, die gerne etwas 'Handfestes' schenken wollen, haben wir ein
+   paar Ideen auf einer Wunschliste gesammelt:  
+   <http://www.amazon.de/registry/wedding/3JF8VO0ZWU1DK>
+
 
 <hr/>
 <a name="rueckmeldung"/>
