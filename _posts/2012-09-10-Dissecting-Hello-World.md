@@ -27,12 +27,12 @@ people claim it is nearest to the actual processor logic. We call it
 
 We compile this program on a Linux box with the command
 
-    gcc simple.c
+    $ gcc simple.c
 
 and get out an executable file a.out. This file is actually quiet long
 it already has 8446 bytes. Lets look inside:
 
-    hexedit a.out
+    $ hexedit a.out
 
 We see that the file starts like that:
 
@@ -63,7 +63,7 @@ treatment is similar to
 [LinuxForums.org - ELF using readelf and objdump](http://www.linuxforums.org/articles/understanding-elf-using-readelf-and-objdump_125.html
 ).
 
-As far as I understand the ELF format is a container format for executable files suitable for the Linux operating system.
+ELF is a container format for executable files suitable for the Linux operating system.
 Before a program can run on the CPU a [loader](http://en.wikipedia.org/wiki/Loader_(computing)) or
 [dynamic linker](http://en.wikipedia.org/wiki/Dynamic_linker) program (in our case [ld.so](http://www.kernel.org/doc/man-pages/online/pages/man8/ld.so.8.html)) of the OS is called which servers the following tasks:
 
@@ -79,15 +79,15 @@ Before a program can run on the CPU a [loader](http://en.wikipedia.org/wiki/Load
 According to the
 [generic format specification](http://downloads.openwatcom.org/ftp/devel/docs/elf-64-gen.pdf) an ELF file consists of:
 
-* a ''File header'', which must appear at the beginning of the ﬁle.
-* ''Section table'' [..]
-* ''Program header table'' Describes the [..] data structures required for loading a program [..].
+* a _File header_, which must appear at the beginning of the ﬁle.
+* _Section table_
+* _Program header table_: Describes the [..] data structures required for loading a program [..].
 * Contents of the sections and segments
 
 The ELF file is used by the loader and by the linker in two different ways:
 
-1. The linker works with '''sections'''. It rearranges sections and consolidates them over different files.
-2. The loader works with '''segments''' specified by the programm headder's. A segment consists of several consecutive segments an is loaded into the memory at once.
+1. The linker works with _sections_. It rearranges sections and consolidates them over different files.
+2. The loader works with _segments_ specified by the programm headder's. A segment consists of several consecutive segments an is loaded into the memory at once.
 
 ### File Header
 Diving further into the specification we find that the headder consists of the following components:
@@ -129,8 +129,9 @@ These bytes have the following meaning:
 * 00 = EI_NIDENT - Size of e_ident[]
 
 Fortunately we do not need to do all this byte matching by hand. There is already a linux tool that does that for you:
-''readelf -h'' produces:
 
+    $ readelf -h a.out
+    
     Magic:   7f 45 4c 46 02 01 01 00 00 00 00 00 00 00 00 00
     Class:                             ELF64
     Data:                              2's complement, little endian
@@ -236,8 +237,10 @@ Another information we can get from this table is that only the sections:
 contain executable data.
 
 ### Segments
-To extract the information about from the Program header we call 'readelf --segments'
+To extract the information about from the Program header we call:
 
+    $ readelf --segments a.out
+    
     Elf file type is EXEC (Executable file)
     Entry point 0x4003e0
     There are 9 program headers, starting at offset 64
@@ -280,10 +283,12 @@ Section to Segment mapping:
      07
      08     .ctors .dtors .jcr .dynamic .got
 
-## Program Code
+## Program Code with `objdump`
 
 After identifying the executable parts of the program lets inspect these parts.
-We disassemble the parts using 'objdump -d' and get:
+We disassemble the parts using [objdump](https://sourceware.org/binutils/docs-2.23/binutils/objdump.html).
+
+    $ objdump -d a.out
 
 Disassembly of section .init:
 
@@ -408,6 +413,8 @@ We can use the gnu debugger
 is executed.  Call `gdb a.out` to start a debuggiong session. Our
 comments appear at after (#):
 
+    $ gdb a.out
+    
     GNU gdb (GDB) 7.1-ubuntu
     Copyright (C) 2010 Free Software Foundation, Inc.
     [...]
@@ -473,15 +480,13 @@ of the computer. Can we see how that really works?
 * What is inside these memoy pages.
 
 A nice explanation of the physical lyout of the memory can be found inside the
-[http://dirac.org/linux/gdb/02a-Memory_Layout_And_The_Stack.php#wherearewegoingtogo GDB documentation].
+[GDB documentation](http://dirac.org/linux/gdb/02a-Memory_Layout_And_The_Stack.php#wherearewegoingtogo).
 
 As explained in the note, each program assumes that it can access all the memory of the computer
 and starts writing it offset 0. This is of course not the case. The instead the OS provides
-reserved spaces inside the memory (virtual memory pages) which are typically 4kb in size.
-[http://en.wikipedia.org/wiki/Virtual_memory Wikipedia - Virtual Memory]
+reserved spaces inside the memory (virtual memory pages) which are typically 4kb in size [Wikipedia - Virtual Memory](http://en.wikipedia.org/wiki/Virtual_memory).
 
-The translation of the adresses to the physical location is made on the fly by a special coprocessor called
-[http://en.wikipedia.org/wiki/Memory_management_unit Memory Mamagement Unit (MMU)].
+The translation of the adresses to the physical location is made on the fly by a special coprocessor called [Memory Mamagement Unit (MMU)](http://en.wikipedia.org/wiki/Memory_management_unit).
 
 The OS binds these VMP to a process. Unless explicitly stated, no other process is allowed
 to read out this memory.
@@ -489,13 +494,13 @@ to read out this memory.
 So how do whe memory pages look like that we got for our sweet little program?
 Linux helps us with that. We first run the program inside the debugger in order to have it in the memory.
 
-    gdb a.out
+    $ gdb a.out
     (gdb) b main
     (gdb) r
 
 Then we open another terminal and type (cf. [http://linux.die.net/man/5/proc man proc])
 
-    cat /proc/`pgrep a.out`/maps
+    $ cat /proc/`pgrep a.out`/maps
 
 and get:
 
@@ -520,7 +525,7 @@ and get:
 
 An better readble version is produced by
 
-    cat /proc/`pgrep a.out`/smaps
+    $ cat /proc/`pgrep a.out`/smaps
 
 but uses up too much space to reproduce it here.  We need to compare
 this to the output of the segmet view:
@@ -572,6 +577,7 @@ which has its own VM page:
 
 
 ### Inspecting the memory
+
 We can use the GNU debugger to look inside these memory locations!
 Lets first display the beginning of the first memory page starting at 0x400000:
 
