@@ -37,12 +37,12 @@ but can use application specific passwords:
 
 2. Store it an a json file (do not check it into version control) e.g. using
 
-    $ cat <<EOF > GoogleAppPw.json
-    > {
-    >    "email" : "<put your email here>", 
-    >    "password" : "<put generated password here>"
-    > }
-    > EOF
+       $ cat <<EOF > GoogleAppPw.json
+       {
+          "email" : "<put your email here>",
+          "password" : "<put generated password here>"
+       }
+       EOF
 
 We can read the password from a python script as follows:
 
