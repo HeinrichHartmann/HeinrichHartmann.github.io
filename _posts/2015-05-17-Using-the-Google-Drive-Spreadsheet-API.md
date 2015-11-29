@@ -2,6 +2,10 @@
     
 <!--# Using the Google Spreadsheets Python API -->
 
+Update 2015-11-29: The described authentification method has been
+[depredated](https://developers.google.com/gdata/docs/auth/clientlogin). Thx
+to m@ for pointing this out.
+
 In this note we will receive and send rows to a Google Spreadsheet.
 
 [Google Spreadsheets](https://www.google.com/sheets/about/) is a great
@@ -18,6 +22,7 @@ power brings a lot of complexity, in particular to the
 authentification process, that makes the documentation hard to
 understand. This note walks you through a simple data access example,
 while avoiding a lot of this complexity.
+
 
 ##Step 1: Install gdata Library
 
