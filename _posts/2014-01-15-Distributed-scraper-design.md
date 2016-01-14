@@ -1,3 +1,8 @@
+---
+author: "Heinrich Hartmann"
+layout: "post"
+---
+
 <!-- # Distributed Scraper Design -->
 
 We are am confronted with the following situation:

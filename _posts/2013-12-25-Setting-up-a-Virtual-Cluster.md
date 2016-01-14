@@ -1,3 +1,8 @@
+---
+author: "Heinrich Hartmann"
+layout: "post"
+---
+
 <!-- # Virtual Cluster -->
 
 When playing around with distributed technologies like hadoop or

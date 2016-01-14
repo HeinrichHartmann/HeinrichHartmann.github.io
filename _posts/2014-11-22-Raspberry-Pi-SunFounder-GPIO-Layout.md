@@ -1,3 +1,8 @@
+---
+author: "Heinrich Hartmann"
+layout: "post"
+---
+
 <!-- # Raspberry Pi SunFounder GPIO Layout -->
 
 I have recently bought a [Raspberry Pi](http://www.raspberrypi.org/)

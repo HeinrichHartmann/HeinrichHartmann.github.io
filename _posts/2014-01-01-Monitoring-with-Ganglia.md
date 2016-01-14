@@ -1,3 +1,8 @@
+---
+author: "Heinrich Hartmann"
+layout: "post"
+---
+
 <!-- # Ganglia -->
 
 In this note we are going to install the Ganglia monitoring system on

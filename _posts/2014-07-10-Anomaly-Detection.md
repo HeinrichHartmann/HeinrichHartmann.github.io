@@ -1,3 +1,8 @@
+---
+author: "Heinrich Hartmann"
+layout: "post"
+---
+
 <script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS_HTML" type="text/javascript"></script>
 <style> .center { margin-right: auto; margin-left:auto; display: block } </style>
 <style src="/css/coderay.css"></style>

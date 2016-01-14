@@ -1,3 +1,8 @@
+---
+author: "Heinrich Hartmann"
+layout: "post"
+---
+
 <!-- EMACS PREAMBLE: -->
 <!-- (global-set-key (kbd "C-c C-e") 'ess-eval-paragraph) -->
 

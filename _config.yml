@@ -1,5 +1,5 @@
 name: "Heinrich Hartmann's Blog"
-description: "I blog about mathematics, statistics and tinkering."
+description: "A blog about mathematics, statistics and tinkering."
 url: "http://heinrichhartmann.com"
 
 # markdown: rdiscount
@@ -10,7 +10,7 @@ defaults:
   -
     scope:
       path: "" # an empty string here means all files in the project
-      type: "post"
+      type: "posts"
     values:
       author: "Heinrich Hartmann"
       layout: "post"

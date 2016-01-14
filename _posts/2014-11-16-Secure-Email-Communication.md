@@ -1,3 +1,8 @@
+---
+author: "Heinrich Hartmann"
+layout: "post"
+---
+
 <!-- # Secure Email Communication -->
 
 This note explains how to write and receive private email messages.

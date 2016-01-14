@@ -34,5 +34,5 @@ In past projects I have been using the following technologies.
 
 # Clients
 
-* [Circonus, inc.](http://www.circonus.com/) - Monotoring and Analytics platform for server telemetry data.  
+* [Circonus, inc.](http://www.circonus.com/) - Monotoring and Analytics platform for server telemetry data.
   Talks about the collaboration by [Theo Schlossnagle](https://twitter.com/postwait) on [Velocity 2014](http://velocityconf.com/velocityeu2014/public/schedule/speaker/4103) in Barcelona, [Goto 2014](http://gotocon.com/berlin-2014/presentation/Applying%20Quantitative%20Analysis%20to%20Large-Scale%20Operations) in Berlin and [USENIX - Lisa14](https://www.usenix.org/conference/lisa14/conference-program/presentation/schlossnagle) in Seattle.

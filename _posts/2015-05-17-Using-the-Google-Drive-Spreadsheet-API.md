@@ -1,3 +1,8 @@
+---
+author: "Heinrich Hartmann"
+layout: "post"
+---
+
 <style> .center { margin-right: auto; margin-left:auto; display: block; max-width:600px } </style>
     
 <!--# Using the Google Spreadsheets Python API -->

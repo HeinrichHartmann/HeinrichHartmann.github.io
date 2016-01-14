@@ -1,3 +1,8 @@
+---
+author: "Heinrich Hartmann"
+layout: "post"
+---
+
 <!-- # Sensor Monitoring with RaspberryPi and Circonus -->
 
 The [RaspberryPi](http://www.raspberrypi.org) mini-computer can be

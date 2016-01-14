@@ -1,3 +1,8 @@
+---
+author: "Heinrich Hartmann"
+layout: "post"
+---
+
 <!-- # Dissecting Hello World -->
 
 This note is part of an effort to understand how a PC works. What
