@@ -4,7 +4,7 @@ url: "http://heinrichhartmann.com"
 
 # markdown: rdiscount
 markdown: kramdown
-highlighter: pygments
+# highlighter: rouge
 
 defaults:
   -
