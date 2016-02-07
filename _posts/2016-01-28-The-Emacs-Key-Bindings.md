@@ -26,10 +26,22 @@ my personal preference.
 This post started as a private exercise while reading the Emacs
 documentation on a flight (without internet access). The aim is to get
 a firm grip around the default key bindings, that are available the
-packaged Emacs versions. There is an argument to be made, that
-/customization is bad/ since it's too easy to invest too much time
-into fiddling around with it. Why do you think, you end up with better
-usability, than the default?
+packaged Emacs versions.
+
+There is an argument to be made, that customization is dangerous.
+It's too easy to invest too much time into fiddling around with
+it, and end up with overall worse usability!
+
+It is sometimes misused, to avoid learning new workflows and
+keybindings. "I already have my way of doing this, I want emacs to
+behave the same". This might work at the beginning, but youare digging
+yourself a hole. There are just too many commands to change, and if
+you include external plugins and extensions, conflicts are inevitable.
+
+Also, if you are using remote machines, you are often confronted with
+plain installations, and copying over configurations and re-installing
+extensions is often difficult or plainly impossible (e.g. when working
+with a differnt OS).
 
 It's interesting to see which patterns the creators of Emacs choose for
 their bindings. There are a few themes that emerge: E.g.
