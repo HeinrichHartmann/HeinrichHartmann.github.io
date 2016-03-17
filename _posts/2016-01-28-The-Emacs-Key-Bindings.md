@@ -131,17 +131,21 @@ you want to learn more about those concepts get on a plane and press
 
    `M-<`    beginning-of-buffer  This also sets mark where left off
    `M->`    end-of-buffer
-   `M-}`    forward-paragraph    Why not M-n ??
-   `M-{`    backward-paragraph   Why not M-p ??
+   `M-}`    forward-paragraph    Why not `M-n` ?
+   `M-{`    backward-paragraph   Why not `M-p` ?
    `C-x [`  backward-page        The concept of a pages is rather arcane.
    `C-x ]`  forward-page         I don't use these.
 
+  Update 2016-03-17: It turns out, that `M-p` and `M-n` are frequently
+  used by other modes. E.g. shell-mode has `M-p/-n` bound to
+  `previous-history` / `next-history`, in org-mode it can be used to
+  move a subtree up or down.
 
 * 1.1.2.3 Smart Cursor Positioning
 
-   `M-m`      back-to-indentation             Use this instead of C-n to
-                                              move through source code
-   `M-r`      move-to-window-line-top-bottom  This is a counterpart to C-l
+   `M-m`      back-to-indentation             Use this instead of `C-n` to
+                                              move through source code.
+   `M-r`      move-to-window-line-top-bottom  This is a counterpart to `C-l`
    `C-M-l`    reposition-window               Careful with logout in gnome.
    `C-x C-n`  set-goal-column                 Change the default column
                                               that `C-n`,`C-p` jump to.
@@ -156,7 +160,7 @@ you want to learn more about those concepts get on a plane and press
 
    When editing source code, the following commands are available:
 
-   `C-x ``    next-error
+   `C-x \``    next-error
    `M-g n`    next-error
    `M-g M-n`  next-error
    `M-g p`    previous-error
@@ -430,11 +434,11 @@ Alternatives for e.g. international keyboards:
 1.2.6 Abbreviations
 -------------------
 
-   ~C-x '~      expand-abbrev
-   ~M-'~        abbrev-prefix-mark
+   `C-x '`      expand-abbrev
+   `M-'`        abbrev-prefix-mark
    `M-/`        dabbrev-expand
    `C-M-/`      dabbrev-completion
-   ~C-x a '~    expand-abbrev
+   `C-x a '`    expand-abbrev
    `C-x a C-a`  add-mode-abbrev
    `C-x a +`    add-mode-abbrev
    `C-x a g`    add-global-abbrev
@@ -452,7 +456,7 @@ Alternatives for e.g. international keyboards:
 ----------
 
    `M-*`    pop-tag-mark
-   ~M-,~    tags-loop-continue
+   `M-,`    tags-loop-continue
    `M-.`    find-tag
    `C-M-.`  find-tag-regexp
 
