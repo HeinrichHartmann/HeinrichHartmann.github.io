@@ -17,7 +17,9 @@ defaults:
 
 # Figure plugin from
 # https://github.com/lmullen/jekyll_figure
-# gems: [jekyll_figure]
+gems: [ jekyll_figure ]
+#  - jekyll_figure
+#  - jekyll-redirect-from
 
 figures:
   dir: /assets
