@@ -1,16 +1,16 @@
 ---
 author: "Heinrich Hartmann"
 layout: "post"
-~---
+---
 
 <script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS_HTML" type="text/javascript"></script>
 <style> .center { margin-right: auto; margin-left:auto; display: block } </style>
 <style src="/css/coderay.css"></style>
 
-I was reading Tanenbaum's paper [1] today, which contains an algorithm
-for calculating prime s attributed to E.W. Dijkstra [2].  The
-algorithm was given as an example for a special purpose language SAL.
-Here is a literal translation of this algorithm to lua.
+I was reading Tanenbaum's paper [1] lately, which contains an
+algorithm for calculating prime s attributed to E.W. Dijkstra [2].
+The algorithm was given as an example for a special purpose language
+SAL.  Here is a literal translation of this algorithm to lua:
 
 {% highlight lua %}
 local N = 100
@@ -52,9 +52,12 @@ By running this program, you can quickly verify that it produces a a
 list of the firs 100 prime numbers. (The 100th prime number is `541`,
 who would have thought?).
 
-What is remarkable about this algoirthm is that no divisions are used, at all!
+What is remarkable about this algoirthm it uses no divisions, only a
+very innocent looking check for inequality `PRIM = X ~= V[K]`, is
+performed to single out divisible numbers.
 
-Only a very innocent looking check for inequality `PRIM = X ~= V[K]`.
+While this certainly sparked my curiosity, I was at a first glance not
+able to make sense out of this algorithm.
 
 ## A refactored version
 
@@ -62,46 +65,30 @@ I spend some time, refactoring this algorithm, to make it more
 ideomatric and see what's going on. The result is the following
 listing:
 
-{% highlight lua %}
-function primes(N)
-  local P, Q, x, limit = {2}, {}, 1, 4
-  local is_prime = function()
-    for k = 2, #Q do
-      if x > Q[k] then Q[k] = Q[k] + P[k] end
-      if x == Q[k] then return false end
-    end
-    return true
-  end
-  while #P < N do
-    repeat
-      x = x + 2
-      if x >= limit then
-        Q[#Q+1], limit = limit, P[#Q+2]^2
-      end
-    until is_prime()
-    P[#P+1] = x
-  end
-  return P
-end
-{% endhighlight %}
+{% figure Dijkstra_files/typed png 'A  refactored version of Dijkstras prime number algorithm' %}
 
-By looking at the
+Aside: As you can see, this algorithm also served as the perfect
+material for testing out my shiny old "Triumph Durabel" typewriter,
+from the 1940ies.
+
+If you don't like typewriters, you can have a look a the code on
+[Github](https://github.com/HeinrichHartmann/DijkstraPrimes/blob/master/Primes.lua).
+The
 [commit history](https://github.com/HeinrichHartmann/DijkstraPrimes/commits/master),
-you see that Listing 1 can be transformed into this here in 14 simple,
-equivalence transformations ('refactorings').
+shows how you can arrive at this refactored version in 14 simple
+transformations, that did not change the results of the computation,
+such as:
 
-Notable changes are:
-
-- The names of most variables are changed.
-- We don't use print statments for output, but return a table.
-- The iteration indices `I` and `K` could be avoided, by using the `#`-operator, to get the table lenght.
-- The boolean flag `PRIM`, could be avoided, by introducing a function  `is_prime` that calculates and returns that flag.
+- Change variable names
+- Don't use print statements for output, but return a table.
+- Remove iteration indices `I` and `K` by using the `#`-operator, to get the table size.
+- Introduce the a function `is_prime` that calculates and returns the `PRIM` flag.
 
 While making these changes the logic of the calculation became more
 apparent to me.  I hope that others might find this version also
 easier to read.
 
-## Why does it work?
+## How does it work?
 
 So, what goes into the workings of this algorithm?
 
@@ -116,43 +103,54 @@ To check, that `x` is prime, we have to check that no number `d` with
 $$1 < d < x$$ divides `x` (i.e. $$d | x$$).  The following reductions
 are well known:
 
-- It suffices to check the case `d` is a prime number. (Since, then x
-  is also divided by all take a prime divisor of d.)
-- It suffices to check numbers $$d \leq \sqrt{x}$$. (When $$x = d e$$ then
-  either `d` or `e` are less or equal to $$\sqrt{x}$$.)
+- It suffices to check the case `d` is a prime number.
+- It suffices to check numbers $$d \leq \sqrt{x}$$.
 
-Let `q` be the smallest prime number such that $$\sqrt{x} < q$$. We call
-`q` the limit prime, and set `limit = q^2`.
+We call the smallest prime number, that we don't have to check the
+'limit prime' `q` and set $$limit = q^2$$.  Clearly `q` be the first
+prime number such that $$\sqrt{x} < q$$.
 
-We have `q < x` (?? since otherwise `q = x` or `q > x`), hence we can
-ind `q` in our table of already computed prime numbers: `P[q_idx] = q`.
+It turns out, that the limit prime is always smaller than `x`, and
+hence we can ind `q` in our table of already computed prime numbers:
+`P[q_idx] = q`. (I was not able to find a simple proof of this
+statement, but it seems to follow from
+[Bertrand's postulate](https://www.wikiwand.com/en/Bertrand's_postulate)
+quite easily.)
 
-The table `Q` maintains a list of multiples of the primes in `P`,
+Now, the table `Q` maintains a list of multiples of the primes in `P`,
 which are close to `x`:
 
 - We want `Q[k]` to be the smallest multiple of `P[k]` so that `x <=
-  Q[k]`.  If the condition is checked and maintained in the line: `if
-  x > Q[k] then Q[k] = Q[k] + P[k] end`.  `Q` is kept up to date with
-  every candidate number `x` so we need to add `P[k]` at most once in
-  this step.
+  Q[k]`.  If the condition is checked and maintained in the line:
+
+      if x > Q[k] then Q[k] = Q[k] + P[k] end
+
+  `Q` is kept up to date with every candidate number `x` so we need to
+  add `P[k]` at most once in this step.
 
 - The largest prime we need to check is the one before the limit prime
-  `q`, with index `P[q_idx - 1]`.  Q only stores values up to that
+  `q`, with index `P[q_idx-1]`. `Q` only stores values up to that
   index.
 
+This concludes the explanation. All in all it's a quite nice mix
+between the Erathosenes Sieve (that would maintain a list of all
+integers up to x), and a naive test of divisibility by primes, up to
+$$\sqrt{x}$$. Figure 2 contains my humble attempt to visualize the
+algorithm for the first view prime numbers.
 
-## A statically type'd version
+{% figure Dijkstra_files/visualization_2 png 'A manual visualization of the algorithm' %}
 
-This algorithm also served as the perfect material for testing out my
-shiny old "Triumph Durabel" type writer. Here is how it looks 1940'ies
-style:
+The algorithm is also quite memory efficient. In addition to the list
+of primes, we only store one integer for each prime up to
+$$\sqrt{x}$$.  There are approximately $$x/ln(x)$$ primes smaller than
+$$x$$ (cf. [Prime-number-theorem](https://www.wikiwand.com/en/Prime_number_theorem)).
+Hence the asymptotic memory requirements are:
 
-![png](/assets/Dijkstra_files/typed.png){: .center }
+$$ \frac{x}{ln(x)} + \frac{\sqrt{x}}{ln(\sqrt{x})} = \frac{x + 2 \sqrt{x}}{ln(x)} \sim \frac{x}{ln(x)}.$$
 
-For some reason lua code looks quite appealing when typed down on
-paper.
+Which is the asymptotic size of the result set.
 
 ## REFERENCES
 
-1. A.S. Tanenbaum - General-Purose Macro Processor as a Poor Man's Compiler-Compiler, IEEE TOSE, Sol.SE-2, No.2, JUNE 1976
-2. E.W. Dijkstra - Structured Programming
+1. A.S. Tanenbaum - General-Purose Macro Processor as a Poor Man's Compiler-Compiler, [IEEE TOSE, Sol.SE-2, No.2, JUNE 1976](http://ieeexplore.ieee.org/xpl/login.jsp?tp=&arnumber=1702350&url=http%3A%2F%2Fieeexplore.ieee.org%2Fxpls%2Fabs_all.jsp%3Farnumber%3D1702350)
+2. E.W. Dijkstra - Notes on Structured Programming ([pdf](https://www.cs.utexas.edu/users/EWD/ewd02xx/EWD249.PDF))
