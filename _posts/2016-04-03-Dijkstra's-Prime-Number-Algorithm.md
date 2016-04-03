@@ -52,18 +52,18 @@ By running this program, you can quickly verify that it produces a a
 list of the firs 100 prime numbers. (The 100th prime number is `541`,
 who would have thought?).
 
-What is remarkable about this algoirthm it uses no divisions, only a
-very innocent looking check for inequality `PRIM = X ~= V[K]`, is
-performed to single out divisible numbers.
+What is remarkable about this algoirthm it uses no divisions at all!
+Just a very innocent looking check for inequality `PRIM = X ~= V[K]`
+is performed to single out divisible numbers.
 
-While this certainly sparked my curiosity, I was at a first glance not
-able to make sense out of this algorithm.
+This certainly sparked my curiosity. However, at first glance, I was
+not able to make much sense out of this algorithm!
 
 ## A refactored version
 
-I spend some time, refactoring this algorithm, to make it more
-ideomatric and see what's going on. The result is the following
-listing:
+Let's see if we can make this rather acrane program more readable by
+refactoring it into a form that is more 'modern' ideomatric and
+easier to comprehend. The result is the following listing:
 
 {% figure Dijkstra_files/typed png 'A  refactored version of Dijkstras prime number algorithm' %}
 
