@@ -137,9 +137,10 @@ you want to learn more about those concepts get on a plane and press
    `C-x ]`  forward-page         I don't use these.
 
   Update 2016-03-17: It turns out, that `M-p` and `M-n` are frequently
-  used by other modes. E.g. shell-mode has `M-p/-n` bound to
-  `previous-history` / `next-history`, in org-mode it can be used to
-  move a subtree up or down.
+  used by other modes. E.g. in the buffer finder, file finder and
+  shell-mode has `M-p/-n` bound to `previous-history` /
+  `next-history`, in org-mode it can be used to move a subtree up or
+  down.
 
 * 1.1.2.3 Smart Cursor Positioning
 
