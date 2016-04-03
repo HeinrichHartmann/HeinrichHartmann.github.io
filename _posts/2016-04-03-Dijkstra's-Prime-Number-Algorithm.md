@@ -8,7 +8,7 @@ layout: "post"
 <style src="/css/coderay.css"></style>
 
 I was reading Tanenbaum's paper [1] lately, which contains an
-algorithm for calculating prime s attributed to E.W. Dijkstra [2].
+algorithm for calculating prime numbers attributed to E.W. Dijkstra [2].
 The algorithm was given as an example for a special purpose language
 SAL.  Here is a literal translation of this algorithm to lua:
 
