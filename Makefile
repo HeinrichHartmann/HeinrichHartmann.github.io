@@ -1,6 +1,6 @@
 # was ./jekyll-run
 serve:
-	bundle exec jekyll serve -w
+	bundle exec jekyll serve -w --drafts
 
 # was ./jekyll-update
 update:
