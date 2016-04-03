@@ -1,5 +1,10 @@
+# was ./jekyll-run
 serve:
-	bundle exec jekyll serve
+	bundle exec jekyll serve -w
+
+# was ./jekyll-update
+update:
+	bundle update
 
 ruby-instsall:
 	sudo apt-get install ruby rubygem-integration
@@ -18,6 +23,7 @@ push: check
 	git checkout source
 	git push origin source
 
+# ./publish.sh
 publish: push build
 	echo "Pushing _site"
 	git branch -D master
