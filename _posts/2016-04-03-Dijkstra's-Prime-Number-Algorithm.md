@@ -150,6 +150,17 @@ $$ \frac{x}{ln(x)} + \frac{\sqrt{x}}{ln(\sqrt{x})} = \frac{x + 2 \sqrt{x}}{ln(x)
 
 Which is the asymptotic size of the result set.
 
+## Open Ends
+
+At some point, I'd like to translate this algorithm to a pure
+functional style, that avoids iteration and local variables and just
+relies on function arguments and recursion. I hope that in this way
+to correctness of the algorithm is easy to proof.
+
+Also the visualization has clear room for improvement. Ideally, I'd
+like to have a dynamic version of this, that updates itself as the
+algorithm moves along. This will have to wait for another post.
+
 ## REFERENCES
 
 1. A.S. Tanenbaum - General-Purose Macro Processor as a Poor Man's Compiler-Compiler, [IEEE TOSE, Sol.SE-2, No.2, JUNE 1976](http://ieeexplore.ieee.org/xpl/login.jsp?tp=&arnumber=1702350&url=http%3A%2F%2Fieeexplore.ieee.org%2Fxpls%2Fabs_all.jsp%3Farnumber%3D1702350)
