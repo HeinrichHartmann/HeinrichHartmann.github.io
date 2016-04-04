@@ -79,7 +79,7 @@ shows how you can arrive at this refactored version in 14 simple
 transformations, that did not change the results of the computation,
 such as:
 
-- Change variable names
+- Change variable names.
 - Don't use print statements for output, but return a table.
 - Remove iteration indices `I` and `K` by using the `#`-operator, to get the table size.
 - Introduce the a function `is_prime` that calculates and returns the `PRIM` flag.
@@ -100,8 +100,7 @@ explicity taken care of. Within the iteration we can assume, that all
 primes `p < x` are listed in `P`.
 
 To check, that `x` is prime, we have to check that no number `d` with
-$$1 < d < x$$ divides `x` (i.e. $$d | x$$).  The following reductions
-are well known:
+$$1 < d < x$$ divides `x`.  The following reductions are well known:
 
 - It suffices to check the case `d` is a prime number.
 - It suffices to check numbers $$d \leq \sqrt{x}$$.
