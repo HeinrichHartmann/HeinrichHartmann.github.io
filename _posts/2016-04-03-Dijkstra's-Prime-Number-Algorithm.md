@@ -110,7 +110,7 @@ We call the smallest prime number, that we don't have to check the
 smallest prime number such that $$\sqrt{x} < q$$.
 
 It turns out, that the limit prime `q` is always smaller than `x`, and
-hence we can ind `q` in our table of already computed prime numbers:
+hence we can find `q` in our table of already computed prime numbers:
 `P[q_idx] = q`. (I was not able to find a simple proof of this
 assertion, but it follows from
 [Bertrand's postulate](https://www.wikiwand.com/en/Bertrand's_postulate)
