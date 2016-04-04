@@ -107,13 +107,13 @@ are well known:
 - It suffices to check numbers $$d \leq \sqrt{x}$$.
 
 We call the smallest prime number, that we don't have to check the
-'limit prime' `q` and set $$limit = q^2$$.  Clearly `q` be the first
-prime number such that $$\sqrt{x} < q$$.
+'limit prime' `q` and set $$limit = q^2$$.  Clearly `q` be the
+smallest prime number such that $$\sqrt{x} < q$$.
 
-It turns out, that the limit prime is always smaller than `x`, and
+It turns out, that the limit prime `q` is always smaller than `x`, and
 hence we can ind `q` in our table of already computed prime numbers:
 `P[q_idx] = q`. (I was not able to find a simple proof of this
-statement, but it seems to follow from
+assertion, but it follows from
 [Bertrand's postulate](https://www.wikiwand.com/en/Bertrand's_postulate)
 quite easily.)
 
@@ -132,11 +132,15 @@ which are close to `x`:
   `q`, with index `P[q_idx-1]`. `Q` only stores values up to that
   index.
 
-This concludes the explanation. All in all it's a quite nice mix
-between the Erathosenes Sieve (that would maintain a list of all
-integers up to x), and a naive test of divisibility by primes, up to
-$$\sqrt{x}$$. Figure 2 contains my humble attempt to visualize the
-algorithm for the first view prime numbers.
+Hence, by comparing `x` to `Q[k]` for equality we can can check if
+`P[k]` divides `x`. Doing this for `k = 2..#Q`, gives a sufficient
+condition for `x` being prime, according to the remarks above.
+
+All in all, this algorithm is an interesting mix between the
+Erathosenes Sieve (that would maintain a list of all integers up to
+x), and a naive test of divisibility by primes, up to
+$$\sqrt{x}$$. Figure 2 contains my humble attempt to visualize (some
+aspects of) the algorithm for the first few prime numbers.
 
 {% figure Dijkstra_files/visualization_2 png 'A manual visualization of the algorithm' %}
 
