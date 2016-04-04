@@ -8,9 +8,14 @@ layout: "post"
 <style src="/css/coderay.css"></style>
 
 I was reading Tanenbaum's paper [1] lately, which contains an
-algorithm for calculating prime numbers attributed to E.W. Dijkstra [2].
+algorithm for calculating prime numbers attributed to E.W. Dijkstra
+[2].  What is remarkable about this algoirthm it uses no divisions at
+all!  Just a very innocent looking check for inequality is performed
+to single out divisible numbers.
+
 The algorithm was given as an example for a special purpose language
-SAL.  Here is a literal translation of this algorithm to lua:
+SAL.  Here is a literal translation of this algorithm to lua, in it's
+full glory:
 
 {% highlight lua %}
 local N = 100
@@ -51,13 +56,8 @@ PRIME()
 By running this program, you can quickly verify that it produces a a
 list of the firs 100 prime numbers. (The 100th prime number is `541`,
 who would have thought?).
-
-What is remarkable about this algoirthm it uses no divisions at all!
-Just a very innocent looking check for inequality `PRIM = X ~= V[K]`
-is performed to single out divisible numbers.
-
-This certainly sparked my curiosity. However, at first glance, I was
-not able to make much sense out of this algorithm!
+But even after looking at the algorithm for a while, I was not quite
+able to make sense out of it. Can you?
 
 ## A refactored version
 
