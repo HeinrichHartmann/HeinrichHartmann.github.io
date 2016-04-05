@@ -15,7 +15,7 @@ is performed to single out divisible numbers.
 
 The algorithm was given as an example for a special purpose language
 SAL.  Here is a literal translation of this algorithm to
-[lua](https://www.lua.org/), in it's full glory:
+[lua](https://www.lua.org/), in its full glory:
 
 {% highlight lua %}
 local N = 100
@@ -62,7 +62,7 @@ able to make sense out of it. Can you?
 ## A refactored version
 
 Let's see if we can make this rather acrane program more readable by
-refactoring it into a form that is more 'modern' ideomatric and
+refactoring it into a form that is more 'modern' idiomatic and
 easier to comprehend. The result is the following listing:
 
 {% figure Dijkstra_files/typed png 'A  refactored version of Dijkstras prime number algorithm' %}
