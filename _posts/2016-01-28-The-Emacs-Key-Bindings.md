@@ -28,31 +28,33 @@ documentation on a flight (without internet access). The aim is to get
 a firm grip around the default key bindings, that are available the
 packaged Emacs versions.
 
-There is an argument to be made, that customization is dangerous.
-It's too easy to invest too much time into fiddling around with
-it, and end up with overall worse usability!
+On the way I discovered quite a few nifty bindings, that I was not
+aware of before, and started using since then. They are marked with an
+'awesome'-tag on the left fringe, of-course ony reflects my personal            *AWESOME*
+oppionion. In addition, the following markers are used in the comments:
 
-It is sometimes misused, to avoid learning new workflows and
-keybindings. "I already have my way of doing this, I want emacs to
-behave the same". This might work at the beginning, but youare digging
-yourself a hole. There are just too many commands to change, and if
-you include external plugins and extensions, conflicts are inevitable.
+- !, !!, !!! --  Bindings I use often
+- #          --  Bindings I have never used. (Not always annotated)
+- ?, ??, ??? --  Bindings I find confusing ... really stupid.
 
-Also, if you are using remote machines, you are often confronted with
-plain installations, and copying over configurations and re-installing
-extensions is often difficult or plainly impossible (e.g. when working
-with a differnt OS).
+Try searching for `!???` to see major pain-points.
 
-It's interesting to see which patterns the creators of Emacs choose for
-their bindings. There are a few themes that emerge: E.g.
+/Customization is bad/.  There is an argument to be made, that
+customization is dangerous.  It's too easy to invest too much time
+into fiddling around with it, and end up with overall worse usability!
 
-    `C-x <prefix> <character>`
+Also, configuration is sometimes misused, to avoid learning new
+workflows and keybindings. "I already have my way of doing this, I
+want emacs to behave the same". This might work at the beginning, but
+youare digging yourself a hole. There are just too many commands to
+change, and if you include external plugins and extensions, conflicts
+are inevitable. Yes. I have been there.
 
-to group commands that affect entities like frames or registers, or
-keeping a single character and vary the meta keys (e.g. `C-k`
-kill-line, `M-k` kill-sentence, `C-M-k` kill-sexp).  Awareness of
-these patterns allows easier recollection and gives a guideline of how
-to choose bindings for you own modes, or customizations.
+By avoiding configuration you get another bonus, that, if you are
+using remote machines, that come with a plain emacs
+installation. Copying configurations and reinstalling packages is
+often problematic, and not really worth it if you are just editing
+some config files.
 
 /Completeness is good/. Only after reading the whole list of
 keybindings, you can be sure, not to have missed that super-useful
@@ -62,10 +64,16 @@ aware of. Even if you do not remember all the bindings, knowing about
 the feature will allow you to lookup the binding in the help menu or
 type in the function name into the `M-x` command input.
 
-Note, that this is not an introduction to Emacs. Familiarity with
-Emacs concepts like windows, buffers and the kill-ring is assumed. If
-you want to learn more about those concepts get on a plane and press
-`C-h r`.
+PS: Sorry, for making this an ASCII post. After fiddeling with HTML
+tables for too long, I went for the plaint text version.
+
+PPS: The best way to read this post is, of course, in emacs:
+- `M-x eww` open browser and load `heinrichhartmann.com`
+- navigate to this blog post
+- Read the post and try things out as you move along.
+- To get more information about a function move the cursor to the
+  function name, and press `C-h f`.
+
 
 1 Standard Global Keybindings
 =============================
@@ -83,10 +91,10 @@ you want to learn more about those concepts get on a plane and press
    Key      Lisp function        Comment
   -----------------------------------------------------------------------
    `C-l`    recenter-top-bottom  Move cursor to center -> top -> bottom.
-   `C-v`    scroll-up-command
-   `M-v`    scroll-down-command  OMG. This is so bad!
-   `C-x <`  scroll-left          I have never used this.
-   `C-x >`  scroll-right         I have never used this.
+   `C-v`    scroll-up-command    !?
+   `M-v`    scroll-down-command  !??? This is so bad.
+   `C-x <`  scroll-left          # I have never used this.
+   `C-x >`  scroll-right         # I have never used this.
 
 1.1.2 Cursor Movement
 ---------------------
@@ -119,22 +127,22 @@ you want to learn more about those concepts get on a plane and press
 
 * 1.1.2.2 Vertical Movement
 
-   `C-n`    next-line         ?
-   `C-p`    previous-line     ?
-   `C-M-n`  forward-list
-   `C-M-p`  backward-list
-   `C-M-d`  down-list         Never used this
-   `C-M-u`  backward-up-list  Never used this
+   `C-n`    next-line         ??
+   `C-p`    previous-line     ??
+   `C-M-n`  forward-list      # for code (LISP) editing
+   `C-M-p`  backward-list     #
+   `C-M-d`  down-list         # for code (LISP) editing
+   `C-M-u`  backward-up-list  #
 
   So, why is M-n/p not bound at all? It seems quite natural to bind
   forward/backward paragraph on those keys.
 
-   `M-<`    beginning-of-buffer  This also sets mark where left off
+   `M-<`    beginning-of-buffer  ! This also sets mark where left off
    `M->`    end-of-buffer
    `M-}`    forward-paragraph    Why not `M-n` ?
    `M-{`    backward-paragraph   Why not `M-p` ?
-   `C-x [`  backward-page        The concept of a pages is rather arcane.
-   `C-x ]`  forward-page         I don't use these.
+   `C-x [`  backward-page        # The concept of a pages is rather arcane.
+   `C-x ]`  forward-page         # I don't use these.
 
   Update 2016-03-17: It turns out, that `M-p` and `M-n` are frequently
   used by other modes. E.g. in the buffer finder, file finder and
@@ -151,17 +159,20 @@ you want to learn more about those concepts get on a plane and press
    `C-x C-n`  set-goal-column                 Change the default column
                                               that `C-n`,`C-p` jump to.
 
+   I never used these controls. Some modes are overwriting the `C-n`,
+   `C-p` and RET to automatically indent. This seems to be better,
+   than using these semi-generic keybindings.
 
 * 1.1.2.4 Goto Commands
 
    `M-g g`    goto-line
-   `M-g M-g`  goto-line       Better tempo then M-g g
-   `M-g TAB`  move-to-column
+   `M-g M-g`  goto-line       !! Better tempo then M-g g
+   `M-g TAB`  move-to-column  # maybe useful in kbd-macros.
    `M-g c`    goto-char       counted from the beginning of the buffer
 
    When editing source code, the following commands are available:
 
-   `C-x \``    next-error
+   `C-x \``   next-error
    `M-g n`    next-error
    `M-g M-n`  next-error
    `M-g p`    previous-error
@@ -173,16 +184,19 @@ you want to learn more about those concepts get on a plane and press
 
   Incremental search is a very powerful movement method.
 
-   `C-s`    isearch-forward
+   `C-s`    isearch-forward             !!!
    `C-r`    isearch-backward
    `C-M-s`  isearch-forward-regexp
    `C-M-r`  isearch-backward-regexp
-   `M-%`    query-replace            awkward binding!
-   `C-M-%`  query-replace-regexp
+   `M-%`    query-replace               !??? awkward binding!
+   `C-M-%`  query-replace-regexp        #??? Even `M-x query-repl..` seems
+                                        better than that.
 
    `M-s .`  isearch-forward-symbol-at-point
    `M-s _`  isearch-forward-symbol
    `M-s w`  isearch-forward-word
+
+   `M-s o`  occur                        Filter contents of buffer         *AWESOME*
 
 
 1.1.4 Kill/Yank
@@ -195,17 +209,16 @@ you want to learn more about those concepts get on a plane and press
   arguments: `M--` or `C-u 4`.
 
    `M-d`      kill-word
-   `C-k`      kill-line
+   `C-k`      kill-line          !!!
    `M-k`      kill-sentence
    `C-M-k`    kill-sexp
    `C-x k`    kill-buffer
-   `C-w`      kill-region      The equivalent of cut
+   `C-w`      kill-region        The equivalent of cut
    `C-x r k`  kill-rectangle
 
-  Kill up to the (N-th) occurrence of char never used this.
+  Kill/copy/mark up to the (N-th) occurrence of char:
 
-    `M-z`  zap-to-char
-
+   `M-z`  zap-to-char                                                      *AWESOME*
 
 * 1.1.4.1 Backspace/Delete Combos
 
@@ -226,12 +239,11 @@ you want to learn more about those concepts get on a plane and press
    `M-w`        kill-ring-save            The equivalent of copy
    `C-x r M-w`  copy-rectangle-as-kill
 
-
 * 1.1.4.3 Kill Append
 
   Append to current kill-ring-entry:
-   `C-M-w`  append-next-kill
 
+   `C-M-w`  append-next-kill                                               *AWESOME*
 
 * 1.1.4.4 Yanking
 
@@ -263,7 +275,7 @@ you want to learn more about those concepts get on a plane and press
 ----------
 
    `C-/`    undo
-   `C-x u`  undo keyboards  # useful on international
+   `C-x u`  undo keyboards         useful on international keyboards
    `C-_`    undo
 
 
@@ -282,11 +294,11 @@ you want to learn more about those concepts get on a plane and press
 1.2 Advanced Editing
 ~~~~~~~~~~~~~~~~~~~~
 
-   `M-SPC`    just-one-space                delete additional white-space
-                                            between words. Unbind this in
-                                            the window manager.
-   `M-\`      delete-horizontal-space       delete all spaces and tabs around
-                                            point. Surprisingly helpful!
+   `M-SPC`    just-one-space             delete additional white-space     *AWESOME*
+                                         between words. Unbind this in
+                                         the window manager.
+   `M-\`      delete-horizontal-space    delete all spaces and tabs        *AWESOME*
+                                         around point.
    `M-(`      insert-parentheses
    `C-M-o`    split-line
    `C-x C-o`  delete-blank-lines
@@ -296,22 +308,22 @@ you want to learn more about those concepts get on a plane and press
 * 1.2.0.1 Indent
 
    `C-M-\`    indent-region
-   `C-x TAB`  indent-rigidly      interactive! with (S-) arrow keys. New for me!
+   `C-x TAB`  indent-rigidly      interactive! with (S-) arrow keys.       *AWESOME*
    `M-^`      delete-indentation  join line at point with predecessor
 
 
 * 1.2.0.2 Up- & down-case
 
-   `M-c`      capitalize-word  Operate on current word. Use with prefix arguments.
-   `M-u`      upcase-word      E.g. M-- M-5 M-u : upcase 5 preceding words.
+   `M-c`      capitalize-word  Operate on current word. Use with
+                               prefix arguments: E.g. M-- M-5 M-u
+   `M-u`      upcase-word
    `M-l`      downcase-word
    `C-x C-l`  downcase-region
    `C-x C-u`  upcase-region
 
-
 * 1.2.0.3 Filling
 
-   `M-q`      fill-paragraph           use C-u M-q to justify paragraph
+   `M-q`      fill-paragraph           !! use C-u M-q to justify
    `C-x f`    set-fill-column
    `C-x .`    set-fill-prefix          fill comments or quotes
    `M-o M-s`  center-line              center within 0-fill column
@@ -324,10 +336,10 @@ you want to learn more about those concepts get on a plane and press
 
   Yes, appareny Emacs supports tab stops. Try:
 
-
-    M-x edit-tab-stops
+    M-x edit-tab-stops                                                     *AWESOME*
     M-x ruler-mode
 
+  or `M-: (setq tab-stop-list '(5 10 30))`
   and checkout the manual!
 
    `M-i`  tab-to-tab-stop  move to next tab column
@@ -339,15 +351,16 @@ you want to learn more about those concepts get on a plane and press
   Use the following bindings, to mark larger chunks of text, without
   moving the point.
 
-   `M-@`      mark-word
-   `M-h`      mark-paragraph
-   `C-M-SPC`  mark-sexp
-   `C-M-@`    mark-sexp
-   `C-M-h`    mark-defun
-   `C-x h`    mark-whole-buffer  I looked for this one for a while.
-   `C-x C-p`  mark-page
+   `M-@`        mark-word          Repeat to mark multiple words.
+   `M-h`        mark-paragraph
+   `C-M-SPC`    mark-sexp
+   `C-M-@`      mark-sexp
+   `C-M-h`      mark-defun
+   `C-x h`      mark-whole-buffer  I looked for this one for a while.      *AWESOME*
+   `C-x C-p`    mark-page
 
-   `C-SPC`      set-mark-command
+   `C-SPC`      set-mark-command         Use C-u C-SPC to walk through
+                                         local mark-ring.
    `C-x C-x`    exchange-point-and-mark
    `C-x SPC`    rectangle-mark-mode
    `C-x C-@`    pop-global-mark
@@ -361,7 +374,7 @@ you want to learn more about those concepts get on a plane and press
   contains multiple chapters.  I use this a lot with org mode, to narrow
   the scope to the current subtree (`C-s n s`).
 
-   `C-x n n`  narrow-to-region       only show the active region
+   `C-x n n`  narrow-to-region       only show the active region           *AWESOME*
    `C-x n w`  widen                  back to full buffer
    `C-x n d`  narrow-to-defun        Never used these
    `C-x n p`  narrow-to-page
@@ -383,7 +396,7 @@ Alternatives for e.g. international keyboards:
 
    `C-x C-k e`    edit-kbd-macro                        when you messed up
    `C-x C-k RET`  kmacro-edit-macro
-   `C-x C-k x`    kmacro-to-register                    Store marcro
+   `C-x C-k x`    kmacro-to-register                    Store macro.
    `C-x q`        kbd-macro-query
    `C-x C-k C-a`  kmacro-add-counter
    `C-x C-k C-c`  kmacro-set-counter
@@ -410,6 +423,8 @@ Alternatives for e.g. international keyboards:
 1.2.5 Register Commands
 -----------------------
 
+I am not using registers ATM.
+
    `C-x r C-@`    point-to-register
    `C-x r SPC`    point-to-register
    `C-x r +`      increment-register
@@ -435,6 +450,8 @@ Alternatives for e.g. international keyboards:
 1.2.6 Abbreviations
 -------------------
 
+I am not using abbreviations. Maybe I should.
+
    `C-x '`      expand-abbrev
    `M-'`        abbrev-prefix-mark
    `M-/`        dabbrev-expand
@@ -456,16 +473,19 @@ Alternatives for e.g. international keyboards:
 1.2.7 Tags
 ----------
 
+Tags allow you to navigate though source code quickly. You need
+to install ctags/etags and create a tag file before this works.
+
    `M-*`    pop-tag-mark
    `M-,`    tags-loop-continue
-   `M-.`    find-tag
+   `M-.`    find-tag                                                       *AWESOME*
    `C-M-.`  find-tag-regexp
 
 
 1.2.8 Comments
 --------------
 
-   `M-;`    comment-dwim        use this one!
+   `M-;`    comment-dwim        use this one!                              *AWESOME*
    `C-x ;`  comment-set-column
 
 
@@ -490,9 +510,9 @@ Alternatives for e.g. international keyboards:
 1.3.2 Shell
 -----------
 
-   `M-!`      shell-command            Use `C-u M-!` to insert response
+   `M-!`      shell-command            Use `C-u M-!` to insert response    *AWESOME*
    `M-&`      async-shell-command
-   `M-|`      shell-command-on-region  Use `C-u M-!` to insert response.
+   `M-|`      shell-command-on-region  Use `C-u M-!` to insert response.   *AWESOME*
 
 These are powerful functions, that unleash the power of UNIX tools to
 your editor. E.g. grep lines, insert line numbers, perform computations.
@@ -501,15 +521,13 @@ your editor. E.g. grep lines, insert line numbers, perform computations.
 ------------
 
    `M-$`  ispell-word
-   `M-s`  occur
-
 
 1.3.4 Lisp
 ----------
 
-   `C-x`    eval-last-sexp
-   `M-:`    eval-expression
-   `M-ESC`  eval-expression
+   `C-x C-e` eval-last-sexp
+   `M-:`     eval-expression                                               *AWESOME*
+   `M-ESC`   eval-expression
 
 
 1.3.5 Others
@@ -525,7 +543,7 @@ your editor. E.g. grep lines, insert line numbers, perform computations.
   Annotate the current buffer side by side.  I did not know about this
   before. It seems handy.
 
-   `<f2> <f2>`   2C-two-columns
+   `<f2> <f2>`   2C-two-columns                                            *AWESOME*
    `C-x 6 2`     2C-two-columns
    `C-x 6 b`     2C-associate-buffer
    `C-x 6 s`     2C-split
@@ -541,11 +559,10 @@ your editor. E.g. grep lines, insert line numbers, perform computations.
    `M-s h .`  highlight-symbol-at-point
    `M-s h f`  hi-lock-find-patterns
    `M-s h l`  highlight-lines-matching-regexp
-   `M-s h p`  highlight-phrase
+   `M-s h p`  highlight-phrase                                             *AWESOME*
    `M-s h r`  highlight-regexp
    `M-s h u`  unhighlight-regexp
    `M-s h w`  hi-lock-write-interactive-patterns
-
 
 1.3.8 Version Control Commands
 ------------------------------
@@ -599,7 +616,6 @@ your editor. E.g. grep lines, insert line numbers, perform computations.
    `C-x s`    save-some-buffers           ask for each buffer.
    `C-x C-c`  save-buffers-kill-terminal
 
-
 * 1.4.2.1 File encoding
 
    `C-x RET C-\`  set-input-method
@@ -618,26 +634,27 @@ your editor. E.g. grep lines, insert line numbers, perform computations.
 1.4.3 Swtich Buffers
 --------------------
 
-   `C-x b`          switch-to-buffer
-   `C-x C-b`        list-buffers
+   `C-x b`          switch-to-buffer  !!!
+   `C-x C-b`        list-buffers      !
    `C-x <C-left>`   previous-buffer
    `C-x <C-right>`  next-buffer
    `C-x <left>`     previous-buffer
    `C-x <right>`    next-buffer
-   `M-~`            not-modified      never used this
+   `M-~`            not-modified       # never used this
 
 
 1.4.4 Window control
 --------------------
 
-   `C-x o`  other-window          This is slightly awkward.
+   `C-x o`  other-window          !!!?? This is slightly awkward.
    `C-x 0`  delete-window
    `C-x 1`  delete-other-windows
    `C-x 2`  split-window-below
    `C-x 3`  split-window-right
 
-
 * 1.4.4.1 Window Sizes
+
+  I use the mouse for this, if I resize windows at all.
 
    `C-x +`  balance-windows
    `C-x ^`  enlarge-window
@@ -754,7 +771,7 @@ your editor. E.g. grep lines, insert line numbers, perform computations.
 
   You can use <f1> or <help> instead of <C-h> prefix.
 
-   `C-h m`  describe-mode      learn more about the current major-mode
+   `C-h m`  describe-mode      !!! learn more about the current major-mode
    `C-h a`  apropos-command    Can't remember key-binding or function name?
    `C-h r`  info-emacs-manual  get proper help; use `C-h r i` to search for topic.
 
@@ -762,7 +779,7 @@ your editor. E.g. grep lines, insert line numbers, perform computations.
 1.6.1 Describe
 --------------
 
-   `C-h f`    describe-function      default search string is the word at the point
+   `C-h f`    describe-function      !! default search string is the word at the point
    `C-h k`    describe-key
    `C-h b`    describe-bindings
    `C-h v`    describe-variable
@@ -815,3 +832,8 @@ your editor. E.g. grep lines, insert line numbers, perform computations.
    `C-h <f1>`    help-for-help
 
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+## Version History [github](https://github.com/HeinrichHartmann/HeinrichHartmann.github.io/commits/source/_posts/2016-01-28-The-Emacs-Key-Bindings.md)
+
+- 2015-04-02 Updated comments on M-p/M-n
+- 2015-04-06 Added highlights to useful bindings
