@@ -10,7 +10,7 @@ layout: "post"
 I was reading Tanenbaum's paper [1] lately, which contains an
 algorithm for calculating prime numbers attributed to E.W. Dijkstra
 [2].  What is remarkable about this algorithm is, that it uses no
-divisions at all!  Just a very innocent looking check for inequality
+divisions at all! [^1]  Just a very innocent looking check for inequality
 is performed to single out divisible numbers.
 
 The algorithm was given as an example for a special purpose language
@@ -136,7 +136,7 @@ Hence, by comparing `x` to `Q[k]` for equality we can can check if
 condition for `x` being prime, according to the remarks above.
 
 All in all, this algorithm is an interesting mix between the
-Erathosenes Sieve (that would maintain a list of all integers up to
+Eratosthenes Sieve (that would maintain a list of all integers up to
 x), and a naive test of divisibility by primes, up to
 $$\sqrt{x}$$. Figure 2 contains my humble attempt to visualize (some
 aspects of) the algorithm for the first few prime numbers.
@@ -168,3 +168,12 @@ algorithm moves along. This will have to wait for another post.
 
 1. A.S. Tanenbaum - General-Purose Macro Processor as a Poor Man's Compiler-Compiler, [IEEE TOSE, Sol.SE-2, No.2, JUNE 1976](http://ieeexplore.ieee.org/xpl/login.jsp?tp=&arnumber=1702350&url=http%3A%2F%2Fieeexplore.ieee.org%2Fxpls%2Fabs_all.jsp%3Farnumber%3D1702350)
 2. E.W. Dijkstra - Notes on Structured Programming ([pdf](https://www.cs.utexas.edu/users/EWD/ewd02xx/EWD249.PDF))
+
+## Footnotes
+
+[^1]: As pointed out by
+    [amelius on HN](https://news.ycombinator.com/item?id=11429163) the
+    Eratosthenes sieve, does not use divisions as well. I still find
+    it remarkable, that you can avoid divisions, while not to
+    computing all multiples up-front and marking the results in a
+    large table.
