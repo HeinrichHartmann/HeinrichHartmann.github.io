@@ -173,7 +173,6 @@ algorithm moves along. This will have to wait for another post.
 
 [^1]: As pointed out by
     [amelius on HN](https://news.ycombinator.com/item?id=11429163) the
-    Eratosthenes sieve, does not use divisions as well. I still find
-    it remarkable, that you can avoid divisions, while not to
-    computing all multiples up-front and marking the results in a
-    large table.
+    Eratosthenes sieve does not use divisions as well. I still find it
+    remarkable that you can avoid divisions, while not to computing
+    all multiples up-front and marking the results in a large table.
