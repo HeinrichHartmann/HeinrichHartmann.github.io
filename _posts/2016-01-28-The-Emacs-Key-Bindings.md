@@ -30,8 +30,8 @@ packaged Emacs versions.
 
 On the way I discovered quite a few nifty bindings, that I was not
 aware of before, and started using since then. They are marked with an
-'awesome'-tag on the left fringe, of-course ony reflects my personal            *AWESOME*
-oppionion. In addition, the following markers are used in the comments:
+'awesome'-tag on the right fringe, of-course ony reflects my personal            *AWESOME*
+opinion. In addition, the following markers are used in the comments:
 
 - !, !!, !!! --  Bindings I use often
 - #          --  Bindings I have never used. (Not always annotated)
