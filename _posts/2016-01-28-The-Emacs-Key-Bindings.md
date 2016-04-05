@@ -50,11 +50,11 @@ youare digging yourself a hole. There are just too many commands to
 change, and if you include external plugins and extensions, conflicts
 are inevitable. Yes. I have been there.
 
-By avoiding configuration you get another bonus, that, if you are
-using remote machines, that come with a plain emacs
-installation. Copying configurations and reinstalling packages is
-often problematic, and not really worth it if you are just editing
-some config files.
+By avoiding configuration you get another bonus, that you directly
+feel at home when using remote machines, that come with a plain
+emacs. Copying configurations and reinstalling packages is often
+problematic, and not really worth it if you are just editing some
+config files.
 
 /Completeness is good/. Only after reading the whole list of
 keybindings, you can be sure, not to have missed that super-useful
