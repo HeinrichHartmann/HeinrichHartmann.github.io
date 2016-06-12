@@ -25,12 +25,13 @@ very beginning:
 
 > "What is the largest number that has a name?"
 
-The largest number in his book was the GoogolPlex ($10^{Googol}$), but he
-suspected that there are even larger numbers which have a name. While that
-question is a little deeper than I was comfortable going into at that
-point
+The largest number in his book was the GoogolPlex ($10^{Googol}$), but
+he suspected that there are even larger numbers which have a
+name. While that question is a little deeper than I was comfortable
+going into at that point
 (cf. [Interesting Number Paradox](https://en.wikipedia.org/wiki/Interesting_number_paradox)),
-we settled for the moment, with creating another even larger, than the GoogolPlex:
+we settled for the moment, by creating another number which was even
+larger than the GoogolPlex:
 
 $$ GoogolPlex \cdot 1000 \cdot 100 + 27 + 4 + 100 \cdot 1000000 $$
 
