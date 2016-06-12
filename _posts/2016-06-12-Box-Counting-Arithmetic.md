@@ -10,7 +10,7 @@ layout: "post"
 
 ![](/assets/BoxCounting_files/headline.png)
 
-I was invited to the wedding recently, and had the pleasure to meet
+I was invited to a wedding recently, and had the pleasure to meet
 the 4-year old Benjamin[^1] who was fascinated by numbers and
 arithmetic. Sharing and often repeating the
 [laments of Paul Lockhardt](https://www.maa.org/external_archive/devlin/LockhartsLament.pdf),
