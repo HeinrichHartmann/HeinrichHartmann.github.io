@@ -149,9 +149,9 @@ counting methods introduced above. We either need more profound set
 theory and induction, or formal arithmetic $(N+1)^2 = N^2 +2N + 1$,
 which derives this in a breeze. However, there is value in
 illustrations. Benjamin followed that argument quickly, while working
-parameters $N,x$ and the binomial theorem would have been too much/too
-boring for him. And frankly, most schools don't bother to present
-proofs at all and stay at the phenomenological level.
+with parameters $N,x$ and the binomial theorem would have been too
+much and/or boring for him. And frankly, most schools don't bother to
+present proofs at all and stay at the phenomenological level.
 
 Ok, here is another exercise:
 
