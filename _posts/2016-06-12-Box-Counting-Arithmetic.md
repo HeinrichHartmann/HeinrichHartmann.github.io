@@ -34,7 +34,10 @@ we settled for the moment, with creating another even larger, than the GoogolPle
 
 $$ GoogolPlex \cdot 1000 \cdot 100 + 27 + 4 + 100 \cdot 1000000 $$
 
-which he called "GooglePlexilliardenSeptillion" and appended to his list.
+I suggested to name the number Rachel[^1] in honor of his mother, but
+Benjamin replied: "This is not a good name for a number".  So we went
+with "GooglePlexilliardenSeptillion" and appended it to his
+list.
 
 While gigantically large numbers fascinated him clearly most, he also
 had a considerable fun at solving arithmetic puzzles ($$5x7, 9x12$$), and
