@@ -124,12 +124,12 @@ However, I had just asked him, 10x10, which he knew by heart: 100!
 
 So essentially, he had just counted all boxes in a 10x10 square.  And
 posed with the problem of counting all boxes in an 11x11 square, which
-is just 1 box large, he started from scratch and recited his series.
+is just 1 box larger, he started from scratch and recited his series.
 Poor boy!
 
 Here is how you do better:
 
-$$11\times 11 = 10\times 10 + 10 + 10 + 1$$
+$$11\times 11 = 10\times 10 + 10 + 10 + 1 = 121$$
 
 ![](/assets/BoxCounting_files/11x11.png)
 
@@ -145,7 +145,7 @@ number of boxes in a square of size $N$, plus $2N$ (at the sides) plus
 1 at the tip.
 
 It's not possible to provide a formal proof using the explicit box
-counting methods introduces above. We either need more profound set
+counting methods introduced above. We either need more profound set
 theory and induction, or formal arithmetic $(N+1)^2 = N^2 +2N + 1$,
 which derives this in a breeze. However, there is value in
 illustrations. Benjamin followed that argument quickly, while working
