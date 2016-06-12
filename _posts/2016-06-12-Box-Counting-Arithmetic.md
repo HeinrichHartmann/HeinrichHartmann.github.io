@@ -10,12 +10,12 @@ layout: "post"
 
 ![](/assets/BoxCounting_files/headline.png)
 
-I was invited to a wedding recently, and had the pleasure to meet
-the 4-year old Benjamin[^1] who was fascinated by numbers and
-arithmetic. Sharing and often repeating the
+I was recently invited to a wedding of a friend, where I had the
+pleasure to meet the the 4-year old Benjamin[^1] who was fascinated by
+numbers and arithmetic. Sharing and often repeating the
 [laments of Paul Lockhardt](https://www.maa.org/external_archive/devlin/LockhartsLament.pdf),
-I was eager to show him some aspects of mathematics, that are
-fun to explore and not commonly taught in schools.
+I was eager to show him some aspects of mathematics, that are fun to
+explore and not commonly taught in schools.
 
 Given his young age and tiny size he had already mastered a fair
 amount of arithmetic. His favorite topic where gigantic numbers. He
