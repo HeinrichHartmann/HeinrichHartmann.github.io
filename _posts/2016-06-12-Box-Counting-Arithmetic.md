@@ -241,8 +241,7 @@ at the very top?
 
 ## Meta
 
-- The images have been created with a [HUION Tablet](http://amzn.to/1UL59I2)[^2] and [Sketches by Tayasui](http://tayasui.com/sketches/).
+- The images have been created with a [HUION Tablet](http://amzn.to/1UL59I2) (this is an Amazon-affiliate link) and [Sketches by Tayasui](http://tayasui.com/sketches/).
 - [Version History](https://github.com/HeinrichHartmann/HeinrichHartmann.github.io/commits/source/_posts/2016-06-12-Box-Counting-Arithmetic.md). Thanks for your comments and corrections. I am fixing those as they appear.
 
 [^1]: Name changed.
-[^2]: Full disclosure, this is an [amazon affiliate link](https://affiliate-program.amazon.com).
