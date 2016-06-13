@@ -161,13 +161,11 @@ If you followed through to here, you will directly say:
 
 $$ 13\times 13 = 12\times 12 + 2\times 12 + 1 = 12\times 12 + 25$$
 
-Now that's a little trickier: $2\times 12+1 = 25$ that's not too difficult.
-
 But you might not remember what $12 \times 12$ is. Do you?
 
 So, let's calculate that first. So what is 12x12?
 
-"I know!", you will now say, "We can apply that same trick again!" And indeed:
+"I know!", you will now say, "We can apply that same trick again!". And indeed:
 
 $$ 12\times 12 = 11\times 11 + 2\times 11 + 1 = 11\times 11 + 23$$
 
@@ -191,7 +189,7 @@ But we don't have to stop at 10x10. We can go all the way down to 1x1!
 But wait, there is another pattern: The size of those square angles are just the odd numbers!
 
 **Theorem.** The number of boxes in a square of size $N$ is equal to the
-sum of all odd numbers lower or equal to the $2N$.
+sum of all odd numbers smaller than $2N$.
 
 ## Sums of even numbers.
 
