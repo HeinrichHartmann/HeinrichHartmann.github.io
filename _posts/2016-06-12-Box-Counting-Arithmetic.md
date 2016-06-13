@@ -37,7 +37,7 @@ $$ GoogolPlex \cdot 1000 \cdot 100 + 27 + 4 + 100 \cdot 1000000 $$
 
 I suggested to name the number Rachel[^1] in honor of his mother, but
 Benjamin replied: "This is not a good name for a number".  So we went
-with "GooglePlexilliardenSeptillion" and appended it to his
+with "GoogolPlexilliardenSeptillion" and appended it to his
 list.
 
 While gigantically large numbers fascinated him clearly most, he also
