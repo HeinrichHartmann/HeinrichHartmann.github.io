@@ -140,9 +140,9 @@ large and fascinating topic of square numbers.
 
 The above trick to calculate 11x11 generalizes to the following theorem.
 
-**Theorem.** The number of boxes is a square of size $N+1$ is the
-number of boxes in a square of size $N$, plus $2N$ (at the sides) plus
-1 at the tip.
+**Theorem.** The number of boxes in a square of size $N+1$ is equal to
+the number of boxes in a square of size $N$, plus $2N$ (at the sides)
+plus 1 (at the tip).
 
 It's not possible to provide a formal proof using the explicit box
 counting methods introduced above. We either need more profound set
