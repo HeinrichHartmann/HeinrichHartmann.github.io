@@ -239,10 +239,10 @@ as box counting problems, allows creative approaches and raises many
 interesting questions. Can you find the identity hidden in the picture
 at the very top?
 
-## Footnotes
-
-[^1]: Name changed.
-
 ## Meta
 
-- Version History ![](https://github.com/HeinrichHartmann/HeinrichHartmann.github.io/commits/source/_posts/2016-06-12-Box-Counting-Arithmetic.md)
+- The images have been created with a [HUION Tablet](http://amzn.to/1UL59I2)[^2] and [Sketches by Tayasui](http://tayasui.com/sketches/).
+- [Version History](https://github.com/HeinrichHartmann/HeinrichHartmann.github.io/commits/source/_posts/2016-06-12-Box-Counting-Arithmetic.md). Thanks for your comments and corrections. I am fixing those as they appear.
+
+[^1]: Name changed.
+[^2]: Full disclosure, this is an [amazon affiliate link](https://affiliate-program.amazon.com).
