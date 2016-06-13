@@ -101,7 +101,6 @@ $$ 7\times 5 = 5 \times 5 + 2 \times 5 = 25 + 10 = 35.$$
 
 ![](/assets/BoxCounting_files/7x5-5x5.png)
 
-
 Here is another variant: If you rearrange the 5x7-rectangle as follows you
 get the identity
 
@@ -235,13 +234,13 @@ Combining both tricks, we have just found another derivation of the [Little Gaus
 ## Going further
 
 We are clearly just at the beginning here. Framing arithmetic problems
-as box counting problems, allows creative approaches and raises many
-interesting questions. Can you find the identity hidden in the picture
+as box counting problems allows creative approaches and raises many
+interesting questions: Can you find the identity hidden in the picture
 at the very top?
 
 ## Meta
 
 - The images have been created with a [HUION Tablet](http://amzn.to/1UL59I2) (this is an Amazon-affiliate link) and [Sketches by Tayasui](http://tayasui.com/sketches/).
-- [Version History](https://github.com/HeinrichHartmann/HeinrichHartmann.github.io/commits/source/_posts/2016-06-12-Box-Counting-Arithmetic.md). Thanks for your comments and corrections. I am fixing those as they appear.
+- Thanks for your comments and corrections. I am fixing those as they appear. Check the [Version History](https://github.com/HeinrichHartmann/HeinrichHartmann.github.io/commits/source/_posts/2016-06-12-Box-Counting-Arithmetic.md) to see what changed and when.
 
 [^1]: Name changed.
