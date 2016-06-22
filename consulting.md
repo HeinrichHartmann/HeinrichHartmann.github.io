@@ -5,9 +5,9 @@ title: Heinrich Hartmann - Consulting
 
 # Consulting
 
-I am offering consulting in mathematical and algorithmical problems,
-aka. 'Data Science'.  If you are interested in my services, pleaseñ
-contact me via email <a href="mailto:heinrich@heinrichhartmann.com">heinrich@heinrichhartmann.com</a>.
+I am offering consulting services in mathematical and algorithmical problems.
+If you are interested in my services, please contact me via email
+<a href="mailto:heinrich@heinrichhartmann.com">heinrich@heinrichhartmann.com</a>.
 
 ## Services
 
