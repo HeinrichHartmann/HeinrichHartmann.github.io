@@ -90,6 +90,10 @@ ul.posts {
     position:relative; top:-1px;
 }
 
+#banner {
+    margin-bottom: 1em;
+}
+
 /*****************************************************************************/
 /*
 /* Site
