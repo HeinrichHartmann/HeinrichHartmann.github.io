@@ -140,7 +140,7 @@ authenticate using the physical passport at a government agency.
 After the initial authentication, alternative credentials like
 passwords or phone numbers, tan lists, PGP keys can be exchanged. Of
 course, it's advisable to use more than one credential for
-authentication (TFA).
+authentication (2FA).
 
 The main purpose of this account is to hold government verified
 information about the citizen like:
