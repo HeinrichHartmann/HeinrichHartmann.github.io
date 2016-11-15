@@ -3,7 +3,7 @@ author: "Heinrich Hartmann"
 layout: "post"
 ---
 
-<img src="/assets/digitalpassportbanner_pixbay_cc0.png" widht="100%">
+<img src="/assets/digitalpassportbanner_pixbay_cc0.png" width="100%">
 
 ## The Internet has changed
 
@@ -23,7 +23,7 @@ technologies has led to serious problems for society, such as:
   false claims in emails.
 
 For a long time these problems have been well known and identified but
-the general consence was, that we can not do something about it and
+the general consensus was, that we can not do something about it and
 the impact of these problems is so small, that it does not really
 matter.
 
@@ -64,7 +64,7 @@ Contrary to this in the offline world, you often have a name an
 address or a face, as well as a broad sense of location, which allow
 to track down a person more effectively
 
->I was robbed at 19:23am at the McDonalds at Marienplatz, these are
+>I was robbed at 19:23am at the McDonald at Marienplatz, these are
 > three bystanders who can testify the event and describe the suspect.
 
 ## Linking Digital Identities
@@ -73,7 +73,7 @@ So what can we do to improve this situation?
 
 It turns out, it's actually well possible to **link** identities on the
 internet.  The concept is called [oAuth](https://en.wikipedia.org/wiki/OAuth) and is most commonly met in
-form of a button `[Log in with Facebook]`.
+form of a button `[Log in with facebook]`.
 
 When a user authenticates with such a button, the service is able to
 establish the following information:
@@ -82,7 +82,7 @@ establish the following information:
 -   The ID of that facebook account
 
 Furthermore the service can request access to meta information that is
-stored on facbook like:
+stored on facebook like:
 
 -   The deposited name of the user
 -   The deposited nationality of the user
@@ -99,7 +99,7 @@ So why can't we use oAuth this to establish **the identity** of the user.
 
 The answer is: We don't know where to start!
 
-As we have seen above, both Google and Facebook accounts are easily
+As we have seen above, both Google and facebook accounts are easily
 forged. So oAuth establishes strong ties between weak identities.
 The open question is:
 
@@ -160,7 +160,7 @@ needed for the case in point.
 By providing an oAuth endpoint for the digital passport the Government
 would provide a strong identity to it's citizens on the internet.
 
-## Applications of the Ditital Passport
+## Applications of the Digital Passport
 
 The Digital Passport allows the holder to proof the following aspects
 of it's real-world identity to the a third party service:
@@ -188,17 +188,17 @@ Passport and live in Berlin".
 
 2. In case a person violates the discussion policies, this person can
    be banned from the site without the possibility to re-join with
-   another username.
+   another user-name.
 
 3. In particular, payed trolls would have to disclose their nationality
    to participate, and could be banned once they have been called out
    once.
 
-4. In case a person commits a criminal offence by harassing other
+4. In case a person commits a criminal offense by harassing other
    users or spreading propaganda the service provider can file a legal
    case against the user.
 
-On the flipside, users can be sure, that there is an effective way to
+On the flip-side, users can be sure, that there is an effective way to
 enforce policies that are there for their protection.
 
 ### Signing of Documents and Publications
@@ -215,13 +215,13 @@ enables citizens to proof statements like this:
     I wrote the above text on 2015-02-12.
     Click here to verify: <http://dpa.gov/DP/PIOJDAIE928?url=...>
 
-On the fipside, news sites and web-stores could be urged to sign their
+On the flip-side, news sites and web-stores could be urged to sign their
 offers and emails, in order to establish trust. Browser vendors could
 automatically check these signatures and warn the user when these are
 missing. (Similar to HTTPS but with email support and even stronger
 authorities).
 
-If a Nigerian Scammer claims to be a widdow from Australia and want's
+If a Nigerian Scammer claims to be a widow from Australia and want's
 to lure me into sending over money, I can ask him to disclose his name
 and sign his emails with a DP.
 
