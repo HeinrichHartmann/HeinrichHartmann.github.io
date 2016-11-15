@@ -47,11 +47,11 @@ new websites without disclosing your identity. It's quite possible
 (though not trivial) to setup a fake facebook account, and get some
 200 friends. The list goes on.
 
-There are no reliable identity providers.
+There are no reliable identity providers on the net.
 
 As a consequence, **there is no effective way to enforce laws.**
 
-If someone commits a fraud another crime on the internet, you can only
+If someone commits a fraud or a crime on the internet, you can only
 point to an email address or facebook account. The police has little
 possibilities to determine the responsible person. E.g.
 
