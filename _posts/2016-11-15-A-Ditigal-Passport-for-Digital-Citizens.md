@@ -16,9 +16,9 @@ as:
 - Hate speech and harassment are rampant social networks and web
   forums.
 
-- Fake news websites (from Macedonia) which publish propaganda.
+- Fake news websites (from Macedonia) publish propaganda.
 
-- Bots and trolls (from Russia) flood social networks with fake comments/propaganda.
+- Bots and trolls (from Russia) flood social networks with fake comments.
 
 - Scammers (from Nigeria) try to steal money from people by making
   false claims in emails.
