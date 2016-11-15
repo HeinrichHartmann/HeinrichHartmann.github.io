@@ -53,7 +53,8 @@ As a consequence, **there is no effective way to enforce laws.**
 
 If someone commits a fraud or a crime on the internet, you can only
 point to an email address or facebook account. The police has little
-possibilities to determine the responsible person. E.g.
+possibilities to determine the responsible person from a statement
+like this:
 
 > A user called "Gandalf1253" with email address
 > "gandalf1253@gmx.net" has threatened me on faz.net with the following
