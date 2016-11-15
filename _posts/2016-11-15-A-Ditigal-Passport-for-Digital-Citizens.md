@@ -9,8 +9,8 @@ layout: "post"
 
 The internet is a largely unregulated platform, where everyone can
 find and publish information.  While this worked well for the
-scientific community in the 90ies. Mainstream adoption of web and
-internet technologies has led to serious problems for society, such
+scientific community in the 90ies mainstream adoption of web and
+internet technologies has led to serious problems for society such
 as:
 
 - Hate speech and harassment are rampant social networks and web
