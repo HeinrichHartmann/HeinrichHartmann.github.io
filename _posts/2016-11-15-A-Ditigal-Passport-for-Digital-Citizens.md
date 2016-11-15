@@ -178,7 +178,7 @@ Establishing these facts unlocks a great number of applications.
 
 ### Strong Identities for Civilized Discussions
 
-Services like news outlets, social networks, could require user's to
+Services like news outlets, social networks, could require users to
 log in with the digital passport if they want to publish their
 comments on their site. There is little reason you should allow people
 to participate in political discussions if they are not willing to
@@ -234,7 +234,7 @@ identity provider, we can not hold people accountable for their doings
 in the digital space. Without accountability there is no trust
 and without trust society falls apart.
 
-However it looks to me that we there are effective way's to establish
+However it looks to me that we there are effective ways to establish
 identity on the net. And that our government has the means to do so,
 by issuing digital passports. Moreover this approach does not require
 citizens to give up their privacy and anonymity while consuming
