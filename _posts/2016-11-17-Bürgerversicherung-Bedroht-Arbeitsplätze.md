@@ -40,12 +40,12 @@ zentralen Probleme die uns *alle* in den nächsten 30 Jahren
 beschäftigen wird. Eine [Studie der Bundesbank](https://www.bundesbank.de/Redaktion/DE/Downloads/Veroeffentlichungen/Monatsberichtsaufsaetze/2014/2014_07_krankenversicherung.pdf?__blob=publicationFile) von 2014 schreibt:
 
 > Die prognostizierten Ausgabenanstiege deuten auf eine künftig
-> deutlich höhere Abgabenbe- lastung hin. In Beitragssätze
+> deutlich höhere Abgabenbelastung hin. In Beitragssätze
 > umgerechnet, würde sich gemäß den EU-Vorausberechnun- gen bis zum
 > Jahr 2060 ein Anstieg auf einen Wert zwischen 16.5% und 21.5%
-> ergeben. Zu- sammen mit den übrigen alterungsabhängigen Ausgaben im
-> Alterssicherungs- und Pflegebe- reich sowie im Zusammenhang mit
-> Arbeitslo- sigkeit könnte der Gesamtsozialversicherungs-
+> ergeben. Zusammen mit den übrigen alterungsabhängigen Ausgaben im
+> Alterssicherungs- und Pflegebereich sowie im Zusammenhang mit
+> Arbeitslosigkeit könnte der Gesamtsozialversicherungs-
 > beitragssatz danach auf eine Größenordnung von 47.5% bis 54.5%
 > steigen – gegenüber derzeit 39.5%.
 
