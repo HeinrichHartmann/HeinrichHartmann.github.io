@@ -1,9 +1,9 @@
 ---
 author: "Heinrich Hartmann"
 layout: "post"
+category: "opinion"
 redirect_from:
   - /2016/11/15/A-Ditigal-Passport-for-Digital-Citizens.html
-category: "blog"
 ---
 
 <img src="/assets/digitalpassportbanner_pixbay_cc0.png" width="100%">
