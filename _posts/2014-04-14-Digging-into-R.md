@@ -1,6 +1,7 @@
 ---
 author: "Heinrich Hartmann"
 layout: "post"
+category: "blog"
 ---
 
 <!-- EMACS PREAMBLE: -->

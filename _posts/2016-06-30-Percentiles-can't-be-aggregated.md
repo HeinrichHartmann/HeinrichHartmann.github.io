@@ -4,6 +4,7 @@ layout: "external"
 external_url: https://twitter.com/heinrichhartman/status/748562001392111617
 external_site: twitter
 comment: "a letter to John Rauser"
+category: "blog"
 ---
 
 Dear John,

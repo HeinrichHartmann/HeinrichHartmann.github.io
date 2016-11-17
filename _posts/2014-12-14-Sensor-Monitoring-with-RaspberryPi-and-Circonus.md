@@ -1,6 +1,7 @@
 ---
 author: "Heinrich Hartmann"
 layout: "post"
+category: "blog"
 ---
 
 <!-- # Sensor Monitoring with RaspberryPi and Circonus -->

@@ -1,14 +1,17 @@
 ---
 author: "Heinrich Hartmann"
 layout: "text"
+category: "blog"
 ---
 
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
                                                             {{ page.date | date: "%Y-%m-%d" }}
 
-                         ----------------------
+                         category: "blog"
+----------------------
                          THE EMACS KEY-BINDINGS
-                         ----------------------
+                         category: "blog"
+----------------------
 
 
 This note contains a full annotated list of Emacs default key bindings,

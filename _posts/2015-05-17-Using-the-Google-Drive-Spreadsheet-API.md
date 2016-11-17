@@ -1,6 +1,7 @@
 ---
 author: "Heinrich Hartmann"
 layout: "post"
+category: "blog"
 ---
 
 <style> .center { margin-right: auto; margin-left:auto; display: block; max-width:600px } </style>

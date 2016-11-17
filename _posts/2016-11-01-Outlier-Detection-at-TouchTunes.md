@@ -6,4 +6,5 @@ redirect_from:
 external_url: https://www.circonus.com/casestudies/touchtunes/
 external_site: circonus.com
 comment: "with Hugo Lafleur"
+category: "blog"
 ---
