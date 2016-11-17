@@ -28,16 +28,15 @@ Die FAZ  [Bürgerversicherung würde Zehntausende Arbeitsplätze bedrohen](http:
 
 Das Gesundheitssystem hat massive Probleme mit Gerechtigkeit (PKV/GKV)
 und Kostenstruktur. Wir sind konfrontiert mit einer alternder
-Bevölkerung und damit verbundendn stark steigenden Kosten im
-Gesundheitssysttem.
+Bevölkerung und stark steigenden Kosten im Gesundheitssystem.
 
-E.g. im Jahr 2017 alleine werden die Kosten für PKV um 11% steigen
+Allein im Jahr 2017 alleine werden die Kosten für PKV um 11% steigen
 [faz.net](http://www.faz.net/aktuell/finanzen/meine-finanzen/versichern-und-schuetzen/f-a-z-exklusiv-beitragsschock-fuer-6-millionen-krankenversicherte-14457599.html):
 
 > „Zusatzkosten von 50 Euro im Monat und darüber hinaus sind möglich.“
 
 Kosten im Gesundheitssystem (und Rentensystem) sind eines der
-zentralen Probleme die uns *alle* in den nächsten 30Jahren
+zentralen Probleme die uns *alle* in den nächsten 30 Jahren
 beschäftigen wird. Eine [Studie der Bundesbank](https://www.bundesbank.de/Redaktion/DE/Downloads/Veroeffentlichungen/Monatsberichtsaufsaetze/2014/2014_07_krankenversicherung.pdf?__blob=publicationFile) von 2014 schreibt:
 
 > Die prognostizierten Ausgabenanstiege deuten auf eine künftig
