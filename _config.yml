@@ -2,6 +2,9 @@ name: "Heinrich Hartmann's Blog"
 description: "A blog about mathematics, statistics and tinkering."
 url: "http://heinrichhartmann.com"
 
+# don't show .html at the end
+permalink: pretty
+
 # markdown: rdiscount
 markdown: kramdown
 # highlighter: rouge
@@ -24,3 +27,5 @@ gems: # [ jekyll_figure ]
 figures:
   dir: /assets
   enumerate: true
+
+
