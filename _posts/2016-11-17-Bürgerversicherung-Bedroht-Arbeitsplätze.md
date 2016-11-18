@@ -78,3 +78,36 @@ Falle ist der Bericht extrem einseitig.
 
 - An alle Rechtesexperten: Darf ich die FAZ hier so zitieren? Oder
   verletze ich das Leistungsschutzrecht?
+
+# Selected Replies 
+
+* [Maximilian Held](http://www.maxheld.de), 2016-11-17, Facebook [1]
+
+  Wie ich dieses "Arbeitsplätze"-Pseudo-Argument hasse. Damit kann man
+  in Deutschland immer Angst machen, *jeden* Wandel verhindern und –
+  leider – gewinnen.  Ökonomisch ist es natürlich totaler Unsinn: 1)
+  Sind "Arbeitsplätze" garnicht etwas, was wir maximieren wollen (man
+  stelle sich vor man würde im privaten Haushalt dasselbe tun!), 2)
+  Entstehen *natürlich* bei hinreichender Faktormobilität anderswo
+  neue Arbeitsplätze.  Dieses Argument bei der PKV zu bringen, bei der
+  es überwiegend um reine Verwaltungsjobs geht, also
+  Nullsummenproduktion, ist schon besonders absurd.
+
+  Das macht mich so irre, das gerade die Gewerkschaften und andere
+  orthodoxe Linke *immer* auf dieses Argument einsteigen.
+
+  Auch mit diesen einfachen Wahrheiten unterstützt mit man die
+  Trumps + Co.
+
+  Natürlich gibt es tatsächliche ökonomische Verwerfungen in der
+  Einführung; die sollte man auch dämpfen, so weit es geht, etwa durch
+  genügend zeitlichen Vorlauf, und eine langsame Einführung.  Das gilt
+  aber eigentlich immer für staatliche Eingriffe in die Ökonomie,
+  alleine schon aus Gründen des Vertrauensschutzes und
+  Eigentumsgarantie.  Wenn man das langsam und planungssicher genug
+  macht, können Marktakteure entsprechend reagieren.  Wenn es schnell
+  und übernacht geht, wird wirklich (sinnlos) Kapital vernichtet.
+
+# References
+
+1. [Facebook Discussion](https://www.facebook.com/heinrich.hartmann.7/posts/1348913531787896)
