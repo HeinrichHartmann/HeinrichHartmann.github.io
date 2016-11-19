@@ -3,7 +3,7 @@ description: "A blog about mathematics, statistics and tinkering."
 url: "http://heinrichhartmann.com"
 
 # don't show .html at the end
-permalink: pretty
+# permalink: pretty
 
 # markdown: rdiscount
 markdown: kramdown
