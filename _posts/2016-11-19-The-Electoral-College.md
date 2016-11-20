@@ -1,7 +1,7 @@
 ---
 author: "Heinrich Hartmann"
 layout: "post"
-category: "opinion"
+category: "blog"
 ---
 
 US Presidents are not directly elected by the citizens of the United
