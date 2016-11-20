@@ -242,11 +242,13 @@ function update_data() {
 function update_table() {
   var d = d_lookup[stateA];
   var e = d_lookup[stateB];
-  d3.selectAll(".A-state").text("" + state_lookup[stateA]);
+  d3.selectAll(".A-state").text("" + stateA);
+  d3.selectAll(".A-state-full").text("" + state_lookup[stateA]);
   d3.selectAll(".A-population").text(numberWithCommas("" + d.population));
   d3.selectAll(".A-votes").text("" + d.ecv);
 
-  d3.selectAll(".B-state").text("" + state_lookup[stateB]);
+  d3.selectAll(".B-state").text("" + stateB);
+  d3.selectAll(".B-state-full").text("" + state_lookup[stateB]);
   d3.selectAll(".B-population").text("" + numberWithCommas(e.population));
   d3.selectAll(".B-votes").text(e.ecv);
 

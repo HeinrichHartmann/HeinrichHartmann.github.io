@@ -20,16 +20,16 @@ differences.
 <link rel="stylesheet" type="text/css" href="/assets/electoralcollege/style.css">
 
 <div class="tagline">
-    One vote in <span class="B-state"></span>
+    One vote in <span class="B-state-full"></span>
     <br> =
-    <br><span class="rat"></span> votes in <span class="A-state"></span>.
+    <br> <span class="rat"></span> votes in <span class="A-state-full"></span>.
 </div>
 
 <table width="100%">
   <tr>
     <td>State</td>
-    <td width="200px"><span class="A-state"/></td>
-    <td width="200px"><span class="B-state"/></td>
+    <td width="200px"><span class="A-state-full"/></td>
+    <td width="200px"><span class="B-state-full"/></td>
   </tr>
   <tr>
     <td>Population</td>
@@ -40,12 +40,6 @@ differences.
     <td>Electors</td>
     <td><span class="A-votes"/></td>
     <td><span class="B-votes"/></td>
-  </tr>
-  <tr>
-    <td>Power Ratio</td>
-    <td colspan="2" class="tbl-ratio">
-    1 : <span class="rat"/>
-    </td>
   </tr>
 </table>
 
@@ -78,4 +72,4 @@ This visualization was created in collaboration with [Rene Pickhardt](https://tw
 <blockquote class="twitter-tweet" data-lang="en"><p lang="en" dir="ltr"><a href="https://twitter.com/hashtag/Request4Help?src=hash">#Request4Help</a>: Can you help me represent the relative presidential voting power of citizens? See <a href="https://t.co/79ZpBjoCEw">https://t.co/79ZpBjoCEw</a></p>&mdash; Lessig (@lessig) <a href="https://twitter.com/lessig/status/797698106360000512">November 13, 2016</a></blockquote> <script async src="//platform.twitter.com/widgets.js" charset="utf-8"></script>
 </center>
 
-The source code is available [on GitHub](https://github.com/HeinrichHartmann/us-voting-power-map).
+The source code is available [on GitHub](https://github.com/HeinrichHartmann/us-voting-power-map). Contributions are welcome.

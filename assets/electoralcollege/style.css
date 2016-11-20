@@ -54,9 +54,8 @@ svg {
 
 .tbl-ratio {
     text-align:center;
-    font-weight: bold;
-    font-size: 30px;
-    height: 50px;
+    font-size: 20px;
+    // height: 50px;
 }
 
 .tagline {
