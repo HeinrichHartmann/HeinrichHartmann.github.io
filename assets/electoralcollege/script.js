@@ -1,3 +1,12 @@
+var rat_lookup   = {};
+var d_lookup     = {};
+var state_lookup = {};
+var data_vote;
+var data_map;
+var stateA = "KS";
+var stateB = "CA";
+var my_vpc   = 1;
+
 function numberWithCommas(x) {
   return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 }
@@ -33,14 +42,6 @@ var color = d3.scale.linear()
     .domain([0,1,4])
     .range(["#d95f0e","#fff7bc","#2ca25f"]);
 
-var rat_lookup   = {};
-var d_lookup     = {};
-var state_lookup = {};
-var data_vote;
-var data_map;
-var stateA = "KS";
-var stateB = "CA";
-var my_vpc   = 1;
 
 function type(d) {
   d.vpc = +d.vpc;
@@ -125,7 +126,7 @@ function init() {
       .attr("stroke", "black");
 
     // set current state
-    update("KS","CA");
+    update(stateA, stateB);
   });
 }
 
@@ -165,7 +166,7 @@ d3.json("/assets/electoralcollege/us-states.json", function(data) {
     .on("click", function(d) { update(d.properties.short_name, stateB); })
     .on("mouseover", function(d) { update(stateA, d.properties.short_name); });
 
-  update_map("KS");
+  update(stateA, stateB);
 });
 
 function update_hover(state){
