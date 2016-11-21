@@ -73,3 +73,5 @@ This visualization was created in collaboration with [Rene Pickhardt](https://tw
 </center>
 
 The source code is available [on GitHub](https://github.com/HeinrichHartmann/us-voting-power-map). Contributions are welcome.
+
+Discussion on [r/DataIsBeautiful](https://www.reddit.com/r/dataisbeautiful/comments/5e3751/voting_power_in_the_us_by_state_under_the/)
