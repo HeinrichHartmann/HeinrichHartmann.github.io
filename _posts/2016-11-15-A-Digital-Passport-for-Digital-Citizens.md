@@ -246,7 +246,108 @@ the web.
 
 Here is the time. Here is the place. Let's make it happen.
 
-# Discussion on Reddit
+# Comments
+
+## Discussion on Reddit
 
 <blockquote class="reddit-card" data-card-created="1479734003"><a href="https://www.reddit.com/r/netsec/comments/5d2obv/a_ditigal_passport_for_digital_citizens/?ref=share&ref_source=embed">A Ditigal Passport For Digital Citizens</a> from <a href="http://www.reddit.com/r/netsec">netsec</a></blockquote>
 <script async src="//embed.redditmedia.com/widgets/platform.js" charset="UTF-8"></script>
+
+## Archived Diqus Comments
+
+These comments were submitted in Disqus, but did not survive an URL
+redirect, I had to introduce.
+
+> [Martin] But it's also more than a tad dangerous. I've been thinking about this
+> a while and the new passport has laid the groundwork for a future that
+> will inevitably go on this direction. But the current state of affairs
+> is that there are lots of computer-illiterate people out there. As
+> long as software is involved such as a private key (-file), software
+> to communicate with the card reader accessing your passport, software
+> running those web platforms accessing your identity via the passport
+> reader or your fingerprint etc., identity theft is going to be an
+> issue. And by implementing such a link, not only is your privacy going
+> to go down (they will easily establish a link that goes far beyond
+> those services you access with your identity pass), but also other
+> issues will become more pressing. For example: how do you protect the
+> government servers holding your information if they have to have an
+> interface to the web? How do you make sure the hardware side cannot be
+> forged and the software be spied on? And how do you make sure that
+> data cannot be abused to identify critics should a repressive party
+> such as the AfD come to power? How would you give citizens of
+> repressive countries the chance to voice their options without fear of
+> being prosecuted for it?  Currently, we can't. Which is why, in my
+> opinion, we have to start with the content. Fact-check websites in a
+> manner that goes beyond projects such as "Web of Trust" (which wasn't
+> very trustworthy after all) and we need to make transparent in a
+> concise manner why the information we deem trustworthy is
+> trustworthy. And this should apply to all information. But that still
+> wouldn't solve the problem of trust, some people don't trust the
+> "official truth" so how do we make it accessible and tangible enough
+> to earn that trust back?  Don't get me wrong, a system of "guaranteed
+> identity" would alleviate the problems we're facing, i just think
+> there's insurmountable problems with that approach today.
+
+> [Heinrich] Thanks Martin, you raise a number of issues there:
+>
+> (a) What about comuter-illiterate people. Is identity theft is going
+> to be an issue?
+>
+> Banks have the same problem. TFA seems to work well in this space,
+> with Password + TAN Lists, SMS or Apps as second factor. Why can't
+> this work for the DPA? Note that I am not advocating the current
+> "electronic passport" in Germany. IMO the card reader is too expensive
+> and clunky to be practical.
+>
+> (b) How do you protect gov servers?
+>
+> The governemnt already holds this information now. E.g. Tax
+> authorities, or Einwohnermeldeamt. So the problem does not change. You
+> have to employ good security exports.
+>
+> (c) How do you make sure users are not spied on?
+>
+> Again, this is a separate concern. Your PC is not a safe platform.
+> Don't store your passwords on disk. Use TFA to keep your identity when
+> your PC is compromised.
+>
+> (d) How would you give citizens of repressive countries the chance to
+> voice their options without fear of being prosecuted for it?
+>
+> No one is stopping you from accepting anonymous information and
+> re-publishing it. But it becomes your responsibility to check that
+> this is indeed legit information if you want to be taken
+> seriously. The Guardian had to do this with Snowden as well, before
+> they published their material.
+
+> [Martin]
+> A) To make sure no information is held on your device that could be compromised and access the data in a secure fashion, thus you need a gate that can talk to the government server or access to the government server via the Internet. 2FA is relatively safe (i use it everywhere) but can still be compromised plus no server is safe especially when exposed to the internet (gateway or otherwise)
+>
+> B) That is true but currently there's a lot of "security through obscurity" I.e. fractioning of data via lack of centralization (would need to change for this approach) and most government servers holding such sensitive information are only connected to internal networks and not exposed to the Internet (would need to change) plus they would need a standardized format/database construction again facilitating compromising it (think monolithic crop cultures versus bacteria/mold)
+>
+> C) I am thinking more along the lines of atlas cookie/hardware fingerprint and leaked information through cookies. They can now track you across devices and once you log in anywhere using your name, that information is linked to your name. Kind of like Tor network, it's all anonymous until you log in somewhere and it all unravels.
+>
+> D) That one is mostly true, provided there are anonymous lines and dump sites, if all communication were encrypted that would also be alleviated. Still, it would mean that the most honest information would become the most shady since it would not be linked to names and people but to anonymous accounts. Which is something we can already see being instrumentalized: far-right publications using the cover of being whistle-blowers because they claim their opinion was oppressed. They would continue doing that and magnify the problem, i suppose.
+
+> [Heinrich]
+> (A) I agree that 2FA is not 100% safe. But nothing is 100% safe. Even passports are not. There are people that forge these things and assume another identity. The real question is it good enough for practical use. And the answer is clear: Yes.
+> There are good enough ways that a establish you are the same person created that account last month (beyond reasonable dought) and are suitable for general adoption (card readers are not).
+>
+> (B) There is no such thing as "security through obscurity".
+> But it's true that exposed servers are harder to keep safe.
+> There are well established ways to do it, though: Hire good admins!
+> If you inisit on more decentralization (I don't) you could have the states issue the digital passports.
+> As for common data formats, the exposed information (Name, Address, Date Of Birth and maybe 10 more) is so little, that selecting a standard is feasible.
+>
+> (C) Yes, that's true. Cookies + Fingerprints are a way to link identities which is not steered by the user. But I don't think this is a show stopper for the DP.
+>
+> (D) I think the main point is. Providing a proof of identity is a great way to establish trust in your actions. If you can't provide such an identity, for whatever reason, you have to find other ways to esatblish trust. The case of whistleblowers is delicate in many ways...
+
+> [Martin]
+> A) 2FA is reasonably safe, yes, then again, the higher the interest in circumventing it, the more vulnerabilities will become apparent. I would think that a hardware token integrated with the physical passport would be sufficiently secure, implementing a salt to the time based token to further tighten security might become necessary to increase complexity.
+>
+> B) My point exactly. It would have to become centralized but centralization is what will make it more vulnerable. The data exposed would have to be strictly limited in such a way that no information that could enable an impostor to fully steal an identity is ever transmitted or can ever be accessed. Preferably, it would be genetic markers, fingerprint etc. which might serve as the hash mentioned in A and can never be accessed by humans (only verified by a machine using hashes for example). Never trust even the best admin (and keep in mind the state doesn't pay enough to attract the best admins unless those are motivated by other motives) . Again, never expect any server can be kept safe.
+>
+> C) It's no show stopper, but it's a grave concern because it makes the already worrying state of privacy even worse. And there's no way we could prevent this (unless keeping a soft digital identity linked to a hard physical identity that do not overlap unless needed by law) for example: nicknames that are verified as belonging to a real person but aren't traceable to that person unless he/she violates the law).
+>
+> D) Indeed. We would need a trusted institution to verify the content of leaked information and to keep whistle-blowers safe. It would be a great addition of those could ensure prior that no information damaging state security is leaked in that way but that nonetheless those violations are prosecuted then. But that's another issue.
