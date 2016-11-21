@@ -245,3 +245,8 @@ material on the internet, as do other approaches to law enforcement on
 the web.
 
 Here is the time. Here is the place. Let's make it happen.
+
+# Discussion on Reddit
+
+<blockquote class="reddit-card" data-card-created="1479734003"><a href="https://www.reddit.com/r/netsec/comments/5d2obv/a_ditigal_passport_for_digital_citizens/?ref=share&ref_source=embed">A Ditigal Passport For Digital Citizens</a> from <a href="http://www.reddit.com/r/netsec">netsec</a></blockquote>
+<script async src="//embed.redditmedia.com/widgets/platform.js" charset="UTF-8"></script>
