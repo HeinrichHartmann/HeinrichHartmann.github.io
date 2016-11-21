@@ -13,16 +13,16 @@ population of the state. This means citizens in different states have
 different voting power for the President. This site visualizes the
 differences.
 
-
 ## Direct Comparison
+Click and hover the map to select states for comparison.
 
 <script src="//d3js.org/d3.v3.min.js"></script>
 <link rel="stylesheet" type="text/css" href="/assets/electoralcollege/style.css">
 
 <div class="tagline">
-    One vote in <span class="B-state-full"></span>
-    <br> =
-    <br> <span class="rat"></span> votes in <span class="A-state-full"></span>.
+    One voter in <span class="B-state-full"></span>
+    <br> <span style="">counts like</span>
+    <br> <span class="rat"></span> voters in <span class="A-state-full"></span>.
 </div>
 
 <table width="100%">

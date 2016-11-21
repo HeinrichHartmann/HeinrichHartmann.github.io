@@ -197,7 +197,7 @@ function update_map() {
 function update_chart() {
   data = data_vote;
 
-  var duration = 750;
+  var duration = 300;
   svg.selectAll(".bar").data(data)
     .transition().duration(duration)
     .attr("y", function(d) { return y(Math.max(0, 1/d.rat)); })
@@ -210,12 +210,13 @@ function update_chart() {
         return null;
       }
     });
+  
 
   var labeld = 10;
   svg.selectAll(".barlabel").data(data)
     .attr("y", height + 30)
     .text(function(d) {
-        return d.rat.toFixed(1);
+      return (1/d.rat).toFixed(1);
     });
   d3.select("#highlight")
     .transition().duration(duration)
