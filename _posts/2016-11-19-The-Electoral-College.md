@@ -13,6 +13,16 @@ population of the state. This means citizens in different states have
 different voting power for the President. This site visualizes the
 differences.
 
+## Credits
+
+This visualization was created in collaboration with [Rene Pickhardt](https://twitter.com/renepickhardt) in reply to the following tweet:
+
+<center>
+<blockquote class="twitter-tweet" data-lang="en"><p lang="en" dir="ltr"><a href="https://twitter.com/hashtag/Request4Help?src=hash">#Request4Help</a>: Can you help me represent the relative presidential voting power of citizens? See <a href="https://t.co/79ZpBjoCEw">https://t.co/79ZpBjoCEw</a></p>&mdash; Lessig (@lessig) <a href="https://twitter.com/lessig/status/797698106360000512">November 13, 2016</a></blockquote> <script async src="//platform.twitter.com/widgets.js" charset="utf-8"></script>
+</center>
+
+The source code is available [on GitHub](https://github.com/HeinrichHartmann/us-voting-power-map). Contributions are welcome.
+
 ## Direct Comparison
 Click and hover the map to select states for comparison.
 
@@ -63,13 +73,3 @@ This chart shows voting power of citizens in comparison.
 </div>
 
 <script src="/assets/electoralcollege/script.js"></script>
-
-## Credits
-
-This visualization was created in collaboration with [Rene Pickhardt](https://twitter.com/renepickhardt) in reply to the following tweet:
-
-<center>
-<blockquote class="twitter-tweet" data-lang="en"><p lang="en" dir="ltr"><a href="https://twitter.com/hashtag/Request4Help?src=hash">#Request4Help</a>: Can you help me represent the relative presidential voting power of citizens? See <a href="https://t.co/79ZpBjoCEw">https://t.co/79ZpBjoCEw</a></p>&mdash; Lessig (@lessig) <a href="https://twitter.com/lessig/status/797698106360000512">November 13, 2016</a></blockquote> <script async src="//platform.twitter.com/widgets.js" charset="utf-8"></script>
-</center>
-
-The source code is available [on GitHub](https://github.com/HeinrichHartmann/us-voting-power-map). Contributions are welcome.
