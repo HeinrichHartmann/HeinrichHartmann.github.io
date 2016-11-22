@@ -2,6 +2,8 @@
 author: "Heinrich Hartmann"
 layout: "post"
 category: "blog"
+redirect_from:
+ - /2014/12/11/Generative-Models-for-Time-Series.html
 ---
 
 <script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS_HTML" type="text/javascript">

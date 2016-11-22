@@ -2,6 +2,8 @@
 author: "Heinrich Hartmann"
 layout: "post"
 category: "blog"
+redirect_from:
+ - /2013/12/25/Setting-up-a-Virtual-Cluster.html
 ---
 
 <!-- # Virtual Cluster -->

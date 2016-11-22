@@ -2,6 +2,8 @@
 author: "Heinrich Hartmann"
 layout: "post"
 category: "blog"
+redirect_from:
+  - /2012/09/10/Dissecting-Hello-World.html
 ---
 
 <!-- # Dissecting Hello World -->

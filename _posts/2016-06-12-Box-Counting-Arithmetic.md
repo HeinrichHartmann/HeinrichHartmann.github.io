@@ -2,6 +2,8 @@
 author: "Heinrich Hartmann"
 layout: "post"
 category: "blog"
+redirect_from:
+ - /2016/06/12/Box-Counting-Arithmetic.html
 ---
 
 <script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS_HTML" type="text/javascript">

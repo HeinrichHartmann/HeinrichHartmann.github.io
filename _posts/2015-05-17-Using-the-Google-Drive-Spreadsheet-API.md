@@ -2,6 +2,8 @@
 author: "Heinrich Hartmann"
 layout: "post"
 category: "blog"
+redirect_from:
+ - /2015/05/17/Using-the-Google-Drive-Spreadsheet-API.html
 ---
 
 <style> .center { margin-right: auto; margin-left:auto; display: block; max-width:600px } </style>

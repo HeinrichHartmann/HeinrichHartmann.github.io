@@ -2,6 +2,8 @@
 author: "Heinrich Hartmann"
 layout: "text"
 category: "blog"
+redirect_from:
+ - 2016/01/28/The-Emacs-Key-Bindings.html
 ---
 
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~

@@ -2,6 +2,8 @@
 author: "Heinrich Hartmann"
 layout: "post"
 category: "blog"
+redirect_from:
+ - /2013/01/17/Why-Openness-benefitts-research.html
 ---
 
 <!-- # Why openness benefits research -->

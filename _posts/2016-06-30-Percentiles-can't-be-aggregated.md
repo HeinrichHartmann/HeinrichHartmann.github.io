@@ -5,6 +5,9 @@ external_url: https://twitter.com/heinrichhartman/status/748562001392111617
 external_site: twitter
 comment: "a letter to John Rauser"
 category: "blog"
+redirect_from:
+ - /blog/2016/06/30/Percentiles-can't-be-aggregated.html
+ - /2016/06/30/Percentiles-can't-be-aggregated.html
 ---
 
 Dear John,

@@ -2,6 +2,8 @@
 author: "Heinrich Hartmann"
 layout: "post"
 category: "blog"
+redirect_from:
+ - /2014/01/01/Monitoring-with-Ganglia.html
 ---
 
 <!-- # Ganglia -->

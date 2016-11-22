@@ -4,6 +4,7 @@ layout: "post"
 category: "opinion"
 redirect_from:
   - /2016/11/15/A-Ditigal-Passport-for-Digital-Citizens.html
+  - /opinion/2016/11/15/A-Ditigal-Passport-for-Digital-Citizens.html
 ---
 
 <img src="/assets/digitalpassportbanner_pixbay_cc0.png" width="100%">

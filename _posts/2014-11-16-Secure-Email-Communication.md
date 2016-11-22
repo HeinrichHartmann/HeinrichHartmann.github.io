@@ -2,6 +2,8 @@
 author: "Heinrich Hartmann"
 layout: "post"
 category: "blog"
+redirect_from:
+ - /2014/11/16/Secure-Email-Communication.html
 ---
 
 <!-- # Secure Email Communication -->

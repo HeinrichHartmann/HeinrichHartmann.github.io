@@ -2,6 +2,8 @@
 author: "Heinrich Hartmann"
 layout: "post"
 category: "blog"
+redirect_from:
+ - /2014/01/15/Distributed-scraper-design.html
 ---
 
 <!-- # Distributed Scraper Design -->

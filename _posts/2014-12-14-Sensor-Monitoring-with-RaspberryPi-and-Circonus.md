@@ -2,6 +2,8 @@
 author: "Heinrich Hartmann"
 layout: "post"
 category: "blog"
+redirect_from:
+ - /2014/12/14/Sensor-Monitoring-with-RaspberryPi-and-Circonus.html
 ---
 
 <!-- # Sensor Monitoring with RaspberryPi and Circonus -->

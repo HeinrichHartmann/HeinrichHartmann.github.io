@@ -2,6 +2,8 @@
 author: "Heinrich Hartmann"
 layout: "post"
 category: "blog"
+redirect_from:
+ - /2014/04/14/Digging-into-R.html
 ---
 
 <!-- EMACS PREAMBLE: -->

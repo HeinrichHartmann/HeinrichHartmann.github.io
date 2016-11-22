@@ -2,6 +2,8 @@
 author: "Heinrich Hartmann"
 layout: "post"
 category: "blog"
+redirect_from:
+ - /2014/11/22/Raspberry-Pi-SunFounder-GPIO-Layout.html
 ---
 
 <!-- # Raspberry Pi SunFounder GPIO Layout -->
