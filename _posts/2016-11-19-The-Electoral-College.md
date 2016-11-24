@@ -73,3 +73,10 @@ This chart shows voting power of citizens in comparison.
 </div>
 
 <script src="/assets/electoralcollege/script.js"></script>
+
+## Discussion on Reddit
+
+<blockquote class="reddit-card" data-card-created="1479985771"><a href="https://www.reddit.com/r/dataisbeautiful/comments/5en8zx/differences_in_voting_power_per_state_in_the_us/?ref=share&ref_source=embed">Differences in Voting Power per State in the US Electoral College [OC]</a> from <a href="http://www.reddit.com/r/dataisbeautiful">dataisbeautiful</a></blockquote>
+<script async src="//embed.redditmedia.com/widgets/platform.js" charset="UTF-8"></script>
+
+<img src="/assets/electoralcollege/preview.png" style="display: none;" />
