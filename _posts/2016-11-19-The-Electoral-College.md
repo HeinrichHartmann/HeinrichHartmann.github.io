@@ -1,7 +1,10 @@
 ---
 author: "Heinrich Hartmann"
 layout: "post"
-category: "blog"
+permalink: "/blog/2016/11/19/The-Electoral-College.html"
+categories:
+- "opinion"
+- "blog"
 ---
 
 US Presidents are not directly elected by the citizens of the United
@@ -74,9 +77,16 @@ This chart shows voting power of citizens in comparison.
 
 <script src="/assets/electoralcollege/script.js"></script>
 
-## Discussion on Reddit
+## Comments
+
+
+### ... on Politics
+
+Please post political comments to [Lessig's blog](https://medium.com/@lessig/see-just-how-unequal-we-are-479634cc6a24#.egersh9jr).
+
+<img src="/assets/electoralcollege/preview.png" style="display: none;" />
+
+### ... on Visualization
 
 <blockquote class="reddit-card" data-card-created="1479985771"><a href="https://www.reddit.com/r/dataisbeautiful/comments/5en8zx/differences_in_voting_power_per_state_in_the_us/?ref=share&ref_source=embed">Differences in Voting Power per State in the US Electoral College [OC]</a> from <a href="http://www.reddit.com/r/dataisbeautiful">dataisbeautiful</a></blockquote>
 <script async src="//embed.redditmedia.com/widgets/platform.js" charset="UTF-8"></script>
-
-<img src="/assets/electoralcollege/preview.png" style="display: none;" />

@@ -4,7 +4,7 @@ title: Heinrich Hartmann
 ---
 
 <div id="home">
-  
+
   <h1>News</h1>
   <ul class="posts">
     <li><span>2016-11-29 </span> &raquo; <a href="https://www.netways.de/en/events_trainings/osmc/">OSMC</a>, Nürnberg - Friends and foes in API Monitoring</li>
@@ -14,13 +14,11 @@ title: Heinrich Hartmann
   <h1>Blog Posts</h1>
 
   <ul class="posts">
-    {% for post in site.posts %}
-      {% if post.category == "blog" %}
-	<li><span>{{ post.date | date: "%Y-%m-%d" }}</span> &raquo; <a href="{{ post.url }}">{{ post.title }}</a>
-	  {% if post.comment%} - <em>{{ post.comment }}</em>{% endif %}
-	  {% if post.external_url %} (on {{ post.external_site }}) {% endif %}
-        </li>
-      {% endif %}
+    {% for post in site.categories.blog %}
+      <li><span>{{ post.date | date: "%Y-%m-%d" }}</span> &raquo; <a href="{{ post.url }}">{{ post.title }}</a>
+        {% if post.comment%} - <em>{{ post.comment }}</em>{% endif %}
+        {% if post.external_url %} (on {{ post.external_site }}) {% endif %}
+      </li>
     {% endfor %}
   </ul>
 

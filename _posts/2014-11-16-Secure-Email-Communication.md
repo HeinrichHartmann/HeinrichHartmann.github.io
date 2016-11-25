@@ -1,7 +1,10 @@
 ---
 author: "Heinrich Hartmann"
 layout: "post"
-category: "blog"
+categories:
+- "blog"
+- "opinion"
+permalink: "/blog/2014/11/16/Secure-Email-Communication.html"
 redirect_from:
  - /2014/11/16/Secure-Email-Communication.html
 ---
