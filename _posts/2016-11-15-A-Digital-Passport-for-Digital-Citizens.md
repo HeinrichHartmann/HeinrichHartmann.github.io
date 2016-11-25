@@ -249,11 +249,6 @@ Here is the time. Here is the place. Let's make it happen.
 
 # Comments
 
-## Discussion on Reddit
-
-<blockquote class="reddit-card" data-card-created="1479734003"><a href="https://www.reddit.com/r/netsec/comments/5d2obv/a_ditigal_passport_for_digital_citizens/?ref=share&ref_source=embed">A Ditigal Passport For Digital Citizens</a> from <a href="http://www.reddit.com/r/netsec">netsec</a></blockquote>
-<script async src="//embed.redditmedia.com/widgets/platform.js" charset="UTF-8"></script>
-
 ## Archived Diqus Comments
 
 These comments were submitted in Disqus, but did not survive an URL
@@ -352,3 +347,8 @@ redirect, I had to introduce.
 > C) It's no show stopper, but it's a grave concern because it makes the already worrying state of privacy even worse. And there's no way we could prevent this (unless keeping a soft digital identity linked to a hard physical identity that do not overlap unless needed by law) for example: nicknames that are verified as belonging to a real person but aren't traceable to that person unless he/she violates the law).
 >
 > D) Indeed. We would need a trusted institution to verify the content of leaked information and to keep whistle-blowers safe. It would be a great addition of those could ensure prior that no information damaging state security is leaked in that way but that nonetheless those violations are prosecuted then. But that's another issue.
+
+## Discussion on Reddit
+
+<blockquote class="reddit-card" data-card-created="1479734003"><a href="https://www.reddit.com/r/netsec/comments/5d2obv/a_ditigal_passport_for_digital_citizens/?ref=share&ref_source=embed">A Ditigal Passport For Digital Citizens</a> from <a href="http://www.reddit.com/r/netsec">netsec</a></blockquote>
+<script async src="//embed.redditmedia.com/widgets/platform.js" charset="UTF-8"></script>
