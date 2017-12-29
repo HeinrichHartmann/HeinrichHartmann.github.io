@@ -18,14 +18,11 @@ defaults:
       author: "Heinrich Hartmann"
       layout: "post"
 
-# Figure plugin from
-# https://github.com/lmullen/jekyll_figure
-gems: # [ jekyll_figure ]
+plugins:
+  # Figure plugin from https://github.com/lmullen/jekyll_figure
   - jekyll_figure
   - jekyll-redirect-from
 
 figures:
   dir: /assets
   enumerate: true
-
-
