@@ -12,8 +12,11 @@ RUN gem install bundler
 RUN mkdir /app
 COPY Gemfile /app
 COPY Gemfile.lock /app
-WORKDIR /app
 
 # App install
 RUN apt-get install -y zlibc zlib1g-dev
+WORKDIR /app
 RUN bundle install
+
+EXPOSE 4000
+WORKDIR /src
