@@ -16,20 +16,29 @@ html, body {
 }
 
 body {
+  font-family: Helvetica, arial, sans-serif;
+  font-size: 14px;
+  line-height: 1.6;
+  padding-top: 10px;
+  padding-bottom: 10px;
   background-color: white;
-  font: 13.34px helvetica, arial, clean, sans-serif;
+  padding: 30px;
 }
 
 h1 {
   font-size: 28px;
   margin: 0 0 1em 0;
 }
-
 h2, h3, h4, h5, h6 {
   font-size: 100%;
   margin-bottom: 1em;
   margin-top: 2em;
+  border-bottom: 1px solid #cccccc;
 }
+h2:before { content: "## "; }
+h3:before { content: "### "; }
+h4:before { content: "#### "; }
+
 
 h2:before { content: "# "; }
 h3:before { content: "## "; }
@@ -166,6 +175,10 @@ ul.posts span {
   border: 0;
 }
 
+#home h1 {
+  font-size: 100%;
+}
+
 /*****************************************************************************/
 /*
 /* Posts
@@ -198,6 +211,13 @@ ul.posts span {
   margin-left: 1.35em;
 }
 
+/* extra space for list elements  */
+#post li {
+  margin: 1em 0;
+}
+#post li li { /* ... but not for nested ones */
+  margin: 0;
+}
 
 #post pre code {
   border: none;
