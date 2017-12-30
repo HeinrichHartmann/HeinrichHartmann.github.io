@@ -1,6 +1,6 @@
 # was ./jekyll-run
 serve:
-	bundle exec jekyll serve -w --drafts
+	bundle exec jekyll serve --watch --drafts --future --incremental
 
 # was ./jekyll-update
 update:
@@ -12,7 +12,7 @@ ruby-instsall:
 	bundle
 
 build:
-	bundle exec jekyll build
+	bundle exec jekyll build --future
 
 check:
 	if ! [ -z "`git status --porcelain`" ]; then echo "Working directory is not clean" && exit 1; fi

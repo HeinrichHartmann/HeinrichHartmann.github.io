@@ -21,8 +21,8 @@ body {
 }
 
 h1 {
-  font-size: 100%;
-  margin-bottom: 1em;
+  font-size: 28px;
+  margin: 0 0 1em 0;
 }
 
 h2, h3, h4, h5, h6 {
@@ -30,6 +30,10 @@ h2, h3, h4, h5, h6 {
   margin-bottom: 1em;
   margin-top: 2em;
 }
+
+h2:before { content: "# "; }
+h3:before { content: "## "; }
+h4:before { content: "### "; }
 
 p {
   margin: 1em 0;
@@ -287,5 +291,3 @@ table tr th, table tr td
 	margin:0;
 	padding:6px 13px;
 }
-
-
