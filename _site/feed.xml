@@ -1,0 +1,154 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:dc="http://purl.org/dc/elements/1.1/">
+	<channel>
+		<title>Heinrich Hartmann's Blog</title>
+		<description>A blog about mathematics, statistics and tinkering.</description>		
+		<link>http://heinrichhartmann.com</link>
+		<atom:link href="http://heinrichhartmann.com/feed.xml" rel="self" type="application/rss+xml" />
+		
+			<item>
+				<title>Quitting Facebook</title>
+				        
+				
+					<description>&lt;p&gt;&lt;a title=&quot;By Kvarki1 (File:Facebook like thumb.png) [CC BY-SA 3.0 (https://creativecommons.org/licenses/by-sa/3.0)], via Wikimedia Commons&quot; href=&quot;https://commons.wikimedia.org/wiki/File%3ANot_facebook_dislike_thumbs_down.png&quot;&gt;&lt;img width=&quot;100%&quot; alt=&quot;Not facebook dislike thumbs down&quot; src=&quot;/assets/thumbs-down.png&quot; /&gt;&lt;/a&gt;&lt;/p&gt;
+
+</description>
+				
+				<pubDate>Fri, 29 Dec 2017 00:00:00 +0000</pubDate>
+				<link>http://heinrichhartmann.com/blog/2017/12/31/Quitting-Facebook.html</link>
+				<guid isPermaLink="true">http://heinrichhartmann.com/blog/2017/12/31/Quitting-Facebook.html</guid>
+			</item>
+		
+			<item>
+				<title>The Electoral College</title>
+				        
+				
+					<description>&lt;p&gt;US Presidents are not directly elected by the citizens of the United
+States.  Instead, citizens in each state vote to select a set of
+electors which vote for a party’s candidate in the
+&lt;a href=&quot;https://en.wikipedia.org/wiki/Electoral_College_(United_States)&quot;&gt;Electoral College&lt;/a&gt;.
+Interestingly, the number of electors is not proportional to the
+population of the state. This means citizens in different states have
+different voting power for the President. This site visualizes the
+differences.&lt;/p&gt;
+
+</description>
+				
+				<pubDate>Sat, 19 Nov 2016 00:00:00 +0000</pubDate>
+				<link>http://heinrichhartmann.com/blog/2016/11/19/The-Electoral-College.html</link>
+				<guid isPermaLink="true">http://heinrichhartmann.com/blog/2016/11/19/The-Electoral-College.html</guid>
+			</item>
+		
+			<item>
+				<title>Bürgerversicherung Bedroht Arbeitsplätze</title>
+				        
+				
+					<description>&lt;p&gt;Die FAZ  &lt;a href=&quot;http://www.faz.net/aktuell/wirtschaft/wirtschaftspolitik/buergerversicherung-von-spd-gruenen-linke-fuehrt-zu-stellenabbau-14531660.html&quot;&gt;Bürgerversicherung würde Zehntausende Arbeitsplätze bedrohen&lt;/a&gt; schreibt heute (2016-11-17):&lt;/p&gt;
+
+</description>
+				
+				<pubDate>Thu, 17 Nov 2016 00:00:00 +0000</pubDate>
+				<link>http://heinrichhartmann.com/opinion/2016/11/17/Bu-rgerversicherung-Bedroht-Arbeitspla-tze.html</link>
+				<guid isPermaLink="true">http://heinrichhartmann.com/opinion/2016/11/17/Bu-rgerversicherung-Bedroht-Arbeitspla-tze.html</guid>
+			</item>
+		
+			<item>
+				<title>A Digital Passport For Digital Citizens</title>
+				        
+				
+					<description>&lt;p&gt;&lt;img src=&quot;/assets/digitalpassportbanner_pixbay_cc0.png&quot; width=&quot;100%&quot; /&gt;&lt;/p&gt;
+
+</description>
+				
+				<pubDate>Tue, 15 Nov 2016 00:00:00 +0000</pubDate>
+				<link>http://heinrichhartmann.com/opinion/2016/11/15/A-Digital-Passport-for-Digital-Citizens.html</link>
+				<guid isPermaLink="true">http://heinrichhartmann.com/opinion/2016/11/15/A-Digital-Passport-for-Digital-Citizens.html</guid>
+			</item>
+		
+			<item>
+				<title>Outlier Detection At Touchtunes</title>
+				        
+				
+					<description>
+</description>
+				
+				<pubDate>Tue, 01 Nov 2016 00:00:00 +0000</pubDate>
+				<link>http://heinrichhartmann.com/blog/2016/11/01/Outlier-Detection-at-TouchTunes.html</link>
+				<guid isPermaLink="true">http://heinrichhartmann.com/blog/2016/11/01/Outlier-Detection-at-TouchTunes.html</guid>
+			</item>
+		
+			<item>
+				<title>Percentiles Can't Be Aggregated</title>
+				        
+				
+					<description>&lt;p&gt;Dear John,&lt;/p&gt;
+
+</description>
+				
+				<pubDate>Thu, 30 Jun 2016 00:00:00 +0000</pubDate>
+				<link>http://heinrichhartmann.com/blog/2016/06/30/Percentiles-can't-be-aggregated.html</link>
+				<guid isPermaLink="true">http://heinrichhartmann.com/blog/2016/06/30/Percentiles-can't-be-aggregated.html</guid>
+			</item>
+		
+			<item>
+				<title>Box Counting Arithmetic</title>
+				        
+				
+					<description>&lt;script src=&quot;http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS_HTML&quot; type=&quot;text/javascript&quot;&gt;
+  MathJax.Hub.Config({ tex2jax: { inlineMath: [['$','$']], processEscapes: true } });
+&lt;/script&gt;
+
+&lt;style&gt; img { margin-right: auto; margin-left:auto; display: block } &lt;/style&gt;
+
+</description>
+				
+				<pubDate>Sun, 12 Jun 2016 00:00:00 +0000</pubDate>
+				<link>http://heinrichhartmann.com/blog/2016/06/12/Box-Counting-Arithmetic.html</link>
+				<guid isPermaLink="true">http://heinrichhartmann.com/blog/2016/06/12/Box-Counting-Arithmetic.html</guid>
+			</item>
+		
+			<item>
+				<title>Dijkstra's Prime Number Algorithm</title>
+				        
+				
+					<description>&lt;script src=&quot;http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS_HTML&quot; type=&quot;text/javascript&quot;&gt;&lt;/script&gt;
+
+&lt;style&gt; .center { margin-right: auto; margin-left:auto; display: block } &lt;/style&gt;
+
+&lt;style src=&quot;/css/coderay.css&quot;&gt;&lt;/style&gt;
+
+</description>
+				
+				<pubDate>Sun, 03 Apr 2016 00:00:00 +0000</pubDate>
+				<link>http://heinrichhartmann.com/blog/2016/04/03/Dijkstra's-Prime-Number-Algorithm.html</link>
+				<guid isPermaLink="true">http://heinrichhartmann.com/blog/2016/04/03/Dijkstra's-Prime-Number-Algorithm.html</guid>
+			</item>
+		
+			<item>
+				<title>The Emacs Key Bindings</title>
+				        
+				
+					<description>&lt;p&gt;~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+                                                            2016-01-28&lt;/p&gt;
+
+</description>
+				
+				<pubDate>Thu, 28 Jan 2016 00:00:00 +0000</pubDate>
+				<link>http://heinrichhartmann.com/blog/2016/01/28/The-Emacs-Key-Bindings.html</link>
+				<guid isPermaLink="true">http://heinrichhartmann.com/blog/2016/01/28/The-Emacs-Key-Bindings.html</guid>
+			</item>
+		
+			<item>
+				<title>Spike Erosion</title>
+				        
+				
+					<description>
+</description>
+				
+				<pubDate>Fri, 15 Jan 2016 00:00:00 +0000</pubDate>
+				<link>http://heinrichhartmann.com/blog/2016/01/15/Spike-Erosion.html</link>
+				<guid isPermaLink="true">http://heinrichhartmann.com/blog/2016/01/15/Spike-Erosion.html</guid>
+			</item>
+		
+	</channel>
+</rss>

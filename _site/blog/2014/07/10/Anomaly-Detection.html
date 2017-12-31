@@ -1,0 +1,511 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en-us">
+<head>
+   <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+   <title>Anomaly Detection</title>
+   <meta name="author" content="Heinrich Hartmann" />
+
+   <!-- syntax highlighting CSS -->
+   <link rel="stylesheet" href="/css/syntax.css" type="text/css" />
+
+   <!-- Homepage CSS -->
+   <link rel="stylesheet" href="/css/screen.css" type="text/css" media="screen, projection" />
+
+   <!-- RSS feed -->
+   <link rel="alternate" type="application/rss+xml" title="RSS" href="/feed.xml">
+</head>
+<body>
+
+<div class="site">
+  <div class="title">
+    <a href="/">Heinrich Hartmann</a>
+    <a class="extra" href="/opinion.html">opinion</a>
+    <a class="extra" href="/consulting.html">consulting</a>
+    <a class="extra" href="/about.html">about</a>
+    <div style='float:right'>
+      <a href="http://eepurl.com/ccmH-T"><img src="/images/mail_icon.svg" width="25px"/></a>
+    </div>
+    <div style='float:right'>
+      <a href="http://twitter.com/intent/follow?screen_name=HeinrichHartman"><img src="/images/twitter_icon.svg" width="25px" style="margin: 0 10px 0 0;"></a>
+    </div>
+  </div>
+
+  <div id="headline" style="width:100%">
+  <h1 style="float:left">Anomaly Detection</h1>
+  <span class='date' style="float:right">
+    <span class='quo'>&laquo;</span>
+    2014-07-10
+    <span class='quo'>&raquo;</span>
+  </span>
+  <div style="clear:both"></div>
+</div>
+
+<div id="post">
+  <script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS_HTML" type="text/javascript"></script>
+
+<style> .center { margin-right: auto; margin-left:auto; display: block } </style>
+
+<style src="/css/coderay.css"></style>
+
+<!-- # Anomaly Detection in Time Series data -->
+
+<h2 id="definition-of-time-series">Definition of Time Series</h2>
+
+<p><strong>Definition</strong>
+<script type="math/tex">\def\KM{\mathcal{M}}
+\def\IY{\mathbb{Y}}</script></p>
+
+<p>A <em>time series (instance)</em> <script type="math/tex">y</script> is a sequence of real numbers:</p>
+
+<script type="math/tex; mode=display">y = (y_1, \dots, y_T)</script>
+
+<p>A <em>time series model</em> <script type="math/tex">\IY</script> is a sequence of random variables:</p>
+
+<script type="math/tex; mode=display">\IY = (\IY_1, \dots, \IY_T)</script>
+
+<p><strong>Examples</strong>
+<script type="math/tex">\def\eps{\epsilon}</script>
+<script type="math/tex">\def\KN{\mathcal{N}}</script>
+<script type="math/tex">\def\IR{\mathbb{R}}</script></p>
+
+<ol>
+  <li>
+    <p>Let <script type="math/tex">\eps_t \sim \KN(0,1)</script> be independent standard-normally
+distributed.  Then the time series model with <script type="math/tex">\IY_t = \eps_t</script>
+is called standard-white noise.</p>
+  </li>
+  <li>
+    <p>Let <script type="math/tex">b \in \IR</script> be a real number, then <script type="math/tex">\IY_t = b + \eps_t</script> is
+a time series model with constant expectation <script type="math/tex">E[\IY_t] = b</script></p>
+  </li>
+  <li>
+    <p>Let <script type="math/tex">b,m \in \IR</script> be real numbers, then <script type="math/tex">\IY_t = b + m t + \eps_t</script>
+is a time series with affine-linear expectations <script type="math/tex">E[\IY_t] = b + m t</script></p>
+  </li>
+</ol>
+
+<p><strong>Remark</strong></p>
+
+<p>For a given time series <script type="math/tex">y</script> and model <script type="math/tex">\IY</script> we get a probability
+for the occurencye of <script type="math/tex">y</script>:</p>
+
+<script type="math/tex; mode=display">P_{\IY}[y] = P[\IY_1 = y_1, \dots, \IY_T = y_T].</script>
+
+<p>In case the model has a joint <a href="http://en.wikipedia.org/wiki/Probability_density_function">probability density function</a> <script type="math/tex">p_\IY</script> we get a probability density for the time series <script type="math/tex">y</script>:</p>
+
+<script type="math/tex; mode=display">p_{\IY}(y) = p_{\IY_1, \dots \IY_T}(y_1, \dots, y_T)</script>
+
+<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="c">## Numerical Simulation of Examples</span>
+
+<span class="kn">import</span> <span class="nn">random</span>
+<span class="kn">from</span> <span class="nn">matplotlib</span> <span class="kn">import</span> <span class="n">pyplot</span> <span class="k">as</span> <span class="n">plt</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">rcParams</span><span class="p">[</span><span class="s">'figure.figsize'</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="mf">9.0</span><span class="p">,</span> <span class="mf">3.0</span><span class="p">)</span>
+
+<span class="n">eps</span> <span class="o">=</span> <span class="k">lambda</span> <span class="p">:</span> <span class="n">random</span><span class="o">.</span><span class="n">normalvariate</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span>
+
+<span class="n">Y1</span> <span class="o">=</span> <span class="p">[</span> <span class="n">eps</span><span class="p">()</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">100</span><span class="p">)]</span>
+<span class="n">Y2</span> <span class="o">=</span> <span class="p">[</span> <span class="n">eps</span><span class="p">()</span> <span class="o">+</span> <span class="mi">5</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">100</span><span class="p">)]</span>
+<span class="n">Y3</span> <span class="o">=</span> <span class="p">[</span> <span class="n">eps</span><span class="p">()</span> <span class="o">-</span> <span class="mi">3</span> <span class="o">+</span> <span class="mf">0.2</span> <span class="o">*</span> <span class="n">i</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">100</span><span class="p">)</span> <span class="p">]</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s">"Time series samples"</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">Y1</span><span class="p">,</span> <span class="s">'r.'</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s">"Standard white noise"</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">Y2</span><span class="p">,</span> <span class="s">'g.'</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s">"Normal noise with mean"</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">Y3</span><span class="p">,</span> <span class="s">'b.'</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s">"Normal noise with mean and drift"</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">loc</span> <span class="o">=</span> <span class="s">"upper left"</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span></code></pre></figure>
+
+<p><img src="http://heinrichhartmann.com/assets/Anomaly-Detection_files/CusumMethod_1_0.png" alt="png" class="center" /></p>
+
+<h2 id="parameter-estimation">Parameter Estimation</h2>
+
+<p><strong>Definition</strong>
+Let <script type="math/tex">\IY_\theta</script> for <script type="math/tex">\theta \in \Theta</script> be a family of time series models, and
+let <script type="math/tex">y</script> be a time series instance.
+We write <script type="math/tex">P_\theta</script> and <script type="math/tex">p_\theta</script> for <script type="math/tex">P_{\IY_\theta}</script> and <script type="math/tex">p_{\IY_\theta}</script>.</p>
+
+<p>The <em>maximum likelihood estimator</em> (MLE) (cf.
+<a href="http://en.wikipedia.org/wiki/Maximum_likelihood">wikipedia</a>) for <script type="math/tex">y</script> in
+<script type="math/tex">\Theta</script>
+is defined as</p>
+
+<script type="math/tex; mode=display">\hat{\theta}= \text{arg-max} \{ P_\theta[y] \,\vert\, \theta \in \Theta \}.</script>
+
+<p>In case the model has a density function <script type="math/tex">p</script> we set</p>
+
+<script type="math/tex; mode=display">\hat{\theta}= \text{arg-max} \{ p_\theta[y] \,\vert\, \theta \in \Theta \}.</script>
+
+<p>Note that the maximum likelyhood estimater does not need to exists, nor is it
+unique if it exists.</p>
+
+<p><strong>Example</strong></p>
+<ol>
+  <li>Let <script type="math/tex">\Theta=\IR</script> and <script type="math/tex">\theta = b</script> with model <script type="math/tex">\IY_t = b + \eps_t</script>, then</li>
+</ol>
+
+<script type="math/tex; mode=display">p_b(y) = \frac{1}{2 \pi} exp(-\frac{1}{2} \sum_t (y_t - b)^2 ).</script>
+
+<p>The value <script type="math/tex">p_b</script> is maximal if the sum of squares <script type="math/tex">\sum_t (b - y_t)^2</script> is
+mininmal. Threfore</p>
+
+<script type="math/tex; mode=display">\hat{b} = \frac{1}{T} \sum y_t.</script>
+
+<ol>
+  <li>Similarly, for the model <script type="math/tex">\IY_t = b + m t + \eps</script> and <script type="math/tex">\theta=(b,m)</script> the MLE
+minimizes the following sum of squares</li>
+</ol>
+
+<script type="math/tex; mode=display">\sum_t (b + m t - y_t)^2.</script>
+
+<p>This problem is quivalent to <a href="http://en.wikipedia.org/wiki/Simple_linear_regression">Linear
+Regression</a>.</p>
+
+<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="c"># Linear Regression Example adapted from</span>
+<span class="c"># http://glowingpython.blogspot.de/2012/03/linear-regression-with-numpy.html</span>
+
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="n">np</span>
+<span class="kn">from</span> <span class="nn">scipy</span> <span class="kn">import</span> <span class="n">stats</span>
+
+<span class="n">y</span> <span class="o">=</span> <span class="p">[</span><span class="mi">19</span><span class="p">,</span> <span class="mi">20</span><span class="p">,</span> <span class="mf">20.5</span><span class="p">,</span> <span class="mf">21.5</span><span class="p">,</span> <span class="mi">22</span><span class="p">,</span> <span class="mi">23</span><span class="p">,</span> <span class="mi">23</span><span class="p">,</span> <span class="mf">25.5</span><span class="p">,</span> <span class="mi">24</span><span class="p">]</span>
+<span class="n">T</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">9</span><span class="p">)</span>
+
+<span class="n">m</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="n">_</span><span class="p">,</span><span class="n">_</span><span class="p">,</span><span class="n">_</span> <span class="o">=</span> <span class="n">stats</span><span class="o">.</span><span class="n">linregress</span><span class="p">(</span><span class="n">T</span><span class="p">,</span><span class="n">y</span><span class="p">)</span>
+
+<span class="n">line</span>  <span class="o">=</span> <span class="n">b</span> <span class="o">+</span> <span class="n">m</span> <span class="o">*</span> <span class="n">T</span>
+<span class="n">const</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">y</span><span class="p">)</span> <span class="o">+</span> <span class="mi">0</span> <span class="o">*</span> <span class="n">T</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s">"MLE Estimators"</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">T</span><span class="p">,</span><span class="n">y</span><span class="p">,</span><span class="s">'ro'</span><span class="p">,</span> <span class="n">T</span><span class="p">,</span> <span class="n">const</span><span class="p">,</span> <span class="s">'g-'</span><span class="p">,</span> <span class="n">T</span><span class="p">,</span><span class="n">line</span><span class="p">,</span><span class="s">'b-'</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">((</span><span class="s">"Samples"</span><span class="p">,</span> <span class="s">"Mean"</span><span class="p">,</span> <span class="s">"Regression line"</span><span class="p">),</span> <span class="n">loc</span><span class="o">=</span><span class="s">"upper left"</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span></code></pre></figure>
+
+<p><img src="http://heinrichhartmann.com/assets/Anomaly-Detection_files/CusumMethod_3_0.png" alt="png" class="center" /></p>
+
+<h1 id="hypothesis-testing"><a href="http://en.wikipedia.org/wiki/Statistical_hypothesis_testing">Hypothesis Testing</a></h1>
+
+<p>Let <script type="math/tex">\IY_\theta</script> and <script type="math/tex">\IY_{\theta'}</script> be two families of models, indexed by
+<script type="math/tex">\theta \in \Theta_0, \theta' \in \Theta_1</script>
+and <script type="math/tex">y</script> a time series instance. We consider the following statements:</p>
+
+<ul>
+  <li><script type="math/tex">H_0:</script> The sample <script type="math/tex">y</script> was drawn from a model in <script type="math/tex">\{\IY_\theta\}</script></li>
+  <li><script type="math/tex">H_1:</script> The sample <script type="math/tex">y</script> was drawn from a model in <script type="math/tex">\{\IY_{\theta'} \}</script></li>
+</ul>
+
+<p>In order to decide between those statements, we consider their likelihood ratio.</p>
+
+<p><strong>Definition</strong></p>
+
+<p>We define the <em>Likelihood ratio</em> <script type="math/tex">\Lambda</script> to be</p>
+
+<script type="math/tex; mode=display">\Lambda
+= \frac{max \{ P_{\theta'}[y] \,\vert\, \theta' \in \Theta_1 \}}{max \{
+P_{\theta}[y]  \,\vert\, \theta \in \Theta_0 \} }
+= \frac{ P_\hat{\theta'}[y] }{ P_\hat{\theta}[y]}</script>
+
+<p>or, in the continues case</p>
+
+<script type="math/tex; mode=display">\Lambda
+= \frac{max \{ p_{\theta'}[y] \,\vert\, \theta' \in \Theta_1 \}}{max \{
+p_{\theta}[y]  \,\vert\, \theta \in \Theta_0 \} }
+= \frac{p_\hat{\theta'}[y] }{ p_\hat{\theta}[y]}</script>
+
+<p>We define the <em>Log-likelihood ratio</em> as <script type="math/tex">\lambda = log(\Lambda)</script>.</p>
+
+<p>For a given confidence level <script type="math/tex">\alpha \geq 1</script> we accept the Hypythesis <script type="math/tex">H_1</script> if
+<script type="math/tex">\Lambda > \alpha</script>.</p>
+
+<p><strong>Example</strong>
+<script type="math/tex">\def\half{\frac{1}{2}}</script></p>
+
+<p>Take <script type="math/tex">% <![CDATA[
+b_0 < b_1 \in \IR %]]></script>, a time series <script type="math/tex">y</script> and <script type="math/tex">\theta = b_0, \theta' = b_1</script>.
+To test the hypothesis</p>
+
+<ul>
+  <li><script type="math/tex">H_0</script>: The instance <script type="math/tex">y</script> was drawn from <script type="math/tex">\IY_t = b_0 + \eps_t</script></li>
+  <li><script type="math/tex">H_1</script>: The instance <script type="math/tex">y</script> was drawn from <script type="math/tex">\IY_t = b_1 + \eps_t</script></li>
+</ul>
+
+<p>we calculate the likelihood ratios as:</p>
+
+<script type="math/tex; mode=display">% <![CDATA[
+\begin{align}
+\lambda
+&= log(\frac{ 1 / \sqrt{2 \pi} exp(-\half \sum_t (y_t - b_1)^2 )}{ 1 / \sqrt{2
+\pi} exp( - \half \sum_t (y_t - b_0)^2)}) \\
+&= \half \sum_t (y_t - b_0)^2 - (y_t - b_1)^2 \\
+&= \half \sum_t (y_t - \bar{b} + \delta)^2 - (y_t - \bar{b} - \delta)^2 \\
+&= 2 \delta \sum_t (y_t - \bar{b}) \\
+&= 2 \delta T (\bar{y} - \bar{b})
+\end{align} %]]></script>
+
+<p>where <script type="math/tex">\bar{b} = \half (b_0 + b_1)</script> is the average of <script type="math/tex">b_0, b_1</script>, the variable
+<script type="math/tex">\delta = \half(b_1 - b_0)</script> is half the distance between <script type="math/tex">b_1</script> and <script type="math/tex">b_0</script> and
+<script type="math/tex">\bar{y} = \frac{1}{T} \sum_t y_t</script> is the sample mean.
+For the second step we used the following simple identity:</p>
+
+<script type="math/tex; mode=display">(a + b)^2 - (a - b)^2 = 4ab</script>
+
+<p>Note, that <script type="math/tex">\lambda = 0</script> if <script type="math/tex">\bar{b} = \bar{y}</script>.
+And <script type="math/tex">\lambda > 0</script> if <script type="math/tex">\bar{y} - \bar{b} > 0</script>, i.e. <script type="math/tex">\bar{y}</script> is closer to <script type="math/tex">b_1</script>
+than to <script type="math/tex">b_0</script>.</p>
+
+<p>We accept the Hypothesis <script type="math/tex">H_1</script> if <script type="math/tex">\lambda > log(\alpha)</script>, which is equivalent
+to:</p>
+
+<script type="math/tex; mode=display">\bar{y} - \bar{b} > \frac{log(\alpha)}{2 \delta T}</script>
+
+<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="c"># Numerical Hypothesis Test Example</span>
+
+<span class="kn">from</span> <span class="nn">scipy.stats</span> <span class="kn">import</span> <span class="n">norm</span>
+
+<span class="c"># Model Parameters</span>
+<span class="n">b0</span> <span class="o">=</span> <span class="mi">0</span>
+<span class="n">b1</span> <span class="o">=</span> <span class="mi">5</span>
+<span class="n">alpha</span> <span class="o">=</span> <span class="mi">10</span>
+
+<span class="k">def</span> <span class="nf">normal_density</span><span class="p">(</span><span class="n">b</span><span class="p">):</span>
+    <span class="k">return</span> <span class="k">lambda</span> <span class="n">y</span> <span class="p">:</span> <span class="n">norm</span><span class="o">.</span><span class="n">pdf</span><span class="p">(</span><span class="n">loc</span><span class="o">=</span><span class="n">b</span><span class="p">,</span><span class="n">scale</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span><span class="n">x</span><span class="o">=</span><span class="n">y</span><span class="p">)</span>
+
+<span class="c"># probability density functions</span>
+<span class="n">p0</span> <span class="o">=</span> <span class="n">normal_density</span><span class="p">(</span><span class="n">b0</span><span class="p">)</span>
+<span class="n">p1</span> <span class="o">=</span> <span class="n">normal_density</span><span class="p">(</span><span class="n">b1</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s">"Probability Density Functions"</span><span class="p">)</span>
+<span class="n">grid</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="o">-</span><span class="mi">5</span><span class="p">,</span><span class="mi">10</span><span class="p">,</span><span class="mi">100</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">grid</span><span class="p">,</span><span class="nb">map</span><span class="p">(</span><span class="n">p0</span><span class="p">,</span> <span class="n">grid</span><span class="p">))</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">grid</span><span class="p">,</span><span class="nb">map</span><span class="p">(</span><span class="n">p1</span><span class="p">,</span> <span class="n">grid</span><span class="p">))</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+
+<span class="c"># Log likelihood ratio (for single sample)</span>
+<span class="n">l</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">y</span> <span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="n">p1</span><span class="p">(</span><span class="n">y</span><span class="p">)</span> <span class="o">/</span> <span class="n">p0</span><span class="p">(</span><span class="n">y</span><span class="p">))</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">grid</span><span class="p">,</span><span class="nb">map</span><span class="p">(</span><span class="n">l</span><span class="p">,</span> <span class="n">grid</span><span class="p">))</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s">"Log-likelihood ratio"</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">axhline</span><span class="p">(</span><span class="n">color</span> <span class="o">=</span> <span class="s">'black'</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+
+<span class="n">b</span>     <span class="o">=</span> <span class="mf">1.</span> <span class="o">/</span> <span class="mi">2</span> <span class="o">*</span> <span class="p">(</span><span class="n">b0</span> <span class="o">+</span> <span class="n">b1</span><span class="p">)</span>
+<span class="n">delta</span> <span class="o">=</span> <span class="mf">1.</span> <span class="o">/</span> <span class="mi">2</span> <span class="o">*</span> <span class="p">(</span><span class="n">b1</span> <span class="o">-</span> <span class="n">b0</span><span class="p">)</span>
+
+<span class="n">l2</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">x</span> <span class="p">:</span> <span class="mi">2</span><span class="o">*</span><span class="n">delta</span><span class="o">*</span><span class="p">(</span><span class="n">x</span> <span class="o">-</span> <span class="n">b</span><span class="p">)</span>
+
+<span class="k">print</span> <span class="s">"l2 == l ? "</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="nb">max</span><span class="p">(</span><span class="nb">map</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">l</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="o">-</span> <span class="n">l2</span><span class="p">(</span><span class="n">x</span><span class="p">),</span> <span class="n">grid</span><span class="p">))</span> <span class="o">&lt;</span> <span class="mi">10</span><span class="o">**-</span><span class="mi">7</span><span class="p">)</span>
+
+<span class="c"># Time series instance</span>
+<span class="n">Y</span> <span class="o">=</span> <span class="p">[</span><span class="mf">0.1</span><span class="p">,</span><span class="mf">0.3</span><span class="p">,</span><span class="o">.</span><span class="mi">4</span><span class="p">,</span><span class="o">.</span><span class="mi">1</span><span class="p">,</span><span class="o">-.</span><span class="mi">1</span><span class="p">,</span><span class="o">-</span><span class="mf">0.3</span><span class="p">,</span><span class="mf">0.3</span><span class="p">,</span><span class="o">-</span><span class="mf">0.2</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="mf">5.2</span><span class="p">]</span><span class="o">*</span><span class="mi">1</span>
+<span class="n">random</span><span class="o">.</span><span class="n">shuffle</span><span class="p">(</span><span class="n">Y</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s">"Time Series Instance"</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">Y</span><span class="p">,</span> <span class="s">'o'</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">axhline</span><span class="p">(</span><span class="n">b0</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">axhline</span><span class="p">(</span><span class="n">b1</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+
+<span class="n">log_lhr</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">Y</span> <span class="p">:</span> <span class="nb">sum</span><span class="p">(</span><span class="n">l2</span><span class="p">(</span><span class="n">y</span><span class="p">)</span> <span class="k">for</span> <span class="n">y</span> <span class="ow">in</span> <span class="n">Y</span><span class="p">)</span>
+
+<span class="kn">from</span> <span class="nn">IPython.display</span> <span class="kn">import</span> <span class="n">Latex</span>
+
+<span class="k">print</span> <span class="s">"Hypothesis H_1 accepted: {}"</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">log_lhr</span><span class="p">(</span><span class="n">Y</span><span class="p">)</span> <span class="o">&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="n">alpha</span><span class="p">))</span>
+<span class="n">Latex</span><span class="p">(</span><span class="s">"Log likelihood ratio $$</span><span class="err">\</span><span class="s">lambda={}$$ for plotted time series Y"</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">log_lhr</span><span class="p">(</span><span class="n">Y</span><span class="p">)))</span></code></pre></figure>
+
+<p><img src="http://heinrichhartmann.com/assets/Anomaly-Detection_files/CusumMethod_5_0.png" alt="png" class="center" /></p>
+
+<p><img src="http://heinrichhartmann.com/assets/Anomaly-Detection_files/CusumMethod_5_1.png" alt="png" class="center" /></p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>l2 == l ? True
+</code></pre></div></div>
+
+<p><img src="http://heinrichhartmann.com/assets/Anomaly-Detection_files/CusumMethod_5_3.png" alt="png" class="center" /></p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Hypothesis H_1 accepted: False
+</code></pre></div></div>
+
+<p>Log likelihood ratio <script type="math/tex">\lambda=-103.5</script> for plotted time series Y</p>
+
+<h1 id="test-for-changes-in-mean">Test for changes in mean</h1>
+
+<p>For given <script type="math/tex">% <![CDATA[
+b_0 < b_1 %]]></script> we consider the hypotheses:</p>
+
+<ul>
+  <li>
+    <p><script type="math/tex">H_0</script>: Constant mean model <script type="math/tex">\IY_t = b_0 + \eps_t</script></p>
+  </li>
+  <li>
+    <p><script type="math/tex">H_1</script>: Change in mean at a time <script type="math/tex">k \in \{ 0, \dots, T\}</script>:
+<script type="math/tex">\IY_t = b_0 + \eps_t, \text{ for } t \leq k</script>
+<script type="math/tex">\IY_t = b_1 + \eps_t, \text{ for } t > k</script></p>
+  </li>
+</ul>
+
+<p>For an instance <script type="math/tex">y</script> we calculate the log-likelihood ration to be
+<script type="math/tex">\lambda = \max_k \{ \lambda_k \}</script>
+and using the notation from the last example we get</p>
+
+<script type="math/tex; mode=display">% <![CDATA[
+\begin{align}
+\lambda_k
+&= \half [ \sum_t (y_t - b_0)^2 - \sum_{t \leq k} (y_t - b_0)^2 - \sum_{t > k}
+(y_t - b_1)^2 ] \\
+&= \half \sum_{t > k} (y_t - b_0)^2 - (y_t - b_1)^2  \\
+&= 2 \delta \sum_{t > k} (y_t - \bar{b})
+\end{align} %]]></script>
+
+<p>We introduce the notation <script type="math/tex">S_k^l = 2 \delta \sum_{t=k}^l (y_t - \bar{b})</script> so
+that we can write</p>
+
+<script type="math/tex; mode=display">\lambda_k = S_{k+1}^T = S_1^T - S_1^k</script>
+
+<p>The total log likelihood ratio is computed by explicit maximization:</p>
+
+<script type="math/tex; mode=display">\lambda = \max_k \{  \lambda_k \} = S_1^T - \min_k \{ S_1^k \}</script>
+
+<p>Note, that <script type="math/tex">\lambda \geq 0</script>, since <script type="math/tex">\min \leq S_1^T</script>.</p>
+
+<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="n">log_lhr_k</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">k</span><span class="p">,</span> <span class="n">Y</span> <span class="p">:</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">delta</span> <span class="o">*</span> <span class="nb">sum</span><span class="p">(</span><span class="n">y</span> <span class="o">-</span> <span class="n">b</span> <span class="k">for</span> <span class="n">y</span> <span class="ow">in</span> <span class="n">Y</span><span class="p">[</span><span class="n">k</span><span class="o">+</span><span class="mi">1</span><span class="p">:])</span>
+<span class="n">log_lhr_max</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">Y</span> <span class="p">:</span> <span class="nb">max</span><span class="p">(</span> <span class="n">log_lhr_k</span><span class="p">(</span><span class="n">k</span><span class="p">,</span><span class="n">Y</span><span class="p">)</span> <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">Y</span><span class="p">)))</span>
+
+<span class="n">Y</span> <span class="o">=</span> <span class="p">[</span><span class="mf">0.1</span><span class="p">,</span><span class="mf">0.3</span><span class="p">,</span><span class="o">.</span><span class="mi">4</span><span class="p">,</span><span class="o">.</span><span class="mi">1</span><span class="p">,</span><span class="o">-.</span><span class="mi">1</span><span class="p">,</span><span class="o">-</span><span class="mf">0.3</span><span class="p">,</span><span class="mf">0.3</span><span class="p">,</span><span class="o">-</span><span class="mf">0.2</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="mf">5.2</span><span class="p">,</span><span class="mi">5</span><span class="p">,</span><span class="mi">6</span><span class="p">,</span><span class="mi">7</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">5</span><span class="p">]</span>
+
+<span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">axes</span><span class="p">()</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s">"Time Series, Model-expectations and log-likelihood ratio"</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">Y</span><span class="p">,</span> <span class="s">'o'</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">axhline</span><span class="p">(</span><span class="n">b0</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">axhline</span><span class="p">(</span><span class="n">b1</span><span class="p">)</span>
+<span class="n">ax2</span> <span class="o">=</span> <span class="n">ax</span><span class="o">.</span><span class="n">twinx</span><span class="p">()</span>
+<span class="n">ax2</span><span class="o">.</span><span class="n">plot</span><span class="p">([</span><span class="n">log_lhr_k</span><span class="p">(</span><span class="n">k</span><span class="p">,</span><span class="n">Y</span><span class="p">)</span> <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">Y</span><span class="p">))],</span> <span class="s">'y--'</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+
+<span class="n">Latex</span><span class="p">(</span><span class="s">"$$</span><span class="err">\</span><span class="s">lambda = </span><span class="err">\</span><span class="s">max </span><span class="err">\</span><span class="s">lambda_k = {} $$"</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">log_lhr_max</span><span class="p">(</span><span class="n">Y</span><span class="p">)))</span></code></pre></figure>
+
+<p><img src="http://heinrichhartmann.com/assets/Anomaly-Detection_files/CusumMethod_7_0.png" alt="png" class="center" /></p>
+
+<script type="math/tex; mode=display">\lambda = \max \lambda_k = 86.0</script>
+
+<h2 id="online-variant">Online Variant</h2>
+<p>It turns out, that there is a simple recursion, which allows us to
+compute the likelyhood ratio <script type="math/tex">\lambda(T+1)</script> for an instance
+<script type="math/tex">y_1,\dots,y_T</script> of length <script type="math/tex">T+1</script> from the knowledge of <script type="math/tex">\lambda(T)</script>
+for the instance <script type="math/tex">(y_1,\dots,y_T)</script> of length <script type="math/tex">T</script>.</p>
+
+<p>Indeed, we have <script type="math/tex">\lambda(T+1) = S_1^{T+1} - \min_{k=1,\dots,T+1} S_1^{k}.</script>
+Note, that <script type="math/tex">S_1^{T+1} = S_1^T + 2 \delta (y_t - \bar{b})</script>.</p>
+
+<p>The minimum-term we have</p>
+
+<p><script type="math/tex">% <![CDATA[
+\quad \min_{k=1,\dots,T+1} S_1^{k} =
+\begin{cases}
+    S_1^{T+1} && (A)\\
+    \min_{k=1,\dots,T} S_1^{k} && (B)
+\end{cases}. %]]></script>
+In case <script type="math/tex">(A)</script> we have <script type="math/tex">\lambda(T+1) = 0</script> and in case <script type="math/tex">(B):</script>
+<script type="math/tex">\lambda(T+1) = \lambda(T) + 2 \delta (y_{T+1} - \bar{b}).</script></p>
+
+<p>Since we always have <script type="math/tex">\lambda(T) \geq 0</script>, we get the total recursion:</p>
+
+<script type="math/tex; mode=display">\lambda(T + 1) = \max \{ 0, \lambda(T) + 2 \delta (y_{T+1} - \bar{b}) \}</script>
+
+<p>Set <script type="math/tex">g(T) := \lambda(T) / (2 \delta)</script> then we get the recursion:</p>
+
+<script type="math/tex; mode=display">g(T + 1) = \max\{0, g(T) + (y_{T+1} - b_0 - \delta)\}</script>
+
+<p>which is known as the CUSUM method.</p>
+
+<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="n">log_lhr_T</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">T</span><span class="p">:</span> <span class="n">log_lhr_max</span><span class="p">(</span><span class="n">Y</span><span class="p">[:</span><span class="n">T</span><span class="p">])</span>
+
+<span class="c"># plt.plot([log_lhr_max(Y[:T]) for T in range(1,len(Y))])</span>
+
+<span class="k">def</span> <span class="nf">log_lhr_rec</span><span class="p">(</span><span class="n">T</span><span class="p">):</span>
+    <span class="k">if</span> <span class="n">T</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span> <span class="k">return</span> <span class="mi">0</span>
+    <span class="k">return</span> <span class="nb">max</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="n">log_lhr_rec</span><span class="p">(</span><span class="n">T</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span> <span class="o">+</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">delta</span> <span class="o">*</span> <span class="p">(</span><span class="n">Y</span><span class="p">[</span><span class="n">T</span><span class="p">]</span> <span class="o">-</span> <span class="n">b</span><span class="p">))</span>
+
+<span class="k">def</span> <span class="nf">log_lhr_iter</span><span class="p">(</span><span class="n">Y</span><span class="p">):</span>
+    <span class="n">l</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="k">for</span> <span class="n">y</span> <span class="ow">in</span> <span class="n">Y</span><span class="p">:</span>
+        <span class="n">l</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">l</span> <span class="o">+</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">delta</span> <span class="o">*</span> <span class="p">(</span><span class="n">y</span> <span class="o">-</span> <span class="n">b</span><span class="p">))</span>
+        <span class="k">yield</span> <span class="n">l</span>
+
+<span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">axes</span><span class="p">()</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s">"samples, max-log-likelihood ratio"</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">Y</span><span class="p">,</span> <span class="s">'o'</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">axhline</span><span class="p">(</span><span class="n">b0</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">axhline</span><span class="p">(</span><span class="n">b1</span><span class="p">)</span>
+<span class="n">ax2</span> <span class="o">=</span> <span class="n">ax</span><span class="o">.</span><span class="n">twinx</span><span class="p">()</span>
+<span class="n">ax2</span><span class="o">.</span><span class="n">plot</span><span class="p">([</span><span class="n">log_lhr_max</span><span class="p">(</span><span class="n">Y</span><span class="p">[:</span><span class="n">T</span><span class="o">+</span><span class="mi">1</span><span class="p">])</span> <span class="k">for</span> <span class="n">T</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">Y</span><span class="p">))],</span> <span class="s">'go'</span><span class="p">)</span>
+<span class="n">ax2</span><span class="o">.</span><span class="n">plot</span><span class="p">([</span><span class="n">log_lhr_rec</span><span class="p">(</span><span class="n">T</span><span class="p">)</span> <span class="k">for</span> <span class="n">T</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="nb">len</span><span class="p">(</span><span class="n">Y</span><span class="p">))],</span> <span class="s">'r.'</span><span class="p">)</span>
+<span class="n">ax2</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="n">log_lhr_iter</span><span class="p">(</span><span class="n">Y</span><span class="p">)),</span> <span class="s">'g--'</span><span class="p">)</span></code></pre></figure>
+
+<p><img src="http://heinrichhartmann.com/assets/Anomaly-Detection_files/CusumMethod_9_1.png" alt="png" class="center" /></p>
+
+
+</div>
+
+<div id="disqus_thread"></div>
+<script type="text/javascript">
+  /* * * CONFIGURATION VARIABLES * * */
+  var disqus_shortname = 'heinrichhartmann';
+
+  /* * * DON'T EDIT BELOW THIS LINE * * */
+  (function() {
+  var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+  dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+  (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+  })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>
+
+<!--div id="related">
+  <h2>Related Posts</h2>
+  <ul class="posts">
+    
+      <li><span>29 Dec 2017</span> &raquo; <a href="/blog/2017/12/31/Quitting-Facebook.html">Quitting Facebook</a></li>
+    
+      <li><span>19 Nov 2016</span> &raquo; <a href="/blog/2016/11/19/The-Electoral-College.html">The Electoral College</a></li>
+    
+      <li><span>17 Nov 2016</span> &raquo; <a href="/opinion/2016/11/17/Bu-rgerversicherung-Bedroht-Arbeitspla-tze.html">Bürgerversicherung Bedroht Arbeitsplätze</a></li>
+    
+  </ul>
+</div-->
+
+
+  <div class="footer">
+    <div class="contact">
+      <p>
+        Dr. Heinrich Hartmann<br />
+        Math & IT Consulting<br />
+        <a href="mailto:heinrich@heinrichhartmann.com">Heinrich@HeinrichHartmann.com</a>
+      </p>
+    </div>
+    <div class="contact">
+      <p>
+        <a href="http://github.com/heinrichhartmann/">on GitHub</a><br />
+        <a href="http://twitter.com/heinrichhartman/">on Twitter</a><br />
+        <a href="http://www.slideshare.net/HeinrichHartmann">on SlideShare</a>
+      </p>
+    </div>
+    <div class="rss">
+      <p>Content under <a rel="license" href="http://creativecommons.org/licenses/by/4.0/">CC-BY 4.0.</a>
+        <span xmlns:dct="http://purl.org/dc/terms/" property="dct:title" style="display:none">This blog</span>
+        <span xmlns:cc="http://creativecommons.org/ns#" property="cc:attributionName" style="display:none">Heinrich Hartmann</span>
+        <br />
+        icons by <a href="https://www.iconfinder.com/AlfredoCreates">Alfredo Creates</a></p>
+        jekyll theme by <a href="https://github.com/mojombo/mojombo.github.io">Tom Preston-Werner</a><br/>
+    </div>
+  </div>
+</div>
+
+<!-- Google Analytics -->
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-53959000-1', 'auto');
+  ga('send', 'pageview');
+</script>
+
+</body>
+</html>
