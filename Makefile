@@ -24,7 +24,7 @@ push: check
 	git push origin source
 
 # ./publish.sh
-publish: push build
+publish: push docker-build
 	echo "Pushing _site"
 	git branch -D master
 	git checkout -b master
@@ -33,3 +33,12 @@ publish: push build
 	git filter-branch --subdirectory-filter _site/ -f
 	git push origin master -f
 	git checkout source
+
+docker-create:
+	docker build -t hh-blog-build-image .
+
+docker-serve: docker-create
+	docker run --rm -v $$(pwd):/src -it -p 4001:4000 hh-blog-build-image make serve
+
+docker-build: docker-create
+	docker run --rm -v $$(pwd):/src -it -p 4001:4000 hh-blog-build-image make build
