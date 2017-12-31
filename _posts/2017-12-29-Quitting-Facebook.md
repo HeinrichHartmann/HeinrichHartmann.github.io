@@ -142,7 +142,7 @@ There won't be one-liner emails like "This is awesome: [link]" every day.
 It's not that facebook is a particularly good contact manager.
 But it certainly holds a great database, with well maintained entries (you are updating your profile).
 
-It's possible to extract a list of friends with names from facebook (See [here](https://www.facebook.com/help/community/question/?id=10102930368300253)).
+It's possible to extract a list of friends with names from facebook ([facebook.com/help](https://www.facebook.com/help/community/question/?id=10102930368300253)).
 A name however, is very little information: No pictures, no email, no address, no date of birth.
 There was a time where [this worked](https://lifehacker.com/5690378/how-to-export-your-friends-email-addresses-from-facebook) where you could get your friends email addresses from facebook if you had a Yahoo email account.
 This is [no longer the case](https://stackoverflow.com/questions/8797874/how-can-i-get-facebook-friends-list-email-addresses) and it has become increasingly cumbersome to get [something out](https://www.contactually.com/blog/3-facebook-contacts-workarounds-to-give-you-control-of-your-network).
@@ -175,7 +175,7 @@ However, don't kid yourself. The data loss is real:
 
 * _You will not be able to export basic profile information like email addresses from your friends profiles_
 
-That's the price you pay when adopting a tool with a heavy vendor log-in.
+That's the price you pay when adopting a tool with a heavy vendor lock-in.
 
 ## Practical Considerations
 
