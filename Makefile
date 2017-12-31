@@ -1,6 +1,6 @@
 # was ./jekyll-run
 serve:
-	bundle exec jekyll serve --watch --drafts --future --incremental
+	bundle exec jekyll serve --host 0.0.0.0 --watch --drafts --future --incremental
 
 # was ./jekyll-update
 update:
@@ -38,7 +38,7 @@ docker-create:
 	docker build -t hh-blog-build-image .
 
 docker-serve: docker-create
-	docker run --rm -v $$(pwd):/src -it -p 4001:4000 hh-blog-build-image make serve
+	docker run --rm -v $$(pwd):/src -it -p 4000:4000 hh-blog-build-image make serve
 
 docker-build: docker-create
-	docker run --rm -v $$(pwd):/src -it -p 4001:4000 hh-blog-build-image make build
+	docker run --rm -v $$(pwd):/src -it hh-blog-build-image make build

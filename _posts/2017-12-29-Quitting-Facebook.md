@@ -16,7 +16,7 @@ Now that I have a family, I need to value my time more.
 It's totally unacceptable to spent 3h surfing the web and procrastinating at night, and to wake up unfit for my parenting duties in the morning.
 
 Being a not very self controlled individual, taking away distractions is the best way for me to take control over my life.
-For the same reason I have abandoned TVs for a long time, and keep my phone in flight-mode for most of the day.
+For the same reason I have abandoned TVs for a long time, and keep my phone in flight-mode for most of the day (sorry guys &#x1F609;).
 I feel that facebook is major distraction for me at this point.
 I have to free myself from it's influence if I want to stay mentally fit, and healthy.
 
