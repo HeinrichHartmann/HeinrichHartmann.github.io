@@ -17,7 +17,7 @@ It's totally unacceptable to spent 3h surfing the web and procrastinating at nig
 
 Being a not very self controlled individual, taking away distractions is the best way for me to take control over my life.
 For the same reason I have abandoned TVs for a long time, and keep my phone in flight-mode for most of the day (sorry guys &#x1F609;).
-I feel that facebook is major distraction for me at this point.
+I feel that facebook is a major distraction for me at this point.
 I have to free myself from it's influence if I want to stay mentally fit, and healthy.
 
 The time has come to say good-bye to the big blue "f".
