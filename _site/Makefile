@@ -1,8 +1,6 @@
-# was ./jekyll-run
 serve:
 	bundle exec jekyll serve --host 0.0.0.0 --watch --drafts --future --incremental
 
-# was ./jekyll-update
 update:
 	bundle update
 
@@ -23,16 +21,11 @@ push: check
 	git checkout source
 	git push origin source
 
-# ./publish.sh
+# cf http://clontz.org/blog/2014/05/08/git-subtree-push-for-deployment/
 publish: push docker-build
-	echo "Pushing _site"
-	git branch -D master
-	git checkout -b master
-	git add _site/ -f
+	git add _site/
 	git commit -m "Added _site"
-	git filter-branch --subdirectory-filter _site/ -f
-	git push origin master -f
-	git checkout source
+	git subtree push --prefix _site origin master
 
 docker-create:
 	docker build -t hh-blog-build-image .
