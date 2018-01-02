@@ -190,5 +190,6 @@ For details of what gets deleted see e.g. [StackOverflow 2013](https://webapps.s
 
 Before taking this step I'll have to post my contact information, communicate my plans about the email news feed and make sure I have contact information of all my close friends available.
 
-
 Wish me luck!
+
+XXX
