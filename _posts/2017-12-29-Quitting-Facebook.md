@@ -160,6 +160,9 @@ Maybe I will just roll with (structured) plain text, or Spreadsheets.
 Maybe even a paper solution like Rolodex (Ger: "Rollkartei").
 I will let you know, if I find something that works well for me.
 
+Update 2018-01-02:
+If you want to follow this blog you can already subscribe to the [newsletter](http://heinrichhartmann.us13.list-manage.com/subscribe?u=638e829e3ebb9c894502b5287&id=f802c91405).
+
 ### Migration Plan: Exporting your profile data
 
 Facebook allows bulk download of your profile data [here](https://www.facebook.com/help/131112897028467).
