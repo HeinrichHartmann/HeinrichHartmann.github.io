@@ -7,47 +7,20 @@ title: Heinrich Hartmann - about
 
 ## Contact
 
-Dr. Heinrich Hartmann  
-Stefan-George-Ring 41  
-81929 Munich  
-Germany  
+Dr. Heinrich Hartmann
 
-* Mail: <a href="mailto:heinrich@heinrichhartmann.com">heinrich@heinrichhartmann.com</a>
-* Twitter: <a href="https://twitter.com/HeinrichHartman/">@HeinrichHartman</a>
+<a href="mailto:heinrich@heinrichhartmann.com">heinrich@heinrichhartmann.com</a>
 
+* [Twitter](https://twitter.com/HeinrichHartman/)
+* [GitHub](http://github.com/heinrichhartmann/)
+* [SlideShare](http://www.slideshare.net/HeinrichHartmann)
+* [Arxiv.org](http://arxiv.org/a/hartmann_h_1)
 
-## Vita
+## Credits
 
-* 2014 Data Scientist at Circonus
-* 2014 IT Consultant
-* 2013 Researcher at WeST Institute for WebScience and Technologies  
-  Team Leader at <a href="http://liveandgov.eu">Live and Gov</a> EU Project
-* 2012 Researcher at Univeristy of Oxford
-* 2011 PhD from University of Bonn
-* 2007 Diploma in Mathematics from University of Mainz
-
-## Pupil work
-
-The [Deutsche
-Schülerakademie](https://www.deutsche-schuelerakademie.de/) is an
-organization that runs acedemies for highly gifted children. These
-academies take place in the summer school holidays and are 17 days
-long. In this time the pupils take part in courses tought by academics
-and have plenty of time to engage with the tutors and each other. I am
-an active supporter of this concept and have been involeved with these
-acedemies over the last years in different roles.
-
-* DSA Schulpforte 2011 - [Course on web services](http://www.deutsche-schuelerakademie.de/download/dsa-programm-2011) with Rene Pickhardt.
-* DJA Meisenheim 2012 -  [Course on efficient algorithms](http://www.deutsche-juniorakademien.de/download/2012/DJA_Rheinland-Pfalz_2012.pdf) Prof. Johann Baumeister
-* DJA Meisenheim 2013 - [Lead of Academy](http://www.deutsche-juniorakademien.de/download/2013/DJA_Rheinland-Pfalz_2013.pdf#page=12)
-* DSA Torgelow 2015 - [Lead of Academy](https://secure.bubev.de/dsa/empfehlung/download/2015/DSA-Programm_2015.pdf#page=67)
-
-## Media
-
-* [Schubert - Auf der Bruck (video)](https://www.youtube.com/watch?v=Qq4MduJTKTg)
-* [Schubert - An die Musik (video)](https://www.youtube.com/watch?v=w9WpCkuPuLA)
-* [Stern TV - 1000'ste Sendung (video)](http://embed.novamov.com/embed.php?v=2wl0guw3e0jtnK)
+* Social icons by [Alfredo Creates](https://www.iconfinder.com/AlfredoCreates)
+* jekyll theme by [Tom Preston-Werner](https://github.com/mojombo/mojombo.github.io)
 
 ## Impressum
 
-<a href="impressum.html">Impressum</a> - statment of ownership is legally mandated in Germany.
+<a href="impressum.html">Impressum</a> - legally mandated statment of ownership.
