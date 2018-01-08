@@ -5,9 +5,11 @@ permalink: "/blog/2017/12/31/Quitting-Facebook.html"
 categories:
 - opinion
 - blog
+location: Stemwede, Germany
+splash:
+  src: "/assets/thumbs-down.png"
+  credits: 'By Kvarki1 <a href="https://creativecommons.org/licenses/by-sa/3.0">CC BY-SA 3.0</a>, via Wikimedia Commons'
 ---
-
-<a title="By Kvarki1 (File:Facebook like thumb.png) [CC BY-SA 3.0 (https://creativecommons.org/licenses/by-sa/3.0)], via Wikimedia Commons" href="https://commons.wikimedia.org/wiki/File%3ANot_facebook_dislike_thumbs_down.png"><img width="512" alt="Not facebook dislike thumbs down" src="/assets/thumbs-down.png" width="100%"></a>
 
 One of my larger goals for 2018 is to free myself from the claws of facebook.
 My facebook usage patterns are pretty bad at this point.

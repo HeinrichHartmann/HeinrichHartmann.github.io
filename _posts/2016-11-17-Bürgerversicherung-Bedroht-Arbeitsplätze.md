@@ -2,6 +2,7 @@
 author: "Heinrich Hartmann"
 layout: "post"
 category: "opinion"
+comments: true
 ---
 
 Die FAZ  [Bürgerversicherung würde Zehntausende Arbeitsplätze bedrohen](http://www.faz.net/aktuell/wirtschaft/wirtschaftspolitik/buergerversicherung-von-spd-gruenen-linke-fuehrt-zu-stellenabbau-14531660.html) schreibt heute (2016-11-17):
@@ -24,7 +25,7 @@ Die FAZ  [Bürgerversicherung würde Zehntausende Arbeitsplätze bedrohen](http:
 > Im Wahljahr 2017 muss sich die PKV wieder auf Angriffe aus der SPD
 > und seitens der Oppositionsparteien einstellen.
 
-# Was ist hier das Argument?
+## Was ist hier das Argument?
 
 Das Gesundheitssystem hat massive Probleme mit Gerechtigkeit (PKV/GKV)
 und Kostenstruktur. Wir sind konfrontiert mit einer alternder
@@ -79,7 +80,7 @@ Falle ist der Bericht extrem einseitig.
 - An alle Rechtesexperten: Darf ich die FAZ hier so zitieren? Oder
   verletze ich das Leistungsschutzrecht?
 
-# Selected Replies 
+## Selected Replies
 
 * [Maximilian Held](http://www.maxheld.de), 2016-11-17, Facebook [1]
 
@@ -108,6 +109,6 @@ Falle ist der Bericht extrem einseitig.
   macht, können Marktakteure entsprechend reagieren.  Wenn es schnell
   und übernacht geht, wird wirklich (sinnlos) Kapital vernichtet.
 
-# References
+## References
 
 1. [Facebook Discussion](https://www.facebook.com/heinrich.hartmann.7/posts/1348913531787896)
