@@ -26,24 +26,18 @@ body {
 }
 
 h1 {
-  font-size: 28px;
-  margin: 0 0 1em 0;
-}
-h2, h3, h4, h5, h6 {
-  font-size: 100%;
+  font-size: 1em;
+  text-transform: uppercase;
+  text-alig: left;
+  font-size: 1em;
   margin-bottom: 1em;
   margin-top: 2em;
-  border-bottom: 1px solid #cccccc;
 }
-h2:before { content: "## "; }
-h3:before { content: "### "; }
-h4:before { content: "#### "; }
-
-
-h2:before { content: "# "; }
-h3:before { content: "## "; }
-h4:before { content: "### "; }
-
+h2 {
+  font-size: 1em;
+  margin-bottom: 1em;
+  margin-top: 2em;
+}
 p {
   margin: 1em 0;
 }
@@ -87,14 +81,14 @@ ul.posts li {
 ul.posts span {
   color: #aaa;
   font-family: Monaco, "Courier New", monospace;
-  font-size: 90%;
+  font-size: 75%;
 }
 
 
 .date {
   color: #aaa;
   font-family: Monaco, Courier New, monospace;
-  font-size: 90%;
+  font-size: 75%;
   font-weight: normal;
   float:right;
 }
@@ -114,7 +108,6 @@ ul.posts span {
 /*****************************************************************************/
 
 .site {
-  font-size: 110%;
   text-align: justify;
   width: 42em;
   margin: 3em auto 2em auto;
@@ -175,19 +168,27 @@ ul.posts span {
   border: 0;
 }
 
-#home h1 {
-  font-size: 100%;
-}
-
 /*****************************************************************************/
 /*
 /* Posts
 /*
 /*****************************************************************************/
 
-#post {
-
+#post h1 {
+  font-size: 2em;
+  text-transform: uppercase;
+  text-align: center;
+  margin: 2em 0 1.5em 0;
+  line-height: 1.5em;
 }
+#post h2, h3, h4, h5, h6 {
+  margin-bottom: 1em;
+  margin-top: 2em;
+  border-bottom: 1px solid #cccccc;
+}
+#post h2:before { content: "# "; }
+#post h3:before { content: "## "; }
+#post h4:before { content: "### "; }
 
 /* standard */
 
@@ -201,10 +202,6 @@ ul.posts span {
   line-height: 16.79px;
   word-wrap: normal;
 }
-
-#post code {
-}
-
 
 #post ul,
 #post ol {
@@ -230,6 +227,11 @@ ul.posts span {
   margin: 30px 0;
 }
 
+#post .credits {
+  text-align: right;
+  font-size: 70%;
+  color: #aaa;
+}
 
 /* terminal */
 
@@ -284,7 +286,6 @@ figure figcaption {
 
 table
 {
-  font-size: 14px;
   border-collapse:collapse;
   margin:20px auto auto;
   padding:0;
