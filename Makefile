@@ -13,7 +13,7 @@ build:
 	bundle exec jekyll build --future
 
 build-watch:
-	bundle exec jekyll build --future --watch --incremental
+	bundle exec jekyll build --future --watch --incremental --verbose
 
 check:
 	if ! [ -z "`git status --porcelain`" ]; then echo "Working directory is not clean" && exit 1; fi
