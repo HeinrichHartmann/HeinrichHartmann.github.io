@@ -1,5 +1,5 @@
 serve:
-	bundle exec jekyll serve --host 0.0.0.0 --watch --drafts --future --incremental
+	bundle exec jekyll serve --host 0.0.0.0 --watch --drafts --future --incremental --verbose
 
 update:
 	bundle update
@@ -11,6 +11,9 @@ ruby-instsall:
 
 build:
 	bundle exec jekyll build --future
+
+build-watch:
+	bundle exec jekyll build --future --watch --incremental
 
 check:
 	if ! [ -z "`git status --porcelain`" ]; then echo "Working directory is not clean" && exit 1; fi
@@ -35,3 +38,6 @@ docker-serve: docker-create
 
 docker-build: docker-create
 	docker run --rm -v $$(pwd):/src -it hh-blog-build-image make build
+
+docker-build-watch: docker-create
+	docker run --rm -v $$(pwd):/src -it hh-blog-build-image make build-watch
