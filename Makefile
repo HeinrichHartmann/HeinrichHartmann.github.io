@@ -31,7 +31,7 @@ push: check
 	git push origin source
 
 # cf http://clontz.org/blog/2014/05/08/git-subtree-push-for-deployment/
-publish: push docker-build
+publish: docker-build
 	git add _site/
 	git commit -m "Added _site"
 	git subtree push --prefix _site origin master

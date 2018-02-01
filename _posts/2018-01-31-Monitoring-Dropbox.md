@@ -9,8 +9,8 @@ splash:
   src: "/assets/capture_1517430553.png"
 ---
 
-I keep a cheap little server in my basement, which I use as file server.
-In particular it contains a full checkout of my dropbox.
+I keep a cheap little server in my basement.
+Amongst other things it contains a full checkout of my dropbox.
 In this way, I always have a copy of all my data inside my walls, which allows me to sleep better.
 The content lies in the trusted hands of a [zfs](https://wiki.ubuntu.com/ZFS) file system, which allows me to take regular snapshots, so I don't loose data by accidentally deleting stuff on one of my devices.
 
