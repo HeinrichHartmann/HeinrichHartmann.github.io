@@ -181,7 +181,7 @@ METRIC <span class="s2">"count"</span> <span class="s2">"</span><span class="k">
 
 <ul>
   <li>
-    <p>We will run this script via <a href="http://man7.org/linux/man-pages/man5/crontab.5.html">crontab(5)</a>, which is famous for invoking acrane shells and not setting up the environment (Thanks cron 🤐).
+    <p>We will run this script via <a href="http://man7.org/linux/man-pages/man5/crontab.5.html">crontab(5)</a>, which is famous for invoking arcane shells and not setting up the environment (Thanks cron 🤐).
 So let’s be explicit about where to find the programs we use.</p>
   </li>
   <li>
@@ -203,19 +203,15 @@ The implementation is explained below.</p>
 
 <h2 id="sending-custom-metrics-to-circonus">Sending Custom Metrics to Circonus</h2>
 
-<p>We have several options to send metrics to Circonus:</p>
+<p>There are many ways to send metrics to Circonus. Two of my favorite ones are:</p>
 
 <ol>
   <li>Push JSON documents to a <a href="https://hartmann.circonus.com/resources/docs/user/Data/CheckTypes/HTTPTrap.html">HTTP Trap</a>.</li>
-  <li>Add a <a href="https://github.com/circonus-labs/nad/blob/master/DEVELOPMENT.md#plugins">new plugin</a> to nad.</li>
-  <li>Send <a href="https://github.com/b/statsd_spec">statsd</a> metrics to the nad agent.</li>
+  <li>Send <a href="https://github.com/b/statsd_spec">statsd</a> metrics to the monitoring agent (nad).</li>
 </ol>
 
 <p>Option 1 is certainly a good one, and I might go for it next time.
-Option 2 is even better in some sense as nad will be able to control the collection interval, and collect metrics once per second, when I am debugging things.
-I opted against this method here because nad runs those plugins as the “nobody” user, so it would be able to use my dropbox configuration without tweaking.</p>
-
-<p>So Option 3 it is.
+We will follow option 2 here.
 Since a while ago nad has an integrated statsd server, that allows you to submit metrics via UDP  in statsd format.
 In our case the payload we want to send looks like this:</p>
 
