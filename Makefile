@@ -1,6 +1,9 @@
 serve:
 	bundle exec jekyll serve --host 0.0.0.0 --watch --drafts --future --incremental --verbose
 
+serve-static:
+	(cd _site; python3 -m http.server 4000)
+
 update:
 	bundle update
 
@@ -10,7 +13,10 @@ ruby-instsall:
 	bundle
 
 build:
-	bundle exec jekyll build --future
+	bundle exec jekyll build --future --verbose
+
+build-drafts:
+	bundle exec jekyll build --future --drafts --verbose
 
 build-watch:
 	bundle exec jekyll build --future --watch --incremental --verbose
@@ -38,6 +44,9 @@ docker-serve: docker-create
 
 docker-build: docker-create
 	docker run --rm -v $$(pwd):/src -it hh-blog-build-image make build
+
+docker-build-drafts: docker-create
+	docker run --rm -v $$(pwd):/src -it hh-blog-build-image make build-drafts
 
 docker-build-watch: docker-create
 	docker run --rm -v $$(pwd):/src -it hh-blog-build-image make build-watch
