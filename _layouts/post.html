@@ -16,8 +16,10 @@ layout: default
 
   <!-- Splash -->
   {% if page.splash %}
-    <img src="{{ page.splash.src }}" width="100%">
-    <p class="credits">{{ page.splash.credits }}</p>
+  <div class="splash">
+    <img src="{{ page.splash.src }}" width="100%"/>
+    {% if page.splash.credits %} <p class="credits">{{ page.splash.credits }}</p> {% endif %}
+  </div>
   {% endif %}
 
   <!-- Post content -->

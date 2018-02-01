@@ -7,6 +7,7 @@ categories:
 permalink: "/blog/Monitoring-Dropbox.html"
 splash:
   src: "/assets/capture_1517430553.png"
+  credits: "click to enlarge"
 ---
 
 I keep a cheap little server in my basement.
