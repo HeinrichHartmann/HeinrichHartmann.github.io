@@ -17,7 +17,7 @@ The content lies in the trusted hands of a [zfs](https://wiki.ubuntu.com/ZFS) fi
 Working for a [monitoring vendor](http://circonus.com), monitoring the server is not optional.
 Especially for this box.
 It has a surprisingly low availability, since I manage to trigger my [circuit breaker](https://en.wikipedia.org/wiki/Residual-current_device) ("FI Sicherung") twice a week while working "fixing" my lights, heating, garage doors, etc. 🤷.
-So I want to make sure, they come up as expected and keep on doing what they should.
+So I want to make sure, it comes up as expected and keep on doing what it should.
 In this case this boils down to:
 
 1. Is the dropbox daemon running?
