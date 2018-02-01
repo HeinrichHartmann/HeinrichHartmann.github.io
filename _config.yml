@@ -20,7 +20,7 @@ defaults:
 
 plugins:
   # Figure plugin from https://github.com/lmullen/jekyll_figure
-  - jekyll_figure
+  # - jekyll_figure
   - jekyll-redirect-from
 
 figures:
