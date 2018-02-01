@@ -128,7 +128,7 @@ esac
 
 Comments:
 
-* We will run this script via [crontab(5)](http://man7.org/linux/man-pages/man5/crontab.5.html), which is famous for invoking acrane shells and not setting up the environment (Thanks cron 🤐).
+* We will run this script via [crontab(5)](http://man7.org/linux/man-pages/man5/crontab.5.html), which is famous for invoking arcane shells and not setting up the environment (Thanks cron 🤐).
 So let's be explicit about where to find the programs we use.
 
 * We want to send out the data we found as a metric, so we create a function for it.
@@ -143,17 +143,13 @@ So let's be explicit about where to find the programs we use.
 
 ## Sending Custom Metrics to Circonus
 
-We have several options to send metrics to Circonus:
+There are many ways to send metrics to Circonus. Two of my favorite ones are:
 
 1. Push JSON documents to a [HTTP Trap](https://hartmann.circonus.com/resources/docs/user/Data/CheckTypes/HTTPTrap.html).
-2. Add a [new plugin](https://github.com/circonus-labs/nad/blob/master/DEVELOPMENT.md#plugins) to nad.
-3. Send [statsd](https://github.com/b/statsd_spec) metrics to the nad agent.
+2. Send [statsd](https://github.com/b/statsd_spec) metrics to the monitoring agent (nad).
 
 Option 1 is certainly a good one, and I might go for it next time.
-Option 2 is even better in some sense as nad will be able to control the collection interval, and collect metrics once per second, when I am debugging things.
-I opted against this method here because nad runs those plugins as the "nobody" user, so it would be able to use my dropbox configuration without tweaking.
-
-So Option 3 it is.
+We will follow option 2 here.
 Since a while ago nad has an integrated statsd server, that allows you to submit metrics via UDP  in statsd format.
 In our case the payload we want to send looks like this:
 
