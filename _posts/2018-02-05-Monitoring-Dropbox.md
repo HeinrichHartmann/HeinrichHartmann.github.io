@@ -37,6 +37,8 @@ I made a little dashboard for this purpose over the weekend and posted it on twi
 <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
 
 Since people asked, I am going to elaborate a little here on what I did, and how you can do that, too, if you like.
+Of course, I will be using [circonus](http://circonus.com) for this, because I am most familiar with this tool.
+Everything I show here, can be done with a free-tier account.
 
 ## System Metrics
 
@@ -252,7 +254,8 @@ I'll admit, this is probably a little over the top, but I just like to know dire
 
 ## Conclusion
 
-The method illustrated here is in pretty universal.
+It's still amazing to me with how little effort, you can arrive at a pretty sophisticated monitoring setup if you know your way around Circonus.
+Also not that the method illustrated here is in pretty universal.
 If you can extract the numerical digest from any tool on the command line you can follow the steps and get your stuff monitored.
 
 For the specific case in point, the files remaining metric really benefited from taking it into the context of the whole system resource usage.
