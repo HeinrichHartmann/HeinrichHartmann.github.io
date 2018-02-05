@@ -8,12 +8,14 @@ permalink: "/blog/Monitoring-Dropbox.html"
 splash:
   src: "/assets/capture_1517430553.png"
   credits: "click to enlarge"
+  link: "/assets/capture_1517430553.png"
 ---
 
 I keep a cheap little server in my basement.
 Amongst other things it contains a full checkout of my dropbox.
-In this way, I always have a copy of all my data inside my walls, so I can sleep better.
+In this way, I always have a copy of all my data inside of my walls.
 The content lies in the trusted hands of a [zfs](https://wiki.ubuntu.com/ZFS) file system, which allows me to take regular snapshots, so I don't loose data by accidentally deleting stuff on one of my devices.
+I just sleep better this way.
 
 Working for a [monitoring vendor](http://circonus.com), monitoring the server is not optional.
 Especially for this box.
