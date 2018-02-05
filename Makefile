@@ -50,3 +50,9 @@ docker-build-drafts: docker-create
 
 docker-build-watch: docker-create
 	docker run --rm -v $$(pwd):/src -it hh-blog-build-image make build-watch
+
+docker-make:
+	docker run --rm -v $$(pwd):/src -it hh-blog-build-image make $(TARGET)
+
+docker-jekyll:
+	docker run --rm -v $$(pwd):/src -it hh-blog-build-image bundle exec jekyll $(CMD)
