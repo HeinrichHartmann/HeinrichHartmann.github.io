@@ -12,12 +12,13 @@
 				
 					<description>&lt;p&gt;I keep a cheap little server in my basement.
 Amongst other things it contains a full checkout of my dropbox.
-In this way, I always have a copy of all my data inside my walls, so I can sleep better.
-The content lies in the trusted hands of a &lt;a href=&quot;https://wiki.ubuntu.com/ZFS&quot;&gt;zfs&lt;/a&gt; file system, which allows me to take regular snapshots, so I don’t loose data by accidentally deleting stuff on one of my devices.&lt;/p&gt;
+In this way, I always have a copy of all my data inside of my walls.
+The content lies in the trusted hands of a &lt;a href=&quot;https://wiki.ubuntu.com/ZFS&quot;&gt;zfs&lt;/a&gt; file system, which allows me to take regular snapshots, so I don’t loose data by accidentally deleting stuff on one of my devices.
+I just sleep better this way.&lt;/p&gt;
 
 </description>
 				
-				<pubDate>Wed, 31 Jan 2018 00:00:00 +0000</pubDate>
+				<pubDate>Mon, 05 Feb 2018 00:00:00 +0000</pubDate>
 				<link>http://heinrichhartmann.com/blog/Monitoring-Dropbox.html</link>
 				<guid isPermaLink="true">http://heinrichhartmann.com/blog/Monitoring-Dropbox.html</guid>
 			</item>
