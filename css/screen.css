@@ -279,8 +279,8 @@ ul.posts span {
 
 #disqus_thread {
   border-top: 4px solid #eee;
-  margin-top: 4em;
-  padding-top: 2em;
+  margin-top: 2em;
+  padding-top: 1em;
 }
 
 /**
