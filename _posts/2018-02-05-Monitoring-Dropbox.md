@@ -38,7 +38,7 @@ I made a little dashboard for this purpose over the weekend and posted it on twi
 
 Since people asked, I am going to elaborate a little here on what I did, and how you can do that, too, if you like.
 Of course, I will be using [circonus](http://circonus.com) for this, because I am most familiar with this tool.
-Everything I show here, can be done with a free-tier account.
+Everything I show here, can be done with a free-tier account, or mutatis mutandis with other tools as well.
 
 ## System Metrics
 
