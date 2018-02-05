@@ -2,12 +2,15 @@
 layout: "post"
 author: "Heinrich Hartmann"
 location: Stemwede, Germany
+title: Provide the title manually here
+permalink: /blog/we-cooose-our-own-apermalink.html
 categories:
 - opinion
 - blog
 splash:
-  src: "/assets/thumbs-down.png"
-  credits: 'By Kvarki1 <a href="https://creativecommons.org/licenses/by-sa/3.0">CC BY-SA 3.0</a>, via Wikimedia Commons'
+  src: "/assets/capture_1517430553.png"
+  credits: "click to enlarge"
+  link: "/assets/capture_1517430553.png"
 ---
 
-## Hello World
+... here comes the text
