@@ -17,7 +17,9 @@ layout: default
   <!-- Splash -->
   {% if page.splash %}
   <div class="splash">
-    <img src="{{ page.splash.src }}" width="100%"/>
+    {% if page.splash.link %}<a href="{{ page.splash.link }}">{% endif %}
+      <img src="{{ page.splash.src }}" width="100%"/>
+    {% if page.splash.link %}</a>{% endif %}
     {% if page.splash.credits %} <p class="credits">{{ page.splash.credits }}</p> {% endif %}
   </div>
   {% endif %}
