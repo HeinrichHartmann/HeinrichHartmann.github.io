@@ -336,7 +336,3 @@ table tr th, table tr td
   margin:0;
   padding:6px 13px;
 }
-
-/* Splash image scale on click */
-.splash img { transition: all .2s ease-in-out; }
-.splash img:active { transform: scale(2); }
