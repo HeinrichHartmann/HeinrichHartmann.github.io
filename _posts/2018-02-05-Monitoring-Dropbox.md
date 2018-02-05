@@ -270,4 +270,5 @@ Using the dashboard I discovered, already that
 - The download stalled after ~24h. So, I added a cron-job to restart it every day.
 - I should add more memory to the box. The system is already swapping.
 
-I hope you enjoyed reading this. If you like to be informed about future posts, please consider singing up for the [newsletter](http://eepurl.com/ccmH-T).
+I hope you enjoyed reading this.
+If you like to be informed about future posts, please consider singing up for the [newsletter](http://eepurl.com/ccmH-T).
