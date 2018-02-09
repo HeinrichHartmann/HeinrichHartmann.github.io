@@ -26,17 +26,21 @@ I applied for a research position in Computer Science at the Universtiy of Koble
 In 2015 I started working as free-lance [consultant](http://heinrichhartmann.com/consulting.html).
 Today I am Chief Data Scientist at Circonus.
 
+
+
 ## Why become a Data Scientist?
 
-* DataScience is the realization that Business need Mathematicians to make sens of their data.
-  Storage costs have dropped.
-  It's even affordable to store and analyze machine generated data.
-  Not only bank balances or order books.
-  There are massive amounts of data are accessible.
+* DataScience is the realization that Business need Mathematicians to make sense of their data.
+  The analysis of balnance sheets and order books does not involve that much mathematics.
+  But storage costs have dropped.
+  Storing massive amounts of data is now common.
+  On some web-sites every click of every user is tracked.
+  If you want to extract information from this kind of scattered, high volume information, you need to work harder.
+  This is where mathematicians come in.
 
-* Mathematicians bring a great skillset to the table.
+* Mathematicians bring a great skillset to the table:
   Frustration tolerance.
-  Reasoning.
+  Formal reasoning.
   No fear of equations.
   The average computer-scientist trained (at least the ones I have seen) are not able to work with equations very well.
   Many are scared of matrices.
@@ -45,17 +49,13 @@ Today I am Chief Data Scientist at Circonus.
   - Grasp how the high level description is reflected in the formulas
   - Incorporate new ideas and simplify or extend the given model
   This is *really* hard for CS master students.
-  Developers often have very shallow knowlege of mathematics for them ML papers are largely impenetrable.
-
-  S
-
+  Those often have very shallow knowlege of mathematics for them ML papers are largely impenetrable.
 
 * The industry is deeply confused.
-  - I'll defined field
-  - Lot's Marketing BullShit from vendors
-  - Unrealistic expectations
-  - No esablished standards.
-  - Questionable Hireing practices "The bar is 'have read a paper'"
+  - Ill defined field
+  - Lot's of marketing bullshit from vendors
+  - Unrealistic expectations by management
+  - No established standards.
 
 ## Advice
 
@@ -119,7 +119,7 @@ Read about coding.
 Have fun at coding.
 Repeat.
 
-## Focus on Simple Methods
+## Data Mining
 
 Do the simple things first.
 Linear regression and Bayesian Interference are very powerful tools, that can solve a lot of problems on the spot.
@@ -171,11 +171,46 @@ I never tried to run the benchmarks on it, but in practice it just worked great.
 The one thing I learned from this was:
 Before ever touching RapidMinder again, implement your baseline!
 
-You don't have big data: https://www.micropact.com/blog/detail/you-probably-dont-have-big-data/
+Important methods that are known to work:
 
-Important things that work:
-
+* Visualizations!
+* Descriptive Statistics
 * Linear Regression
-* Baysian Interference
-* Bootstrap
 * Gradient Descend
+* Bootstrap method
+* Baysian Interference (personal preferences)
+
+Pointers to the Literature:
+
+- [McKinney - Python for Data Analysis](http://shop.oreilly.com/product/0636920023784.do)
+- [Janert - Data Analysis with Open Source Tools](http://shop.oreilly.com/product/9780596802363.do)
+
+## Big Data
+
+Big data is a buzz word that comes up often in that context.
+
+Let's start with a definition from [Wikipedia](https://en.wikipedia.org/wiki/Big_data):
+
+> Big data is (sic) data sets that are so voluminous and complex that traditional data processing application software are inadequate to deal with them.
+
+Appart from the apparent grammar mistake, this seems like a sane definition.
+
+Be aware that current server configurations, can hold 256GB and more in memory (e.g. [AWS/EC2 m4.16xlarge](https://aws.amazon.com/ec2/instance-types/)), so you have to gather quite a bit of data to exceed this limit.
+Many people make the mistake to use big-data processing frameworks without having a big data problem.
+It's a lot simpler to manipulate data in-memory with python than running a distributed MapReduce job on your Hadoop cluster.
+Also the big SQL databases (PostgreSQL, MySQL, Oracle, Microsoft) do hande datasets up to a few TB quite well, and still have the superb query capabilities that SQL brings with it.
+
+That being said.
+You should absolutely be aware of how big data problems are approached.
+Two highly infulential papers were:
+
+- [Google's MapReduce paper](https://static.googleusercontent.com/media/research.google.com/en//archive/mapreduce-osdi04.pdf)
+- [Amazon's Dynamo DB paper](https://s3.amazonaws.com/AllThingsDistributed/sosp/amazon-dynamo-sosp2007.pdf)
+
+As for analyzing large datasets, I can (somewhat) recommend this text book:
+
+- [MiningMassiveDatasets from UStandford](http://infolab.stanford.edu/~ullman/mmds/book.pdf).
+
+If you are operationalizing big (or not so big) data processing (which you should!) then
+- [Kleppermann - Designing Data-Intensive Applications](http://shop.oreilly.com/product/0636920032175.do)
+is an amazing resource, highly recommended.
