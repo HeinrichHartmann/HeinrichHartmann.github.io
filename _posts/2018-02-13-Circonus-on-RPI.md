@@ -15,7 +15,7 @@ categories:
 ---
 
 There are a lot of interesting monitoring tasks, that can facilitated with a Raspberry Pi (e.g. [here](http://heinrichhartmann.com/blog/2014/12/14/Sensor-Monitoring-with-RaspberryPi-and-Circonus.html), [there](https://www.circonus.com/2016/10/circonus-api-raspberry-pi/)).
-Unfortunately installing the Circonus monitoring agent on the Pi is not entirely straitght forward.
+Unfortunately installing the Circonus monitoring agent on the Pi is not entirely straight forward.
 - The linux distribution "Raspian" is not directly supported, and neither is its upstream distro Debian Wheezy.
 - The processor architecture (armv6/v7) requires different binaries than supported targets.
 - Setting up nodejs/npm correctly is a PITA.
