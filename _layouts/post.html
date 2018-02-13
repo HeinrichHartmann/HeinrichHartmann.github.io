@@ -13,6 +13,9 @@ layout: default
     {% if page.location %} in {{ page.location }} {% endif %}
   </p>
 
+  {% if page.hidden %}
+  <h1 style="color:red"> UNPUBLISHED DRAFT </h1>
+  {% endif %}
 
   <!-- Splash -->
   {% if page.splash %}
