@@ -46,9 +46,9 @@ This should install and enable the monitoring agent nad on the RPI.
 Check that it is up and running using:
 
 ``` shell
-# Is it up?
+# Is it up? -> You should see a staus report mentioning "active (running)"
 systemctl status nad
-# Does it serve metrics?
+# Does it serve metrics? -> You should see a large JSON blob, containing metrics
 curl localhost:2609
 ```
 
