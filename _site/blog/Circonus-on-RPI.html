@@ -37,18 +37,19 @@
   </div>
 
   <div id="post">
+
   <!-- Title -->
   <h1> Circonus on the Raspberry Pi</h1>
+
+  
+  <h1 style="color:red; border-style:solid; border-color:red; border-radius:0.2em;margin:50px"> UNPUBLISHED DRAFT </h1>
+  
 
   <!-- Meta -->
   <p class="meta">
     Written on 2018-02-13
      in Stemwede, Germany 
   </p>
-
-  
-  <h1 style="color:red"> UNPUBLISHED DRAFT </h1>
-  
 
   <!-- Splash -->
   
@@ -86,9 +87,9 @@ git checkout v2.5.1
 <p>This should install and enable the monitoring agent nad on the RPI.
 Check that it is up and running using:</p>
 
-<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c"># Is it up?</span>
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c"># Is it up? -&gt; You should see a staus report mentioning "active (running)"</span>
 systemctl status nad
-<span class="c"># Does it serve metrics?</span>
+<span class="c"># Does it serve metrics? -&gt; You should see a large JSON blob, containing metrics</span>
 curl localhost:2609
 </code></pre></div></div>
 
