@@ -26,9 +26,11 @@ Here are a few things that I have successfully experimented with in the last day
 2. Write down your intention *before* you start working on something with a device.
 
 
-# Writing makes an exact man
+# Write a Journal
 
-I belief in writing.
+> Writing makes an exact man -- Sir Francis Bacon
+
+I believe in writing.
 While practicing mathematics, pen and paper are the only way to structure your mind.
 Editing text-editor does not give you the same expressiveness that pen and paper have.
 You can easily draw diagrams or sketches, and typeset complicated formulas.
@@ -38,8 +40,8 @@ I can only think clearly if I have pen and paper in front of me.
 
 When moving into IT I had to surrender my paper for a code editor.
 Writing code with pen and paper is really tedious, and does not give you the same control than with math formulas.
-I am not 100% sure, why this is.
-A big aspect is the statefullness of the language.
+
+I am not 100% sure, why this is, but I think a core problem is the implict state of the language.
 In mathematics you write $x=3$ and this equation will hold in the full context (proof, lemma, chapter) you are working.
 When programming the statement $x=3$ a memory cell is set to the value 3, the value might change in the next line (or before that if when you are dealing with concurrency -- god prevent).
 In some sense declarations like $int x$, are more like mathematical statements, since they too will hold within their context ("scope").
@@ -49,3 +51,18 @@ However for less technical tasks, the pen and paper are still very suited.
 * Todo lists
 * Design drafts
 * Emails
+
+# Print out Code
+
+Reading code on the screen makes me nervous.
+It's too much jumping around.
+Only 100 lines do fit into the screen.
+The screen glows.
+You have to sit at your desk.
+Personal annotations in code are not welcome.
+Don't add comments that explain the language or just restarte what's being done.
+Only add comments to clarify the intend, or structure the file.
+
+I enjoy reading code.
+But when I do, I want to sit somewhere nice, witha coffee in my hand.
+And annot

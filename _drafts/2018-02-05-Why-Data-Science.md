@@ -8,25 +8,9 @@ categories:
 - opinion
 - blog
 splash:
-  src: "/assets/capture_1517430553.png"
-  credits: "click to enlarge"
-  link: "/assets/capture_1517430553.png"
+  src: "/assets/regression.png"
+  credits: 'Bob Dole [CC BY SA] via <a href="https://stackoverflow.com/questions/27336771/matlab-fit-a-line-to-a-histogram">Stack Overflow</a>'
 ---
-
-## Personal History
-
-I have a pure-math background.
-Between the age of 15-25 my goal was to become a Professor in Mathematics.
-I completed a PhD in Algebraic Geometry from University of Bonn,
-published a few papers in well respected journals (Math. Ann. 2012 / Man. Math. 2013),
-and landed a very prestigious PostDoc position at the University of Oxford.
-
-Then things changed, and I pivoted into Computer Science.
-I applied for a research position in Computer Science at the Universtiy of Koblenz.
-In 2015 I started working as free-lance [consultant](http://heinrichhartmann.com/consulting.html).
-Today I am Chief Data Scientist at Circonus.
-
-
 
 ## Why become a Data Scientist?
 
@@ -65,21 +49,15 @@ What should you do?
 ### Take programming seriously
 
 You will be measured by the value you create for the company.
-For a software company, the value it provides is the code it is shipping and running.
-In production.
-If you want to generate value, then learn how to code.
+For a software company, the value it provides is the code it is shipping.
+If you want to generate value, learn how to code that people can read and deploy.
 This will be your bred and butter.
 
-In the beginning I thought that I would be the one doing the mathematics and other people would do the implementation.
-This does not work.
-It's called *data* science for a reason.
-You need to work with the data to create any value.
-
-Then I tought, well I will write prototypes in R or Python and other people will do the implemenation for production systems.
+This is one of the things I have learned on the job.
+Starting as Data Scientist I thought, I will write prototypes in R or Python and other people will do the implemenation for production systems.
 I am not a trained programmer after all!
 
-It turns out, that this does not work well either.
-I actually tried that once.
+It turns out, that this does not work.
 The problem is the iteration speed.
 Your method might work well on the data sets you tried, but after you deployed it you find another instance, for which the method does not work that well.
 So you need to copy the data over to your test environment and make some changes to your prototype.
@@ -101,8 +79,8 @@ Click deploy.
 You can repeat this cycle multiple times a day.
 
 The good news is: It's not all that hard.
-If you made it through graad school im pure maths, you are more than smart enought decent programmer.
-In many ways a proof is very similar to a progam.
+If you made it through graad school im pure maths, you are more than smart enought to become a decent programmer.
+After all, a proof is very similar to a progam.
 
 As a pure mathematician, one pitfall is to try to appraoche programming from first principles.
 I.e. learn about how the CPU works and formal mathematical models of computation (lamda calculus).
@@ -111,7 +89,7 @@ There is just too much complexity in your way.
 You will never understand what your Java code actually does on the CPU.
 At least not, without investing many years of time into this.
 
-Programming is a craft.
+It's much more effective to approach programming is a craft.
 The only thing that really helps is practice.
 Write code.
 Read code others have written.
