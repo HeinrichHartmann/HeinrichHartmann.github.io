@@ -4,18 +4,19 @@ layout: default
 
 
 <div id="post">
+
   <!-- Title -->
   <h1> {{ page.title }}</h1>
+
+  {% if page.hidden %}
+  <h1 style="color:red; border-style:solid; border-color:red; border-radius:0.2em;margin:50px"> UNPUBLISHED DRAFT </h1>
+  {% endif %}
 
   <!-- Meta -->
   <p class="meta">
     Written on {{ page.date | date: "%Y-%m-%d" }}
     {% if page.location %} in {{ page.location }} {% endif %}
   </p>
-
-  {% if page.hidden %}
-  <h1 style="color:red"> UNPUBLISHED DRAFT </h1>
-  {% endif %}
 
   <!-- Splash -->
   {% if page.splash %}
