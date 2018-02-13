@@ -7,6 +7,19 @@
 		<atom:link href="http://heinrichhartmann.com/feed.xml" rel="self" type="application/rss+xml" />
 		
 			<item>
+				<title>Circonus on the Raspberry Pi</title>
+				        
+				
+					<description>&lt;p&gt;There are a lot of interesting monitoring tasks, that can facilitated with a Raspberry Pi (E.g. &lt;a href=&quot;http://heinrichhartmann.com/blog/2014/12/14/Sensor-Monitoring-with-RaspberryPi-and-Circonus.html&quot;&gt;here&lt;/a&gt;, &lt;a href=&quot;https://www.circonus.com/2016/10/circonus-api-raspberry-pi/&quot;&gt;here&lt;/a&gt;.&lt;/p&gt;
+
+</description>
+				
+				<pubDate>Tue, 13 Feb 2018 00:00:00 +0000</pubDate>
+				<link>http://heinrichhartmann.com/blog/Circonus-on-RPI.html</link>
+				<guid isPermaLink="true">http://heinrichhartmann.com/blog/Circonus-on-RPI.html</guid>
+			</item>
+		
+			<item>
 				<title>Monitoring Dropbox</title>
 				        
 				
@@ -140,23 +153,6 @@ differences.&lt;/p&gt;
 				<pubDate>Sun, 12 Jun 2016 00:00:00 +0000</pubDate>
 				<link>http://heinrichhartmann.com/blog/2016/06/12/Box-Counting-Arithmetic.html</link>
 				<guid isPermaLink="true">http://heinrichhartmann.com/blog/2016/06/12/Box-Counting-Arithmetic.html</guid>
-			</item>
-		
-			<item>
-				<title>Dijkstra's Prime Number Algorithm</title>
-				        
-				
-					<description>&lt;script src=&quot;http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS_HTML&quot; type=&quot;text/javascript&quot;&gt;&lt;/script&gt;
-
-&lt;style&gt; .center { margin-right: auto; margin-left:auto; display: block } &lt;/style&gt;
-
-&lt;style src=&quot;/css/coderay.css&quot;&gt;&lt;/style&gt;
-
-</description>
-				
-				<pubDate>Sun, 03 Apr 2016 00:00:00 +0000</pubDate>
-				<link>http://heinrichhartmann.com/blog/2016/04/03/Dijkstra's-Prime-Number-Algorithm.html</link>
-				<guid isPermaLink="true">http://heinrichhartmann.com/blog/2016/04/03/Dijkstra's-Prime-Number-Algorithm.html</guid>
 			</item>
 		
 	</channel>
