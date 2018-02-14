@@ -356,3 +356,11 @@ table tr th, table tr td
     line-height: 2.5em;
   }
 }
+
+.sticker {
+  color:red;
+  border-style:solid;
+  border-color:red;
+  border-radius:0.2em;
+  margin:50px;
+}
