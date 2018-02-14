@@ -4,9 +4,9 @@ author: "Heinrich Hartmann"
 location: Stemwede, Germany
 title: Circonus on the Raspberry Pi
 permalink: /blog/Circonus-on-RPI.html
-hidden: true
+hidden: false
 canonical:
- url: "http://circonus.com/blog/"
+ url: "https://www.circonus.com/2018/02/circonus-raspberry-pi/"
  name: "Circonus blog"
 categories: blog
 ---
