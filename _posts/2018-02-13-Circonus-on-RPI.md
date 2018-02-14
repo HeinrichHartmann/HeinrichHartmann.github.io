@@ -10,7 +10,7 @@ categories: blog
 
 There are a lot of interesting monitoring tasks, that can facilitated with a Raspberry Pi (e.g. [here](http://heinrichhartmann.com/blog/2014/12/14/Sensor-Monitoring-with-RaspberryPi-and-Circonus.html), [there](https://www.circonus.com/2016/10/circonus-api-raspberry-pi/)).
 Unfortunately installing the Circonus monitoring agent on the Pi is not entirely straight forward.
-- The linux distribution [Raspbian](https://www.raspbian.org/) is not directly supported, and neither is its upstream distro [Debian Wheezy](https://wiki.debian.org/DebianWheezy).
+- The linux distribution Raspbian is not directly supported, and neither is its upstream distro Debian Wheezy.
 - The processor architecture (armv6/v7) requires different binaries than supported targets.
 - Setting up nodejs/npm correctly is a PITA.
 
@@ -34,6 +34,9 @@ git clone https://github.com/circonus-labs/nad.git
 cd nad
 git checkout v2.5.1
 sudo make install install-linux-init
+
+# Fix nad disk plugins which depend on /proc/mdstat
+sudo modprobe md
 ```
 
 This should install and enable the monitoring agent nad on the RPI.
@@ -57,11 +60,11 @@ curl -sSL https://onestep.circonus.com/install | bash \
 
 The credentials will be different for you.
 The installer should find the running agent and register checks, graphs and the [USE Dashboard](https://www.circonus.com/2017/08/system-monitoring-with-the-use-dashboard/) for you.
-We needed to make some tweaks to the COSI installer itself to get this working as it is now.
-Thanks to Matt Maier @ Circonus to make this possible.
+We needed to make [some tweaks](https://github.com/circonus-labs/circonus-one-step-install/pull/51) to the COSI installer itself to get this working as it is now.
+Thanks to Matt Maier from Circonus for his help.
 
-These instructions were tested on [Raspbian stretch lite](https://www.raspberrypi.org/downloads/raspbian/)
-Version: November 2017 / Release date: 2017-11-29 / Kernel version: 4.9
+These instructions were tested on Raspbian stretch lite
+(Version: November 2017 / Release date: 2017-11-29 / Kernel version: 4.9)
 on a RPI2 Model B.
 
 Happy Monitoring!
