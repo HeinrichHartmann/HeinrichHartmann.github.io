@@ -16,6 +16,11 @@
 
    <!-- Favicon -->
    <link rel="icon" type="image/png" href="/images/favicon.png">
+
+   {% if page.canonical %}
+   <!-- Canonical source -->
+   <link rel="canonical" href="{{ page.canonical }}"/>
+   {% endif %}
    </head>
 <body>
 
