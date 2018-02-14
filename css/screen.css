@@ -339,7 +339,7 @@ table tr th, table tr td
 /**
  * Responsive
  **/
-@media only screen and (max-width: 42em) {
+@media only screen and (max-width: 50em) {
   .site {
     text-align: left;
     width: 100%;

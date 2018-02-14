@@ -5,18 +5,12 @@ location: Stemwede, Germany
 title: Circonus on the Raspberry Pi
 permalink: /blog/Circonus-on-RPI.html
 hidden: true
-categories:
-# - opinion
-- blog
-# splash:
-#   src: "/assets/capture_1517430553.png"
-#   credits: "click to enlarge"
-#   link: "/assets/capture_1517430553.png"
+categories: blog
 ---
 
 There are a lot of interesting monitoring tasks, that can facilitated with a Raspberry Pi (e.g. [here](http://heinrichhartmann.com/blog/2014/12/14/Sensor-Monitoring-with-RaspberryPi-and-Circonus.html), [there](https://www.circonus.com/2016/10/circonus-api-raspberry-pi/)).
 Unfortunately installing the Circonus monitoring agent on the Pi is not entirely straight forward.
-- The linux distribution "Raspian" is not directly supported, and neither is its upstream distro Debian Wheezy.
+- The linux distribution [Raspbian](https://www.raspbian.org/) is not directly supported, and neither is its upstream distro [Debian Wheezy](https://wiki.debian.org/DebianWheezy).
 - The processor architecture (armv6/v7) requires different binaries than supported targets.
 - Setting up nodejs/npm correctly is a PITA.
 
@@ -66,7 +60,7 @@ The installer should find the running agent and register checks, graphs and the 
 We needed to make some tweaks to the COSI installer itself to get this working as it is now.
 Thanks to Matt Maier @ Circonus to make this possible.
 
-These instructions were tested on [raspbian stretch lite](https://www.raspberrypi.org/downloads/raspbian/)
+These instructions were tested on [Raspbian stretch lite](https://www.raspberrypi.org/downloads/raspbian/)
 Version: November 2017 / Release date: 2017-11-29 / Kernel version: 4.9
 on a RPI2 Model B.
 
