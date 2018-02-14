@@ -13,7 +13,7 @@
 					<description>&lt;p&gt;There are a lot of interesting monitoring tasks, that can facilitated with a Raspberry Pi (e.g. &lt;a href=&quot;http://heinrichhartmann.com/blog/2014/12/14/Sensor-Monitoring-with-RaspberryPi-and-Circonus.html&quot;&gt;here&lt;/a&gt;, &lt;a href=&quot;https://www.circonus.com/2016/10/circonus-api-raspberry-pi/&quot;&gt;there&lt;/a&gt;).
 Unfortunately installing the Circonus monitoring agent on the Pi is not entirely straight forward.&lt;/p&gt;
 &lt;ul&gt;
-  &lt;li&gt;The linux distribution “Raspian” is not directly supported, and neither is its upstream distro Debian Wheezy.&lt;/li&gt;
+  &lt;li&gt;The linux distribution &lt;a href=&quot;https://www.raspbian.org/&quot;&gt;Raspbian&lt;/a&gt; is not directly supported, and neither is its upstream distro &lt;a href=&quot;https://wiki.debian.org/DebianWheezy&quot;&gt;Debian Wheezy&lt;/a&gt;.&lt;/li&gt;
   &lt;li&gt;The processor architecture (armv6/v7) requires different binaries than supported targets.&lt;/li&gt;
   &lt;li&gt;Setting up nodejs/npm correctly is a PITA.&lt;/li&gt;
 &lt;/ul&gt;
