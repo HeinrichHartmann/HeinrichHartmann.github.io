@@ -9,13 +9,15 @@ layout: default
   <h1> {{ page.title }}</h1>
 
   {% if page.hidden %}
-  <h1 style="color:red; border-style:solid; border-color:red; border-radius:0.2em;margin:50px"> UNPUBLISHED DRAFT </h1>
+  <h1 class="sticker"> UNPUBLISHED DRAFT </h1>
   {% endif %}
+
 
   <!-- Meta -->
   <p class="meta">
     Written on {{ page.date | date: "%Y-%m-%d" }}
     {% if page.location %} in {{ page.location }} {% endif %}
+    {% if page.canonical %} for the <a href="{{ page.canonical.url }}">{{ page.canonical.name }}</a>. {% endif %}
   </p>
 
   <!-- Splash -->

@@ -5,7 +5,9 @@ location: Stemwede, Germany
 title: Circonus on the Raspberry Pi
 permalink: /blog/Circonus-on-RPI.html
 hidden: true
-canonical: "http://circonus.com/blog/xxx"
+canonical:
+ url: "http://circonus.com/blog/"
+ name: "Circonus blog"
 categories: blog
 ---
 
