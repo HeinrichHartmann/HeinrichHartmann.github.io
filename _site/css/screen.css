@@ -227,7 +227,7 @@ ul.posts span {
   margin: 30px 0;
 }
 
-.pullquote div {
+.pullquote {
   font-family: Georgia, serif;
   font-size: 18px;
   font-style: italic;
@@ -238,7 +238,7 @@ ul.posts span {
   color: #383838;
 }
 
-.pullquote div:before {
+.pullquote:before {
   display: block;
   content: "\201C";
   font-size: 80px;
