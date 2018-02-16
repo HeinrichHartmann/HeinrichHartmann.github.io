@@ -364,3 +364,9 @@ table tr th, table tr td
   border-radius:0.2em;
   margin:50px;
 }
+
+@media only print {
+  .splash {
+    visibility: hidden;
+  }
+}
