@@ -21,6 +21,19 @@ Circonus does not officially support “Raspbian Linux on armv6/v7” as a deplo
 			</item>
 		
 			<item>
+				<title>Why Data Science?</title>
+				        
+				
+					<description>&lt;h2 id=&quot;why-become-a-data-scientist&quot;&gt;Why become a Data Scientist?&lt;/h2&gt;
+
+</description>
+				
+				<pubDate>Mon, 05 Feb 2018 00:00:00 +0000</pubDate>
+				<link>http://heinrichhartmann.com/blog/Why-Data-Science.html</link>
+				<guid isPermaLink="true">http://heinrichhartmann.com/blog/Why-Data-Science.html</guid>
+			</item>
+		
+			<item>
 				<title>Monitoring Dropbox</title>
 				        
 				
@@ -35,6 +48,22 @@ I just sleep better this way.&lt;/p&gt;
 				<pubDate>Mon, 05 Feb 2018 00:00:00 +0000</pubDate>
 				<link>http://heinrichhartmann.com/blog/Monitoring-Dropbox.html</link>
 				<guid isPermaLink="true">http://heinrichhartmann.com/blog/Monitoring-Dropbox.html</guid>
+			</item>
+		
+			<item>
+				<title>Impulse And Intent</title>
+				        
+				
+					<description>&lt;p&gt;I have spent a lot of time thinking about impulse control over the last days.
+More and more reports are coming out which are highlighting the malicious effects that the millennial media diet (smart-phones, social-media, email, slack) brings with it.
+The internet runs on advertisements, and entirely relies on selling our attention.
+Even in the real world, every surface in public space that the eye might rest on is covered with ads, or even screens nowadays!&lt;/p&gt;
+
+</description>
+				
+				<pubDate>Wed, 10 Jan 2018 00:00:00 +0000</pubDate>
+				<link>http://heinrichhartmann.com/opinion/blog/2018/01/10/Impulse-and-Intent.html</link>
+				<guid isPermaLink="true">http://heinrichhartmann.com/opinion/blog/2018/01/10/Impulse-and-Intent.html</guid>
 			</item>
 		
 			<item>
@@ -124,36 +153,6 @@ differences.&lt;/p&gt;
 				<pubDate>Tue, 01 Nov 2016 00:00:00 +0000</pubDate>
 				<link>http://heinrichhartmann.com/blog/2016/11/01/Outlier-Detection-at-TouchTunes.html</link>
 				<guid isPermaLink="true">http://heinrichhartmann.com/blog/2016/11/01/Outlier-Detection-at-TouchTunes.html</guid>
-			</item>
-		
-			<item>
-				<title>Percentiles Can't Be Aggregated</title>
-				        
-				
-					<description>&lt;p&gt;Dear John,&lt;/p&gt;
-
-</description>
-				
-				<pubDate>Thu, 30 Jun 2016 00:00:00 +0000</pubDate>
-				<link>http://heinrichhartmann.com/blog/2016/06/30/Percentiles-can't-be-aggregated.html</link>
-				<guid isPermaLink="true">http://heinrichhartmann.com/blog/2016/06/30/Percentiles-can't-be-aggregated.html</guid>
-			</item>
-		
-			<item>
-				<title>Box Counting Arithmetic</title>
-				        
-				
-					<description>&lt;script src=&quot;http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS_HTML&quot; type=&quot;text/javascript&quot;&gt;
-  MathJax.Hub.Config({ tex2jax: { inlineMath: [['$','$']], processEscapes: true } });
-&lt;/script&gt;
-
-&lt;style&gt; img { margin-right: auto; margin-left:auto; display: block } &lt;/style&gt;
-
-</description>
-				
-				<pubDate>Sun, 12 Jun 2016 00:00:00 +0000</pubDate>
-				<link>http://heinrichhartmann.com/blog/2016/06/12/Box-Counting-Arithmetic.html</link>
-				<guid isPermaLink="true">http://heinrichhartmann.com/blog/2016/06/12/Box-Counting-Arithmetic.html</guid>
 			</item>
 		
 	</channel>
