@@ -2,6 +2,7 @@
 layout: "post"
 author: "Heinrich Hartmann"
 location: Stemwede, Germany
+hidden: true
 categories:
 - opinion
 - blog
