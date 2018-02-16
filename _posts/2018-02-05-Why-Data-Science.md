@@ -69,6 +69,7 @@ It typically takes weeks to months to complete a cycle like this.
 It's incredibly expensive for the company.
 
 The truth is:
+
 {% pullquote %}
 Data Scientist need to write and maintain production code.
 {% endpullquote %}

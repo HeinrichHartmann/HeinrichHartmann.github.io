@@ -2,6 +2,7 @@
 layout: "post"
 author: "Heinrich Hartmann"
 location: Stemwede, Germany
+permalink: "/blog/Impulse-and-Intent.html"
 hidden: true
 categories:
 - opinion
