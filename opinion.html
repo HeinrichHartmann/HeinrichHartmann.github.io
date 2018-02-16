@@ -8,12 +8,12 @@ title: Heinrich Hartmann
   <h1>Opinions</h1>
 
   <ul class="posts">
-    {% for post in site.categories.opinion %}
+    {% for post in site.categories.opinion %}{% unless post.hidden %}
       <li><span>{{ post.date | date: "%Y-%m-%d" }}</span> &raquo; <a href="{{ post.url }}">{{ post.title }}</a>
         {% if post.comment%} - <em>{{ post.comment }}</em>{% endif %}
         {% if post.external_url %} (on {{ post.external_site }}) {% endif %}
       </li>
-    {% endfor %}
+    {% endunless %}{% endfor %}
   </ul>
 
 </div>
