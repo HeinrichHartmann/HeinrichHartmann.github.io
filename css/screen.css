@@ -58,6 +58,7 @@ table {
 }
 
 pre {
+  text-align: left;
   overflow-y: auto;
 }
 
@@ -369,4 +370,25 @@ table tr th, table tr td
   .splash {
     visibility: hidden;
   }
+}
+
+.hookin {
+  float: left;
+  font-size: 2.5em;
+  font-weight: 700;
+  padding-top: 0.2em;
+  margin-right: 0.4em;
+  color: #a00;
+  color: #EC9F2E;
+  font-family: "franklin-gothic-urw",Verdana,Geneva,sans-serif;
+}
+
+.dropcaps::first-letter {
+  font-size: 4.8em;
+  color: #a00;
+  font-family: Georgia;
+  font-weight: 500;
+  line-height: 0.9em;
+  float: left;
+  margin-right: 0.1em;
 }
