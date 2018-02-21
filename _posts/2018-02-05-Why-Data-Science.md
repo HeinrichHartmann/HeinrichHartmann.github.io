@@ -15,26 +15,26 @@ splash:
 
 ## Why become a Data Scientist?
 
-* DataScience is the realization that Business need Mathematicians to make sense of their data.
-  The analysis of balnance sheets and order books does not involve that much mathematics.
-  But storage costs have dropped.
-  Storing massive amounts of data is now common.
-  On some web-sites every click of every user is tracked.
-  If you want to extract information from this kind of scattered, high volume information, you need to work harder.
-  This is where mathematicians come in.
+{% hookin 1 %} **It's a great opportunity.**
+DataScience is the realization that Business need Mathematicians to make sense of their data.
+The analysis of balnance sheets and order books does not involve that much mathematics.
+But storage costs have dropped.
+Companies start gathering every bit of information they can get their hands on.
+If you want to extract information from this kind of scattered, high volume information, you need to work harder.
+This is where mathematicians come in.
 
-* Mathematicians bring a great skillset to the table:
-  Frustration tolerance.
-  Formal reasoning.
-  No fear of equations.
-  The average computer-scientist trained (at least the ones I have seen) are not able to work with equations very well.
-  Many are scared of matrices.
-  It can not be expected that you are able to work creatively with conceptual models:
-  - Interpret formula geometrically
-  - Grasp how the high level description is reflected in the formulas
-  - Incorporate new ideas and simplify or extend the given model
-  This is *really* hard for CS master students.
-  Those often have very shallow knowlege of mathematics for them ML papers are largely impenetrable.
+{% hookin 2 %} **Mathematicians bring a great skillset to the table.**
+Frustration tolerance.
+Formal reasoning.
+No fear of equations.
+The average computer-scientist trained (at least the ones I have seen) are not able to work with equations very well.
+Many are scared of matrices.
+It can not be expected that you are able to work creatively with conceptual models:
+- Interpret formula geometrically
+- Grasp how the high level description is reflected in the formulas
+- Incorporate new ideas and simplify or extend the given model
+This is *really* hard for CS master students.
+Those often have very shallow knowlege of mathematics for them ML papers are largely impenetrable.
 
 * The industry is deeply confused.
   - Ill defined field

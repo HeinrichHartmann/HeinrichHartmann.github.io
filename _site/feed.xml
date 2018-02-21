@@ -7,10 +7,25 @@
 		<atom:link href="http://heinrichhartmann.com/feed.xml" rel="self" type="application/rss+xml" />
 		
 			<item>
+				<title>From Regressions to Neural Networks</title>
+				        
+				
+					<description>&lt;div style=&quot;visibility:hidden; float:left&quot;&gt;
+$$\newcommand{\ra}{\rightarrow}\newcommand{\lra}{\longrightarrow}$$
+&lt;/div&gt;
+
+</description>
+				
+				<pubDate>Wed, 21 Feb 2018 00:00:00 +0000</pubDate>
+				<link>http://heinrichhartmann.com/blog/lg-to-nn.html</link>
+				<guid isPermaLink="true">http://heinrichhartmann.com/blog/lg-to-nn.html</guid>
+			</item>
+		
+			<item>
 				<title>Circonus on the Raspberry Pi</title>
 				        
 				
-					<description>&lt;p&gt;There are a lot of interesting monitoring tasks, that can facilitated with a Raspberry Pi (e.g. &lt;a href=&quot;http://heinrichhartmann.com/blog/2014/12/14/Sensor-Monitoring-with-RaspberryPi-and-Circonus.html&quot;&gt;here&lt;/a&gt;, &lt;a href=&quot;https://www.circonus.com/2016/10/circonus-api-raspberry-pi/&quot;&gt;there&lt;/a&gt;).
+					<description>&lt;p class=&quot;dropcaps&quot;&gt;There are a lot of interesting monitoring tasks, that can facilitated with a Raspberry Pi (e.g. &lt;a href=&quot;http://heinrichhartmann.com/blog/2014/12/14/Sensor-Monitoring-with-RaspberryPi-and-Circonus.html&quot;&gt;here&lt;/a&gt;, &lt;a href=&quot;https://www.circonus.com/2016/10/circonus-api-raspberry-pi/&quot;&gt;there&lt;/a&gt;).
 Circonus does not officially support “Raspbian Linux on armv6/v7” as a deployment target, but given the steady interest in this topic, we took the time to pave the way and write down some instructions in this post.&lt;/p&gt;
 
 </description>
@@ -140,19 +155,6 @@ differences.&lt;/p&gt;
 				<pubDate>Tue, 15 Nov 2016 00:00:00 +0000</pubDate>
 				<link>http://heinrichhartmann.com/opinion/2016/11/15/A-Digital-Passport-for-Digital-Citizens.html</link>
 				<guid isPermaLink="true">http://heinrichhartmann.com/opinion/2016/11/15/A-Digital-Passport-for-Digital-Citizens.html</guid>
-			</item>
-		
-			<item>
-				<title>Outlier Detection At Touchtunes</title>
-				        
-				
-					<description>&lt;p&gt;Touchtunes&lt;/p&gt;
-
-</description>
-				
-				<pubDate>Tue, 01 Nov 2016 00:00:00 +0000</pubDate>
-				<link>http://heinrichhartmann.com/blog/2016/11/01/Outlier-Detection-at-TouchTunes.html</link>
-				<guid isPermaLink="true">http://heinrichhartmann.com/blog/2016/11/01/Outlier-Detection-at-TouchTunes.html</guid>
 			</item>
 		
 	</channel>
