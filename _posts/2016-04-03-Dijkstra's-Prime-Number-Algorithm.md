@@ -10,6 +10,7 @@ redirect_from:
 <style> .center { margin-right: auto; margin-left:auto; display: block } </style>
 <style src="/css/coderay.css"></style>
 
+{: .dropcaps }
 I was reading Tanenbaum's paper [1] lately, which contains an
 algorithm for calculating prime numbers attributed to E.W. Dijkstra
 [2].  What is remarkable about this algorithm is, that it uses no

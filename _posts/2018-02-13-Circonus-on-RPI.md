@@ -11,6 +11,7 @@ canonical:
 categories: blog
 ---
 
+{: .dropcaps }
 There are a lot of interesting monitoring tasks, that can facilitated with a Raspberry Pi (e.g. [here](http://heinrichhartmann.com/blog/2014/12/14/Sensor-Monitoring-with-RaspberryPi-and-Circonus.html), [there](https://www.circonus.com/2016/10/circonus-api-raspberry-pi/)).
 Circonus does not officially support "Raspbian Linux on armv6/v7" as a deployment target, but given the steady interest in this topic, we took the time to pave the way and write down some instructions in this post.
 
