@@ -279,7 +279,7 @@ There is certainly an art in choosing those functions in such a way that the min
 
 The jupyter notebooks used to generated the graphics are available [here](https://github.com/HeinrichHartmann/all-is-loss-notebooks).
 
-If you liked this post, you migh also thind [these visuaulzations](https://imgur.com/a/Hqolp) of differet optimization algorithms by Alac Radford interesting.
+If you liked this post, you migh also find [these visuaulzations](https://imgur.com/a/Hqolp) of differet optimization algorithms by Alac Radford interesting.
 
 This post drew some inspiration from a [video lecture](https://www.coursera.org/learn/ai/lecture/kfTED/deep-feed-forward-neural-networks) by [Romeo Kienzler](https://twitter.com/RomeoKienzler).
 
