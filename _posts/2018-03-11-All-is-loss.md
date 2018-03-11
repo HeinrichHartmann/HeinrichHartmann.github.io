@@ -281,6 +281,6 @@ The jupyter notebooks used to generated the graphics are available [here](https:
 
 If you liked this post, you migh also thind [these visuaulzations](https://imgur.com/a/Hqolp) of differet optimization algorithms by Alac Radford interesting.
 
-This post draw some inspiration from a [video lecture](https://www.coursera.org/learn/ai/lecture/kfTED/deep-feed-forward-neural-networks) by [Romeo Kienzler](https://twitter.com/RomeoKienzler).
+This post drew some inspiration from a [video lecture](https://www.coursera.org/learn/ai/lecture/kfTED/deep-feed-forward-neural-networks) by [Romeo Kienzler](https://twitter.com/RomeoKienzler).
 
 Thanks to [Rene Pickhardt](https://twitter.com/renepickhardt) and [Martin Thoma](https://martin-thoma.com) for their feedback on earlier versions of this article.
