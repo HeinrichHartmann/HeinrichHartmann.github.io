@@ -7,6 +7,20 @@
 		<atom:link href="http://heinrichhartmann.com/feed.xml" rel="self" type="application/rss+xml" />
 		
 			<item>
+				<title>Virtual Coffee Break</title>
+				        
+				
+					<description>&lt;p&gt;Virtua Coffee Breaks (VCBs) are the analogue of coffee breaks for remote workers.
+Here are the rules for holding a Virtual Coffee Break.&lt;/p&gt;
+
+</description>
+				
+				<pubDate>Mon, 12 Mar 2018 00:00:00 +0000</pubDate>
+				<link>http://heinrichhartmann.com/VCB.html</link>
+				<guid isPermaLink="true">http://heinrichhartmann.com/VCB.html</guid>
+			</item>
+		
+			<item>
 				<title>All is loss</title>
 				        
 				
@@ -141,19 +155,6 @@ differences.&lt;/p&gt;
 				<pubDate>Thu, 17 Nov 2016 00:00:00 +0000</pubDate>
 				<link>http://heinrichhartmann.com/opinion/2016/11/17/Bu-rgerversicherung-Bedroht-Arbeitspla-tze.html</link>
 				<guid isPermaLink="true">http://heinrichhartmann.com/opinion/2016/11/17/Bu-rgerversicherung-Bedroht-Arbeitspla-tze.html</guid>
-			</item>
-		
-			<item>
-				<title>A Digital Passport For Digital Citizens</title>
-				        
-				
-					<description>&lt;p&gt;&lt;img src=&quot;/assets/digitalpassportbanner_pixbay_cc0.png&quot; width=&quot;100%&quot; /&gt;&lt;/p&gt;
-
-</description>
-				
-				<pubDate>Tue, 15 Nov 2016 00:00:00 +0000</pubDate>
-				<link>http://heinrichhartmann.com/opinion/2016/11/15/A-Digital-Passport-for-Digital-Citizens.html</link>
-				<guid isPermaLink="true">http://heinrichhartmann.com/opinion/2016/11/15/A-Digital-Passport-for-Digital-Citizens.html</guid>
 			</item>
 		
 	</channel>
