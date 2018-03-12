@@ -13,7 +13,7 @@ splash:
   credits: Photo by <a href="https://unsplash.com/@karlchor">karl chor</a> on Unsplash
 ---
 
-Virtua Coffee Breaks (VCBs) are the analogue of coffee breaks for remote workers.
+Virtual Coffee Breaks (VCBs) are the analogue of coffee breaks for remote workers.
 Here are the rules for holding a Virtual Coffee Break.
 
 1. VCBs are initiated with a text message "VCB?"
