@@ -25,9 +25,12 @@ Here are the rules for holding a Virtual Coffee Break.
 
 1. The recepient may ask for a short delay before joining.
 
-1. VCB requests expire after 5 minutes.
+1. The recepient may turn down a request directly by answering "busy".
+
+1. VCB requests silently expire after 5 minutes.
    - If the recepient did not get back to you, he was apparetly busy. No apologies needed.
-   - Once a request has expired, the initiator has probably picked up work again. Don't interrupt him again.
+   - Once a request has expired, the initiator has probably picked up work again.
+     Further interruptions might not be welcome.
    - If he missed the request before it expired, the recepient can always initiate a new VCB.
 
 1. A VCB session must be ended after a maximal duration of 15 minutes.
@@ -60,10 +63,12 @@ Catching up with all life events since your wedding can take hours.
 A coffee break in within the working hours is not the right place for this.
 The hard cut at 15 minutes explicitly shuts down this kind of conversations.
 
-**Not a meeting.**
+**No scheduling.**
 A scheduled meeting costs much more than the scheduled time.
 You can't start any task, which requires some context to keep in mind up to 30 mins before the meeting.
 Also the time in your day is now blocked, and you can't take in anything else, like going to lunch.
+VCB's are not scheduled.
+It's either happening now or not at all.
 
 **No obligations.**
 If you are busy.
