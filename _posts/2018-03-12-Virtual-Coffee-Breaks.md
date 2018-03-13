@@ -36,7 +36,7 @@ Here are the rules for holding a Virtual Coffee Break.
 1. A VCB session must be ended after a maximal duration of 15 minutes.
    - The initiator of the VCB is reponsible to end the session in time.
 
-1. A VCB session may or may not include the consumption of actual coffee.
+1. A VCB session may or may not involve the consumption of coffee.
 
 That's it. Enjoy your virtual coffee!
 
