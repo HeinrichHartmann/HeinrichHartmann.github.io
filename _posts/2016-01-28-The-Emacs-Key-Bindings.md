@@ -9,9 +9,9 @@ redirect_from:
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
                                                             {{ page.date | date: "%Y-%m-%d" }}
 
-----------------------
-THE EMACS KEY-BINDINGS
-----------------------
+                      ----------------------
+                      THE EMACS KEY-BINDINGS
+                      ----------------------
 
 
 This note contains a full annotated list of Emacs default key bindings,
