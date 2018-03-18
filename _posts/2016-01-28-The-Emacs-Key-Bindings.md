@@ -9,10 +9,8 @@ redirect_from:
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
                                                             {{ page.date | date: "%Y-%m-%d" }}
 
-                         category: "blog"
 ----------------------
-                         THE EMACS KEY-BINDINGS
-                         category: "blog"
+THE EMACS KEY-BINDINGS
 ----------------------
 
 
