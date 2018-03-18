@@ -7,6 +7,21 @@
 		<atom:link href="http://heinrichhartmann.com/feed.xml" rel="self" type="application/rss+xml" />
 		
 			<item>
+				<title>Debugging</title>
+				        
+				
+					<description>&lt;p&gt;Debugging is one of the major activities while developing software.
+Debugging is not only about finding bugs but also about understanding sofware.
+As such it has a lot incommon with monitoring and observability.&lt;/p&gt;
+
+</description>
+				
+				<pubDate>Sat, 17 Mar 2018 00:00:00 +0000</pubDate>
+				<link>http://heinrichhartmann.com/blog/debugging.html</link>
+				<guid isPermaLink="true">http://heinrichhartmann.com/blog/debugging.html</guid>
+			</item>
+		
+			<item>
 				<title>Virtual Coffee Break</title>
 				        
 				
@@ -142,19 +157,6 @@ differences.&lt;/p&gt;
 				<pubDate>Sat, 19 Nov 2016 00:00:00 +0000</pubDate>
 				<link>http://heinrichhartmann.com/blog/2016/11/19/The-Electoral-College.html</link>
 				<guid isPermaLink="true">http://heinrichhartmann.com/blog/2016/11/19/The-Electoral-College.html</guid>
-			</item>
-		
-			<item>
-				<title>Bürgerversicherung Bedroht Arbeitsplätze</title>
-				        
-				
-					<description>&lt;p&gt;Die FAZ  &lt;a href=&quot;http://www.faz.net/aktuell/wirtschaft/wirtschaftspolitik/buergerversicherung-von-spd-gruenen-linke-fuehrt-zu-stellenabbau-14531660.html&quot;&gt;Bürgerversicherung würde Zehntausende Arbeitsplätze bedrohen&lt;/a&gt; schreibt heute (2016-11-17):&lt;/p&gt;
-
-</description>
-				
-				<pubDate>Thu, 17 Nov 2016 00:00:00 +0000</pubDate>
-				<link>http://heinrichhartmann.com/opinion/2016/11/17/Bu-rgerversicherung-Bedroht-Arbeitspla-tze.html</link>
-				<guid isPermaLink="true">http://heinrichhartmann.com/opinion/2016/11/17/Bu-rgerversicherung-Bedroht-Arbeitspla-tze.html</guid>
 			</item>
 		
 	</channel>
