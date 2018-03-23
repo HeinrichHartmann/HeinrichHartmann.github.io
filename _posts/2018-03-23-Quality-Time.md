@@ -9,7 +9,7 @@ categories:
 - blog
 ---
 
-It was thus siad, that the great [@poswait](https://twitter.com/postwait) once [stated](https://twitter.com/postwait/status/960987392424529922):
+It was thus said, that the great [@poswait](https://twitter.com/postwait) once [stated](https://twitter.com/postwait/status/960987392424529922):
 
 {% pullquote %}
 I just spent some quality time with tcpdump; it really paid off.
@@ -18,7 +18,7 @@ Remember to spend quality time with your loved ones while you can.
 {% endpullquote %}
 
 At first I was like: "What? Quality time with ... what?. I am pretty sure my wife want's something different when she demands quality time!"
-However, that quote did not went out of my head, and I tought about it for a while.
+However, that quote did not went out of my head, and I thought about it for a while.
 It does indeed make some sense.
 
 ## What is Quality Time?
@@ -27,8 +27,8 @@ We live in a world where we are constantly distracted by our phones, slack chann
 For me quality time is the opposite of interruptions.
 "Let me just do that real quick" is *not* quality time.
 
-It's much more about being in the moment, and taking enought time for the task at hand.
-In my romantic phantasies about woodworking, a carpenter spents quality time with his materials.
+It's much more about being in the moment, and taking enough time for the task at hand.
+In my romantic fantasies about woodworking, a carpenter spends quality time with his materials.
 It takes a lot of dedication to make nice furniture.
 He does not rush to get some grooves in.
 He takes his time and carves them out one by one.
@@ -41,7 +41,7 @@ I sure think it's possible! Here are some ideas on how to do it:
   The internet is the most distracting invention ever made.
   Getting rid of it for a while is great.
   I think the [Internet Distraction Comic](https://duckduckgo.com/?q=Internet+distraction+comic+-+Asher+Sarlin&iax=images&ia=images){:target="_blank"} by Asher Sarlin is pretty accurate.
-  As a phd student I used to have this as my desktop background image.
+  As a PhD student I used to have this as my desktop background image.
 
 * **Avoid screens** if you can.
   The typographer [Bringhurst](https://en.wikipedia.org/wiki/The_Elements_of_Typographic_Style) writes:
@@ -58,9 +58,9 @@ I sure think it's possible! Here are some ideas on how to do it:
   > information - names, dates, library call numbers, for instance - but not
   > so good a place for thoughtful text.
 
-  It's near impossible for me to get into a calm state of mind when staing at a screen.
+  It's near impossible for me to get into a calm state of mind when staring at a screen.
   If I can turn it off it's a huge win.
-  (Unfortunaltely the same holds true for for iPad screens as well. Even in Nightshift mode.
+  (Unfortunately the same holds true for for iPad screens as well. Even in Night-shift mode.
   epaper might be different. I have not tried it, yet.)
 
 * **Print out manuals** or at least get an offline version to read on the screen.
@@ -79,7 +79,7 @@ I sure think it's possible! Here are some ideas on how to do it:
   Oftentimes documentation is simply missing out of date or not detailed or precise enough,
   so you need to "use the source" (... Luke).
   So here is what I do:
-  - I don't print outwhole components. It's just too much paper, and you will not need everything.
+  - I don't print out whole components. It's just too much paper, and you will not need everything.
     Instead, print one module/class/file at a time.
   - Use GitHub for printing.
     Just navigate to the file you need to print (Hint: Use the `t` shortcut),
@@ -91,9 +91,9 @@ I sure think it's possible! Here are some ideas on how to do it:
 * **Play with the tool**. 
   Make some experiments.
   Try something fun or interesting.
-  Unfortunaltely this will involve screens.
+  Unfortunately this will involve screens.
   E.g. run the tool under strace(1) to see how it interacts with the OS.
-  Or, attach gdb and look at some typical backtraces and step thought some interesting places.
+  Or, attach gdb and look at some typical back-traces and step thought some interesting places.
 
 * **Write about it**.
   Take notes for yourself.
@@ -106,8 +106,8 @@ I sure think it's possible! Here are some ideas on how to do it:
   Realize that you are not going to write any code for the next few hours.
   It's an investment into building a mental model of the software you are running.
   This will pay of in the mid term.
-  I have had numerous situations where I fix a bug took ages, b/c I did not undersand the component well enough.
-  Taking a few hours to read more docs and code would have been qicker and less stressful.
+  I have had numerous situations where I fix a bug took ages, b/c I did not understand the component well enough.
+  Taking a few hours to read more docs and code would have been quicker and less stressful.
   Also, your next debugging session will profit from improved understanding.
 
 I am pretty sure that this was *not* exactly what @postwait did in his quality time with tcpdump(1).
