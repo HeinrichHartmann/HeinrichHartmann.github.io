@@ -148,11 +148,18 @@ with a WebKit-browser (Chrome, Opera, not Firefox) and hit the print button.
   </li>
   <li>
     <p><strong>Play with the tool</strong>. 
-Make some experiments.
-Try something fun or interesting.
 Unfortunately this will involve screens.
-E.g. run the tool under strace(1) to see how it interacts with the OS.
-Or, attach gdb and look at some typical back-traces and step thought some interesting places.</p>
+Experiment with some options/switches that you found in the docs.
+Try something fun or interesting.
+Tweak your personal config file (if supports such a thing).</p>
+  </li>
+  <li>
+    <p><strong>Inspect the internals</strong>.
+Improve and verify your mental model by inspecting the internals.
+Turn on verbose logging, to see what it does (e.g. <code class="highlighter-rouge">ssh -vvv</code> has some interesting output).
+Run the tool under strace(1) to see how it interacts with the OS.
+Attach gdb(1) and look at some typical back-traces and step thought some interesting places.
+Capture and examin network traffice emmitted by the tool with tcpdump(1) and wireshark.</p>
   </li>
   <li>
     <p><strong>Write about it</strong>.
