@@ -196,3 +196,35 @@ For details of what gets deleted see e.g. [StackOverflow 2013](https://webapps.s
 Before taking this step I'll have to post my contact information, communicate my plans about the email news feed and make sure I have contact information of all my close friends available.
 
 Wish me luck!
+
+## Update 2018-03-23
+
+So it has finally happend! I pulled the trigger.
+
+{% figure capture_1521809464 png "Quitting Facebook. For real." %}
+
+Actually it I did not actively use facebook for since I wrote this post.
+I made no more interactions on the site.
+But I admit, that I still checked in once or twice a day, just to close the tab after a few seconds.
+
+But what took me so long?
+
+It turns out that the exported facebook data is much worse than I realized at first.
+In particular the exported timeline is very incomplete!
+- All comments are missing. Even the ones you wrote yourself!
+- There are no images in the timeline.
+- The number of likes and shares is missing.
+
+Before I delete my account, I wanted to have a more decent backup of my timeline.
+I looked into printing out the timeline, exporting it as pdf, [full-page screenshots](https://screenshots.firefox.com/), massaging the DOM/HTML.
+I could get none of this working, with acceptable effort.
+
+Eventually I went throught the whole timeline (100s of posts!) and screenshotted each one individually.
+To make this process a little less tedious I changed the OSX keyboard shortcut for full page scrrenshot to F1, so I could use the following combo:
+
+* `j` -- navigate to next post in page
+* `F1` -- take a screenshot
+
+In this way I could complete the task in less than one hour.
+But now I have all posts archived in a large folder, so I don't loose that much data.
+It's still terrible in many ways, but acceptable for me.
