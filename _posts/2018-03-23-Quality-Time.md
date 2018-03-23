@@ -19,7 +19,7 @@ Remember to spend quality time with your loved ones while you can.
 
 At first I was like: "What? Quality time with ... what?. I am pretty sure my wife want's something different when she demands quality time!"
 However, that quote stuck in my head for a while.
-And the more I think about it, the more sense it makes to me.
+And thinking about it longer, I found it makes indeed some sense.
 
 ## What is Quality Time?
 
