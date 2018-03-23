@@ -89,11 +89,17 @@ I sure think it's possible! Here are some ideas on how to do it:
   - Make annotations with marker and pencil. Structure the code. Is it cohesive? Write down questions you want to clarify with a debugger.
 
 * **Play with the tool**. 
-  Make some experiments.
-  Try something fun or interesting.
   Unfortunately this will involve screens.
-  E.g. run the tool under strace(1) to see how it interacts with the OS.
-  Or, attach gdb and look at some typical back-traces and step thought some interesting places.
+  Experiment with some options/switches that you found in the docs.
+  Try something fun or interesting.
+  Tweak your personal config file (if supports such a thing).
+  
+* **Inspect the internals**.
+  Improve and verify your mental model by inspecting the internals.
+  Turn on verbose logging, to see what it does (e.g. `ssh -vvv` has some interesting output).
+  Run the tool under strace(1) to see how it interacts with the OS.
+  Attach gdb(1) and look at some typical back-traces and step thought some interesting places.
+  Capture and examin network traffice emmitted by the tool with tcpdump(1) and wireshark.
 
 * **Write about it**.
   Take notes for yourself.
