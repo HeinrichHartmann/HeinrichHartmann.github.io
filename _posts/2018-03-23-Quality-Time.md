@@ -112,7 +112,7 @@ I sure think it's possible! Here are some ideas on how to do it:
   Realize that you are not going to write any code for the next few hours.
   It's an investment into building a mental model of the software you are running.
   This will pay of in the mid term.
-  I have had numerous situations where I fix a bug took ages, b/c I did not understand the component well enough.
+  I have had numerous situations where fixing a bug took ages, b/c I did not understand the component well enough.
   Taking a few hours to read more docs and code would have been quicker and less stressful.
   Also, your next debugging session will profit from improved understanding.
 
