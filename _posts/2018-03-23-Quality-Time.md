@@ -99,7 +99,7 @@ I sure think it's possible! Here are some ideas on how to do it:
   Turn on verbose logging, to see what it does (e.g. `ssh -vvv` has some interesting output).
   Run the tool under strace(1) to see how it interacts with the OS.
   Attach gdb(1) and look at some typical back-traces and step thought some interesting places.
-  Capture and examin network traffice emmitted by the tool with tcpdump(1) and wireshark.
+  Capture and examine network traffice emmitted by the tool with tcpdump(1) and wireshark.
 
 * **Write about it**.
   Take notes for yourself.
