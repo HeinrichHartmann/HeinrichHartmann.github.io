@@ -7,18 +7,32 @@
 		<atom:link href="http://heinrichhartmann.com/feed.xml" rel="self" type="application/rss+xml" />
 		
 			<item>
-				<title>Debugging</title>
+				<title>Quality Time</title>
 				        
 				
-					<description>&lt;p&gt;Debugging is one of the major activities while developing software.
-Debugging is not only about finding bugs but also about understanding sofware.
-As such it has a lot incommon with monitoring and observability.&lt;/p&gt;
+					<description>&lt;p&gt;It was thus said, that the great &lt;a href=&quot;https://twitter.com/postwait&quot;&gt;@poswait&lt;/a&gt; once &lt;a href=&quot;https://twitter.com/postwait/status/960987392424529922&quot;&gt;stated&lt;/a&gt;:&lt;/p&gt;
+
+</description>
+				
+				<pubDate>Fri, 23 Mar 2018 00:00:00 +0000</pubDate>
+				<link>http://heinrichhartmann.com/blog/quality-time.html</link>
+				<guid isPermaLink="true">http://heinrichhartmann.com/blog/quality-time.html</guid>
+			</item>
+		
+			<item>
+				<title>Dynamic Tracing with GDB</title>
+				        
+				
+					<description>&lt;p&gt;Dynamic tracing is a very powerful debuging technique, that allows you to observe the behavior of running programs in a deep and meaningful way.
+People who have worked with Solaris or FreeBSD know about &lt;a href=&quot;http://dtrace.org/guide/preface.html&quot;&gt;dtrace(1)&lt;/a&gt; and the great powers it gives you to dynamically observe the system behavior. 
+It’s one of the things you really miss on Linux, once you have gotten to know it.
+If you have not heard about dtrace check out this collection of &lt;a href=&quot;http://www.brendangregg.com/DTrace/dtrace_oneliners.txt&quot;&gt;one-liners&lt;/a&gt; to get an idea of it’s capabilities.&lt;/p&gt;
 
 </description>
 				
 				<pubDate>Sat, 17 Mar 2018 00:00:00 +0000</pubDate>
-				<link>http://heinrichhartmann.com/blog/debugging.html</link>
-				<guid isPermaLink="true">http://heinrichhartmann.com/blog/debugging.html</guid>
+				<link>http://heinrichhartmann.com/blog/dynamic-tracing-with-gdb.html</link>
+				<guid isPermaLink="true">http://heinrichhartmann.com/blog/dynamic-tracing-with-gdb.html</guid>
 			</item>
 		
 			<item>
@@ -137,26 +151,6 @@ It’s totally unacceptable to spent 3h surfing the web and procrastinating at n
 				<pubDate>Mon, 21 Aug 2017 00:00:00 +0000</pubDate>
 				<link>http://heinrichhartmann.com/blog/Use-Dashboard.html</link>
 				<guid isPermaLink="true">http://heinrichhartmann.com/blog/Use-Dashboard.html</guid>
-			</item>
-		
-			<item>
-				<title>The Electoral College</title>
-				        
-				
-					<description>&lt;p&gt;US Presidents are not directly elected by the citizens of the United
-States.  Instead, citizens in each state vote to select a set of
-electors which vote for a party’s candidate in the
-&lt;a href=&quot;https://en.wikipedia.org/wiki/Electoral_College_(United_States)&quot;&gt;Electoral College&lt;/a&gt;.
-Interestingly, the number of electors is not proportional to the
-population of the state. This means citizens in different states have
-different voting power for the President. This site visualizes the
-differences.&lt;/p&gt;
-
-</description>
-				
-				<pubDate>Sat, 19 Nov 2016 00:00:00 +0000</pubDate>
-				<link>http://heinrichhartmann.com/blog/2016/11/19/The-Electoral-College.html</link>
-				<guid isPermaLink="true">http://heinrichhartmann.com/blog/2016/11/19/The-Electoral-College.html</guid>
 			</item>
 		
 	</channel>
