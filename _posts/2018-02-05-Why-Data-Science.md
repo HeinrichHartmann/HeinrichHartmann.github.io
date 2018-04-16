@@ -8,9 +8,9 @@ hidden: true
 categories:
 - opinion
 - blog
-splash:
-  src: "/assets/regression.png"
-  credits: 'Bob Dole [CC BY SA] via <a href="https://stackoverflow.com/questions/27336771/matlab-fit-a-line-to-a-histogram">Stack Overflow</a>'
+#splash:
+#  src: "/assets/regression.png"
+#  credits: 'Bob Dole [CC BY SA] via <a href="https://stackoverflow.com/questions/27336771/matlab-fit-a-line-to-a-histogram">Stack Overflow</a>'
 ---
 
 ## Why become a Data Scientist?

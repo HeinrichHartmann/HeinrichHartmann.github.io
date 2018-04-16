@@ -116,6 +116,7 @@ Fortunately gdb supports a number of flags on the command line, that allow opera
 and avoid interruptions of the program.
 
 The relevant sections form the [manual](https://sourceware.org/gdb/onlinedocs/gdb/File-Options.html#File-Options) are:
+
 * `-x file`  
   Execute commands from file file. The contents of this file is evaluated exactly as the source command would. See Command files.
 
