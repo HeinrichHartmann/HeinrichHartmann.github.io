@@ -5,21 +5,23 @@ title: Heinrich Hartmann - Consulting
 
 # Consulting
 
-I am offering consulting services in mathematical and algorithmical problems.
-If you are interested in my services, please contact me via email
-<a href="mailto:heinrich@heinrichhartmann.com">heinrich@heinrichhartmann.com</a>.
+I am offering consulting services as Data Scientist and Software Engineer.  In recent years my focus
+has been on the alalysis of time-series data and in particular telementry emitted by IT systems.
+Services include:
 
-## Services
-
-* Probabilistic modeling
-* Statistical analysis
-* Data Visualizations
-* Review of mathematical literature
-* Management of developer teams
+* Performance Monitoring
+* SLO/SLA Design
+* Data Science Trainings
+* Statistical data analysis
+* Data Visualization
 
 ## Technologies
 
+* Circonus Monitoring Stack
 * Data Analysis: Python, NumPy, pandas, SciPy, matplotlib
-* Programming Languages: Java, Python, lua
-* Databases: Postgres, MySQL, Neo4J
-* Messaging: ZeroMQ
+* Programming Languages: lua, C, Python, Java
+* Databases: PostgreSQL, Neo4J
+
+## Contact
+
+Email: <a href="mailto:heinrich@heinrichhartmann.com">heinrich@heinrichhartmann.com</a>
