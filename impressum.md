@@ -14,9 +14,11 @@ Betreiber und Kontakt:
 
 Dr. Heinrich Hartmann
 
-Stefan-George Ring 41  
-81929 Munich  
+Am Bökel 3  
+32351 Stemwede  
 
 Telefonnummer: +49 1525 3638134  
 E-Mail-Adresse: heinrich@heinrichhartmann.com  
 USt-IdNr.: DE295519544  
+
+Die Europäische Kommission stellt eine Plattform zur Online-Streitbeilegung (OS) bereit, die Sie unter http://ec.europa.eu/consumers/odr/ finden.
