@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en-us">
 <head>
    <meta http-equiv="content-type" content="text/html; charset=utf-8"/>
-   <title>Provide the title manually here</title>
+   <title>Monitoring Linux with eBPF</title>
    <meta name="author" content="Heinrich Hartmann"/>
 
    <!-- syntax highlighting CSS -->
@@ -47,7 +47,7 @@
   <div id="post">
 
   <!-- Title -->
-  <h1> Provide the title manually here</h1>
+  <h1> Monitoring Linux with eBPF</h1>
 
   
   <h1 class="sticker"> UNPUBLISHED DRAFT </h1>
@@ -56,23 +56,46 @@
 
   <!-- Meta -->
   <p class="meta">
-    Written on 2000-01-01
-     in Stemwede, Germany 
+    Written on 2018-04-29
+     in Zurich, Swizerland 
      for the <a href="https://www.circonus.com/2018/02/circonus-raspberry-pi/">Circonus blog</a>. 
   </p>
 
   <!-- Splash -->
   
-  <div class="splash">
-    <a href="/assets/capture_1517430553.png">
-      <img src="/assets/capture_1517430553.png" width="100%"/>
-    </a>
-     <p class="credits">click to enlarge</p> 
-  </div>
-  
 
   <!-- Post content -->
-  <p>… here comes the text</p>
+  <p>The Linux kernel is an abundant component of modern IT systems.
+It provides the critical services of hardware abstraction and time-sharing to applications.
+For the correct and performant operation of your system it’s critical to monitor the kernel as well as the application.</p>
+
+<p>The classical metrics for monitoring Linux, are among the most well known metrics in monitoring at all:
+CPU utilization, Memory usage (RSS-size), File system usage, and Network throughout.
+Those metrics focus on the kernel’s role as resource manager.</p>
+
+<p>A systematic view on system resources is the USE Method suggested by Brendan Gregg (http://www.brendangregg.com/usemethod.html).
+With the USE Dashboard, Circonus offers a high level overview over the key services that the Linux kernel provides to the application.
+https://www.circonus.com/2017/08/system-monitoring-with-the-use-dashboard/</p>
+
+<p>Monitoring these metrics provides clear value, but leaves a lot of things to be wished for.
+Even the most basic metrics like CPU utilization have some serious flaws (https://www.youtube.com/watch?v=QkcBASKLyeU) that limit the usefullness of those metrics.
+Also there are a lot of questions, for which there are simply no metrics.
+How much time did process X spent on CPU? How much time</p>
+
+<p>eBPF is a game changing technology that is available in recent kernel versions (v4.1 and later, cf https://github.com/iovisor/bcc/blob/master/docs/kernel-versions.md, e.g Ubuntu 16.04)
+It allows to subscribe to a large variety of in kernel events (function calls, k_probes) and aggregate them with minimal overhead.
+This unlocks a wide range of meaningful precise measurements, that can help narrowing the observability gap.</p>
+
+<p>The Circonus Monitoring Agent comes with an bpf plugin that allows to collect ebpf metrics from the Linux kernel.</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>https://github.com/circonus-labs/nad/tree/master/plugins/linux/bccbpf
+</code></pre></div></div>
+
+<p>The agent as well as the plugin are open source under a BSD license.
+The plugin makes use of the iovisor bcc toolkit (https://github.com/iovisor/bcc).
+At the time of this writing the plugin is supported on the Ubuntu 16.04 platform.</p>
+
+<p>In the following we will show some examples how this information can be used for monitoring purposes.</p>
 
 
   <!-- Comments -->

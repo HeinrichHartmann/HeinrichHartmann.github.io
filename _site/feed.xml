@@ -7,6 +7,21 @@
 		<atom:link href="http://heinrichhartmann.com/feed.xml" rel="self" type="application/rss+xml" />
 		
 			<item>
+				<title>Monitoring Linux with eBPF</title>
+				        
+				
+					<description>&lt;p&gt;The Linux kernel is an abundant component of modern IT systems.
+It provides the critical services of hardware abstraction and time-sharing to applications.
+For the correct and performant operation of your system it’s critical to monitor the kernel as well as the application.&lt;/p&gt;
+
+</description>
+				
+				<pubDate>Sun, 29 Apr 2018 00:00:00 +0000</pubDate>
+				<link>http://heinrichhartmann.com/blog/linux-monitoring-with-ebpf.html</link>
+				<guid isPermaLink="true">http://heinrichhartmann.com/blog/linux-monitoring-with-ebpf.html</guid>
+			</item>
+		
+			<item>
 				<title>Quality Time</title>
 				        
 				
@@ -138,19 +153,6 @@ It’s totally unacceptable to spent 3h surfing the web and procrastinating at n
 				<pubDate>Fri, 29 Dec 2017 00:00:00 +0000</pubDate>
 				<link>http://heinrichhartmann.com/blog/2017/12/31/Quitting-Facebook.html</link>
 				<guid isPermaLink="true">http://heinrichhartmann.com/blog/2017/12/31/Quitting-Facebook.html</guid>
-			</item>
-		
-			<item>
-				<title>System Monitoring With The Use Dashboard</title>
-				        
-				
-					<description>&lt;p&gt;System Monitoring with the USE Dashboard&lt;/p&gt;
-
-</description>
-				
-				<pubDate>Mon, 21 Aug 2017 00:00:00 +0000</pubDate>
-				<link>http://heinrichhartmann.com/blog/Use-Dashboard.html</link>
-				<guid isPermaLink="true">http://heinrichhartmann.com/blog/Use-Dashboard.html</guid>
 			</item>
 		
 	</channel>
