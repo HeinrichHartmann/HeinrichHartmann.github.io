@@ -7,6 +7,19 @@
 		<atom:link href="http://heinrichhartmann.com/feed.xml" rel="self" type="application/rss+xml" />
 		
 			<item>
+				<title>From Academia to Data Science</title>
+				        
+				
+					<description>&lt;p&gt;Over the last years, many people have asked me:&lt;/p&gt;
+
+</description>
+				
+				<pubDate>Sun, 27 May 2018 00:00:00 +0000</pubDate>
+				<link>http://heinrichhartmann.com/blog/Data-Science.html</link>
+				<guid isPermaLink="true">http://heinrichhartmann.com/blog/Data-Science.html</guid>
+			</item>
+		
+			<item>
 				<title>Monitoring Linux with eBPF</title>
 				        
 				
@@ -90,19 +103,6 @@ Circonus does not officially support “Raspbian Linux on armv6/v7” as a deplo
 				<pubDate>Tue, 13 Feb 2018 00:00:00 +0000</pubDate>
 				<link>http://heinrichhartmann.com/blog/Circonus-on-RPI.html</link>
 				<guid isPermaLink="true">http://heinrichhartmann.com/blog/Circonus-on-RPI.html</guid>
-			</item>
-		
-			<item>
-				<title>Why Data Science?</title>
-				        
-				
-					<description>&lt;h2 id=&quot;why-become-a-data-scientist&quot;&gt;Why become a Data Scientist?&lt;/h2&gt;
-
-</description>
-				
-				<pubDate>Mon, 05 Feb 2018 00:00:00 +0000</pubDate>
-				<link>http://heinrichhartmann.com/blog/Why-Data-Science.html</link>
-				<guid isPermaLink="true">http://heinrichhartmann.com/blog/Why-Data-Science.html</guid>
 			</item>
 		
 			<item>
