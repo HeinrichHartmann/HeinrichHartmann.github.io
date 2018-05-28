@@ -39,16 +39,16 @@ publish: docker-build
 docker-create:
 	docker build -t hh-blog-build-image .
 
-docker-serve: docker-create
+docker-serve:
 	docker run --rm -v $$(pwd):/src -it -p 4000:4000 hh-blog-build-image make serve
 
-docker-build: docker-create
+docker-build:
 	docker run --rm -v $$(pwd):/src -it hh-blog-build-image make build
 
-docker-build-drafts: docker-create
+docker-build-drafts:
 	docker run --rm -v $$(pwd):/src -it hh-blog-build-image make build-drafts
 
-docker-build-watch: docker-create
+docker-build-watch:
 	docker run --rm -v $$(pwd):/src -it hh-blog-build-image make build-watch
 
 docker-make:
