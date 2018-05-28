@@ -4,7 +4,6 @@ author: "Heinrich Hartmann"
 location: Stemwede, Germany
 title: From Academia to Data Science
 permalink: /blog/Data-Science.html
-# hidden: true
 categories:
 - opinion
 - blog
@@ -13,30 +12,23 @@ categories:
 #  credits: 'Bob Dole [CC BY SA] via <a href="https://stackoverflow.com/questions/27336771/matlab-fit-a-line-to-a-histogram">Stack Overflow</a>'
 ---
 
-## The Academic Job Struggle
+Over the last years, many people have asekd me:
 
-Having spent more than 10 years learning and researching mathematics at Universities, I have a lot of friends in academia.
-Unfortunatly landing a decent job in academia has become near impossible this days.
-So many people, including myself, conclude at some point, that it's just not worth the struggle.
+{% pullquote %} How do I enter Data Science? {% endpullquote %}
 
-As a mathematician the most common industry job you can get are in finance, or strategy consulting.
-However, there is a growing number of academics entering the IT industry.
-An attractive job in that area is that of a Data Scientist.
-Some people even claim it's the [hottest jobs](https://www.bloomberg.com/news/articles/2018-05-18/-sexiest-job-ignites-talent-wars-as-demand-for-data-geeks-soars) these days.
-
-A lot of people have come to me asking for advice, on how to enter Data Science from an academic background.
-So here are some of the lessons I learned in the last 3+ years of working as a Data Scientist.
+I have by no means a definite answer to this question.
+But having transitioned from an academic career path in pure Mathematics to working as a Data Scientist, I have at least some opinions and experiences that I can share.
 
 ## What is Data Science?
 
-Data Science is the realization that businesses needs advanced mathematics to make sense of their data.
-The analysis of balnance sheets and order books does not involve that much mathematics.
-Nowadays, companies are gathering every bit of information they can get their hands on:
-User data, Sensor data, Market data, Web datasets, etc.
-If you want to extract information from this kind of scattered, high volume data, you need to work harder.
-This is what Data Science is all about:
+Before we dive in, let's take a step back and clarify terminology.
 
-Extracting business value from data.
+Data Science is the realization that businesses needs advanced mathematics to make sense of their data.
+The analysis of balance sheets and order books does not involve that much mathematics.
+Nowadays, companies are gathering every bit of information they can get their hands on:
+User data, sensor data, market data, web datasets, etc.
+If you want to extract information from this kind of scattered, high volume data, you need to apply some more mathematics.
+This is what Data Science is all about: Extracting business value from data.
 
 ## What does a Data Scientist do?
 
@@ -53,10 +45,10 @@ In larger organization you might get this down to 50%, but expect this to be a l
 ## How to get there?
 
 {% hookin 1 %} **Trust in your Abilities.**
-Seasoned academics bring a great skillset to the table that computer science (CS) majors often do not have.
+Seasoned academics bring a great skill-set to the table that computer science (CS) majors often do not have.
 This includes: A high tolerance for frustration. Ability to reason formally. No fear of equations.
 Grasp how a high-level description is reflected in formulas.
-The abilitiy to manipulate mathematical models creatively.
+The ability to manipulate mathematical models creatively.
 Incorporate new ideas and extend a given model.
 Communicate theory and results in written and oral form.
 Teach colleagues and peers.
@@ -74,7 +66,7 @@ Don't be afraid.
 Make sure to cover the simple things first.
 Linear regression is a very powerful tool, that can solve a lot of problems on the spot.
 90% of your models you will write will only involve basic statistics and linear regressions.
-Don't apply machine sophisticated machine learning algorithms before you tried a bunch of if statments.
+Don't apply machine sophisticated machine learning algorithms before you tried a bunch of if statements.
 
 Here is an anecdote I like to share in this context:
 
@@ -84,9 +76,10 @@ Here is an anecdote I like to share in this context:
 > This all worked OK-ish but we were far away from the 99% accuracy claimed in the papers.
 > And you could see that if just was not working all that well when you used it on your phone.
 > 
-> It was on a train ride and talking to my wife when I realized, Gosh!
-> I could build something better by extracting a few simple features from accelerometer data and if statments to get at a better result.
-> It took me 30 minutes to write [four if-statements](https://github.com/Institute-Web-Science-and-Technologies/LiveGovWP1/blob/master/server/HARTools/src/main/java/eu/liveandgov/wp1/classifier/ManualClassify.java) that outperformed everything we had done before.
+> It was on a train ride, when I suddenly realized:
+> Gosh!
+> I could build something better by extracting a few simple features from accelerometer data and funnel that into a few if statements.
+> It took me 30 minutes to write [this little function](https://github.com/Institute-Web-Science-and-Technologies/LiveGovWP1/blob/master/server/HARTools/src/main/java/eu/liveandgov/wp1/classifier/ManualClassify.java) that outperformed everything we had done up to that point.
 
 The one thing I learned from this was:
 Before ever touching RapidMinder again, implement your baseline!
@@ -96,10 +89,10 @@ Get a firm grip on basic statistics, before learning about advanced machine lear
 
 {% hookin 3 %} **Value Running Code.**
 You will be measured by the value you create for the company.
-The models you built on csv files on your Laptop can be gerat and eveything.
+The models you built on csv files on your Laptop can be great and everything.
 If you can't get them in front of customers, they are worthless to the company.
 
-While Data Science talkes largely place in languages like R and Python, the dominant languages met in production systems are Java, C/C++, PHP, JavaScript, Python.
+While Data Science takes largely place in languages like R and Python, the dominant languages met in production systems are Java, C/C++, PHP, JavaScript, Python.
 You will have to find a way to get your models in to those environments.
 
 Fundamentally there are two way how to do it:
@@ -129,7 +122,7 @@ Release early. Release Often. Learn from your mistakes.
 
 For Data Science applications this means:
 
-1. Once your model is barely usable, get it infront of users.
+1. Once your model is barely usable, get it in front of users.
 2. Evaluate (measure) it's usefulness in practice.
 3. Refine your model.
 4. Iterate. Quickly.
@@ -137,18 +130,17 @@ For Data Science applications this means:
 It's much more important to be able to iterate quickly, than to have a 99%-accurate model to start with.
 But iterating quickly is not easy.
 There are a lot of delicate steps involved in getting a new model rolled out into a production environment.
-Make sure to undersand the steps involved, and automate them as far as possible.
+Make sure to understand the steps involved, and automate them as far as possible.
 Leading companies have fully automated deployment pipelines, that allow them to update (and revert) production code within minutes.
-
 
 {% hookin 5 %} **Take programming seriously.**
 A large part of the day to day work of a Data Scientist, consists of writing code.
-In many circumstances you are effectively a Sofware Engineer with a broad Statistical know-how.
+In many circumstances you are effectively a Software Engineer with broad Statistical know-how.
 This means, you should treat programming as a profession.
 
 The good news is: It's not all that hard.
-If you made it through graad school im pure maths, you are more than smart enought to become a decent programmer.
-After all, a proof is very similar to a progam.
+If you made it through grad school in pure maths, you are more than smart enough to become a decent programmer.
+After all, a proof is very similar to a program.
 
 The bad news is: It's a huge mess.
 Approaching programming from first principles (Touring Machines, Lambda Calculus) is a rabbit hole with no end.
@@ -165,27 +157,40 @@ You will eventually get better.
 {% hookin 6 %} **Just get started.**
 Finding an attractive Data Science position with a decent company and a high salary is not easy.
 Job descriptions usually require industry experience, and list a large number of technologies you should be an expert in.
-While you might actually be a good match for those position (at least after a few months of training), it will be very hard to get land such a postion if you don't fulfill the requirements.
+While you might actually be a good match for those position (at least after a few months of training), it will be very hard to get such a position if you don't fulfill the requirements.
 
-To understand the problem one must realize that hireing in the Data Science space is extremly difficult for companies.
+To understand the problem one must realize that hiring in the Data Science space is extremely difficult for companies.
 There are tons of young engineers from all over the world, who can do some Python coding and have worked through some TensorFlow tutorials, which apply for Data Science positions.
-Often times these people can produce certificates and high grades from shools or universities, yet in practice they are not able to do much.
-Tool knowledge dones not take you very far if you lack basic understanding on what they are doing.
+Often times these people can produce certificates and the best grades from schools or universities, yet in practice they are not able to do much.
+Tool-knowledge does not take you very far if you lack basic understanding on what they are doing.
 
-{% hookin 7 %} **Get engaged.**
+The best strategy that I have encountered, is to just start somewhere.
+Take any job that roughly matches your interest, and will let you develop your skill-set.
+Sofware engineering roles are a great start if you have some programming experience already.
+Compared to the averge CS major, you should have no problems to catch up quickly and exceed expectations.
+
+Once you got some industry experience on your CV and earned some "street cred", your next job search will be much easier.
+
+{% hookin 7 %} **Engage with the community.**
 Get in touch with other people who work in Data Science.
-Talking to other people makes learning much easire and is a great source of inspiration for things to try out.
-Take some online courses.
+Talking to other people makes learning much easier and is a great source of inspiration for things to try out.
+In addition, reputation and a network gained from these interactions will allow you to find interesting postions.
+
 Read blogs.
 Leave comments.
 Ask questions.
-Watch out for meetups or conferences in cities near you.
-Start a side project that is of personal interest and talk about it at a meetup.
+Take some online courses.
+Watch out for Meetups or Data Science conferences in cities near you.
+Start a side project that is of personal interest and talk about it at a Meetup.
+Write blog posts about things that you learn or find interesting.
 Teach other people what you have learned.
-Write blog posts about suff that you learn or find interesting.
 There are many ways to get in touch!
-
 
 ## Conclusion
 
-I hope that my elablorations where somewhat helpful for you.
+In my opinion Data Science presents an attractive opportunity for acedemics in the STEM fields.
+Thorough mathematical education and fearless manipulation of statisitcal models are essentiall skills that most CS majors are lacking.
+
+The biggest huddle to jump is to close the gap in programming skills.
+Here only practice will help.
+Once that step is taken, the door is open for many very attractive positions in an industry which is craving for analytical talent.
