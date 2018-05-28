@@ -4,6 +4,7 @@ author: "Heinrich Hartmann"
 location: Stemwede, Germany
 title: From Academia to Data Science
 permalink: /blog/Data-Science.html
+hidden: True
 categories:
 - opinion
 - blog
@@ -12,7 +13,7 @@ categories:
 #  credits: 'Bob Dole [CC BY SA] via <a href="https://stackoverflow.com/questions/27336771/matlab-fit-a-line-to-a-histogram">Stack Overflow</a>'
 ---
 
-Over the last years, many people have asekd me:
+Over the last years, many people have asked me:
 
 {% pullquote %} How do I enter Data Science? {% endpullquote %}
 
@@ -166,15 +167,15 @@ Tool-knowledge does not take you very far if you lack basic understanding on wha
 
 The best strategy that I have encountered, is to just start somewhere.
 Take any job that roughly matches your interest, and will let you develop your skill-set.
-Sofware engineering roles are a great start if you have some programming experience already.
-Compared to the averge CS major, you should have no problems to catch up quickly and exceed expectations.
+Software engineering roles are a great start if you have some programming experience already.
+Compared to the average CS major, you should have no problems to catch up quickly and exceed expectations.
 
 Once you got some industry experience on your CV and earned some "street cred", your next job search will be much easier.
 
 {% hookin 7 %} **Engage with the community.**
 Get in touch with other people who work in Data Science.
 Talking to other people makes learning much easier and is a great source of inspiration for things to try out.
-In addition, reputation and a network gained from these interactions will allow you to find interesting postions.
+In addition, reputation and a network gained from these interactions will allow you to find interesting positions.
 
 Read blogs.
 Leave comments.
@@ -188,8 +189,8 @@ There are many ways to get in touch!
 
 ## Conclusion
 
-In my opinion Data Science presents an attractive opportunity for acedemics in the STEM fields.
-Thorough mathematical education and fearless manipulation of statisitcal models are essentiall skills that most CS majors are lacking.
+In my opinion Data Science presents an attractive opportunity for academics in the STEM fields.
+Thorough mathematical education and fearless manipulation of statistical models are essential skills that most CS majors are lacking.
 
 The biggest huddle to jump is to close the gap in programming skills.
 Here only practice will help.
