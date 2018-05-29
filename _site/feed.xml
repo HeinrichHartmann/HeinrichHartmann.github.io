@@ -35,10 +35,7 @@
 				<title>Linux System Monitoring with eBPF</title>
 				        
 				
-					<description>&lt;p&gt;The Linux kernel is an abundant component of modern IT systems.
-It provides the critical services of hardware abstraction and time-sharing to applications.
-For the correct and performant operation of your system it’s critical to monitor the kernel as well as the application.&lt;/p&gt;
-
+					<description>
 </description>
 				
 				<pubDate>Sun, 29 Apr 2018 00:00:00 +0000</pubDate>
