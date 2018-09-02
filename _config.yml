@@ -26,3 +26,5 @@ plugins:
 figures:
   dir: /assets
   enumerate: true
+
+exclude: [ "_notebooks" ]
