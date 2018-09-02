@@ -56,3 +56,16 @@ docker-make:
 
 docker-jekyll:
 	docker run --rm -v $$(pwd):/src -it -p 4000:4000 hh-blog-build-image bundle exec jekyll $(CMD)
+
+nbconvert:
+	(cd _notebooks; \
+		jupyter-nbconvert --config nbc.py 2018-09-02-Latency-SLOs-done-right.ipynb && \
+		sed -i 's|../images|/images|' 2018-09-02-Latency-SLOs-done-right.md )
+	cp _notebooks/2018-09-02-Latency-SLOs-done-right.md _posts/
+		# _notebooks/2018-09-02-Latency-SLOs-done-right.ipynb
+		#--to markdown --template=~/host/home/git/nbconvert-jekyll/jekyll.tpl \
+		#--NbConvertApp.output_files_dir="../images/" \
+		# --output ../_posts/2018-09-02-Latncy-SLOs-done-right.md
+		# --NbConvertApp.output_base="2018-09-02-Latency-SLOs-done-right"
+		# --ExtractOutputPreprocessor.enabled=False
+		# --stdout > _posts/2018-09-02-Latncy-SLOs-done-right.md

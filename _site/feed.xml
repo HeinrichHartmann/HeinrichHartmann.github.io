@@ -7,6 +7,19 @@
 		<atom:link href="http://heinrichhartmann.com/feed.xml" rel="self" type="application/rss+xml" />
 		
 			<item>
+				<title>Latency SLOs done right</title>
+				        
+				
+					<description>&lt;p&gt;In their excellent SLO-workshop at SRECon2018 (&lt;a href=&quot;https://www.usenix.org/conference/srecon18europe/presentation/fong-jones-0&quot;&gt;program&lt;/a&gt;) Liz Fong-Jones, Kristina Bennett and Stephen Thorne (Google) presented some best practice examples for Latency SLI/SLOs. At Circonus we care deeply about measuring latency and SRE techniques such as SLI/SLOs. As we will explain here, Latency SLOs are particularly delicate to implement and benefit from having Histogram-data available to  understand distributions and adjust SLO targets.&lt;/p&gt;
+
+</description>
+				
+				<pubDate>Sun, 02 Sep 2018 00:00:00 +0000</pubDate>
+				<link>http://heinrichhartmann.com/blog/Latency-SLOs.html</link>
+				<guid isPermaLink="true">http://heinrichhartmann.com/blog/Latency-SLOs.html</guid>
+			</item>
+		
+			<item>
 				<title>Less Toil, More Coil: Telemetry analysis with Python</title>
 				        
 				
@@ -22,7 +35,7 @@
 				<title>From Academia to Data Science</title>
 				        
 				
-					<description>&lt;p&gt;Over the last years, many people have asked me:&lt;/p&gt;
+					<description>&lt;h1 id=&quot;what-is-data-science&quot;&gt;What is Data Science?&lt;/h1&gt;
 
 </description>
 				
@@ -129,22 +142,6 @@ I just sleep better this way.&lt;/p&gt;
 				<pubDate>Mon, 05 Feb 2018 00:00:00 +0000</pubDate>
 				<link>http://heinrichhartmann.com/blog/Monitoring-Dropbox.html</link>
 				<guid isPermaLink="true">http://heinrichhartmann.com/blog/Monitoring-Dropbox.html</guid>
-			</item>
-		
-			<item>
-				<title>Impulse And Intent</title>
-				        
-				
-					<description>&lt;p&gt;I have spent a lot of time thinking about impulse control over the last days.
-More and more reports are coming out which are highlighting the malicious effects that the millennial media diet (smart-phones, social-media, email, slack) brings with it.
-The internet runs on advertisements, and entirely relies on selling our attention.
-Even in the real world, every surface in public space that the eye might rest on is covered with ads, or even screens nowadays!&lt;/p&gt;
-
-</description>
-				
-				<pubDate>Wed, 10 Jan 2018 00:00:00 +0000</pubDate>
-				<link>http://heinrichhartmann.com/blog/Impulse-and-Intent.html</link>
-				<guid isPermaLink="true">http://heinrichhartmann.com/blog/Impulse-and-Intent.html</guid>
 			</item>
 		
 	</channel>

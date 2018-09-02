@@ -283,6 +283,10 @@ ul.posts span {
   padding-top: 1em;
 }
 
+#post img {
+  max-width: 100%;
+}
+
 /**
  * Figure Plugin: https://github.com/lmullen/jekyll_figure
  **/
