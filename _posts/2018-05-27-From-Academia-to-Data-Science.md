@@ -11,16 +11,14 @@ categories:
 #splash:
 #  src: "/assets/regression.png"
 #  credits: 'Bob Dole [CC BY SA] via <a href="https://stackoverflow.com/questions/27336771/matlab-fit-a-line-to-a-histogram">Stack Overflow</a>'
+abstract: >
+    Over the last years, many people have asked me:
+    How do I enter Data Science?
+    I have by no means a definite answer to this question.
+    But having transitioned from an academic career path in pure Mathematics to working as a Data Scientist, I have at least some opinions and experiences that I can share.
 ---
 
-Over the last years, many people have asked me:
-
-{% pullquote %} How do I enter Data Science? {% endpullquote %}
-
-I have by no means a definite answer to this question.
-But having transitioned from an academic career path in pure Mathematics to working as a Data Scientist, I have at least some opinions and experiences that I can share.
-
-## What is Data Science?
+# What is Data Science?
 
 Before we dive in, let's take a step back and clarify terminology.
 
@@ -31,7 +29,7 @@ User data, sensor data, market data, web datasets, etc.
 If you want to extract information from this kind of scattered, high volume data, you need to apply some more mathematics.
 This is what Data Science is all about: Extracting business value from data.
 
-## What does a Data Scientist do?
+# What does a Data Scientist do?
 
 The role description is still in flux, but typically the duties of a Data Scientist involve:
 
@@ -43,7 +41,7 @@ Depending on the size of the company, implementation aspects (2) can be more or 
 Right now it takes up >%80 of my time.
 In larger organization you might get this down to 50%, but expect this to be a large part of your work.
 
-## How to get there?
+# How to get there?
 
 {% hookin 1 %} **Trust in your Abilities.**
 Seasoned academics bring a great skill-set to the table that computer science (CS) majors often do not have.
@@ -188,7 +186,7 @@ Teach other people what you have learned.
 Contribute to open source projects.
 There are many ways to get in touch!
 
-## Conclusion
+# Conclusion
 
 In my opinion Data Science presents an attractive opportunity for academics in the STEM fields.
 Thorough mathematical education and fearless manipulation of statistical models are essential skills that most CS majors are lacking.
