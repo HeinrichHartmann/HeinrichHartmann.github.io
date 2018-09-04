@@ -39,7 +39,7 @@ The role description is still in flux, but typically the duties of a Data Scient
 4. Talk about those models in documentation, blogs, seminars, conferences.
 
 In smaller companies a large chunk of your time will also be spent on (3).
-Right now it takes up north of %80 of my time.
+Right now it takes up more than %80 of my time.
 In larger organization you might this will be much lower.
 In particular the operational burden might rest upon another team.
 Nevertheless, getting your models operational is critical for the the value you deliver to the company.
