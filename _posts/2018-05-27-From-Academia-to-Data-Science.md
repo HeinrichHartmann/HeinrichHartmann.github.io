@@ -4,23 +4,24 @@ author: "Heinrich Hartmann"
 location: Stemwede, Germany
 title: From Academia to Data Science
 permalink: /blog/Data-Science.html
-hidden: True
+hidden: False
 categories:
 - opinion
 - blog
 #splash:
 #  src: "/assets/regression.png"
 #  credits: 'Bob Dole [CC BY SA] via <a href="https://stackoverflow.com/questions/27336771/matlab-fit-a-line-to-a-histogram">Stack Overflow</a>'
-abstract: >
-    Over the last years, many people have asked me:
-    How do I enter Data Science?
-    I have by no means a definite answer to this question.
-    But having transitioned from an academic career path in pure Mathematics to working as a Data Scientist, I have at least some opinions and experiences that I can share.
 ---
 
-# What is Data Science?
+Over the last years, many people have asked me:
+How do I enter Data Science?
+I have by no means a definite answer to this question.
+But having transitioned from an academic career path in pure Mathematics to working as a Data Scientist, I have at least some opinions and experiences that I can share.
 
 Before we dive in, let's take a step back and clarify terminology.
+
+
+## What is Data Science?
 
 Data Science is the realization that businesses needs advanced mathematics to make sense of their data.
 The analysis of balance sheets and order books does not involve that much mathematics.
@@ -29,19 +30,23 @@ User data, sensor data, market data, web datasets, etc.
 If you want to extract information from this kind of scattered, high volume data, you need to apply some more mathematics.
 This is what Data Science is all about: Extracting business value from data.
 
-# What does a Data Scientist do?
+## What does a Data Scientist do?
 
 The role description is still in flux, but typically the duties of a Data Scientist involve:
 
-1. Develop machine learning models in Python/R.
-2. Implement, debug and operate systems that run those models.
+1. Find, explore, transform, normalize and curate datasets.
+2. Develop machine learning models in Python/R.
+4. Implement, debug and operate systems that run those models.
 3. Talk about those models in documentation, blogs, seminars, conferences.
 
-Depending on the size of the company, implementation aspects (2) can be more or less pronounced.
-Right now it takes up >%80 of my time.
-In larger organization you might get this down to 50%, but expect this to be a large part of your work.
+In smaller companies a large chunk of your time will also be spent on (3).
+Right now it takes up north of %80 of my time.
+In larger organization you might this will be much lower.
+In particular the operational burden might rest upon another team.
+Nevertheless, getting your models operational is critical for the the value you deliver to the company.
+A good understanding of what it takes to run code in production will help you to become more effective.
 
-# How to get there?
+## How to get there?
 
 {% hookin 1 %} **Trust in your Abilities.**
 Seasoned academics bring a great skill-set to the table that computer science (CS) majors often do not have.
@@ -66,6 +71,9 @@ Make sure to cover the simple things first.
 Linear regression is a very powerful tool, that can solve a lot of problems on the spot.
 90% of your models you will write will only involve basic statistics and linear regressions.
 Don't apply machine sophisticated machine learning algorithms before you tried a bunch of if statements.
+
+Also simple models can be surprisingly effective if trained on enough data.
+(Peter Norvig -- The Unreasonable Effectiveness of Data,  [pdf](https://static.googleusercontent.com/media/research.google.com/en//pubs/archive/35179.pdf), [video](https://www.youtube.com/watch?v=yvDCzhbjYWs))
 
 Here is an anecdote I like to share in this context:
 
@@ -186,7 +194,11 @@ Teach other people what you have learned.
 Contribute to open source projects.
 There are many ways to get in touch!
 
-# Conclusion
+## Acknowledgements
+
+Thanks to [Kevin Lin](https://twitter.com/quasicoherence) and [Thiago de Faria](https://twitter.com/thiagoavadore) for inspiration and feedback to earlier versions of this writeup.
+
+## Conclusion
 
 In my opinion Data Science presents an attractive opportunity for academics in the STEM fields.
 Thorough mathematical education and fearless manipulation of statistical models are essential skills that most CS majors are lacking.
