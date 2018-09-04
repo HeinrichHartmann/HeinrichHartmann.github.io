@@ -199,7 +199,7 @@ There are many ways to get in touch!
 
 ## Acknowledgements
 
-Thanks to [Kevin Lin](https://twitter.com/quasicoherence) and [Thiago de Faria](https://twitter.com/thiagoavadore) for inspiration and feedback to earlier versions of this writeup.
+Thanks to [Kevin Lin](https://twitter.com/quasicoherence), [Max Pumperla](https://twitter.com/maxpumperla) and [Thiago de Faria](https://twitter.com/thiagoavadore) for inspiration and feedback to earlier versions of this writeup.
 
 ## Conclusion
 
