@@ -14,11 +14,9 @@ categories:
 
 Over the last years, many people have asked me:
 How do I enter Data Science?
-I have by no means a definite answer to this question.
-But having transitioned from an academic career path in pure Mathematics to working as a Data Scientist, I have at least some opinions and experiences that I can share.
+I don't have a definite answer to this question, but having transitioned from an academic career in pure Mathematics to working as a Data Scientist, I have made some experiences that I can share here.
 
 Before we dive in, let's take a step back and clarify terminology.
-
 
 ## What is Data Science?
 
@@ -38,10 +36,10 @@ The role description is still in flux, but typically the duties of a Data Scient
 3. Implement, debug and operate systems that run those models.
 4. Talk about those models in documentation, blogs, seminars, conferences.
 
-In smaller companies a large chunk of your time will also be spent on (3).
-Right now it takes up more than %80 of my time.
-In larger organization you might this will be much lower.
-In particular the operational burden might rest upon another team.
+In smaller companies a large chunk of your time will be spent on (3).
+Right now it takes up more than 80% of my time.
+In larger organizations, this figure will will be a much lower.
+In particular the operational burden might rest entirely upon another team.
 Nevertheless, getting your models operational is critical for the the value you deliver to the company.
 A good understanding of what it takes to run code in production will help you to become more effective.
 
@@ -197,10 +195,6 @@ Teach other people what you have learned.
 Contribute to open source projects.
 There are many ways to get in touch!
 
-## Acknowledgements
-
-Thanks to [Kevin Lin](https://twitter.com/quasicoherence), [Max Pumperla](https://twitter.com/maxpumperla) and [Thiago de Faria](https://twitter.com/thiagoavadore) for inspiration and feedback to earlier versions of this writeup.
-
 ## Conclusion
 
 In my opinion Data Science presents an attractive opportunity for academics in the STEM fields.
@@ -209,3 +203,8 @@ Thorough mathematical education and fearless manipulation of statistical models 
 The biggest huddle to jump is to close the gap in programming skills.
 Here only practice will help.
 Once that step is taken, the door is open for many very attractive positions in an industry which is craving for analytical talent.
+
+## Acknowledgements
+
+Thanks to [Kevin Lin](https://twitter.com/quasicoherence), [Max Pumperla](https://twitter.com/maxpumperla) and [Thiago de Faria](https://twitter.com/thiagoavadore) for inspiration and feedback to earlier versions of this writeup.
+
