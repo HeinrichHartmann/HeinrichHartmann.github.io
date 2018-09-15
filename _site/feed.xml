@@ -12,8 +12,7 @@
 				
 					<description>&lt;p&gt;Over the last years, many people have asked me:
 How do I enter Data Science?
-I have by no means a definite answer to this question.
-But having transitioned from an academic career path in pure Mathematics to working as a Data Scientist, I have at least some opinions and experiences that I can share.&lt;/p&gt;
+I don’t have a definite answer to this question, but having transitioned from an academic career in pure Mathematics to working as a Data Scientist, I have made some experiences that I can share here.&lt;/p&gt;
 
 </description>
 				
@@ -45,18 +44,6 @@ But having transitioned from an academic career path in pure Mathematics to work
 				<pubDate>Tue, 29 May 2018 00:00:00 +0000</pubDate>
 				<link>http://heinrichhartmann.com/blog/more-toil-less-coil.html</link>
 				<guid isPermaLink="true">http://heinrichhartmann.com/blog/more-toil-less-coil.html</guid>
-			</item>
-		
-			<item>
-				<title>From Academia To Data Science</title>
-				        
-				
-					<description>
-</description>
-				
-				<pubDate>Sun, 27 May 2018 00:00:00 +0000</pubDate>
-				<link>http://heinrichhartmann.com/2018/05/27/From-Academia-to-Data-Science.html</link>
-				<guid isPermaLink="true">http://heinrichhartmann.com/2018/05/27/From-Academia-to-Data-Science.html</guid>
 			</item>
 		
 			<item>
@@ -140,6 +127,23 @@ Circonus does not officially support “Raspbian Linux on armv6/v7” as a deplo
 				<pubDate>Tue, 13 Feb 2018 00:00:00 +0000</pubDate>
 				<link>http://heinrichhartmann.com/blog/Circonus-on-RPI.html</link>
 				<guid isPermaLink="true">http://heinrichhartmann.com/blog/Circonus-on-RPI.html</guid>
+			</item>
+		
+			<item>
+				<title>Monitoring Dropbox</title>
+				        
+				
+					<description>&lt;p&gt;I keep a cheap little server in my basement.
+Amongst other things it contains a full checkout of my dropbox.
+In this way, I always have a copy of all my data inside of my walls.
+The content lies in the trusted hands of a &lt;a href=&quot;https://wiki.ubuntu.com/ZFS&quot;&gt;zfs&lt;/a&gt; file system, which allows me to take regular snapshots, so I don’t loose data by accidentally deleting stuff on one of my devices.
+I just sleep better this way.&lt;/p&gt;
+
+</description>
+				
+				<pubDate>Mon, 05 Feb 2018 00:00:00 +0000</pubDate>
+				<link>http://heinrichhartmann.com/blog/Monitoring-Dropbox.html</link>
+				<guid isPermaLink="true">http://heinrichhartmann.com/blog/Monitoring-Dropbox.html</guid>
 			</item>
 		
 	</channel>
