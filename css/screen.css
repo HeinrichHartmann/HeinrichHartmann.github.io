@@ -307,6 +307,10 @@ figure figcaption {
   text-align: center;
 }
 
+.pdflink {
+  float: right;
+}
+
 /**
  * GITHUB TABLE STYLES: https://github.com/alampros/Docter/blob/master/ghf_marked.css
  **/

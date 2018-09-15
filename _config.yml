@@ -27,4 +27,4 @@ figures:
   dir: /assets
   enumerate: true
 
-exclude: [ "_notebooks" ]
+exclude: [ "_notebooks", "_templates" ]

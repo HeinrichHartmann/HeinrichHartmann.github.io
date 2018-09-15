@@ -11,14 +11,18 @@ layout: default
   <h1 class="sticker"> UNPUBLISHED DRAFT </h1>
   {% endif %}
 
-
   <!-- Meta -->
+  {% if page.pdflink %}
+  <div class="pdflink">
+    <a href="{{ site.url }}{{ page.pdflink }}">[pdf]</a>
+  </div>
+  {% endif %}
   <p class="meta">
     Written on {{ page.date | date: "%Y-%m-%d" }}
     {% if page.location %} in {{ page.location }} {% endif %}
     {% if page.canonical %} for the <a href="{{ page.canonical.url }}">{{ page.canonical.name }}</a>. {% endif %}
   </p>
-
+  
   <!-- Splash -->
   {% if page.splash %}
   <div class="splash">

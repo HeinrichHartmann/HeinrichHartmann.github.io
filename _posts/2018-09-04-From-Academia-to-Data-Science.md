@@ -3,7 +3,9 @@ layout: "post"
 author: "Heinrich Hartmann"
 location: Stemwede, Germany
 title: From Academia to Data Science
-permalink: /blog/Data-Science.html
+date: 2018-09-15
+permalink: /blog/data-science.html
+pdflink: "/pdf/Heinrich Hartmann - From Academia to Data Science (2018).pdf"
 hidden: False
 categories:
 - blog
@@ -24,7 +26,7 @@ User data, sensor data, market data, web datasets, etc.
 If you want to extract information from this kind of scattered, high volume data, you need to apply some more mathematics.
 This is what Data Science is all about: Extracting business value from data.
 
-## What does a Data Scientist do?
+## What do Data Scientist do?
 
 The role description is still in flux, but typically the duties of a Data Scientist involve:
 
@@ -116,7 +118,7 @@ Tools like [Deeplearning4j (Java)](https://deeplearning4j.org/) allow you to imp
 Which route you take will depend on the environment you end up working for.
 In any case, it is your responsibility to make sure your models make it to production, and continue to provide value to the company.
 
-{% hookin 4 %} **Avoid perfection.** -- [@gethash](https://twitter.com/gethash), Zurich 2018-05.
+{% hookin 4 %} **Avoid perfection.**
 This might be the hardest lesson for an academic to take.
 The software industry had to learn that planning is extremely hard and error prone.
 [Agile Software Development](https://en.wikipedia.org/wiki/Agile_software_development#The_Agile_Manifesto) and the [DevOps Movement](https://en.wikipedia.org/wiki/DevOps)

@@ -69,3 +69,10 @@ nbconvert:
 		# --NbConvertApp.output_base="2018-09-02-Latency-SLOs-done-right"
 		# --ExtractOutputPreprocessor.enabled=False
 		# --stdout > _posts/2018-09-02-Latncy-SLOs-done-right.md
+
+.PHONY: pdf
+pdf:
+	cat _posts/2018-09-04-From-Academia-to-Data-Science.md \
+	| sed 's/^##/#/' \
+	| sed 's/{%.*%}//' \
+	| PATH=$$PATH:/Library/TeX/texbin pandoc --pdf-engine=pdflatex -f markdown -t latex --template=./_templates/wenneker.latex -o "pdf/Heinrich Hartmann - From Academia to Data Science (2018).pdf"
