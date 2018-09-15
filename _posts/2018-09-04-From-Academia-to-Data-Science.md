@@ -4,12 +4,9 @@ author: "Heinrich Hartmann"
 location: Stemwede, Germany
 title: From Academia to Data Science
 permalink: /blog/Data-Science.html
-hidden: True
+hidden: False
 categories:
 - blog
-#splash:
-#  src: "/assets/regression.png"
-#  credits: 'Bob Dole [CC BY SA] via <a href="https://stackoverflow.com/questions/27336771/matlab-fit-a-line-to-a-histogram">Stack Overflow</a>'
 ---
 
 Over the last years, many people have asked me:
@@ -207,4 +204,3 @@ Once that step is taken, the door is open for many very attractive positions in 
 ## Acknowledgements
 
 Thanks to [Kevin Lin](https://twitter.com/quasicoherence), [Max Pumperla](https://twitter.com/maxpumperla) and [Thiago de Faria](https://twitter.com/thiagoavadore) for inspiration and feedback to earlier versions of this writeup.
-
