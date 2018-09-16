@@ -13,7 +13,7 @@ categories:
 
 Over the last years, many people have asked me:
 How do I enter Data Science?
-I don't have a definite answer to this question, but having transitioned from an academic career in pure Mathematics to working as a Data Scientist, I have made some experiences that I can share here.
+I don't have a definite answer to this question, but having transitioned from an academic career in pure Mathematics to working as a Data Scientist, I have experiences that I can share.
 
 Before we dive in, let's take a step back and clarify terminology.
 
@@ -66,7 +66,7 @@ Don't be afraid.
 Make sure to cover the simple things first.
 Linear regression is a very powerful tool, that can solve a lot of problems on the spot.
 90% of your models you will write will only involve basic statistics and linear regressions.
-Don't apply machine sophisticated machine learning algorithms before you tried a bunch of if statements.
+Don't apply sophisticated machine learning algorithms before you tried a bunch of if statements.
 
 Also simple models can be surprisingly effective if trained on enough data.
 (Peter Norvig -- The Unreasonable Effectiveness of Data,  [pdf](https://static.googleusercontent.com/media/research.google.com/en//pubs/archive/35179.pdf), [video](https://www.youtube.com/watch?v=yvDCzhbjYWs))
@@ -150,7 +150,7 @@ If you made it through grad school in pure maths, you are more than smart enough
 After all, a proof is very similar to a program.
 
 The bad news is: It's a huge mess.
-Approaching programming from first principles (Touring Machines, Lambda Calculus) is a rabbit hole with no end.
+Approaching programming from first principles (Turing Machines, Lambda Calculus) is a rabbit hole with no end.
 In practice you will have to deal with large piles of undocumented code, that surfaces subtle bugs in the worst possible moments.
 
 The only thing that really helps is exercise.
@@ -164,7 +164,7 @@ You will eventually get better.
 {% hookin 6 %} **Just get started.**
 Finding an attractive Data Science position with a decent company and a high salary is not easy.
 Job descriptions usually require industry experience, and list a large number of technologies you should be an expert in.
-While you might actually be a good match for those position (at least after a few months of training), it will be very hard to get such a position if you don't fulfill the requirements.
+While you might actually be a good match for those positions (at least after a few months of training), it will be very hard to get such a position if you don't fulfill the requirements.
 
 To understand the problem one must realize that hiring in the Data Science space is extremely difficult for companies.
 There are tons of young engineers from all over the world, who can do some Python coding and have worked through some TensorFlow tutorials, which apply for Data Science positions.
