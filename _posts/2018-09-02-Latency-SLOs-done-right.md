@@ -269,3 +269,4 @@ Aggregating 1M-percentiles seems tempting but can produce materially wrong resul
 Practical ways to calculate correct SLO percentiles are counters and histograms.
 Histograms give you additional flexibility to choose the latency threshold after the fact.
 This comes in particularly handy when you are still evaluating your service and are not ready to commit yourself to a latency threshold just yet.
+
