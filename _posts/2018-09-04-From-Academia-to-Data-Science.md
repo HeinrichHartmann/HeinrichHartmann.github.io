@@ -26,7 +26,7 @@ User data, sensor data, market data, web datasets, etc.
 If you want to extract information from this kind of scattered, high volume data, you need to apply some more mathematics.
 This is what Data Science is all about: Extracting business value from data.
 
-## What do Data Scientist do?
+## What do Data Scientists do?
 
 The role description is still in flux, but typically the duties of a Data Scientist involve:
 
@@ -37,9 +37,9 @@ The role description is still in flux, but typically the duties of a Data Scient
 
 In smaller companies a large chunk of your time will be spent on (3).
 Right now it takes up more than 80% of my time.
-In larger organizations, this figure will will be a much lower.
+In larger organizations, this figure will be much lower.
 In particular the operational burden might rest entirely upon another team.
-Nevertheless, getting your models operational is critical for the the value you deliver to the company.
+Nevertheless, getting your models operational is critical for the value you deliver to the company.
 A good understanding of what it takes to run code in production will help you to become more effective.
 
 ## How to get there?
@@ -58,7 +58,7 @@ Many are scared of matrices.
 Getting a firm grip on mathematical models is *really* hard for CS master students.
 Often times, machine learning papers are just impenetrable for them.
 
-So while CS majors do have an edge in programming, but they also have to catch up with a whole set of equally valuable skills.
+So while CS majors do have an edge in programming, they also have to catch up with a whole set of equally valuable skills.
 It's easy to forget how far you have already made it, when you are 2 years into your PhD.
 Don't be afraid.
 
@@ -73,7 +73,7 @@ Also simple models can be surprisingly effective if trained on enough data.
 
 Here is an anecdote I like to share in this context:
 
-> I was working on a activity recognition classifier that should be able to detect human activities like walking, running, sitting, etc. on the basis of sensor data collected on a mobile phone.
+> I was working on an activity recognition classifier that should be able to detect human activities like walking, running, sitting, etc. on the basis of sensor data collected on a mobile phone.
 > My colleagues told me that PCA, SVMs and decision trees would be the way to go here.
 > So I spent months, learning about these methods, collecting data, doing trials, etc.
 > This all worked OK-ish but we were far away from the 99% accuracy claimed in the papers.
@@ -95,14 +95,14 @@ You will be measured by the value you create for the company.
 The models you built on csv files on your Laptop can be great and everything.
 If you can't get them in front of customers, they are worthless to the company.
 
-Also, the customer will not be care if your model is 99.9% accurate and uses $HOW_NEW_DL_FRAMEWORK and runs on $HOT_NEW_CLOUD_SERVICE.
+Also, the customer will not care if your model is 99.9% accurate and uses $HOW_NEW_DL_FRAMEWORK and runs on $HOT_NEW_CLOUD_SERVICE.
 All he cares about is: Is the model available? Does it work good enough? Is it fast?
 It's important to leave behind the academic mind set of p-values and accuracy, and focus on the customer needs.
 
 While Data Science takes largely place in languages like R and Python, the dominant languages met in production systems are Java, C/C++, PHP, JavaScript, Python.
-You will have to find a way to get your models in to those environments.
+You will have to find a way to get your models into those environments.
 
-Fundamentally there are two way how to do it:
+Fundamentally there are two ways how to do it:
 
 1. Write your models in a language used in production.
 
@@ -168,8 +168,8 @@ While you might actually be a good match for those positions (at least after a f
 
 To understand the problem one must realize that hiring in the Data Science space is extremely difficult for companies.
 There are tons of young engineers from all over the world, who can do some Python coding and have worked through some TensorFlow tutorials, which apply for Data Science positions.
-Often times these people can produce certificates and the best grades from schools or universities, yet in practice they are not able to do much.
-Tool-knowledge does not take you very far if you lack basic understanding on what they are doing.
+Often times, these people can produce certificates and the best grades from schools or universities, yet in practice they are not able to do much.
+Tool-knowledge does not take you very far if you lack basic understanding of what they are doing.
 
 The best strategy that I have encountered, is to just start somewhere.
 Take any job that roughly matches your interest, and will let you develop your skill-set.
