@@ -107,13 +107,13 @@ One is led to think, that every lisp expression could be parsed and evaluated li
 <p>This is wrong!</p>
 
 <p>Example:</p>
-<div class="language-elisp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">(</span><span class="nb">defun</span> <span class="nv">silly</span> <span class="p">(</span><span class="nv">a</span> <span class="nv">b</span> <span class="nv">c</span><span class="p">)</span> <span class="p">(</span><span class="k">let</span> <span class="p">((</span><span class="nv">sum</span> <span class="p">(</span><span class="nb">+</span> <span class="nv">a</span> <span class="nv">b</span> <span class="nv">c</span><span class="p">)))</span> <span class="p">(</span><span class="nb">*</span> <span class="nv">sum</span> <span class="p">(</span><span class="nb">+</span> <span class="mi">1</span> <span class="nv">sum</span><span class="p">)))</span>
+<div class="language-elisp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">(</span><span class="nb">defun</span> <span class="nv">silly</span> <span class="p">(</span><span class="nv">a</span> <span class="nv">b</span> <span class="nv">c</span><span class="p">)</span> <span class="p">(</span><span class="k">let</span> <span class="p">((</span><span class="nv">my-sum</span> <span class="p">(</span><span class="nb">+</span> <span class="nv">a</span> <span class="nv">b</span> <span class="nv">c</span><span class="p">)))</span> <span class="p">(</span><span class="nb">*</span> <span class="nv">my-sum</span> <span class="p">(</span><span class="nb">+</span> <span class="mi">1</span> <span class="nv">my-sum</span><span class="p">)))</span>
 </code></pre></div></div>
 <p>This defines a function “silly”, that does some silly arithmetic.
 If you parsed this inside-out, you would try to evaluate:</p>
 <div class="language-elisp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">(</span><span class="nb">+</span> <span class="nv">a</span> <span class="nv">b</span> <span class="nv">c</span><span class="p">)</span> <span class="nv">=&gt;</span> <span class="nv">X</span> <span class="c1">;; this is only defined if we know a,b,c already...</span>
                <span class="c1">;; ... but OK, let's just call the result X for now.</span>
-<span class="p">(</span><span class="nv">sum</span> <span class="nv">X</span><span class="p">)</span>        <span class="c1">;; ??? Where does "sum" come from? How do I apply sum to X</span>
+<span class="p">(</span><span class="nv">my-sum</span> <span class="nv">X</span><span class="p">)</span>     <span class="c1">;; ??? Where does "my-sum" come from? How do I apply my-sum to X</span>
 <span class="o">...</span>
 </code></pre></div></div>
 <p>A little later we hit:</p>
@@ -122,8 +122,8 @@ If you parsed this inside-out, you would try to evaluate:</p>
 <p>So this simple rule, breaks down completely.</p>
 
 <p>It turns out, that right evaluation order in this case is:</p>
-<div class="language-elisp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">(</span><span class="nb">defun</span> <span class="nv">silly</span> <span class="p">(</span><span class="nv">a</span> <span class="nv">b</span> <span class="nv">c</span><span class="p">)</span> <span class="p">(</span><span class="k">let</span> <span class="p">((</span><span class="nv">sum</span> <span class="p">(</span><span class="nb">+</span> <span class="nv">a</span> <span class="nv">b</span> <span class="nv">c</span><span class="p">)))</span> <span class="p">(</span><span class="nb">*</span> <span class="nv">sum</span> <span class="p">(</span><span class="nb">+</span> <span class="mi">1</span> <span class="nv">sum</span><span class="p">)))</span>
- <span class="mi">1</span>     <span class="nb">-</span>      <span class="nb">-</span>       <span class="mi">2</span>     <span class="nb">-</span>    <span class="mi">3</span>           <span class="mi">5</span>      <span class="mi">4</span>
+<div class="language-elisp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">(</span><span class="nb">defun</span> <span class="nv">silly</span> <span class="p">(</span><span class="nv">a</span> <span class="nv">b</span> <span class="nv">c</span><span class="p">)</span> <span class="p">(</span><span class="k">let</span> <span class="p">((</span><span class="nv">my-sum</span> <span class="p">(</span><span class="nb">+</span> <span class="nv">a</span> <span class="nv">b</span> <span class="nv">c</span><span class="p">)))</span> <span class="p">(</span><span class="nb">*</span> <span class="nv">my-sum</span> <span class="p">(</span><span class="nb">+</span> <span class="mi">1</span> <span class="nv">my-sum</span><span class="p">)))</span>
+ <span class="mi">1</span>     <span class="nb">-</span>      <span class="nb">-</span>       <span class="mi">2</span>     <span class="nb">-</span>       <span class="mi">3</span>           <span class="mi">5</span>         <span class="mi">4</span>
 </code></pre></div></div>
 <p>Where elements marked with “-“ are not evaluated at all.</p>
 
@@ -158,6 +158,13 @@ Just like irregular verbs in natural language.</p>
 
 <p>In this light it seems very reasonable for more modern lisp-like languages like Python or Ruby, to
 get rid of macro system altogether, so the language behaves much more predictably.</p>
+
+<hr />
+
+<p>EDIT 2018-10-12: Renamed <code class="highlighter-rouge">sum</code> -&gt; <code class="highlighter-rouge">my-sum</code></p>
+
+<p>Discussion: <a href="https://news.ycombinator.com/item?id=18200624#18201768">https://news.ycombinator.com/item?id=18200624#18201768</a></p>
+
 
 
   <br/>
