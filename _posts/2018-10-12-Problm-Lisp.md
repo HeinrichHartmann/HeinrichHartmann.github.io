@@ -66,14 +66,14 @@ This is wrong!
 
 Example:
 ```elisp
-(defun silly (a b c) (let ((sum (+ a b c))) (* sum (+ 1 sum)))
+(defun silly (a b c) (let ((my-sum (+ a b c))) (* my-sum (+ 1 my-sum)))
 ```
 This defines a function "silly", that does some silly arithmetic.
 If you parsed this inside-out, you would try to evaluate:
 ```elisp
 (+ a b c) => X ;; this is only defined if we know a,b,c already...
                ;; ... but OK, let's just call the result X for now.
-(sum X)        ;; ??? Where does "sum" come from? How do I apply sum to X
+(my-sum X)     ;; ??? Where does "my-sum" come from? How do I apply my-sum to X
 ...
 ```
 A little later we hit:
@@ -84,8 +84,8 @@ So this simple rule, breaks down completely.
 
 It turns out, that right evaluation order in this case is:
 ```elisp
-(defun silly (a b c) (let ((sum (+ a b c))) (* sum (+ 1 sum)))
- 1     -      -       2     -    3           5      4
+(defun silly (a b c) (let ((my-sum (+ a b c))) (* my-sum (+ 1 my-sum)))
+ 1     -      -       2     -       3           5         4
 ```
 Where elements marked with "-" are not evaluated at all.
 
@@ -119,3 +119,10 @@ Just like irregular verbs in natural language.
 
 In this light it seems very reasonable for more modern lisp-like languages like Python or Ruby, to
 get rid of macro system altogether, so the language behaves much more predictably.
+
+---
+
+EDIT 2018-10-12: Renamed `sum` -> `my-sum`
+
+Discussion: [https://news.ycombinator.com/item?id=18200624#18201768](https://news.ycombinator.com/item?id=18200624#18201768)
+
