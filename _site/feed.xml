@@ -7,6 +7,32 @@
 		<atom:link href="http://heinrichhartmann.com/feed.xml" rel="self" type="application/rss+xml" />
 		
 			<item>
+				<title></title>
+				        
+				
+					<description></description>
+				
+				<pubDate>Fri, 12 Oct 2018 11:15:23 +0000</pubDate>
+				<link>http://heinrichhartmann.com/2018/10/12/2000-01-01-Example.html</link>
+				<guid isPermaLink="true">http://heinrichhartmann.com/2018/10/12/2000-01-01-Example.html</guid>
+			</item>
+		
+			<item>
+				<title>The Problem with Lisp</title>
+				        
+				
+					<description>&lt;p&gt;I picked up some Lisp over the years by tinkering with Emacs and reading the &lt;a href=&quot;https://mitpress.mit.edu/sites/default/files/sicp/index.html&quot;&gt;SICP&lt;/a&gt; book.
+I have a lot of sympathy for the language.
+Getting productive with Lisp, however, took me very long, and I know many people share this experience.&lt;/p&gt;
+
+</description>
+				
+				<pubDate>Fri, 12 Oct 2018 00:00:00 +0000</pubDate>
+				<link>http://heinrichhartmann.com/blog/problem-lisp.html</link>
+				<guid isPermaLink="true">http://heinrichhartmann.com/blog/problem-lisp.html</guid>
+			</item>
+		
+			<item>
 				<title>From Academia to Data Science</title>
 				        
 				
@@ -113,37 +139,6 @@ I for myself was somewhat aware of this for a long time, but it was not until re
 				<pubDate>Sun, 11 Mar 2018 00:00:00 +0000</pubDate>
 				<link>http://heinrichhartmann.com/blog/all-is-loss.html</link>
 				<guid isPermaLink="true">http://heinrichhartmann.com/blog/all-is-loss.html</guid>
-			</item>
-		
-			<item>
-				<title>Circonus on the Raspberry Pi</title>
-				        
-				
-					<description>&lt;p class=&quot;dropcaps&quot;&gt;There are a lot of interesting monitoring tasks, that can facilitated with a Raspberry Pi (e.g. &lt;a href=&quot;http://heinrichhartmann.com/blog/2014/12/14/Sensor-Monitoring-with-RaspberryPi-and-Circonus.html&quot;&gt;here&lt;/a&gt;, &lt;a href=&quot;https://www.circonus.com/2016/10/circonus-api-raspberry-pi/&quot;&gt;there&lt;/a&gt;).
-Circonus does not officially support “Raspbian Linux on armv6/v7” as a deployment target, but given the steady interest in this topic, we took the time to pave the way and write down some instructions in this post.&lt;/p&gt;
-
-</description>
-				
-				<pubDate>Tue, 13 Feb 2018 00:00:00 +0000</pubDate>
-				<link>http://heinrichhartmann.com/blog/Circonus-on-RPI.html</link>
-				<guid isPermaLink="true">http://heinrichhartmann.com/blog/Circonus-on-RPI.html</guid>
-			</item>
-		
-			<item>
-				<title>Monitoring Dropbox</title>
-				        
-				
-					<description>&lt;p&gt;I keep a cheap little server in my basement.
-Amongst other things it contains a full checkout of my dropbox.
-In this way, I always have a copy of all my data inside of my walls.
-The content lies in the trusted hands of a &lt;a href=&quot;https://wiki.ubuntu.com/ZFS&quot;&gt;zfs&lt;/a&gt; file system, which allows me to take regular snapshots, so I don’t loose data by accidentally deleting stuff on one of my devices.
-I just sleep better this way.&lt;/p&gt;
-
-</description>
-				
-				<pubDate>Mon, 05 Feb 2018 00:00:00 +0000</pubDate>
-				<link>http://heinrichhartmann.com/blog/Monitoring-Dropbox.html</link>
-				<guid isPermaLink="true">http://heinrichhartmann.com/blog/Monitoring-Dropbox.html</guid>
 			</item>
 		
 	</channel>
