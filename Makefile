@@ -1,3 +1,6 @@
+python-serve:
+	cd _site; python -m SimpleHTTPServer 4444
+
 serve:
 	bundle exec jekyll serve --host 0.0.0.0 --watch --drafts --future --incremental --verbose
 
