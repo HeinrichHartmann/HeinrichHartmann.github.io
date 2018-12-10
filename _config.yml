@@ -28,3 +28,5 @@ figures:
   enumerate: true
 
 exclude: [ "_notebooks", "_templates", "Makefile" ]
+
+include: [ ".well-known" ]
