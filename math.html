@@ -1,0 +1,20 @@
+---
+layout: default
+title: Heinrich Hartmann
+---
+
+<div id="home">
+
+  <h1>Mathematical Studies</h1>
+
+  <ul class="posts">
+    {% for post in site.categories.math %}{% unless post.hidden %}
+      <li><span>{{ post.date | date: "%Y-%m-%d" }}</span> &raquo; <a href="{{ post.url }}">{{ post.title }}</a>
+        {% if post.comment %} - <em>{{ post.comment }}</em>{% endif %}
+        {% if post.abstract %} <p class="abstract">{{ post.abstract }}</p> {% endif %}
+        {% if post.external_url %} (on {{ post.external_site }}) {% endif %}
+      </li>
+    {% endunless %}{% endfor %}
+  </ul>
+
+</div>
