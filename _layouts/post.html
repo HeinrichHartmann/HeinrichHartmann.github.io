@@ -33,7 +33,10 @@ layout: default
   </div>
   {% endif %}
 
-  {% if page.abstract %} <p class="abstract">{{ page.abstract }}</p> {% endif %}
+  <!-- Abstract -->
+  {% if page.abstract %}
+  <p class="abstract">{{ page.abstract }}</p>
+  {% endif %}
 
   <!-- Post content -->
   {{ content }}
