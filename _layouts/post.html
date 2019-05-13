@@ -22,7 +22,7 @@ layout: default
     {% if page.location %} in {{ page.location }} {% endif %}
     {% if page.canonical %} for the <a href="{{ page.canonical.url }}">{{ page.canonical.name }}</a>. {% endif %}
   </p>
-  
+
   <!-- Splash -->
   {% if page.splash %}
   <div class="splash">
@@ -32,6 +32,8 @@ layout: default
     {% if page.splash.credits %} <p class="credits">{{ page.splash.credits }}</p> {% endif %}
   </div>
   {% endif %}
+
+  {% if page.abstract %} <p class="abstract">{{ page.abstract }}</p> {% endif %}
 
   <!-- Post content -->
   {{ content }}
