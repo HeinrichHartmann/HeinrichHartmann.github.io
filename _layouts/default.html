@@ -44,14 +44,6 @@
       </div>
     </div>
   </div>
-  {% if page.mathjax %}
-    <!-- Mathjax preamble -->
-    <div style="visibility:hidden; display:none;">
-    $$
-    {% include mathjax-preamble.tex %}
-    $$
-    </div>
-  {% endif %}
 
   {{ content }}
 
@@ -65,19 +57,6 @@
     </div>
   </div>
 </div>
-
-{% if page.mathjax %}
-  <!-- Include Mathjax if needed -->
-  <script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS_HTML" type="text/javascript"></script>
-  <script type="text/x-mathjax-config">
-  MathJax.Hub.Config({
-    tex2jax: {
-      inlineMath: [['$','$']],
-      displayMath: [['$$','$$']]
-    }
-  });
-  </script>
-{% endif %}
 
 <!-- Google Analytics -->
 

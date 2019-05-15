@@ -23,6 +23,32 @@ layout: default
     {% if page.canonical %} for the <a href="{{ page.canonical.url }}">{{ page.canonical.name }}</a>. {% endif %}
   </p>
 
+  <!-- Include Mathjax if needed -->
+  {% if page.mathjax %}
+  <script type="text/javascript" async
+          src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-AMS_SVG">
+  </script>
+  <script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+      tex2jax: {
+        inlineMath: [['$','$']],
+        displayMath: [['$$','$$'], ["BEGIN_MATH","END_MATH"]]
+      }
+    });
+    MathJax.Hub.Register.MessageHook("Math Processing Error", function(message)
+                                     {
+                                       console.log("MathJax error:");
+                                       console.log(message);
+                                     });
+  </script>
+  <!-- Mathjax preamble -->
+  <div style="visibility:hidden; display:none;">
+    $$
+    {% include mathjax-preamble.tex %}
+    $$
+  </div>
+  {% endif %}
+
   <!-- Splash -->
   {% if page.splash %}
   <div class="splash">
