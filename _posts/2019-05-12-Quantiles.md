@@ -16,6 +16,13 @@ abstract: >
 
 {::options math_engine="nil" /}
 
+## Contents
+{: .no_toc }
+
+- TOC
+{:toc}
+
+
 ## Quantiles for Random Variables
 
 Let $P$ be a probability distribution on the real axis.
@@ -153,7 +160,7 @@ BEGIN_MATH
   D_{sorted} = (x_{(1)} \leq x_{(2)} \leq \dots \leq x_{(n)}) 
 END_MATH
 be the sorted version of $D$.
-As a convention we set $x_{(i)}=x_{(1)}$ for $i \leq 1$ and $x_{(i)}=x_{(n)}$ for $i \geq n$.
+As a convention we set $x_{(i)}=-\infty$ for $i \leq 0$ and $x_{(i)} = \infty$ for $i > n$.
 
 
 In order to simplify the arguments below we introduce the following notation:
@@ -243,6 +250,69 @@ $$
 
 where $x_{(k)}$ is the k-th entry in $D_{sorted}$.
 
+Furthermore, we call
+
+$$
+  Q_q(D) = \frac{1}{2} (Q_q^{min}(D) + Q_q^{max}(D))
+$$
+
+the central empirical $q$-quantile.
+
+
+**Example.**  For $n=1, D=(x)$we have the following quantiles:
+
+| $q$     | $k^{min}_q$ | $k^{max}_q$ | $Q_q^{min}$ | $Q_q^{max}$ | Comment | 
+|:-:|-:|-:|-:|-:|-|
+| 0   | 0 | 1 | $-\infty$ | $x$ | Every number $y \leq x$ is a 0-quantile |
+| $0<q<1$ | 1 | 1 | $x$ | $x$       | Only $y=0$ is a $q$-quantile |
+| 1   | 1 | 2 | $x$ | $\infty$  | Every number $y \geq x$ is a 1-quantile |
+
+**Example.** For $n=2, D=(x_1 \leq x_2)$ we have:
+
+| $q$       | $qn$ | $k^{min}_q$ | $k^{max}_q$ | Comment |
+|:-:|-:|-:|-:|-|
+| 0     | 0           | 0 | 1 | Every number $y \leq x_1$ is a 0-quantile |
+| $0<q<1/2$ | 0 < $qn$ < 1  | 1 | 1 | Only $y=x_1$ is a $q$-quantile |
+| $1/2$   | 1           | 1 | 2 | Every $x_1 \leq y \leq x_2$ is a $1/2$-quantile |
+| $1/2<q<1$ | 1 < $qn$ < 2  | 2 | 2 | Only $y=x_2$ is a $q$-quantile |
+| 1     | 2           | 2 | 3 | Every number $y \geq x_2$ is a 1-quantile |
+
+**Example.** For $n=4, D=(x_1\leq \dots \leq x_4)$ we have:
+
+| $q$         | $qn$ | $k^{min}_q$ | $k^{max}_q$ | Comment |
+|:-:|-:|-:|-:|
+| 0       | 0           | 0 | 1 | Every number $y \leq x_1$ is a 0-quantile |
+| $0<q<1/4$   | 0 < $qn$ < 1  | 1 | 1 | Only $y=x_1$ is a $q$-quantile |
+| $1/4$     | 1           | 1 | 2 | Every $x_1 \leq y \leq x_2$ is a $1/4$-quantile |
+| $1/4<q<1/2$ | 1 < $qn$ < 2  | 2 | 2 | Only $y=x_2$ is a $q$-quantile |
+| $1/2$     | 2           | 2 | 3 | Every $x_2 \leq y \leq x_3$ is a $1/2$-quantile |
+| $1/2<q<3/4$ | 2 < $qn$ < 3  | 3 | 3 | Only $y=x_3$ is a $q$-quantile |
+| $3/4$     | 3           | 3 | 4 | Every $x_3 \leq y \leq x_4$ is a $3/4$-quantile |
+| $3/4<q<1$   | 3 < $qn$ < 4  | 4 | 4 | Only $y=x_4$ is a $q$-quantile |
+| 1       | 4           | 4 | 5 | Every number $y \geq x_4$ is a 1-quantile |
+
+The following figure illustrates the quantile locations for $n=4$.
+
+{% figure "1578112376cb5b906577b616" png "Empirical quantile locations for n=4." %}
+
+**Comment.** A frequently cited source for practical quantile compuation is
+
+* Hyndman, R. J. and Fan, Y. (1996) Sample quantiles in statistical packages,
+  American Statistician 50, 361--365. 10.2307/2684934
+  [robhyndman.com](https://robjhyndman.com/publications/quantiles/)
+
+This paper contains a list of 9 different types of quantile definitions that are found in the wild.
+The minimal empirical quantile $Q^{min}_q$ is the very fist in their list (Type 1):
+
+> Definition 1. The oldest and most studied definition is the inverse of the empirical distribution function obtained by ...
+> For this definition $Freq(X_k < Q_1(P)) = \ceil{pn}$
+
+The central empirical quantile $Q_q$ is the second entry in their list (Type 2):
+
+> Definition 2. $Q_2(p)$ is similar to $Q_1(p)$except that averaging is used when $g=0$...
+
+This underlines the practical relevance of the empirical quantiles.
+
 ## Practical Choice: The Minimal Quantile for a Dataset
 
 In practical applications one often want's to make statements of the form:
@@ -267,57 +337,186 @@ that arise in the formulation of latency SLAs/SLOs (cf. [blog](https://www.circo
 ## Interpolated Quantiles
 
 We already mentioned, that for any definition of quantile we want that 
-$x_{(1)}=min(D)$ should be a $0$-quantile, and $x_({n})$ should be a $1$-quantile.
+$x_{(1)}=min(D)$ should be a $0$-quantile, and $max(D)=x_{(n)}$ should be a $1$-quantile.
 It's tempting to define the remaining quantiles by interpolation.
 
-The function that linearly interpolates between these cases is $r(q)=q(n-1)+1$
-with $r(0)=1$, and $r(1)=n$.
-Hence it's natural to conider the following indices:
+The unique linear function $r$ that interpolates between these cases $r(0)=0$ and $r(1)=1$ is
+$r(q)= q (n-1) + 1$. Hence it's natural to conider the following indices:
 
 BEGIN_MATH
-  l_- = \floor{q (n-1) + 1} \quad\text{and}\quad l_+ = \ceil{q (n-1) + 1}.
+  l^{min}_q = \floor{r(q)}= \floor{q(n-1)} + 1 \quad\text{and}\quad l^{max}_q = \ceil{r(q)} = \ceil{q (n-1)} + 1.
 END_MATH
 
-**Proposition.** We have
+**Proposition.** For $0<q<1$, we have
 
 $$
-        l_- \leq k^{min}_q \leq k^{max}_q \leq l_+.
+        l^{min}_q \leq k^{min}_q \leq k^{max}_q \leq l^{max}_q.
 $$
 
-**Proof.** We distinguish the cases $q n$ is an integer and $q n$ is not integer.
+**Proof.** 
+We distinguish the cases (A) $q n$ is an integer and (B) $q n$ is not integer.
 
-Case A: $q n$ is an integer. 
-Then $\floor{nq} = \ceil{nq} = qn$, and hence $\floor{q (n-1)} = n q + \floor{-q} = nq - 1$,
-as well as $\ceil{q(n - 1)}=nq+\ceil{-q}=nq$. Hence
+Case A) Assume $q n$ is an integer.  Then $\floor{nq} = \ceil{nq} = qn$.
+Hence
 
 $$
-  l_- = \floor{q (n-1)} + 1 = nq = \ceil{qn} = k^{min}_q.
+  l^{min}_q = \floor{q (n-1)} + 1 = \floor{qn - q} + 1 = nq + \floor{-q} + 1 \leq nq = \ceil{qn} = k^{min}_q.
 $$
 
 and
 
 $$
-  k^{max}_q = \floor{q n} + 1 = nq + 1 = \ceil{q (n-1)} + 1 = l_+.
+  k^{max}_q = \floor{q n} + 1 = nq + 1 = \ceil{q (n-1)} + 1 = l^{max}_q.
 $$
 
-Case B: $q n$ is not an integer. Then $\ceil{q n} = \floor{q n}+1$ so:
+Case B) Assume $q n$ is not an integer. 
+Then $\ceil{q n} = \floor{q n}+1$ and we find:
 
 $$
-  l_- = \floor{q (n-1) + 1} \leq \floor{qn + 1} = \floor{qn} + 1 = \ceil{q n} = k^{min}_q.
+  l^{min}_q = \floor{q (n-1) + 1} \leq \floor{qn + 1} = \floor{qn} + 1 = \ceil{q n} = k^{min}_q.
 $$
 
 also, since $qn \leq q(n-1) + 1$ for $0\leq q \leq 1$, we find
 
 $$
-  k^{max}_q = \floor{q n} + 1 = \ceil{qn} \leq \ceil{q (n-1) + 1} = l_+.
+  k^{max}_q = \floor{q n} + 1 = \ceil{qn} \leq \ceil{q (n-1) + 1} = l^{max}_q.
 $$
 
 QED.
 
+**Definition.** For a dataset $D$ of size $n\geq 2$ and a number $0\leq q \leq 1$ we
+define the interpolated quantile as:
 
-[SciPy](https://docs.scipy.org/doc/scipy-0.7.x/reference/generated/scipy.stats.mstats.mquantiles.html)
-[NumPy](https://docs.scipy.org/doc/numpy/reference/generated/numpy.percentile.html), [R](https://www.rdocumentation.org/packages/stats/versions/3.6.0/topics/quantile)
+$$
+        Q^{int}_q(D) = (1-\gamma) x_{(l^{min}_q)} + \gamma x_{(l^{max}_q)}
+$$
 
+where $\gamma = q(n-1) - \floor{q(n-1)}$ with $0 \leq \gamma < 1$.
+
+**Proposition.** For $D=(1,\dots,n)$ the interpolated $q$-quantile is the
+linear function in $r(q)$ that interpolates between $min(D)=r(0)$ and $max(D)=r(1)$.
+
+$$
+        Q^{int}_q(D) = r(q) = q(n-1) + 1.
+$$
+
+**Proof.** 
+Let $k = \floor{q(n-1)}$ then $q(n-1) = k+\gamma$, and $r(q) = k+\gamma+1$.
+If $\gamma = 0$, then
+
+$$
+    Q^{int}_q(D) = x_{l^{min}} = x_{k+1} = k + 1 = q(n-1) + 1.
+$$
+
+If $0 < \gamma < 1 $, then $l^{min}=k+1$, $l^{max}=k+2$, so
+
+$$
+  Q^{int}_q(D)= (1-\gamma) (k+1) + \gamma (k+2) = k + \gamma + 1 = q(n-1) + 1.
+$$
+
+QED.
+
+**Proposition.** The interpolated quantile satisfies the desireable properties (A) - (D) from above.
+
+**Proof.** (A-C) are direct calculations. We have just proved (D). QED.
+
+**Example** For $n=4$ the interpolated quantile rangs are at the following positions:
+
+| $q$         | $r(q)$ | $l^{min}_q$ | $l^{max}_q$ | Comment |
+|:-:|-:|-:|-:|
+| 0           | 1            | 1 | 1 | Only $y \leq x_1$ is a 0-quantile |
+| $0<q<1/3$   | 1 < $r$ < 2  | 1 | 2 | The $q$-quantile lies between $x_{1},x_{2}$ |
+| $1/3$       | 2            | 2 | 2 | Only $y \leq x_2$ is a 1/3-quantile |
+| $1/3<q<1/3$ | 2 < $r$ < 3  | 2 | 3 | The $q$-quantile lies between $x_{2},x_{3}$ |
+| $2/3$       | 3            | 3 | 3 | Only $y \leq x_3$ is a 2/3-quantile |
+| $2/3<q<1$   | 3 < $r$ < 4  | 3 | 4 | The $q$-quantile lies between $x_{3},x_{4}$ |
+| $1$         | 4            | 4 | 4 | Only $y \leq x_4$ is a 1-quantile |
+
+The following figure illustrates the interpolated quantile ranks for $n=4$.
+
+{% figure 8e78c2ac5f8f6159515bcdd7 png "Interpolated quantile ranks for n=4." %}
+
+**Comment.** The Hyndman-Fan list includes our interpolated quantiles as Type 7 quantiles, 
+and attributes them to Gumbel "La Probabilite des Hypotheses" from 1939.
+
+## Implementation
+
+**Numpy**
+The NumPy function [np.percentile](https://docs.scipy.org/doc/numpy/reference/generated/numpy.percentile.html), implements interpolated quantiles.
+As of this writing, there are no options for calculating empirical quantiles with NumPy's percentile function.
+
+```python
+import numpy as np
+D = [1,2,3,4]
+Q = np.linspace(0,1,5000) # grid
+R = np.percentile(D, Q*100,interpolation="linear") # default setting
+L = np.percentile(D, Q*100,interpolation="lower")
+H = np.percentile(D, Q*100,interpolation="higher")
+```
+
+{% figure 0cae73fb147382983203ef8e png "Quantiles as computed by the np.percentile function." %}
+
+
+**Scipy.**
+The SciPy function [mquantiles](https://docs.scipy.org/doc/scipy-0.7.x/reference/generated/scipy.stats.mstats.mquantiles.html)
+implements the continues quantiles from the Hyndman-Fan list: Type 4-9.
+This includes the intepolated quantile (Type 7), but not the empirical quantiles (Type 1,2).
+So, as of this writing, there are no options for calculating empirical quantiles (Type 1,2) with SciPy's mquantile function.
+
+```
+import numpy as np
+from scipy.stats.mstats import mquantiles
+D = [1,2,3,4]
+Q = np.linspace(0,1,5000)
+A = mquantiles(D, Q)
+B = mquantiles(D, Q, alphap=1,betap=1) # linear
+```
+
+{% figure f69174cb9ec030c4bed3b437 png "Quantiles as computed by the np.percentile function." %}
+
+
+**R.**
+According to the documentation the R [quantile function](https://www.rdocumentation.org/packages/stats/versions/3.6.0/topics/quantile) implements quantiles of all 9 Hydman-Fan Types of Quantiles.
+This includes empirical quantiles (Type 1,2) and interpolated quantiles (Type 4).
+
+The full coverage of the Hydman-Fan list is less surprising, when one takes into account, that Hydman wrote the R quantile function himself:
+
+> I wrote a new quantile() function (with Ivan Frohne) which made it into R core v2.0 in October 2004. Everyone computing quantiles in R was now using our code and the paper was cited in the help file. -- https://robjhyndman.com/hyndsight/sample-quantiles-20-years-later/
+
+## Comparison between Empirical Quantiles and Interpolated Quantiles
+
+The definition of empirical quantiles is extremely natural from a theoretical perspectice.
+and gives concise answeres to the practical question of bounding ratios of samples.
+
+The definition of interpolated quantiles is natural from the implementation,
+where one starts by sorting D and interpolates between the min and max.
+
+As a sanity check both implementations satisfy the desireable properties from our list.
+
+One essential difference is that the empirical quantile is piecewise constant, with
+jumps at discrete positions, whereas the interpolated quantile is piecewise linear and
+continues.
+This property makes the interpolated quantile more suitable for use in quantile-plots like the QQ-polot.
+
+From the implementation perspectice it seems that most software produces default to computing
+continues versions of quantiles, and the interpolated quantile seems to be a popular choice.
+It was somewhat shocking for me to see that the frequently used quantile functions in Python
+can not calculate empirical quantiles.
+R includes a function for empirical quantiles, but it's not the default.
+
+As an example where Interpolated Quantiles and Empirical Quantiles differ take 
+
+{% figure 8ce5431c59a5eb0697b8ff30 png "Empirical vs. Interpolated quantiles for a Paretro Distribution with outliers" %}
+
+**Summary.**
+
+| Property | Empirical Quantile | Interpolated Quantile |
+|-
+| Motivation                | Probability Theory | Implementation/Plotting |
+| Desireable Properties hold| yes | yes |
+| Gives sample ratio bounds | yes | approximately |
+| Continues in q            | no | yes |
+| Implementation available  | not everywhere | widely |
 
 ## Backup: Ranks
 
