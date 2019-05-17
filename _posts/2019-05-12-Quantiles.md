@@ -9,7 +9,7 @@ categories:
 - math
 mathjax: true
 abstract: > 
-  Quantile and percentiles are an essential tool for the qualitative analysis of diverse datasets.
+  Quantiles and percentiles are an essential tool for the qualitative analysis of diverse datasets.
   In particular, they have become an integral part of performance monitoring systems in the IT domain.
   Despite their wide use, there are a number of competing definitions of percentiles commonly found in the wild.
   In this note we will explain how these definitions arise and study their relation in detail.
@@ -54,23 +54,23 @@ END_MATH
 - For $q>.5$ only $y=1$ is a $q$-quantile.
 
 **Remark**.
-- Exsistence. For every $X,q$ there is at least one $q$-quantile.
+- Existence. For every $X,q$ there is at least one $q$-quantile.
 - Uniqueness. As we have seen $q$-quantiles might be non-unique.
 - If $X$ has a probability density $p$, which is positive everywhere, then all quantiles are unique.
 
 This definition of Quantile seems to be universally agreed up-on.
-At least this is what I learned at University (e.g. [Georgii - Staistics](https://www.degruyter.com/view/product/184322)).
+At least this is what I learned at University (e.g. [Georgii - Statistics](https://www.degruyter.com/view/product/184322)).
 and how [Wikipedia](https://en.wikipedia.org/wiki/Quantile) (accessed on 2019-05-13) defines this.
-Also I don't see much room for an alternaive definition in this setting.
+Also I don't see much room for an alternative definition in this setting.
 
 ## Quantiles for Datasets
 
 Given a dataset $D=(x_1,...x_n)$ of real numbers, with $n \geq 1$, how can we define quantiles for D?
 
-We will give a few different competing defintions below.
-But there are a number of undisputed properties, that everyone will find desireable.
+We will give a few different competing definitions below.
+But there are a number of undisputed properties, that everyone will find desirable.
 
-**Desireable Properties.**
+**Desirable Properties.**
 
 * (A) The minimum is a $0$-quantile.
 * (B) The maximum is a $1$-quantile.
@@ -85,7 +85,7 @@ Special cases of (D) are
 
 One natural and very general approach is to assign a probability distribution $P$ to $D$,
 and then take the quantiles of $P$ as we defined them above.
-We will follow this stategy in the next sections.
+We will follow this strategy in the next sections.
 
 ## Empirical Quantiles
 
@@ -199,7 +199,7 @@ BEGIN_MATH
 END_MATH
 
 **Proof.** 
-For the first inequalities it suffices to note that, of all numers in $D$, at most the numbers $x_{(1)},\dots,x_{(k-1)}$ might be smaller than $x_{(k)}$.
+For the first inequalities it suffices to note that, of all numbers in $D$, at most the numbers $x_{(1)},\dots,x_{(k-1)}$ might be smaller than $x_{(k)}$.
 For the second one, we have at least $k$ numbers $x_{(1)},\dots,x_{(k)}$ which are smaller or equal to $x_{(k)}$.
 
 Now to the next set of inequalities:
@@ -228,7 +228,7 @@ By the last lemma we know that his is the case if and only if $y \leq x_{(b)}$.
 Similarly, let's assume $Count_{>}(D; y) \leq (1-q) n$.
 Subtracting form $n$ on both side, this is equivalent to $Count_\leq(D; y) \geq n q$.
 Since $Count_\leq(D; y)$ is an integer, this condition is equivalent to $Count_<(D; y) \geq \ceil{n q} = a$.
-By the last lemma we know that thisis the case if and only if $y \geq x_{(a)}$.
+By the last lemma we know that this is the case if and only if $y \geq x_{(a)}$.
 
 QED.
 
@@ -294,7 +294,7 @@ The following figure illustrates the quantile locations for $n=4$.
 
 {% figure "1578112376cb5b906577b616" png "Empirical quantile locations for n=4." %}
 
-**Comment.** A frequently cited source for practical quantile compuation is
+**Comment.** A frequently cited source for practical quantile computation is
 
 * Hyndman, R. J. and Fan, Y. (1996) Sample quantiles in statistical packages,
   American Statistician 50, 361--365. 10.2307/2684934
@@ -318,9 +318,9 @@ In practical applications one often want's to make statements of the form:
 
 > 95% of all requests were served within 500ms.
 
-The quantile version that allows you to make those statments exactly, is the minimal empirical quantile.
+The quantile version that allows you to make those statements exactly, is the minimal empirical quantile.
 
-**Proposition.** For a dataset $D$, the following statemens are equivalent:
+**Proposition.** For a dataset $D$, the following statements are equivalent:
 
 * p% of all samples in $D$ were less or equal to y.
 
@@ -330,7 +330,7 @@ The quantile version that allows you to make those statments exactly, is the min
 $Count_\leq(D; y) \geq n q$ is equivalent to $y \geq Q^{min}_q(D)$. QED.
 
 **Comment.** 
-This proposition shows, that the empirical quantiles give precise answers to pracitcal questions 
+This proposition shows, that the empirical quantiles give precise answers to practical questions 
 that arise in the formulation of latency SLAs/SLOs (cf. [blog](https://www.circonus.com/2018/08/latency-slos-done-right)).
 
 ## Interpolated Quantiles
@@ -340,7 +340,7 @@ $x_{(1)}=min(D)$ should be a $0$-quantile, and $max(D)=x_{(n)}$ should be a $1$-
 It's tempting to define the remaining quantiles by interpolation.
 
 The unique linear function $r$ that interpolates between these cases $r(0)=0$ and $r(1)=1$ is
-$r(q)= q (n-1) + 1$. Hence it's natural to conider the following indices:
+$r(q)= q (n-1) + 1$. Hence it's natural to consider the following indices:
 
 BEGIN_MATH
   l^{min}_q = \floor{r(q)}= \floor{q(n-1)} + 1 \quad\text{and}\quad l^{max}_q = \ceil{r(q)} = \ceil{q (n-1)} + 1.
@@ -427,11 +427,11 @@ QED.
 **Example.** For $D=(1,\dots,n)$ the interpolated $q$-quantile is exactly 
 $Q^{int}_q(D) = r(q) = q(n-1) + 1$.
 
-**Proposition.** The interpolated quantile satisfies the desireable properties (A) - (D) from above.
+**Proposition.** The interpolated quantile satisfies the desirable properties (A) - (D) from above.
 
 **Proof.** (A-C) are direct calculations. We have just proved (D). QED.
 
-**Example** For $n=4$ the interpolated quantile rangs are at the following positions:
+**Example** For $n=4$ the interpolated quantile ranges are at the following positions:
 
 | $q$         | $r(q)$ | $l^{min}_q$ | $l^{max}_q$ | Comment |
 |:-:|-:|-:|-:|
@@ -452,22 +452,22 @@ and attributes them to Gumbel "La Probabilite des Hypotheses" from 1939.
 
 ## Comparison: Empirical vs. Interpolated Quantiles
 
-The qualititive differences between empirical- and interpolated quantiles
+The qualitative differences between empirical- and interpolated quantiles
 can be well observed in the case $n=4$:
 
 {% figure b5bb25c8537a6e8034baf16a png "Empirical vs. Interpolated quantiles for n=4" %}
 
 We can see that:
 
-- The interpolated quantiles, take the desireable quantile values at $k/3$ as a basis and interpolate between them.
+- The interpolated quantiles, take the desirable quantile values at $k/3$ as a basis and interpolate between them.
 - The empirical quantiles, jump at $q=k/4$ to the locations of the samples.
 
-- There are no stric inequalities between the quantile, but for low values of $q$ the interpolated quantile is generally larger than the empirical one. For high values of $q$ the interpolated quantiles are generally lower than the empirical ones.
+- There are no strict inequalities between the quantile, but for low values of $q$ the interpolated quantile is generally larger than the empirical one. For high values of $q$ the interpolated quantiles are generally lower than the empirical ones.
 
-Also in this example empirical and interpolated quantiles are not far appart. 
+Also in this example empirical and interpolated quantiles are not far apart. 
 In fact, we have the following proposition.
 
-**Proposition.** Empirical quantile and interpolated quantiles are no more than one sample appart:
+**Proposition.** Empirical quantile and interpolated quantiles are no more than one sample apart:
 
 $$
         | Q^{emp}_q - Q^{int}_q | \leq max \Set{ x_{(k+1)} - x_{(k)} }{ k = 1,\dots,n }
@@ -483,10 +483,10 @@ So $Q_q^{emp}$ and $Q_q^{int}$ both lie within $[x_{(l_q^{min})}, x_{(l_q^{max})
 But $|l^{max}_q - l^{min}_q| \leq 1$, hence the difference between the quantiles is bounded by the maximal sample distance. QED.
 
 **Example.**
-There are cases where interpolated and empirical quantiles are far appart.
+There are cases where interpolated and empirical quantiles are far apart.
 A common example where this is the case is are long tailed distributions with outliers,
 and we are interested in high quantiles like $.99,.999$. 
-In these regions samples are sparse and far appart.
+In these regions samples are sparse and far apart.
 
 {% figure 8ce5431c59a5eb0697b8ff30 png "Empirical vs. Interpolated quantiles for a Paretro Distribution with outliers" %}
 
@@ -507,14 +507,14 @@ We have marked the following quantile values
 
 So we see, that the difference between the values can be quite significant in the long tail.
 
-## Interpolated Qunatiles from Probability Distributions
+## Interpolated Quantiles from Probability Distributions
 
 It is possible to construct a probability distribution that has $Q_q^{int}$ as associated $q$-quantile.
 To simplify the discussion, we limit ourselves to the case that $x_{(1)} < \dots < x_{(n)}$ here.
 
-Roughly speaking, we need to construct a probability densitiy function, that spreads 
+Roughly speaking, we need to construct a probability density function, that spreads 
 the weight of $x_{(k)}$ evenly, across the space between the next higher and next lower samples.
-One way to do so is to consider the following probability denstiy functions
+One way to do so is to consider the following probability density functions
 
 $$
     p_k(x) = \frac{1}{x_{(k+1)} - x_{(k)}}  \mathbb{1}[ x_{(k)} \leq x < x_{(k+1)} ](x), \quad k=1,\dots,n-1
@@ -523,15 +523,15 @@ $$
 for which are supported on $[x_{(k)}, x_{(k+1)})$ and integrates to 1.
 
 For each central sample $x_{(2)} \leq x_{(k)} \leq x_{(n-1)}$ we associate $\half (p_{k-1} + p_{k})$.
-The bounday samples $x_{(1)}, x_{(n)}$ only get a half-weigth density $\half p_1, \half p_{n-1}$ respectively.
-Summing up we get a probablity denstity function:
+The boundary samples $x_{(1)}, x_{(n)}$ only get a half-weight density $\half p_1, \half p_{n-1}$ respectively.
+Summing up we get a probability density function:
 
 $$
     p(x) = \frac{1}{n-1}( \half p_1(x) + \sum_{k=2}^{n-1} \half (p_{k-1}(x) + p_{k}(x)) + \half p_{n-1}(x)) \\
          = \frac{1}{n-1}( p_1(x) + \dots + p_{n-1}(x))
 $$
 
-**Proposition.** The comulative distribution function associated to p(x)
+**Proposition.** The cumulative distribution function associated to p(x)
 
 $$ 
 \DeclareMathOperator{\cdf}{cdf}
@@ -542,7 +542,7 @@ $$
 
 has the property that:
 
-1. $\cdf(x)$ is continuus and piece-wise linear between $x_{(k)}$ and $x_{(k+1)}$.
+1. $\cdf(x)$ is continuous and piece-wise linear between $x_{(k)}$ and $x_{(k+1)}$.
 1. $\cdf(x_{(k)}) = (k-1)/(n-1)$.
 
 **Proof.** Ad 1) We know that $\frac{d}{dx}\cdf(x) = p(x)$ is constant on between $x_{(k)}$ and $x_{(k+1)}$.
@@ -558,7 +558,7 @@ $$
 
 **Corollary.** The interpolated quantiles are quantiles for the probability distribution with density $p$.
 
-**Proof.** The composition $f(q) = \cdf(Q_q^{int})$ is again a continues, piecewise linear function.
+**Proof.** The composition $f(q) = \cdf(Q_q^{int})$ is again a continues, piece-wise linear function.
 It suffices to show that $f(q)=q$ on the breakpoints of $f$.
 
 The breakpoints of $Q_q^{int}$ at $q=(k-1)/(n-1)$, $k=1,\dots,n$ map to the breakpoints 
@@ -600,7 +600,7 @@ H = np.percentile(D, Q*100,interpolation="higher")
 
 The SciPy function [mquantiles](https://docs.scipy.org/doc/scipy-0.7.x/reference/generated/scipy.stats.mstats.mquantiles.html)
 implements the continues quantiles from the Hyndman-Fan list: Type 4-9.
-This includes the intepolated quantile (Type 7), but not the empirical quantiles (Type 1,2).
+This includes the interpolated quantile (Type 7), but not the empirical quantiles (Type 1,2).
 So, as of this writing, there are no options for calculating empirical quantiles (Type 1,2) with SciPy's mquantile function.
 
 ```python
@@ -624,22 +624,28 @@ The full coverage of the Hydman-Fan list is less surprising, when one takes into
 
 ## Conclusion
 
-The definition of empirical quantiles is extremely natural from a theoretical perspectice.
+The definition of empirical quantiles is a literal translation of the probablistic quantiles to the setting of discrete data-sets.
+The definition of interpolated quantiles is natural form the implementation perspective.
 
-The definition of interpolated quantiles is natural from the implementation, 
-where one starts by sorting D and interpolates between the min and max.
+As a sanity check both versions satisfy the desirable properties from our list.
 
-As a sanity check both implementations satisfy the desireable properties from our list.
+Both quantiles are covered in the encyclopedic Hydman-Fan paper as Types 1,2 and Type 7 respectively.
+So they can be regarded as well established.
+
+One advantage of the interpolated quantile function is, that is continues,
+whereas the empirical quantile function is piece-wise constant with discrete jumps.
+This property makes the interpolated quantile more suitable for use in plotting applications like the QQ-plot.
 
 One advantage of the empirical quantile is that it gives exact answers to the
 practical problem of bounding ratios of samples above/below a threshold.
+This feature makes empirical quantile more suitable for checking SLA/SLO bounds of e.g. latency distributions.
 
-One qalitative difference is that the empirical quantile is piecewise constant with discrete jumps,
-whereas the interpolated quantile is piecewise linear and continues.
-This property makes the interpolated quantile more suitable for use in quantile-plots like the QQ-polot.
+In many cases there is not much of a difference between both versions.
+When samples are close together, so will be the quantiles in that area.
+When samples are far appart, like in the long tail of a distibution, the differences can be very substancial.
 
 Apparently most software products prefer to compute interpolated quantiles.
-Somewhat shockingly for the author, support for empirical quantiles is often entirely lacking,
+Somewhat shockingly for the author, support for empirical quantiles is often entirely lacking, 
 at least in the popular Python libraries.
 
 **Summary.**
@@ -647,7 +653,7 @@ at least in the popular Python libraries.
 | Property | Empirical Quantile | Interpolated Quantile |
 |-
 | Motivation                | Probability Theory | Implementation/Plotting |
-| Desireable Properties hold| yes | yes |
+| Desirable Properties hold| yes | yes |
 | Gives sample ratio bounds | exactly | approximately |
 | Continues in q            | no | yes |
 | Implementation available  | not everywhere | widely |
