@@ -24,8 +24,7 @@ abstract: >
 
 ## Quantiles for Random Variables
 
-Let $P$ be a probability distribution on the real axis.
-For notational reasons we also choose a $P$-distributed random variable $X$.
+Let $P$ be a probability distribution on the real axis, and $X$ a $P$-distributed random variable.
 
 **Definition.** 
 For any number $q \in [0,1]$, a *naive q-quantile* for $P$ is a number $$y \in \IR$$, so that
@@ -37,6 +36,8 @@ END_MATH
 - Naive quantiles do not always exist. Take $P=\delta_0$. Here only the numbers 0,1 are realized as naive quantiles.
 
 - Naive quantile are not always unique. Take $q=.5$ and $P=\half (\delta_0 + \delta_1)$. Here every number $y\in(0,1)$ qualifies as a $.5$-quantile.
+
+To improve the situation, we make the following adjustments to the above definition.
 
 **Definition.**
 A number $y$ is a q-quantile, for some number $q \in [0,1]$, and a random variable $X$,
@@ -54,8 +55,8 @@ END_MATH
 - For $q>.5$ only $y=1$ is a $q$-quantile.
 
 **Remark**.
-- Existence. For every $X,q$ there is at least one $q$-quantile.
-- Uniqueness. As we have seen $q$-quantiles might be non-unique.
+- For every $P,q$ there is at least one $q$-quantile.
+- As we have seen $q$-quantiles might be non-unique.
 - If $X$ has a probability density $p$, which is positive everywhere, then all quantiles are unique.
 
 This definition of Quantile seems to be universally agreed up-on.
@@ -294,12 +295,7 @@ The following figure illustrates the quantile locations for $n=4$.
 
 {% figure "1578112376cb5b906577b616" png "Empirical quantile locations for n=4." %}
 
-**Comment.** A frequently cited source for practical quantile computation is
-
-* Hyndman, R. J. and Fan, Y. (1996) Sample quantiles in statistical packages,
-  American Statistician 50, 361--365. 10.2307/2684934
-  [robhyndman.com](https://robjhyndman.com/publications/quantiles/)
-
+**Comment.** A frequently cited source for practical quantile computation is [Hyndman-Fan 1996].
 This paper contains a list of 9 different types of quantile definitions that are found in the wild.
 The minimal empirical quantile $Q^{min}_q$ is the very fist in their list (Type 1):
 
@@ -450,63 +446,6 @@ The following figure illustrates the interpolated quantile ranks for $n=4$.
 **Comment.** The Hyndman-Fan list includes our interpolated quantiles as Type 7 quantiles, 
 and attributes them to Gumbel "La Probabilite des Hypotheses" from 1939.
 
-## Comparison: Empirical vs. Interpolated Quantiles
-
-The qualitative differences between empirical- and interpolated quantiles
-can be well observed in the case $n=4$:
-
-{% figure b5bb25c8537a6e8034baf16a png "Empirical vs. Interpolated quantiles for n=4" %}
-
-We can see that:
-
-- The interpolated quantiles, take the desirable quantile values at $k/3$ as a basis and interpolate between them.
-- The empirical quantiles, jump at $q=k/4$ to the locations of the samples.
-
-- There are no strict inequalities between the quantile, but for low values of $q$ the interpolated quantile is generally larger than the empirical one. For high values of $q$ the interpolated quantiles are generally lower than the empirical ones.
-
-Also in this example empirical and interpolated quantiles are not far apart. 
-In fact, we have the following proposition.
-
-**Proposition.** Empirical quantile and interpolated quantiles are no more than one sample apart:
-
-$$
-        | Q^{emp}_q - Q^{int}_q | \leq max \Set{ x_{(k+1)} - x_{(k)} }{ k = 1,\dots,n }
-$$
-
-**Proof.** We have seen that the quantile indices satisfy:
-
-$$
-  l^{min}_q \leq k^{min}_q \leq k^{max}_q \leq l^{max}_q
-$$
-
-So $Q_q^{emp}$ and $Q_q^{int}$ both lie within $[x_{(l_q^{min})}, x_{(l_q^{max})}]$.
-But $|l^{max}_q - l^{min}_q| \leq 1$, hence the difference between the quantiles is bounded by the maximal sample distance. QED.
-
-**Example.**
-There are cases where interpolated and empirical quantiles are far apart.
-A common example where this is the case is are long tailed distributions with outliers,
-and we are interested in high quantiles like $.99,.999$. 
-In these regions samples are sparse and far apart.
-
-{% figure 8ce5431c59a5eb0697b8ff30 png "Empirical vs. Interpolated quantiles for a Paretro Distribution with outliers" %}
-
-This figure shows data sampled from a Paretro distribution with added outliers like so:
-
-```python
-D = [ np.random.pareto(1) for n in range(400) ] +
-    [ np.random.pareto(1)*800 for n in range(5) ]
-```
-
-We have marked the following quantile values
-
-| q | Empirical Quantile | Interpolated Quantile | Delta |
-|-:|-:|-:|-:|
-| .95   | 15.920 | 15.927 | 0.007 (0%) |
-| .995  | 1386.133 | 793.232 | 592.901 (42%)  |
-| .9995 | 1623.282 | 1584.152 | 39.13 (2.4%) |
-
-So we see, that the difference between the values can be quite significant in the long tail.
-
 ## Interpolated Quantiles from Probability Distributions
 
 It is possible to construct a probability distribution that has $Q_q^{int}$ as associated $q$-quantile.
@@ -578,6 +517,64 @@ $$
 
 QED.
 
+## Comparison: Empirical vs. Interpolated Quantiles
+
+The qualitative differences between empirical- and interpolated quantiles
+can be well observed in the case $n=4$:
+
+{% figure b5bb25c8537a6e8034baf16a png "Empirical vs. Interpolated quantiles for n=4" %}
+
+We can see that:
+
+- The interpolated quantiles, take the desirable quantile values at $k/3$ as a basis and interpolate between them.
+- The empirical quantiles, jump at $q=k/4$ to the locations of the samples.
+
+- There are no strict inequalities between the quantile, but for low values of $q$ the interpolated quantile is generally larger than the empirical one. For high values of $q$ the interpolated quantiles are generally lower than the empirical ones.
+
+Also in this example empirical and interpolated quantiles are not far apart. 
+In fact, we have the following proposition.
+
+**Proposition.** Empirical quantile and interpolated quantiles are no more than one sample apart:
+
+$$
+        | Q^{emp}_q - Q^{int}_q | \leq max \Set{ x_{(k+1)} - x_{(k)} }{ k = 1,\dots,n }
+$$
+
+**Proof.** We have seen that the quantile indices satisfy:
+
+$$
+  l^{min}_q \leq k^{min}_q \leq k^{max}_q \leq l^{max}_q
+$$
+
+So $Q_q^{emp}$ and $Q_q^{int}$ both lie within $[x_{(l_q^{min})}, x_{(l_q^{max})}]$.
+But $|l^{max}_q - l^{min}_q| \leq 1$, hence the difference between the quantiles is bounded by the maximal sample distance. QED.
+
+**Example.**
+There are cases where interpolated and empirical quantiles are far apart.
+A common example where this is the case is are long tailed distributions with outliers,
+and we are interested in high quantiles like $.99,.999$. 
+In these regions samples are sparse and far apart.
+
+{% figure 8ce5431c59a5eb0697b8ff30 png "Empirical vs. Interpolated quantiles for a Paretro Distribution with outliers" %}
+
+This figure shows data sampled from a Paretro distribution with added outliers like so:
+
+```python
+D = [ np.random.pareto(1) for n in range(400) ] +
+    [ np.random.pareto(1)*800 for n in range(5) ]
+```
+
+We have marked the following quantile values
+
+| q | Empirical Quantile | Interpolated Quantile | Delta |
+|-:|-:|-:|-:|
+| .95   | 15.920 | 15.927 | 0.007 (0%) |
+| .995  | 1386.133 | 793.232 | 592.901 (42%)  |
+| .9995 | 1623.282 | 1584.152 | 39.13 (2.4%) |
+
+So we see, that the difference between the values can be quite significant in the long tail.
+
+
 ## Quantile Implementations
 
 ### Numpy
@@ -624,7 +621,7 @@ The full coverage of the Hydman-Fan list is less surprising, when one takes into
 
 ## Conclusion
 
-The definition of empirical quantiles is a literal translation of the probablistic quantiles to the setting of discrete data-sets.
+The definition of empirical quantiles is a literal translation of the probabilistic quantiles to the setting of discrete data-sets.
 The definition of interpolated quantiles is natural form the implementation perspective.
 
 As a sanity check both versions satisfy the desirable properties from our list.
@@ -642,7 +639,7 @@ This feature makes empirical quantile more suitable for checking SLA/SLO bounds 
 
 In many cases there is not much of a difference between both versions.
 When samples are close together, so will be the quantiles in that area.
-When samples are far appart, like in the long tail of a distibution, the differences can be very substancial.
+When samples are far apart, like in the long tail of a distribution, the differences can be very substantial.
 
 Apparently most software products prefer to compute interpolated quantiles.
 Somewhat shockingly for the author, support for empirical quantiles is often entirely lacking, 
@@ -657,3 +654,11 @@ at least in the popular Python libraries.
 | Gives sample ratio bounds | exactly | approximately |
 | Continues in q            | no | yes |
 | Implementation available  | not everywhere | widely |
+
+
+
+## References
+{: .no_toc}
+
+* Hyndman, R. J. and Fan, Y. (1996) Sample quantiles in statistical packages, American Statistician 50, 361--365. 10.2307/2684934 [robhyndman.com](https://robjhyndman.com/publications/quantiles/)
+
