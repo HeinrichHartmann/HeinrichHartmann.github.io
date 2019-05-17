@@ -4,7 +4,7 @@ author: "Heinrich Hartmann"
 location: Stemwede, Germany
 title: Quantiles
 permalink: /math/quantiles.html
-hidden: false
+hidden: true
 categories:
 - math
 mathjax: true
