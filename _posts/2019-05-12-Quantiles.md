@@ -578,10 +578,7 @@ $$
 
 QED.
 
-## Histogram Approximations of Quantiles
-
-
-## Quantile Implementations in the Wild
+## Quantile Implementations
 
 ### Numpy
 The NumPy function [np.percentile](https://docs.scipy.org/doc/numpy/reference/generated/numpy.percentile.html), implements interpolated quantiles.
@@ -625,28 +622,25 @@ The full coverage of the Hydman-Fan list is less surprising, when one takes into
 
 > I wrote a new quantile() function (with Ivan Frohne) which made it into R core v2.0 in October 2004. Everyone computing quantiles in R was now using our code and the paper was cited in the help file. -- https://robjhyndman.com/hyndsight/sample-quantiles-20-years-later/
 
-## Comparison between Empirical Quantiles and Interpolated Quantiles
+## Conclusion
 
 The definition of empirical quantiles is extremely natural from a theoretical perspectice.
-and gives concise answeres to the practical question of bounding ratios of samples.
 
-The definition of interpolated quantiles is natural from the implementation,
+The definition of interpolated quantiles is natural from the implementation, 
 where one starts by sorting D and interpolates between the min and max.
 
 As a sanity check both implementations satisfy the desireable properties from our list.
 
-One essential difference is that the empirical quantile is piecewise constant, with
-jumps at discrete positions, whereas the interpolated quantile is piecewise linear and
-continues.
+One advantage of the empirical quantile is that it gives exact answers to the
+practical problem of bounding ratios of samples above/below a threshold.
+
+One qalitative difference is that the empirical quantile is piecewise constant with discrete jumps,
+whereas the interpolated quantile is piecewise linear and continues.
 This property makes the interpolated quantile more suitable for use in quantile-plots like the QQ-polot.
 
-From the implementation perspectice it seems that most software produces default to computing
-continues versions of quantiles, and the interpolated quantile seems to be a popular choice.
-It was somewhat shocking for me to see that the frequently used quantile functions in Python
-can not calculate empirical quantiles.
-R includes a function for empirical quantiles, but it's not the default.
-
-
+Apparently most software products prefer to compute interpolated quantiles.
+Somewhat shockingly for the author, support for empirical quantiles is often entirely lacking,
+at least in the popular Python libraries.
 
 **Summary.**
 
@@ -654,41 +648,6 @@ R includes a function for empirical quantiles, but it's not the default.
 |-
 | Motivation                | Probability Theory | Implementation/Plotting |
 | Desireable Properties hold| yes | yes |
-| Gives sample ratio bounds | yes | approximately |
+| Gives sample ratio bounds | exactly | approximately |
 | Continues in q            | no | yes |
 | Implementation available  | not everywhere | widely |
-
-
-
-## Backup: Ranks
-
-**Definition.** We say that the number $x_{(k)} \in D$ has rank $k$ in $D$.
-
-We can see from an example like $D=(1,2,2,2,3)$, that the rank of $x$ is not uniquely determined. 
-Here $x=2$ can have rank $2$ or $3$.
-So we may ask:
-
-> What are the possible ranks for $x \in D$?
-
-**Proposition.**
-The possible ranks of $x \in D$ are precisely the numbers:
-BEGIN_MATH
-   \\{ Count_{\<}(D; x)+1, \dots, Count_{\leq}(D; x) \\}.
-END_MATH
-
-**Proof.** 
-First, lets show that the numbers are indeed ranks for $x$.
-For $a=Count_{\<}(D; x)$ we know that only $a$ samples are strictly smaller than $x$,
-so the next ordered sample $x_{(a+1)}$ has to be larger or equal to $x$: $x_{(a+1)} \geq x$.
-For $b=Count_{\leq}(D; x) = n - Count_{\>}(D; x)$, there are $n - b$ samples which are strictly
-greater than $x$, so $x_{(b)}$ itself has to be smaller or equal to $x$: $x_{(b)} \leq x$.
-Hence for all numbers $a+1 \leq k \leq b$ we find
-BEGIN_MATH
-  x \leq x_{(a+1)} \leq x_{(k)} \leq x_{(b)} \leq x
-END_MATH
-so we must have equality everywhere.
-
-On the other hand, if $x$ has rank $k$, i.e. $x = x_{(k)}$, then we have seen in the last remark
-that $Count_{\<}(D; x) \leq k-1$ and $Count_{\leq}(D; x) \geq k$, hence $k$ is in the expected range.
-QED.
-
