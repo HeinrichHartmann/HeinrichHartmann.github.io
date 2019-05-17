@@ -9,19 +9,18 @@ categories:
 - math
 mathjax: true
 abstract: > 
-  There are a number of competing definitions of percentiles commonly found in the wild.
-  In this note we will explore a few of them. See how they relate to each other,
-  and comment on their suitability for monitoring  and SLA/SLO formulations.
+  Quantile and percentiles are an essential tool for the qualitative analysis of diverse datasets.
+  In particular, they have become an integral part of performance monitoring systems in the IT domain.
+  Despite their wide use, there are a number of competing definitions of percentiles commonly found in the wild.
+  In this note we will explain how these definitions arise and study their relation in detail.
+  This includes formal relationships, and empirical analysis of practical examples.
 ---
-
-{::options math_engine="nil" /}
 
 ## Contents
 {: .no_toc }
 
 - TOC
 {:toc}
-
 
 ## Quantiles for Random Variables
 
@@ -393,28 +392,40 @@ $$
 
 where $\gamma = q(n-1) - \floor{q(n-1)}$ with $0 \leq \gamma < 1$.
 
-**Proposition.** For $D=(1,\dots,n)$ the interpolated $q$-quantile is the
-linear function in $r(q)$ that interpolates between $min(D)=r(0)$ and $max(D)=r(1)$.
+
+**Proposition.** 
+The interpolated $q$-quantile $Q^{int}_q$ is a continues, piece-wise linear function in $q$, 
+with values 
 
 $$
-        Q^{int}_q(D) = r(q) = q(n-1) + 1.
+        Q^{int}_q(D) = x_{(k)} \qtext{for} q = \frac{k-1}{n-1}.
 $$
 
-**Proof.** 
-Let $k = \floor{q(n-1)}$ then $q(n-1) = k+\gamma$, and $r(q) = k+\gamma+1$.
-If $\gamma = 0$, then
+at the break-points.
+
+**Proof**.
+We have $\gamma=0$ precisely at the break-points $q=(k-1)/(n-1)$ for $k=1,n$.
+
+So if $q=\frac{k-1}{n-1}$, then
 
 $$
-    Q^{int}_q(D) = x_{l^{min}} = x_{k+1} = k + 1 = q(n-1) + 1.
+    Q^{int}_q(D) = x_{(l^{min})} = x_{(k)}
 $$
 
-If $0 < \gamma < 1 $, then $l^{min}=k+1$, $l^{max}=k+2$, so
+And if $q=(k-1)/(n-1) + \gamma/(n-1), with 0 < \gamma < 1$, then $\gamma(q) = q(n-1) - k + 1$
+and $l^{min}=k$ $l^{max}=k+1$. 
+So
 
 $$
-  Q^{int}_q(D)= (1-\gamma) (k+1) + \gamma (k+2) = k + \gamma + 1 = q(n-1) + 1.
+  Q^{int}_q(D) = (1-\gamma(q)) x_{(k)} + \gamma(q) x_{(k+1)}
 $$
 
+is a linear function in $q$.
+Note that for $\gamma=0$ and $\gamma=1$ this agrees with the formula for the break-points.
 QED.
+
+**Example.** For $D=(1,\dots,n)$ the interpolated $q$-quantile is exactly 
+$Q^{int}_q(D) = r(q) = q(n-1) + 1$.
 
 **Proposition.** The interpolated quantile satisfies the desireable properties (A) - (D) from above.
 
@@ -439,9 +450,140 @@ The following figure illustrates the interpolated quantile ranks for $n=4$.
 **Comment.** The Hyndman-Fan list includes our interpolated quantiles as Type 7 quantiles, 
 and attributes them to Gumbel "La Probabilite des Hypotheses" from 1939.
 
-## Implementation
+## Comparison: Empirical vs. Interpolated Quantiles
 
-**Numpy**
+The qualititive differences between empirical- and interpolated quantiles
+can be well observed in the case $n=4$:
+
+{% figure b5bb25c8537a6e8034baf16a png "Empirical vs. Interpolated quantiles for n=4" %}
+
+We can see that:
+
+- The interpolated quantiles, take the desireable quantile values at $k/3$ as a basis and interpolate between them.
+- The empirical quantiles, jump at $q=k/4$ to the locations of the samples.
+
+- There are no stric inequalities between the quantile, but for low values of $q$ the interpolated quantile is generally larger than the empirical one. For high values of $q$ the interpolated quantiles are generally lower than the empirical ones.
+
+Also in this example empirical and interpolated quantiles are not far appart. 
+In fact, we have the following proposition.
+
+**Proposition.** Empirical quantile and interpolated quantiles are no more than one sample appart:
+
+$$
+        | Q^{emp}_q - Q^{int}_q | \leq max \Set{ x_{(k+1)} - x_{(k)} }{ k = 1,\dots,n }
+$$
+
+**Proof.** We have seen that the quantile indices satisfy:
+
+$$
+  l^{min}_q \leq k^{min}_q \leq k^{max}_q \leq l^{max}_q
+$$
+
+So $Q_q^{emp}$ and $Q_q^{int}$ both lie within $[x_{(l_q^{min})}, x_{(l_q^{max})}]$.
+But $|l^{max}_q - l^{min}_q| \leq 1$, hence the difference between the quantiles is bounded by the maximal sample distance. QED.
+
+**Example.**
+There are cases where interpolated and empirical quantiles are far appart.
+A common example where this is the case is are long tailed distributions with outliers,
+and we are interested in high quantiles like $.99,.999$. 
+In these regions samples are sparse and far appart.
+
+{% figure 8ce5431c59a5eb0697b8ff30 png "Empirical vs. Interpolated quantiles for a Paretro Distribution with outliers" %}
+
+This figure shows data sampled from a Paretro distribution with added outliers like so:
+
+```python
+D = [ np.random.pareto(1) for n in range(400) ] +
+    [ np.random.pareto(1)*800 for n in range(5) ]
+```
+
+We have marked the following quantile values
+
+| q | Empirical Quantile | Interpolated Quantile | Delta |
+|-:|-:|-:|-:|
+| .95   | 15.920 | 15.927 | 0.007 (0%) |
+| .995  | 1386.133 | 793.232 | 592.901 (42%)  |
+| .9995 | 1623.282 | 1584.152 | 39.13 (2.4%) |
+
+So we see, that the difference between the values can be quite significant in the long tail.
+
+## Interpolated Qunatiles from Probability Distributions
+
+It is possible to construct a probability distribution that has $Q_q^{int}$ as associated $q$-quantile.
+To simplify the discussion, we limit ourselves to the case that $x_{(1)} < \dots < x_{(n)}$ here.
+
+Roughly speaking, we need to construct a probability densitiy function, that spreads 
+the weight of $x_{(k)}$ evenly, across the space between the next higher and next lower samples.
+One way to do so is to consider the following probability denstiy functions
+
+$$
+    p_k(x) = \frac{1}{x_{(k+1)} - x_{(k)}}  \mathbb{1}[ x_{(k)} \leq x < x_{(k+1)} ](x), \quad k=1,\dots,n-1
+$$
+
+for which are supported on $[x_{(k)}, x_{(k+1)})$ and integrates to 1.
+
+For each central sample $x_{(2)} \leq x_{(k)} \leq x_{(n-1)}$ we associate $\half (p_{k-1} + p_{k})$.
+The bounday samples $x_{(1)}, x_{(n)}$ only get a half-weigth density $\half p_1, \half p_{n-1}$ respectively.
+Summing up we get a probablity denstity function:
+
+$$
+    p(x) = \frac{1}{n-1}( \half p_1(x) + \sum_{k=2}^{n-1} \half (p_{k-1}(x) + p_{k}(x)) + \half p_{n-1}(x)) \\
+         = \frac{1}{n-1}( p_1(x) + \dots + p_{n-1}(x))
+$$
+
+**Proposition.** The comulative distribution function associated to p(x)
+
+$$ 
+\DeclareMathOperator{\cdf}{cdf}
+
+\cdf(x) = \int_{-\infty}^x p(x) dx = \frac{1}{n-1} \sum_{k=1}^{n-1} \int_{-\inf}^{x} p_k(t) dt
+
+$$
+
+has the property that:
+
+1. $\cdf(x)$ is continuus and piece-wise linear between $x_{(k)}$ and $x_{(k+1)}$.
+1. $\cdf(x_{(k)}) = (k-1)/(n-1)$.
+
+**Proof.** Ad 1) We know that $\frac{d}{dx}\cdf(x) = p(x)$ is constant on between $x_{(k)}$ and $x_{(k+1)}$.
+Hence $\cdf(x)$ is linear on those intervals.
+
+Ad 2) We have $\int_{-\inf}^{x_{(k)}} p_l(t) = 0$ for $k \leq l$, and 
+$\int_{-\inf}^{x_{(k)}} p_l(t) = 1$ for $k \geq l+1$.
+So 
+
+$$
+  \cdf(x_{(k)}) = \frac{1}{n-1} \sum_{l=1}^{n-1} \Ind[l \leq k-1](l) = \frac{k-1}{n-1}
+$$
+
+**Corollary.** The interpolated quantiles are quantiles for the probability distribution with density $p$.
+
+**Proof.** The composition $f(q) = \cdf(Q_q^{int})$ is again a continues, piecewise linear function.
+It suffices to show that $f(q)=q$ on the breakpoints of $f$.
+
+The breakpoints of $Q_q^{int}$ at $q=(k-1)/(n-1)$, $k=1,\dots,n$ map to the breakpoints 
+of $\cdf(x)$ at $x_{(k)}$,
+Hence the break-points of the composition $f(q)$ are again at $q=(k-1)/(n-1)$.
+At those points we have:
+
+$$
+   f(q) = \cdf(Q^{int}_q) = \cdf{x_{(k)}} = \frac{k-1}{n-1} = q.
+$$
+
+Now,
+
+$$
+   P[X < Q^{int}_q] = \cdf(Q^{int}_q) = q \qtext{and} P[X > Q^{int}_q] = 1-\cdf(Q^{int}_q) = 1-q.
+$$
+
+QED.
+
+## Histogram Approximations of Quantiles
+
+
+## Quantile Implementations in the Wild
+
+### Numpy
 The NumPy function [np.percentile](https://docs.scipy.org/doc/numpy/reference/generated/numpy.percentile.html), implements interpolated quantiles.
 As of this writing, there are no options for calculating empirical quantiles with NumPy's percentile function.
 
@@ -457,13 +599,14 @@ H = np.percentile(D, Q*100,interpolation="higher")
 {% figure 0cae73fb147382983203ef8e png "Quantiles as computed by the np.percentile function." %}
 
 
-**Scipy.**
+### Scipy
+
 The SciPy function [mquantiles](https://docs.scipy.org/doc/scipy-0.7.x/reference/generated/scipy.stats.mstats.mquantiles.html)
 implements the continues quantiles from the Hyndman-Fan list: Type 4-9.
 This includes the intepolated quantile (Type 7), but not the empirical quantiles (Type 1,2).
 So, as of this writing, there are no options for calculating empirical quantiles (Type 1,2) with SciPy's mquantile function.
 
-```
+```python
 import numpy as np
 from scipy.stats.mstats import mquantiles
 D = [1,2,3,4]
@@ -474,8 +617,7 @@ B = mquantiles(D, Q, alphap=1,betap=1) # linear
 
 {% figure f69174cb9ec030c4bed3b437 png "Quantiles as computed by the np.percentile function." %}
 
-
-**R.**
+### R
 According to the documentation the R [quantile function](https://www.rdocumentation.org/packages/stats/versions/3.6.0/topics/quantile) implements quantiles of all 9 Hydman-Fan Types of Quantiles.
 This includes empirical quantiles (Type 1,2) and interpolated quantiles (Type 4).
 
@@ -504,9 +646,7 @@ It was somewhat shocking for me to see that the frequently used quantile functio
 can not calculate empirical quantiles.
 R includes a function for empirical quantiles, but it's not the default.
 
-As an example where Interpolated Quantiles and Empirical Quantiles differ take 
 
-{% figure 8ce5431c59a5eb0697b8ff30 png "Empirical vs. Interpolated quantiles for a Paretro Distribution with outliers" %}
 
 **Summary.**
 
@@ -517,6 +657,8 @@ As an example where Interpolated Quantiles and Empirical Quantiles differ take
 | Gives sample ratio bounds | yes | approximately |
 | Continues in q            | no | yes |
 | Implementation available  | not everywhere | widely |
+
+
 
 ## Backup: Ranks
 
