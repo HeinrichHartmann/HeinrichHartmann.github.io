@@ -1,7 +1,9 @@
 ---
 author: "Heinrich Hartmann"
 layout: "post"
-category: "blog"
+categories:
+- math
+- blog
 redirect_from:
  - /2014/12/08/A-categorical-perspective-on-Covariance.html
 ---

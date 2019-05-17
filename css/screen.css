@@ -233,7 +233,7 @@ ul.posts span {
   margin: 1em 0;
 }
 #post li li { /* ... but not for nested ones */
-  margin: 0;
+  margin: .5em 0;
 }
 
 #post pre code {

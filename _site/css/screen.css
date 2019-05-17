@@ -113,6 +113,14 @@ ul.posts span {
   line-height: 1.5em;
 }
 
+.site .headline a {
+    color: #a00;
+    font-weight: bold;
+    margin-bottom: 2em;
+    margin-top: 2em;
+    text-decoration: none;
+}
+
 .title {
   color: #a00;
   font-weight: bold;
@@ -132,7 +140,7 @@ ul.posts span {
 .site .title a.extra {
   color: #aaa;
   text-decoration: none;
-  margin-left: 1em;
+  margin-right: 1em;
 }
 
 .site .title a.extra:hover {
@@ -174,6 +182,17 @@ ul.posts span {
 /*
 /*****************************************************************************/
 
+#markdown-toc li {
+    line-height: 1;
+}
+
+.abstract p {
+    width: 80%;
+    margin-left: auto;
+    margin-top: 3em;
+    margin-bottom: 3em;
+}
+
 #post h1 {
   font-size: 2em;
   text-transform: uppercase;
@@ -214,7 +233,7 @@ ul.posts span {
   margin: 1em 0;
 }
 #post li li { /* ... but not for nested ones */
-  margin: 0;
+  margin: .5em 0;
 }
 
 #post pre code {

@@ -574,7 +574,6 @@ We have marked the following quantile values
 
 So we see, that the difference between the values can be quite significant in the long tail.
 
-
 ## Quantile Implementations
 
 ### Numpy

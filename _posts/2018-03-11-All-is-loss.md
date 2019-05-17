@@ -7,6 +7,7 @@ permalink: /blog/all-is-loss.html
 hidden: false
 categories:
 - blog
+- math
 mathjax: true
 ---
 

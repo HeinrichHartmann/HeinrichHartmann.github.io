@@ -12,9 +12,22 @@
 				
 					<description></description>
 				
-				<pubDate>Sun, 03 Feb 2019 15:17:45 +0000</pubDate>
-				<link>http://heinrichhartmann.com/2019/02/03/2000-01-01-Example.html</link>
-				<guid isPermaLink="true">http://heinrichhartmann.com/2019/02/03/2000-01-01-Example.html</guid>
+				<pubDate>Fri, 17 May 2019 16:56:58 +0000</pubDate>
+				<link>http://heinrichhartmann.com/2019/05/17/2000-01-01-Example.html</link>
+				<guid isPermaLink="true">http://heinrichhartmann.com/2019/05/17/2000-01-01-Example.html</guid>
+			</item>
+		
+			<item>
+				<title>Quantiles</title>
+				        
+				
+					<description>&lt;h2 class=&quot;no_toc&quot; id=&quot;contents&quot;&gt;Contents&lt;/h2&gt;
+
+</description>
+				
+				<pubDate>Sun, 12 May 2019 00:00:00 +0000</pubDate>
+				<link>http://heinrichhartmann.com/math/quantiles.html</link>
+				<guid isPermaLink="true">http://heinrichhartmann.com/math/quantiles.html</guid>
 			</item>
 		
 			<item>
@@ -125,20 +138,6 @@ Here are the rules for holding a Virtual Coffee Break.&lt;/p&gt;
 				<pubDate>Mon, 12 Mar 2018 00:00:00 +0000</pubDate>
 				<link>http://heinrichhartmann.com/VCB.html</link>
 				<guid isPermaLink="true">http://heinrichhartmann.com/VCB.html</guid>
-			</item>
-		
-			<item>
-				<title>All is loss</title>
-				        
-				
-					<description>&lt;p&gt;You might have heard, that most supervised Machine Learning methods boil down to &lt;em&gt;minimizing a loss function&lt;/em&gt; over a set of parameters.
-I for myself was somewhat aware of this for a long time, but it was not until recently that I realized how powerfull this observation really is.&lt;/p&gt;
-
-</description>
-				
-				<pubDate>Sun, 11 Mar 2018 00:00:00 +0000</pubDate>
-				<link>http://heinrichhartmann.com/blog/all-is-loss.html</link>
-				<guid isPermaLink="true">http://heinrichhartmann.com/blog/all-is-loss.html</guid>
 			</item>
 		
 	</channel>
