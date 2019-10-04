@@ -4,8 +4,10 @@ layout: "post"
 categories:
 - math
 - blog
+permalink: /blog/A-categorical-perspective-on-Covariance.html
 redirect_from:
  - /2014/12/08/A-categorical-perspective-on-Covariance.html
+ - /blog/2014/12/08/A-categorical-perspective-on-Covariance.html
 ---
 
 <script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS_HTML" type="text/javascript"></script>

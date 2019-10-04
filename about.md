@@ -5,11 +5,13 @@ title: Heinrich Hartmann - about
 
 <img src="/images/profile.jpg" style="float: right" width="150px">
 
-## Contact
+## About
 
-Dr. Heinrich Hartmann
+Dr. Heinrich Hartmann is a Data Scientist from Germany.
 
-<a href="mailto:heinrich@heinrichhartmann.com">heinrich@heinrichhartmann.com</a>
+He is head of Hartmann IT GmbH, who offers IT consultancy services.
+
+## Profiles
 
 * [Twitter](https://twitter.com/HeinrichHartman/)
 * [GitHub](http://github.com/heinrichhartmann/)

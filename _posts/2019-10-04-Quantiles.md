@@ -3,11 +3,12 @@ layout: "post"
 author: "Heinrich Hartmann"
 location: Stemwede, Germany
 title: Quantiles
-permalink: /math/quantiles.html
-hidden: true
+hidden: false
 categories:
 - math
+- blog
 mathjax: true
+permalink: /math/quantiles.html
 abstract: > 
   Quantiles and percentiles are an essential tool for the qualitative analysis of diverse datasets.
   In particular, they have become an integral part of performance monitoring systems in the IT domain.
@@ -46,13 +47,16 @@ BEGIN_MATH
    P[X < y] \leq q \qtext{and} P[X > y] \leq 1-q
 END_MATH
 
-**Example.** If $P=\delta_0$, then all $q$ quantiles are $0$.
+**Example.** If $P=\delta_0$, then
+- All numbers $y \leq 0$ qualify as 0 quantile.
+- All numbers $y \geq 0$ qualify as 1 quantile.
+- All other $0<q<1$-quantiles are $0$.
 
 **Example.** If $P=\half (\delta_0 + \delta_1)$, then:
 
-- For $q<.5$ only $y=0$ is a $q$-quantile.
+- For $0<q<.5$ only $y=0$ is a $q$-quantile.
 - For $q=.5$ all numbers $0<y<1$, are $.5$-quantiles.
-- For $q>.5$ only $y=1$ is a $q$-quantile.
+- For $.5<q<1$ only $y=1$ is a $q$-quantile.
 
 **Remark**.
 - For every $P,q$ there is at least one $q$-quantile.
@@ -76,13 +80,12 @@ But there are a number of undisputed properties, that everyone will find desirab
 * (A) The minimum is a $0$-quantile.
 * (B) The maximum is a $1$-quantile.
 * (C) The [median value](https://en.wikipedia.org/wiki/Median) is a $.5$ quantile.
-* (D) For $D=(x_1 < \dots < x_n), n\geq 2$ the number $x_k$ should be an $\frac{k-1}{n-q}$ quantile.
+* (D) For $D=(x_1 < \dots < x_n), n\geq 2$ the number $x_k$ should be an $\frac{k-1}{n-1}$ quantile.
 
 Special cases of (D) are
 
-* For $D=(0,1)$, the number .5 should be a .5-quantile.
-* For $D=(0,1,2)$, then $y=1$ should be a .5-quantile.
-* For $D=(0,1,\dots,10)$, then $y=9$ should be a .9-quantile.
+* For $D=(0,1,2)$, then $x_2=1$ should be a .5-quantile.
+* For $D=(0,1,\dots,10)$, then $x_{10}=9$ should be a .9-quantile.
 
 One natural and very general approach is to assign a probability distribution $P$ to $D$,
 and then take the quantiles of $P$ as we defined them above.
@@ -245,7 +248,11 @@ $$
 And for a dataset $D$ of length $n$ we define the minimal and maximal empirical $q$-quantiles as:
 
 $$
-  Q^{min}_q(D) = x_{(k^{min}_q(n))} \qtext{and} Q^{max}_q(D) = x_{(k^{max}_q(n))}.
+\newcommand{QEMIN}[1]{Q_{emp}^{min}(D; #1)}
+\newcommand{QEMAX}[1]{Q_{emp}^{max}(D; #1)}
+\newcommand{QE}[1]{Q_{emp}(D; #1)}
+
+  \QEMIN{q} = x_{(k^{min}_q(n))} \qtext{and} \QEMAX{q} = x_{(k^{max}_q(n))}.
 $$
 
 where $x_{(k)}$ is the k-th entry in $D_{sorted}$.
@@ -253,7 +260,7 @@ where $x_{(k)}$ is the k-th entry in $D_{sorted}$.
 Furthermore, we call
 
 $$
-  Q_q(D) = \frac{1}{2} (Q_q^{min}(D) + Q_q^{max}(D))
+  \QE{q} = \frac{1}{2} (Q_q^{min}(D) + Q_q^{max}(D))
 $$
 
 the central empirical $q$-quantile.
@@ -261,7 +268,7 @@ the central empirical $q$-quantile.
 
 **Example.**  For $n=1, D=(x)$we have the following quantiles:
 
-| $q$     | $k^{min}_q$ | $k^{max}_q$ | $Q_q^{min}$ | $Q_q^{max}$ | Comment | 
+| $q$     | $k^{min}_q$ | $k^{max}_q$ | $\QEMIN{q}$ | $\QEMAX{q}$ | Comment | 
 |:-:|-:|-:|-:|-:|-|
 | 0   | 0 | 1 | $-\infty$ | $x$ | Every number $y \leq x$ is a 0-quantile |
 | $0<q<1$ | 1 | 1 | $x$ | $x$       | Only $y=0$ is a $q$-quantile |
@@ -297,12 +304,12 @@ The following figure illustrates the quantile locations for $n=4$.
 
 **Comment.** A frequently cited source for practical quantile computation is [Hyndman-Fan 1996].
 This paper contains a list of 9 different types of quantile definitions that are found in the wild.
-The minimal empirical quantile $Q^{min}_q$ is the very fist in their list (Type 1):
+The minimal empirical quantile $\QEMIN{q}$ is the very fist in their list (Type 1):
 
 > Definition 1. The oldest and most studied definition is the inverse of the empirical distribution function obtained by ...
 > For this definition $Freq(X_k < Q_1(P)) = \ceil{pn}$
 
-The central empirical quantile $Q_q$ is the second entry in their list (Type 2):
+The central empirical quantile $\QE{q}$ is the second entry in their list (Type 2):
 
 > Definition 2. $Q_2(p)$ is similar to $Q_1(p)$except that averaging is used when $g=0$...
 
@@ -320,10 +327,10 @@ The quantile version that allows you to make those statements exactly, is the mi
 
 * p% of all samples in $D$ were less or equal to y.
 
-* The the minimal p/100 quantile, was greater or equal to y: $Q^{min}_{p/100}(D) \geq y$.
+* The the minimal p/100 quantile, was greater or equal to y: $\QEMIN{p/100} \geq y$.
 
 **Proof.** We have seen in the proof of the last theorem, that the condition
-$Count_\leq(D; y) \geq n q$ is equivalent to $y \geq Q^{min}_q(D)$. QED.
+$Count_\leq(D; y) \geq n q$ is equivalent to $y \geq \QEMIN{q}$. QED.
 
 **Comment.** 
 This proposition shows, that the empirical quantiles give precise answers to practical questions 
@@ -342,78 +349,49 @@ BEGIN_MATH
   l^{min}_q = \floor{r(q)}= \floor{q(n-1)} + 1 \quad\text{and}\quad l^{max}_q = \ceil{r(q)} = \ceil{q (n-1)} + 1.
 END_MATH
 
-**Proposition.** For $0<q<1$, we have
-
-$$
-        l^{min}_q \leq k^{min}_q \leq k^{max}_q \leq l^{max}_q.
-$$
-
-**Proof.** 
-We distinguish the cases (A) $q n$ is an integer and (B) $q n$ is not integer.
-
-Case A) Assume $q n$ is an integer.  Then $\floor{nq} = \ceil{nq} = qn$.
-Hence
-
-$$
-  l^{min}_q = \floor{q (n-1)} + 1 = \floor{qn - q} + 1 = nq + \floor{-q} + 1 \leq nq = \ceil{qn} = k^{min}_q.
-$$
-
-and
-
-$$
-  k^{max}_q = \floor{q n} + 1 = nq + 1 = \ceil{q (n-1)} + 1 = l^{max}_q.
-$$
-
-Case B) Assume $q n$ is not an integer. 
-Then $\ceil{q n} = \floor{q n}+1$ and we find:
-
-$$
-  l^{min}_q = \floor{q (n-1) + 1} \leq \floor{qn + 1} = \floor{qn} + 1 = \ceil{q n} = k^{min}_q.
-$$
-
-also, since $qn \leq q(n-1) + 1$ for $0\leq q \leq 1$, we find
-
-$$
-  k^{max}_q = \floor{q n} + 1 = \ceil{qn} \leq \ceil{q (n-1) + 1} = l^{max}_q.
-$$
-
-QED.
-
 **Definition.** For a dataset $D$ of size $n\geq 2$ and a number $0\leq q \leq 1$ we
 define the interpolated quantile as:
 
 $$
-        Q^{int}_q(D) = (1-\gamma) x_{(l^{min}_q)} + \gamma x_{(l^{max}_q)}
+\newcommand{\QI}{Q_{int}(D; q)}
+\newcommand{\QIMIN}{Q_{int}^{min}(D; q)}
+\newcommand{\QIMAX}{Q_{int}^{max}(D; q)}
+
+   \QI = (1-\gamma) x_{(l^{min}_q)} + \gamma x_{(l^{max}_q)}
 $$
 
 where $\gamma = q(n-1) - \floor{q(n-1)}$ with $0 \leq \gamma < 1$.
+Furthermore we introduce the notation
 
+$$
+   \QIMIN = x_{(l^{min}_q)}, \quad \QIMAX = x_{(l^{max}_q)}
+$$
+
+for the minimal and maximal interpolated $q$-quantiles.
 
 **Proposition.** 
-The interpolated $q$-quantile $Q^{int}_q$ is a continues, piece-wise linear function in $q$, 
-with values 
+The interpolated $q$-quantile $\QI$ is a continues, piece-wise linear function in $q$, 
+with break point at $q=(k-1)/(n-1)$ at which the following values are assumed:
 
 $$
-        Q^{int}_q(D) = x_{(k)} \qtext{for} q = \frac{k-1}{n-1}.
+        Q_{int}(D; \frac{k-1}{n-1}) = x_{(k)} \qtext{for} k = 1,\dots,n.
 $$
-
-at the break-points.
 
 **Proof**.
 We have $\gamma=0$ precisely at the break-points $q=(k-1)/(n-1)$ for $k=1,n$.
 
-So if $q=\frac{k-1}{n-1}$, then
+So if $q=(k-1)/(n-1)$, then
 
 $$
-    Q^{int}_q(D) = x_{(l^{min})} = x_{(k)}
+    \QI = x_{(l^{min})} = x_{(k)}
 $$
 
-And if $q=(k-1)/(n-1) + \gamma/(n-1), with 0 < \gamma < 1$, then $\gamma(q) = q(n-1) - k + 1$
-and $l^{min}=k$ $l^{max}=k+1$. 
+And if $q=(k-1)/(n-1) + \gamma/(n-1)$, with $0 < \gamma < 1$, then $\gamma(q) = q(n-1) - k + 1$
+and $l^{min}=k$ $l^{max}=k+1$.
 So
 
 $$
-  Q^{int}_q(D) = (1-\gamma(q)) x_{(k)} + \gamma(q) x_{(k+1)}
+  \QI = (1-\gamma(q)) x_{(k)} + \gamma(q) x_{(k+1)}
 $$
 
 is a linear function in $q$.
@@ -421,7 +399,7 @@ Note that for $\gamma=0$ and $\gamma=1$ this agrees with the formula for the bre
 QED.
 
 **Example.** For $D=(1,\dots,n)$ the interpolated $q$-quantile is exactly 
-$Q^{int}_q(D) = r(q) = q(n-1) + 1$.
+$\QI = r(q) = q(n-1) + 1$.
 
 **Proposition.** The interpolated quantile satisfies the desirable properties (A) - (D) from above.
 
@@ -448,7 +426,7 @@ and attributes them to Gumbel "La Probabilite des Hypotheses" from 1939.
 
 ## Interpolated Quantiles from Probability Distributions
 
-It is possible to construct a probability distribution that has $Q_q^{int}$ as associated $q$-quantile.
+It is possible to construct a probability distribution that has $\QI$ as associated $q$-quantile.
 To simplify the discussion, we limit ourselves to the case that $x_{(1)} < \dots < x_{(n)}$ here.
 
 Roughly speaking, we need to construct a probability density function, that spreads 
@@ -497,22 +475,20 @@ $$
 
 **Corollary.** The interpolated quantiles are quantiles for the probability distribution with density $p$.
 
-**Proof.** The composition $f(q) = \cdf(Q_q^{int})$ is again a continues, piece-wise linear function.
+**Proof.** The composition $f(q) = \cdf(Q_{int}(q))$ is again a continues, piece-wise linear function.
 It suffices to show that $f(q)=q$ on the breakpoints of $f$.
 
-The breakpoints of $Q_q^{int}$ at $q=(k-1)/(n-1)$, $k=1,\dots,n$ map to the breakpoints 
-of $\cdf(x)$ at $x_{(k)}$,
-Hence the break-points of the composition $f(q)$ are again at $q=(k-1)/(n-1)$.
-At those points we have:
+The breakpoints of $\QI$ at $q=(k-1)/(n-1)$, $k=1,\dots,n$ map to the breakpoints of $\cdf(x)$ at $x_{(k)}$,
+Hence the break-points of the composition $f(q)$ are again at $q=(k-1)/(n-1)$. At those points we have:
 
 $$
-   f(q) = \cdf(Q^{int}_q) = \cdf{x_{(k)}} = \frac{k-1}{n-1} = q.
+   f(q) = \cdf(Q_{int}(q)) = \cdf{x_{(k)}} = \frac{k-1}{n-1} = q.
 $$
 
 Now,
 
 $$
-   P[X < Q^{int}_q] = \cdf(Q^{int}_q) = q \qtext{and} P[X > Q^{int}_q] = 1-\cdf(Q^{int}_q) = 1-q.
+   P[X < \QI] = \cdf(\QI) = q \qtext{and} P[X > \QI] = 1-\cdf(Q_{int}(q)) = 1-q.
 $$
 
 QED.
@@ -534,10 +510,55 @@ We can see that:
 Also in this example empirical and interpolated quantiles are not far apart. 
 In fact, we have the following proposition.
 
+**Proposition.** 
+For all numbers $0 \leq q \leq 1$ we have:
+
+$$
+  \QIMIN \leq  \QEMIN{q} \leq \QE{q} \leq \QEMAX{q} \leq  \QIMAX
+$$
+
+**Proof.** 
+The cases $q=0$ and $q=1$ are trivial.
+It suffices to show, that for $0<q<1$, we have
+
+$$
+        l^{min}_q \leq k^{min}_q \leq k^{max}_q \leq l^{max}_q.
+$$
+
+We distinguish the cases (A) $q n$ is an integer and (B) $q n$ is not integer.
+
+Case A) Assume $q n$ is an integer.  Then $\floor{nq} = \ceil{nq} = qn$.
+Hence
+
+$$
+  l^{min}_q = \floor{q (n-1)} + 1 = \floor{qn - q} + 1 = nq + \floor{-q} + 1 \leq nq = \ceil{qn} = k^{min}_q.
+$$
+
+and
+
+$$
+  k^{max}_q = \floor{q n} + 1 = nq + 1 = \ceil{q (n-1)} + 1 = l^{max}_q.
+$$
+
+Case B) Assume $q n$ is not an integer. 
+Then $\ceil{q n} = \floor{q n}+1$ and we find:
+
+$$
+  l^{min}_q = \floor{q (n-1) + 1} \leq \floor{qn + 1} = \floor{qn} + 1 = \ceil{q n} = k^{min}_q.
+$$
+
+also, since $qn \leq q(n-1) + 1$ for $0\leq q \leq 1$, we find
+
+$$
+  k^{max}_q = \floor{q n} + 1 = \ceil{qn} \leq \ceil{q (n-1) + 1} = l^{max}_q.
+$$
+
+QED.
+
 **Proposition.** Empirical quantile and interpolated quantiles are no more than one sample apart:
 
 $$
-        | Q^{emp}_q - Q^{int}_q | \leq max \Set{ x_{(k+1)} - x_{(k)} }{ k = 1,\dots,n }
+        | \QE{q} - \QI | \leq max \Set{ x_{(k+1)} - x_{(k)} }{ k = 1,\dots,n }
 $$
 
 **Proof.** We have seen that the quantile indices satisfy:
@@ -546,8 +567,9 @@ $$
   l^{min}_q \leq k^{min}_q \leq k^{max}_q \leq l^{max}_q
 $$
 
-So $Q_q^{emp}$ and $Q_q^{int}$ both lie within $[x_{(l_q^{min})}, x_{(l_q^{max})}]$.
-But $|l^{max}_q - l^{min}_q| \leq 1$, hence the difference between the quantiles is bounded by the maximal sample distance. QED.
+So $Q_{emp}(q)$ and $Q_{int}(q)$ both lie within $[x_{(l_q^{min})}, x_{(l_q^{max})}]$.
+But $|l^{max}_q - l^{min}_q| \leq 1$, hence the difference between the quantiles is bounded 
+by the maximal distance of adjacent samples. QED.
 
 **Example.**
 There are cases where interpolated and empirical quantiles are far apart.
@@ -575,6 +597,8 @@ We have marked the following quantile values
 So we see, that the difference between the values can be quite significant in the long tail.
 
 ## Quantile Implementations
+
+Let's take a look at how quantiles are implemented in some popular data processing tools.
 
 ### Numpy
 The NumPy function [np.percentile](https://docs.scipy.org/doc/numpy/reference/generated/numpy.percentile.html), implements interpolated quantiles.
