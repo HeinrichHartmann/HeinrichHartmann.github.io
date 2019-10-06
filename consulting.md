@@ -22,7 +22,7 @@ h1 {
 
 ## Services
 
-* On-site training "Statistics for Engineers", teaching best practices and common pitfalls in analyzing telemetry data from IT systems
+* Training "Statistics for Engineers", teaching best practices and common pitfalls in analyzing telemetry data from IT systems
 
 * Improvement of existing monitoring infrastructure for observability, operability, debugability and accountability needs
 
@@ -34,11 +34,11 @@ h1 {
 
 - 5years+ of consulting experience in the IT monitoring space
 
-- [CACM Vol. 59 No. 7](http://cacm.acm.org/magazines/2016/7/204029-statistics-for-engineers/abstract) Statistics for Engineers - Applying statistical techniques to operations data
+- [CACM Vol. 59 No. 7](http://cacm.acm.org/magazines/2016/7/204029-statistics-for-engineers/abstract) -- Statistics for Engineers - Applying statistical techniques to operations data
 
-- [Monitorama PDX, 2016](http://monitorama.com/2016/pdx.html#welcome) - [A Tale of API Monitoring](https://vimeo.com/173610069)
+- [Monitorama PDX, 2016](http://monitorama.com/2016/pdx.html#welcome) -- [A Tale of API Monitoring](https://vimeo.com/173610069)
 
-- [Keynote - SRECon EMEA 2018](https://www.usenix.org/conference/srecon18europe/presentation/schlossnagle) Circonus - Design (Failures) Case Study
+- Keynote [SRECon EMEA 2018](https://www.usenix.org/conference/srecon18europe/presentation/schlossnagle) -- Circonus Design (Failures) Case Study
 
 - Training [Statistics for Engineers](https://github.com/HeinrichHartmann/Statistics-for-Engineers/) at
   SRECon [19](https://www.usenix.org/conference/srecon19emea/program), [18](https://www.usenix.org/conference/srecon18emea/program), [17](https://www.usenix.org/conference/srecon17europe), [16](https://www.usenix.org/conference/srecon16europe), [15](https://www.usenix.org/conference/srecon15europe);
