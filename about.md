@@ -3,8 +3,6 @@ layout: default
 title: Heinrich Hartmann - about
 ---
 
-<img src="/images/profile.jpg" style="float: right" width="150px">
-
 ## About
 
 Dr. Heinrich Hartmann is a Data Scientist from Germany.
