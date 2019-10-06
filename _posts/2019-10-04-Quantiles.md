@@ -10,9 +10,9 @@ categories:
 mathjax: true
 permalink: /math/quantiles.html
 abstract: > 
-  Quantiles and percentiles are an essential tool for the qualitative analysis of diverse datasets.
-  In particular, they have become an integral part of performance monitoring systems in the IT domain.
-  Despite their wide use, there are a number of competing definitions of percentiles commonly found in the wild.
+  Quantiles and percentiles are an essential tool for the qualitative analysis of telemetry data.
+  In particular, they have become an integral part of performance analysis in the IT domain.
+  Despite their wide use, there are a number of competing definitions of quantiles commonly found in the wild.
   In this note we will explain how these definitions arise and study their relation in detail.
   This includes formal relationships, and empirical analysis of practical examples.
 ---
