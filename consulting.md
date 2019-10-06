@@ -22,7 +22,7 @@ h1 {
 
 ## Services
 
-* On-site training "Statistics for Engineers", teaching best practices and common pitfalls in monitoring IT systems
+* On-site training "Statistics for Engineers", teaching best practices and common pitfalls in analyzing telemetry data from IT systems
 
 * Improvement of existing monitoring infrastructure for observability, operability, debugability and accountability needs
 
