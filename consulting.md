@@ -65,7 +65,7 @@ h1 {
 ## Testimonials
 
 <img src="https://upload.wikimedia.org/wikipedia/en/5/59/Swisscom_logo.svg" class="logo"/>
-<p class="quote">This was an excellent course. Heinrich explained the theoretical foundations with exceptional clarity and great thoroughness, while keeping a clear view on practical applications."</p>
+<p class="quote">"This was an excellent course. Heinrich explained the theoretical foundations with exceptional clarity and great thoroughness, while keeping a clear view on practical applications."</p>
 <p class="author">Thomas Zippo, Lean Agile Leader for Data Analytics</p>
 
 <div style="clear:both"/>
