@@ -14,6 +14,21 @@ h1 {
 .site {
     text-align: left;
     }
+
+.logo {
+  float:right;
+  margin-left: 20px;
+  width:80px;
+  height 80px;
+}
+.author {
+  float:right;
+  margin-right: 20px;
+  margin-top: 0px;
+}
+.quote {
+  margin: 0px;
+}
 </style>
 
 # Hartmann IT GmbH
@@ -46,6 +61,14 @@ h1 {
   [London](https://conferences.oreilly.com/velocity/vl-eu/public/schedule/full/public);
   [StatsCraft](http://www.statscraft.org.il/event/2016/);
   [DevOpsDays Kiel](https://devopsdays.org/events/2018-kiel/workshop/heinrich-hartmann/)
+
+## Testimonials
+
+<img src="https://upload.wikimedia.org/wikipedia/en/5/59/Swisscom_logo.svg" class="logo"/>
+<p class="quote">This was an excellent course. Heinrich explained the theoretical foundations with exceptional clarity and great thoroughness, while keeping a clear view on practical applications."</p>
+<p class="author">Thomas Zippo, Lean Agile Leader for Data Analytics</p>
+
+<div style="clear:both"/>
 
 ## Contact
 
