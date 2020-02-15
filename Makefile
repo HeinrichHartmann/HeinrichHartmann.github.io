@@ -46,10 +46,10 @@ docker-serve:
 	docker run --rm -v $$(pwd):/src -it -p 4000:4000 hh-blog-build-image make serve
 
 docker-build:
-	docker run --rm -v $$(pwd):/src -it hh-blog-build-image make build
+	docker run --rm -v $$(pwd):/src hh-blog-build-image make build
 
 docker-build-drafts:
-	docker run --rm -v $$(pwd):/src -it hh-blog-build-image make build-drafts
+	docker run --rm -v $$(pwd):/src hh-blog-build-image make build-drafts
 
 docker-build-watch:
 	docker run --rm -v $$(pwd):/src -it hh-blog-build-image make build-watch
