@@ -2,7 +2,7 @@
 layout: "post"
 author: "Heinrich Hartmann"
 location: Stemwede, Germany
-title: Landtagswahl Thürigen
+title: Landtagswahl Thüringen
 hidden: false
 categories:
 - opinion
