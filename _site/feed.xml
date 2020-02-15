@@ -12,9 +12,24 @@
 				
 					<description></description>
 				
-				<pubDate>Mon, 07 Oct 2019 18:53:16 +0000</pubDate>
-				<link>http://heinrichhartmann.com/2019/10/07/2000-01-01-Example.html</link>
-				<guid isPermaLink="true">http://heinrichhartmann.com/2019/10/07/2000-01-01-Example.html</guid>
+				<pubDate>Sat, 15 Feb 2020 21:07:38 +0000</pubDate>
+				<link>http://heinrichhartmann.com/2020/02/15/2000-01-01-Example.html</link>
+				<guid isPermaLink="true">http://heinrichhartmann.com/2020/02/15/2000-01-01-Example.html</guid>
+			</item>
+		
+			<item>
+				<title>Landtagswahl Thürigen</title>
+				        
+				
+					<description>&lt;p&gt;Die Wahl in Thüringen hat mich in den letzten Wochen sehr bewegt. Es fühlt sich
+an, als wäre etwas kaputt gegangen in Deutschland. Ganz genau kann ich es nicht
+benennen.&lt;/p&gt;
+
+</description>
+				
+				<pubDate>Sat, 15 Feb 2020 00:00:00 +0000</pubDate>
+				<link>http://heinrichhartmann.com/opinion/2020/02/15/Thuringen.html</link>
+				<guid isPermaLink="true">http://heinrichhartmann.com/opinion/2020/02/15/Thuringen.html</guid>
 			</item>
 		
 			<item>
@@ -124,20 +139,6 @@ If you have not heard about dtrace check out this collection of &lt;a href=&quot
 				<pubDate>Sat, 17 Mar 2018 00:00:00 +0000</pubDate>
 				<link>http://heinrichhartmann.com/blog/dynamic-tracing-with-gdb.html</link>
 				<guid isPermaLink="true">http://heinrichhartmann.com/blog/dynamic-tracing-with-gdb.html</guid>
-			</item>
-		
-			<item>
-				<title>Virtual Coffee Break</title>
-				        
-				
-					<description>&lt;p&gt;Virtual Coffee Breaks (VCBs) are the analogue of coffee breaks for remote workers.
-Here are the rules for holding a Virtual Coffee Break.&lt;/p&gt;
-
-</description>
-				
-				<pubDate>Mon, 12 Mar 2018 00:00:00 +0000</pubDate>
-				<link>http://heinrichhartmann.com/VCB.html</link>
-				<guid isPermaLink="true">http://heinrichhartmann.com/VCB.html</guid>
 			</item>
 		
 	</channel>
