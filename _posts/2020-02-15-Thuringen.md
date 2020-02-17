@@ -64,3 +64,108 @@ Selbst wenn Fehler passiert sind, hoffe ich dass wir weiterhin klar versehen, da
 ein Verbündeter im Kampf gegen Populismus und Extremismus ist, kein Gegner.
 
 Heinrich Hartmann, 2020-02-15, Stemwede.
+
+# Diskussion / Ergänzung / Feedback auf Twitter
+
+**Thread**: https://twitter.com/HartmannTalk/status/1228793535203291136
+
+Lieber Herr Imhof,
+
+natürlich muss man damit rechnen, dass die AfD sich so verhält wie sie es getan
+hat.  Bei der Wahl gab es nicht gerade viele Optionen: 3 Kandidaten / 6
+Parteien.  Das kleine Einmal-Eins sollte im Politikbetrieb jeder beherrschen.
+
+Es gibt aber einen Unterscheid ob (A) zwei Parteien unabhängig voneinander zu
+dem selben Schluss kommen oder (B) bewusst *Absprachen* getroffen wurden
+taktisch zu wählen (#collusion).
+
+Im Fall (B) muss eine beidseitige Kommunikation zwischen den Parteiführungen
+statt gefunden haben. In diesem Fall wäre auch besprochen worden, was für die
+beiden Parteien drin gewesen wäre: Typischer weise wären das Programmabsprachen
+und Ministerposten.
+
+Option (A) ist plausibel, gerade weil ein Linker MP in beiden Lagern unpopulär
+ist und "die Wahlprogramme von AfD, CDU und FDP zu rund zwei Dritteln ähnlich
+sind" (Zitat Hahn/Focus).
+
+Option (B) halte ich für unrealistisch.  Kämmerich hat sich konsistent vor und
+nach der Wahl ganz klar von programmatische und personelle Einflussnahme durch
+die AfD ausgeschlossen. Ich habe keinerlei Belege für irgendwelche Absprachen
+gesehen.
+
+In meinen Augen muss man beide Optionen trennen. Wenn wir das nicht tun, werden
+viele demokratischen Entscheidungen anfetchbar (e.g. Wahl von VonDer Leyen zur
+EU Kommisonspräsidentin mit Stimmen der PIS / Orban.)  Eine Wahl wird nicht
+dadurch illegitim oder unmoralisch, weil Radikale die selbe Meinung vertreten
+haben.
+
+Mit freundlichem Gruß,
+Heinrich Hartmann
+
+---
+
+Lieber Heer Imhof,
+
+ohne Frage, hat sich FDP in Thürigen in ein gigantisches Fettnäpfchen gesetzt
+und der FDP bundesweit grossen Schaden zugefügt. GUT finde ich das sicher nicht!
+
+Die Frage die wir hier diskutieren ist:
+
+    Hat die FDP tatsächlich eine rote Linie überschritten, und einen
+    "unverzeihlichen" Sündenfall begangen.
+
+Keinen realistischen Regierungsplan zu haben ist unschön, aber kein Sündenfall.
+
+Wäre eine Minderheitsregierung FDP+CDU+SPD mit wechselnden Mehrheiten von
+Links/Rechts der Sündenfall gewesen?
+
+Wenn Herr Kemmerich sagt, er wollte nie mit der AfD koalieren, verhandeln oder
+sie in Gesetzgebungsprozesse einbeziehen dann glaube ich ihm das.  Das ist auch
+nicht zwingend erforderlich um Stimmen im Landtag zu erhalten.  Ist es schon
+"kooperation" wenn man in manchen Punkten einer Meinug ist?
+
+Vielleicht müssen wir die Linie trotzde hier ziehen. Vielleicht ist die Gefahr
+in so einer Konstellation von der AfD erpresst oder manipuliert zu werden zu
+groß. Ich weiss es nicht. Über diese Frage wurde bisher aber auch kaum gesprochen.
+
+Was ich sicher weiss ist:
+
+1. Die FDP und Herr Kemmerich sind aufrichtige Demokraten. Keine Nazis.
+2. Die Vorstellung von direkten Absprachen zwischen AfD und FDP ist absurd.
+3. Die rote Linie zu ziehen bei: "Wahlen mit AfD Stimmen sind Ungültig" ist unhaltbar.
+
+Gute Nacht!
+Heinrich Hartmann
+
+---
+
+**Thread**: https://twitter.com/juliefromspb/status/1228961136118288385
+
+Lieber Jannis Unland,
+
+Die Frage ist doch:
+
+    Wo genau ziehen wir die Linie gegen Rechtsextreme?
+
+Wenn wir sagen, alle Wahlen die von der AfD entschieden weden sind illegitim,
+dann sehe ich in naher Zukunft eine ganze Reihe von trickreichen Fragen auf uns
+zukommen:
+
+- Woher will man in einer geheimen Wahl wissen, wer sie entscheiden hat?
+
+- Wie will man vermeiden dass eine Partei die mit 10%+ in mehreren Parlamenten
+  vertreten ist, wahlen entscheidet?
+
+- Sind taktische Absprachen zwischen Links, Grün, CDU, SPD, FDP um Einflussnahme
+  durch die AfD zu verhindern (e.g. Stimmern der CDU für Ramelow) (a)
+  realistisch und (b) im Geiste der Verfassung.
+
+Derartige Fragen stellen sich schon heute bei Bürgemeisterwahlen in den Kommunen.
+Oder eben bei der EU Kommission.
+
+Ich bilde mir nicht ein die endgültige Antwort zu kennen. Ich bin mir sicher, dass wir
+eine Linie gegen Rechts ziehen müssen. Ich denke aber auch, dass die Wahl von
+Kemmerich nicht der Sündenfall war zu dem er gemacht wurde.
+
+Mit freundlichen Grüßen,
+Heinrich Hartmann
