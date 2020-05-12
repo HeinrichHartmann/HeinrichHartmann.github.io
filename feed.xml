@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:dc="http://purl.org/dc/elements/1.1/">
+	<channel>
+		<title>Heinrich Hartmann's Blog</title>
+		<description>A blog about mathematics, statistics and tinkering.</description>		
+		<link>http://heinrichhartmann.com</link>
+		<atom:link href="http://heinrichhartmann.com/feed.xml" rel="self" type="application/rss+xml" />
+		
+			<item>
+				<title></title>
+				        
+				
+					<description></description>
+				
+				<pubDate>Tue, 12 May 2020 14:50:46 +0000</pubDate>
+				<link>http://heinrichhartmann.com/2020/05/12/2000-01-01-Example.html</link>
+				<guid isPermaLink="true">http://heinrichhartmann.com/2020/05/12/2000-01-01-Example.html</guid>
+			</item>
+		
+			<item>
+				<title>Landtagswahl Thüringen</title>
+				        
+				
+					<description>&lt;p&gt;Die Wahl in Thüringen hat mich in den letzten Wochen sehr bewegt. Es fühlt sich
+an, als wäre etwas kaputt gegangen in Deutschland. Ganz genau kann ich es nicht
+benennen.&lt;/p&gt;
+
+</description>
+				
+				<pubDate>Sat, 15 Feb 2020 00:00:00 +0000</pubDate>
+				<link>http://heinrichhartmann.com/opinion/2020/02/15/Thuringen.html</link>
+				<guid isPermaLink="true">http://heinrichhartmann.com/opinion/2020/02/15/Thuringen.html</guid>
+			</item>
+		
+			<item>
+				<title>Quantiles</title>
+				        
+				
+					<description>&lt;h2 class=&quot;no_toc&quot; id=&quot;contents&quot;&gt;Contents&lt;/h2&gt;
+
+</description>
+				
+				<pubDate>Fri, 04 Oct 2019 00:00:00 +0000</pubDate>
+				<link>http://heinrichhartmann.com/math/quantiles.html</link>
+				<guid isPermaLink="true">http://heinrichhartmann.com/math/quantiles.html</guid>
+			</item>
+		
+			<item>
+				<title>The Problem with Lisp</title>
+				        
+				
+					<description>&lt;p&gt;I picked up some Lisp over the years by tinkering with Emacs and reading the &lt;a href=&quot;https://mitpress.mit.edu/sites/default/files/sicp/index.html&quot;&gt;SICP&lt;/a&gt; book.
+I have a lot of sympathy for the language.
+Getting productive with Lisp, however, took me very long, and I know many people share this experience.&lt;/p&gt;
+
+</description>
+				
+				<pubDate>Fri, 12 Oct 2018 00:00:00 +0000</pubDate>
+				<link>http://heinrichhartmann.com/blog/problem-lisp.html</link>
+				<guid isPermaLink="true">http://heinrichhartmann.com/blog/problem-lisp.html</guid>
+			</item>
+		
+			<item>
+				<title>From Academia to Data Science</title>
+				        
+				
+					<description>&lt;p&gt;Over the last years, many people have asked me:
+How do I enter Data Science?
+I don’t have a definite answer to this question, but having transitioned from an academic career in pure Mathematics to working as a Data Scientist, I have experiences that I can share.&lt;/p&gt;
+
+</description>
+				
+				<pubDate>Sat, 15 Sep 2018 00:00:00 +0000</pubDate>
+				<link>http://heinrichhartmann.com/blog/data-science.html</link>
+				<guid isPermaLink="true">http://heinrichhartmann.com/blog/data-science.html</guid>
+			</item>
+		
+			<item>
+				<title>Latency SLOs done right</title>
+				        
+				
+					<description>&lt;p&gt;In their excellent SLO-workshop at SRECon2018 (&lt;a href=&quot;https://www.usenix.org/conference/srecon18europe/presentation/fong-jones-0&quot;&gt;program&lt;/a&gt;) Liz Fong-Jones, Kristina Bennett and Stephen Thorne (Google) presented some best practice examples for Latency SLI/SLOs. At Circonus we care deeply about measuring latency and SRE techniques such as SLI/SLOs. As we will explain here, Latency SLOs are particularly delicate to implement and benefit from having Histogram-data available to  understand distributions and adjust SLO targets.&lt;/p&gt;
+
+</description>
+				
+				<pubDate>Sun, 02 Sep 2018 00:00:00 +0000</pubDate>
+				<link>http://heinrichhartmann.com/blog/Latency-SLOs.html</link>
+				<guid isPermaLink="true">http://heinrichhartmann.com/blog/Latency-SLOs.html</guid>
+			</item>
+		
+			<item>
+				<title>Less Toil, More Coil: Telemetry analysis with Python</title>
+				        
+				
+					<description>
+</description>
+				
+				<pubDate>Tue, 29 May 2018 00:00:00 +0000</pubDate>
+				<link>http://heinrichhartmann.com/blog/more-toil-less-coil.html</link>
+				<guid isPermaLink="true">http://heinrichhartmann.com/blog/more-toil-less-coil.html</guid>
+			</item>
+		
+			<item>
+				<title>Linux System Monitoring with eBPF</title>
+				        
+				
+					<description>
+</description>
+				
+				<pubDate>Sun, 29 Apr 2018 00:00:00 +0000</pubDate>
+				<link>http://heinrichhartmann.com/blog/linux-monitoring-with-ebpf.html</link>
+				<guid isPermaLink="true">http://heinrichhartmann.com/blog/linux-monitoring-with-ebpf.html</guid>
+			</item>
+		
+			<item>
+				<title>Quality Time</title>
+				        
+				
+					<description>&lt;p&gt;It was thus said, that the great &lt;a href=&quot;https://twitter.com/postwait&quot;&gt;@poswait&lt;/a&gt; once &lt;a href=&quot;https://twitter.com/postwait/status/960987392424529922&quot;&gt;stated&lt;/a&gt;:&lt;/p&gt;
+
+</description>
+				
+				<pubDate>Fri, 23 Mar 2018 00:00:00 +0000</pubDate>
+				<link>http://heinrichhartmann.com/blog/quality-time.html</link>
+				<guid isPermaLink="true">http://heinrichhartmann.com/blog/quality-time.html</guid>
+			</item>
+		
+			<item>
+				<title>Dynamic Tracing with GDB</title>
+				        
+				
+					<description>&lt;p&gt;Dynamic tracing is a very powerful debuging technique, that allows you to observe the behavior of running programs in a deep and meaningful way.
+People who have worked with Solaris or FreeBSD know about &lt;a href=&quot;http://dtrace.org/guide/preface.html&quot;&gt;dtrace(1)&lt;/a&gt; and the great powers it gives you to dynamically observe the system behavior. 
+It’s one of the things you really miss on Linux, once you have gotten to know it.
+If you have not heard about dtrace check out this collection of &lt;a href=&quot;http://www.brendangregg.com/DTrace/dtrace_oneliners.txt&quot;&gt;one-liners&lt;/a&gt; to get an idea of it’s capabilities.&lt;/p&gt;
+
+</description>
+				
+				<pubDate>Sat, 17 Mar 2018 00:00:00 +0000</pubDate>
+				<link>http://heinrichhartmann.com/blog/dynamic-tracing-with-gdb.html</link>
+				<guid isPermaLink="true">http://heinrichhartmann.com/blog/dynamic-tracing-with-gdb.html</guid>
+			</item>
+		
+	</channel>
+</rss>

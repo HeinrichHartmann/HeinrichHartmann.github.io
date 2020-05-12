@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en-us">
+<head>
+   <meta http-equiv="content-type" content="text/html; charset=utf-8"/>
+   <title>Using The Google Drive Spreadsheet Api</title>
+   <meta name="author" content="Heinrich Hartmann"/>
+
+   <!-- syntax highlighting CSS -->
+   <link rel="stylesheet" href="/css/syntax.css" type="text/css"/>
+
+   <!-- Homepage CSS -->
+   <link rel="stylesheet" href="/css/screen.css" type="text/css" media="screen, projection"/>
+
+   <!-- RSS feed -->
+   <link rel="alternate" type="application/rss+xml" title="RSS" href="/feed.xml">
+
+   <!-- Favicon -->
+   <link rel="icon" type="image/png" href="/images/favicon.png">
+
+   
+   </head>
+<body>
+
+<div class="site">
+  <div class="headline"><a href="/">Heinrich Hartmann</a></div>
+  <div class="title">
+    <a class="extra" href="/">blog</a>
+    <a class="extra" href="/math.html">math</a>
+    <a class="extra" href="/opinion.html">opinion</a>
+    <a class="extra" href="/consulting.html">consulting</a>
+    <a class="extra" href="/about.html">about</a>
+    <div class="social" style='float:right'>
+      <!-- <div style='float:right'> -->
+      <!--   <a href="http://eepurl.com/ccmH-T"><img src="/images/mail_icon.svg" width="25px"/></a> -->
+      <!-- </div> -->
+      <div style='float:right'>
+        <a href="/feed.xml"><img src="/images/rss_icon.svg" width="25px" style="margin: 0 10px 0 0;"/></a>
+      </div>
+      <div style='float:right'>
+        <a href="http://twitter.com/intent/follow?screen_name=HeinrichHartman"><img src="/images/twitter_icon.svg" width="25px" style="margin: 0 10px 0 0;"></a>
+      </div>
+    </div>
+  </div>
+
+  <div id="post">
+
+  <!-- Title -->
+  <h1> Using The Google Drive Spreadsheet Api</h1>
+
+  
+
+  <!-- Meta -->
+  
+  <p class="meta">
+    Written on 2015-05-17
+    
+    
+  </p>
+
+  <!-- Include Mathjax if needed -->
+  
+
+  <!-- Splash -->
+  
+
+  <!-- Abstract -->
+  
+
+  <!-- Post content -->
+  <style> .center { margin-right: auto; margin-left:auto; display: block; max-width:600px } </style>
+
+<!--# Using the Google Spreadsheets Python API -->
+
+<p>Update 2015-11-29: The described authentification method has been
+<a href="https://developers.google.com/gdata/docs/auth/clientlogin">depredated</a>. Thx
+to m@ for pointing this out.</p>
+
+<p>In this note we will receive and send rows to a Google Spreadsheet.</p>
+
+<p><a href="https://www.google.com/sheets/about/">Google Spreadsheets</a> is a great
+tool to store all kinds of tables e.g. for expenses or contacts, in a
+human readable, editable and globally accessible form.  With the
+<a href="https://developers.google.com/drive/web/about-sdk">Google Drive API</a>
+it is possible to automate access to Google Spreadsheets and use these
+worksheets as little databases that can be modified from the command
+line.</p>
+
+<p>The API is even more powerfull and supports applications to access
+data from third party users (e.g. for a image manipulation tool). This
+power brings a lot of complexity, in particular to the
+authentification process, that makes the documentation hard to
+understand. This note walks you through a simple data access example,
+while avoiding a lot of this complexity.</p>
+
+<p>##Step 1: Install gdata Library</p>
+
+<p>We will be using the <a href="https://github.com/google/gdata-python-client/">gdata-python-client</a>.
+You can either install it from source or using a package manager, e.g. using</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$ pip install gdata
+</code></pre></div></div>
+
+<h2 id="step-2-get-an-application-specific-password">Step 2: Get an application specific password</h2>
+
+<p>We will need to access your Google Drive data but do not require to
+access data from third parties.  Therefore we don’t need 
+<a href="https://developers.google.com/identity/protocols/OAuth2">OAuth2</a>
+but can use application specific passwords:</p>
+
+<ol>
+  <li>
+    <p>Generate a password at <a href="https://security.google.com/settings/security/apppasswords">https://security.google.com/settings/security/apppasswords</a></p>
+  </li>
+  <li>
+    <p>Store it an a json file (do not check it into version control) e.g. using</p>
+
+    <div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$ cat &lt;&lt;EOF &gt; GoogleAppPw.json
+{
+   "email" : "&lt;put your email here&gt;",
+   "password" : "&lt;put generated password here&gt;"
+}
+EOF
+</code></pre></div>    </div>
+  </li>
+</ol>
+
+<p>We can read the password from a python script as follows:</p>
+
+<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="kn">import</span> <span class="nn">json</span>
+<span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s">"GoogleAppPw.json"</span><span class="p">)</span> <span class="k">as</span> <span class="n">fh</span><span class="p">:</span>
+    <span class="n">config</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">fh</span><span class="p">)</span>
+
+<span class="c"># Print the password on the screen</span>
+<span class="k">print</span> <span class="n">config</span><span class="p">[</span><span class="s">'password'</span><span class="p">]</span></code></pre></figure>
+
+<h2 id="step-3-access-google-sheets-api">Step 3: Access Google Sheets API</h2>
+
+<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="kn">import</span> <span class="nn">gdata.spreadsheet.service</span>
+
+<span class="c"># Create connection object</span>
+<span class="n">client</span> <span class="o">=</span> <span class="n">gdata</span><span class="o">.</span><span class="n">spreadsheet</span><span class="o">.</span><span class="n">service</span><span class="o">.</span><span class="n">SpreadsheetsService</span><span class="p">()</span>
+
+<span class="c"># Login using credentials</span>
+<span class="n">client</span><span class="o">.</span><span class="n">ClientLogin</span><span class="p">(</span><span class="n">config</span><span class="p">[</span><span class="s">'email'</span><span class="p">],</span> <span class="n">config</span><span class="p">[</span><span class="s">'password'</span><span class="p">])</span></code></pre></figure>
+
+<p>If the last command did not raise an error, you have successfully connected to the Google API.
+Let’s print all available spreadsheets:</p>
+
+<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="c"># List all spreadsheets</span>
+<span class="n">documents_feed</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="n">GetSpreadsheetsFeed</span><span class="p">()</span>
+<span class="k">for</span> <span class="n">document_entry</span> <span class="ow">in</span> <span class="n">documents_feed</span><span class="o">.</span><span class="n">entry</span><span class="p">:</span>
+    <span class="k">print</span> <span class="n">document_entry</span><span class="o">.</span><span class="n">title</span><span class="o">.</span><span class="n">text</span></code></pre></figure>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Expenses
+Untitled spreadsheet 1
+Untitled spreadsheet 2
+Untitled spreadsheet 3
+...
+</code></pre></div></div>
+
+<h2 id="step-4-select-the-right-spreadsheet">Step 4: Select the right Spreadsheet</h2>
+
+<p>First, we read the name of the spreadsheet and the worksheet we want to access into variables.
+I have added them to the config file to leave the code more generic, feel free to use
+string literals instead.</p>
+
+<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="n">spreadsheet_name</span> <span class="o">=</span> <span class="n">config</span><span class="p">[</span><span class="s">'spreadsheet'</span><span class="p">]</span>
+<span class="n">worksheet_name</span>   <span class="o">=</span> <span class="n">config</span><span class="p">[</span><span class="s">'worksheet'</span><span class="p">]</span></code></pre></figure>
+
+<p>Now we iterate through the document feed and select the spreadsheet entry with matching title:</p>
+
+<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="k">for</span> <span class="n">entry</span> <span class="ow">in</span> <span class="n">documents_feed</span><span class="o">.</span><span class="n">entry</span><span class="p">:</span>
+    <span class="k">if</span> <span class="n">entry</span><span class="o">.</span><span class="n">title</span><span class="o">.</span><span class="n">text</span> <span class="o">==</span> <span class="n">spreadsheet_name</span><span class="p">:</span>
+        <span class="n">spreadsheet_entry</span> <span class="o">=</span> <span class="n">entry</span>
+        <span class="k">break</span>
+<span class="k">else</span><span class="p">:</span> <span class="c"># no-break</span>
+    <span class="k">print</span> <span class="s">"Spreadsheet not found!"</span></code></pre></figure>
+
+<p>Unfortunately, there is no easy way to obtain a spreadsheet object,
+from the entry which we can query for cells. Instead, we have to
+manually extract the key field from the id (this is no
+joke. cf. <a href="https://github.com/google/gdata-python-client/blob/master/samples/spreadsheets/spreadsheetExample.py#L52">example</a>)
+and pass it back to the client library:</p>
+
+<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="n">spreadsheet_key</span> <span class="o">=</span> <span class="n">spreadsheet_entry</span><span class="o">.</span><span class="nb">id</span><span class="o">.</span><span class="n">text</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s">'/'</span><span class="p">)[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+<span class="n">worksheet_feed</span>  <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="n">GetWorksheetsFeed</span><span class="p">(</span><span class="n">spreadsheet_key</span><span class="p">)</span></code></pre></figure>
+
+<p>Now we can iterate over the worksheets in a similar way:</p>
+
+<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="k">for</span> <span class="n">entry</span> <span class="ow">in</span> <span class="n">worksheet_feed</span><span class="o">.</span><span class="n">entry</span><span class="p">:</span>
+    <span class="k">if</span> <span class="n">entry</span><span class="o">.</span><span class="n">title</span><span class="o">.</span><span class="n">text</span> <span class="o">==</span> <span class="n">worksheet_name</span><span class="p">:</span>
+        <span class="n">worksheet_entry</span> <span class="o">=</span> <span class="n">entry</span>
+        <span class="k">break</span>
+<span class="k">else</span><span class="p">:</span> <span class="c"># no-break</span>
+    <span class="k">print</span> <span class="s">"Worksheet not found!"</span>
+
+<span class="n">worksheet_key</span> <span class="o">=</span> <span class="n">worksheet_entry</span><span class="o">.</span><span class="nb">id</span><span class="o">.</span><span class="n">text</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s">'/'</span><span class="p">)[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span></code></pre></figure>
+
+<p>Now we have found the keys of the worksheet and spreadsheet.</p>
+
+<h2 id="step-5-list-rows-in-the-worksheet">Step 5: List rows in the Worksheet</h2>
+
+<p>We retrieve the rows of a worksheet as iterator of dictionaries.  For
+this to work, the spreadsheet has to comply to a format.  The first
+row (header) defines the key of the dictionary the following rows
+provide the subsequent values.</p>
+
+<p>Here is an example:</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>| date       | comment    | amount   | currency |
+| 2015-01-10 | Dinner     | 29.30    | EUR      |
+| 2015-01-10 | Taxi       | 12.00    | EUR      |
+</code></pre></div></div>
+
+<p>The worksheet can be accessed as follows:</p>
+
+<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="n">list_feed</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="n">GetListFeed</span><span class="p">(</span><span class="n">spreadsheet_key</span><span class="p">,</span> <span class="n">worksheet_key</span><span class="p">)</span>
+
+<span class="c"># Iterator that lists all rows as</span>
+<span class="k">def</span> <span class="nf">rows</span><span class="p">():</span>
+    <span class="k">for</span> <span class="n">entry</span> <span class="ow">in</span> <span class="n">list_feed</span><span class="o">.</span><span class="n">entry</span><span class="p">:</span>
+        <span class="k">yield</span> <span class="nb">dict</span><span class="p">(</span> <span class="p">(</span><span class="n">key</span><span class="p">,</span> <span class="n">entry</span><span class="o">.</span><span class="n">custom</span><span class="p">[</span><span class="n">key</span><span class="p">]</span><span class="o">.</span><span class="n">text</span><span class="p">)</span> <span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="n">entry</span><span class="o">.</span><span class="n">custom</span> <span class="p">)</span></code></pre></figure>
+
+<p>Now, we print out all rows in the sheet:</p>
+
+<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="k">print</span> <span class="n">rows</span><span class="p">()</span><span class="o">.</span><span class="nb">next</span><span class="p">()</span><span class="o">.</span><span class="n">keys</span><span class="p">()</span> <span class="c"># col names</span>
+<span class="k">print</span> <span class="s">"---"</span>
+<span class="k">for</span> <span class="n">row</span> <span class="ow">in</span> <span class="n">rows</span><span class="p">():</span>
+    <span class="k">print</span> <span class="n">row</span><span class="o">.</span><span class="n">values</span><span class="p">()</span> <span class="c"># row entries</span></code></pre></figure>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>['date', 'comment', 'amount', 'currency']
+---
+['2015-01-10', 'Dinner', '29.30', 'EUR']
+['2015-01-10', 'Taxi', '12.00', 'EUR']
+</code></pre></div></div>
+
+<h2 id="step-6-append-a-row-to-the-worksheet">Step 6: Append a row to the Worksheet</h2>
+
+<p>This is surprisingly straight forward.</p>
+
+<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="n">row</span> <span class="o">=</span> <span class="p">{</span><span class="s">'date'</span><span class="p">:</span><span class="s">'2015-05-15'</span><span class="p">,</span> <span class="s">'comment'</span><span class="p">:</span><span class="s">'Bus'</span><span class="p">,</span> <span class="s">'amount'</span><span class="p">:</span><span class="s">'10'</span><span class="p">,</span> <span class="s">'currency'</span><span class="p">:</span><span class="s">'EUR'</span><span class="p">}</span>
+
+<span class="n">result</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="n">InsertRow</span><span class="p">(</span><span class="n">row</span><span class="p">,</span> <span class="n">spreadsheet_key</span><span class="p">,</span> <span class="n">worksheet_key</span><span class="p">)</span>
+
+<span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">result</span><span class="p">,</span> <span class="n">gdata</span><span class="o">.</span><span class="n">spreadsheet</span><span class="o">.</span><span class="n">SpreadsheetsList</span><span class="p">):</span> <span class="k">print</span> <span class="s">"success"</span></code></pre></figure>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>success
+</code></pre></div></div>
+
+<h2 id="step7-wrapping-it-up-in-a-convenience-class">Step7: Wrapping it up in a convenience class</h2>
+
+<p>For future use we wrap the above functions in a few classes. 
+In the future I might add a few more methods to it. The current
+version can be found on <a href="https://gist.github.com/HeinrichHartmann/fedc3fd54314ac4cec41">GitHub</a>.</p>
+
+<script src="https://gist.github.com/HeinrichHartmann/fedc3fd54314ac4cec41.js"></script>
+
+
+
+  <br/>
+  <em>View the version history of this post on <a href="https://github.com/HeinrichHartmann/HeinrichHartmann.github.io/commits/source/_posts/2015-05-17-Using-the-Google-Drive-Spreadsheet-API.md">GitHub</a>.</em>
+  <br/>
+  <!-- Comments -->
+  
+    <em>Comments have been disabled until the dust around the GDPR settled.</em>
+    <!-- <div id="disqus_thread"></div> -->
+    <!-- <script type="text/javascript"> -->
+    <!--   /* * * CONFIGURATION VARIABLES * * */ -->
+    <!--   var disqus_shortname = 'heinrichhartmann'; -->
+    <!--   /* * * DON'T EDIT BELOW THIS LINE * * */ -->
+    <!--   (function() { -->
+    <!--   var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true; -->
+    <!--   dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js'; -->
+    <!--   (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq); -->
+    <!--   })(); -->
+    <!-- </script> -->
+    <!-- <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments</a></noscript> -->
+  
+
+</div>
+
+
+  <div class="footer">
+    <div class="contact">
+      <p>
+        Licensed under <a rel="license" href="http://creativecommons.org/licenses/by/4.0/">CC-BY 4.0.</a>
+        <span xmlns:dct="http://purl.org/dc/terms/" property="dct:title" style="display:none">This blog</span>
+        <span xmlns:cc="http://creativecommons.org/ns#" property="cc:attributionName" style="display:none">Heinrich Hartmann</span>
+      </p>
+    </div>
+  </div>
+</div>
+
+<!-- Google Analytics -->
+
+<!-- <script> -->
+<!--   (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){ -->
+<!--   (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o), -->
+<!--   m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m) -->
+<!--   })(window,document,'script','//www.google-analytics.com/analytics.js','ga'); -->
+
+<!--   ga('create', 'UA-53959000-1', 'auto'); -->
+<!--   ga('send', 'pageview'); -->
+<!-- </script> -->
+
+</body>
+</html>

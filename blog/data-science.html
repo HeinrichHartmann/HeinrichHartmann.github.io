@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en-us">
+<head>
+   <meta http-equiv="content-type" content="text/html; charset=utf-8"/>
+   <title>From Academia to Data Science</title>
+   <meta name="author" content="Heinrich Hartmann"/>
+
+   <!-- syntax highlighting CSS -->
+   <link rel="stylesheet" href="/css/syntax.css" type="text/css"/>
+
+   <!-- Homepage CSS -->
+   <link rel="stylesheet" href="/css/screen.css" type="text/css" media="screen, projection"/>
+
+   <!-- RSS feed -->
+   <link rel="alternate" type="application/rss+xml" title="RSS" href="/feed.xml">
+
+   <!-- Favicon -->
+   <link rel="icon" type="image/png" href="/images/favicon.png">
+
+   
+   </head>
+<body>
+
+<div class="site">
+  <div class="headline"><a href="/">Heinrich Hartmann</a></div>
+  <div class="title">
+    <a class="extra" href="/">blog</a>
+    <a class="extra" href="/math.html">math</a>
+    <a class="extra" href="/opinion.html">opinion</a>
+    <a class="extra" href="/consulting.html">consulting</a>
+    <a class="extra" href="/about.html">about</a>
+    <div class="social" style='float:right'>
+      <!-- <div style='float:right'> -->
+      <!--   <a href="http://eepurl.com/ccmH-T"><img src="/images/mail_icon.svg" width="25px"/></a> -->
+      <!-- </div> -->
+      <div style='float:right'>
+        <a href="/feed.xml"><img src="/images/rss_icon.svg" width="25px" style="margin: 0 10px 0 0;"/></a>
+      </div>
+      <div style='float:right'>
+        <a href="http://twitter.com/intent/follow?screen_name=HeinrichHartman"><img src="/images/twitter_icon.svg" width="25px" style="margin: 0 10px 0 0;"></a>
+      </div>
+    </div>
+  </div>
+
+  <div id="post">
+
+  <!-- Title -->
+  <h1> From Academia to Data Science</h1>
+
+  
+
+  <!-- Meta -->
+  
+  <div class="pdflink">
+    <a href="http://heinrichhartmann.com/pdf/Heinrich Hartmann - From Academia to Data Science (2018).pdf">[pdf]</a>
+  </div>
+  
+  <p class="meta">
+    Written on 2018-09-15
+     in Stemwede, Germany 
+    
+  </p>
+
+  <!-- Include Mathjax if needed -->
+  
+
+  <!-- Splash -->
+  
+
+  <!-- Abstract -->
+  
+
+  <!-- Post content -->
+  <p>Over the last years, many people have asked me:
+How do I enter Data Science?
+I don’t have a definite answer to this question, but having transitioned from an academic career in pure Mathematics to working as a Data Scientist, I have experiences that I can share.</p>
+
+<p>Before we dive in, let’s take a step back and clarify terminology.</p>
+
+<h2 id="what-is-data-science">What is Data Science?</h2>
+
+<p>Data Science is the realization that businesses needs advanced mathematics to make sense of their data.
+The analysis of balance sheets and order books does not involve that much mathematics.
+Nowadays, companies are gathering every bit of information they can get their hands on:
+User data, sensor data, market data, web datasets, etc.
+If you want to extract information from this kind of scattered, high volume data, you need to apply some more mathematics.
+This is what Data Science is all about: Extracting business value from data.</p>
+
+<h2 id="what-do-data-scientists-do">What do Data Scientists do?</h2>
+
+<p>The role description is still in flux, but typically the duties of a Data Scientist involve:</p>
+
+<ol>
+  <li>Find, explore, transform, normalize and curate datasets.</li>
+  <li>Develop machine learning models in Python/R.</li>
+  <li>Implement, debug and operate systems that run those models.</li>
+  <li>Talk about those models in documentation, blogs, seminars, conferences.</li>
+</ol>
+
+<p>In smaller companies a large chunk of your time will be spent on (3).
+Right now it takes up more than 80% of my time.
+In larger organizations, this figure will be much lower.
+In particular the operational burden might rest entirely upon another team.
+Nevertheless, getting your models operational is critical for the value you deliver to the company.
+A good understanding of what it takes to run code in production will help you to become more effective.</p>
+
+<h2 id="how-to-get-there">How to get there?</h2>
+
+<p><span class="hookin">1 </span> <strong>Trust in your Abilities.</strong>
+Seasoned academics bring a great skill-set to the table that computer science (CS) majors often do not have.
+This includes: A high tolerance for frustration. Ability to reason formally. No fear of equations.
+Grasp how a high-level description is reflected in formulas.
+The ability to manipulate mathematical models creatively.
+Incorporate new ideas and extend a given model.
+Communicate theory and results in written and oral form.
+Teach colleagues and peers.</p>
+
+<p>The CS majors I have worked with were not able to work with equations very well.
+Many are scared of matrices.
+Getting a firm grip on mathematical models is <em>really</em> hard for CS master students.
+Often times, machine learning papers are just impenetrable for them.</p>
+
+<p>So while CS majors do have an edge in programming, they also have to catch up with a whole set of equally valuable skills.
+It’s easy to forget how far you have already made it, when you are 2 years into your PhD.
+Don’t be afraid.</p>
+
+<p><span class="hookin">2 </span> <strong>Start with Simple Models.</strong>
+Make sure to cover the simple things first.
+Linear regression is a very powerful tool, that can solve a lot of problems on the spot.
+90% of your models you will write will only involve basic statistics and linear regressions.
+Don’t apply sophisticated machine learning algorithms before you tried a bunch of if statements.</p>
+
+<p>Also simple models can be surprisingly effective if trained on enough data.
+(Peter Norvig – The Unreasonable Effectiveness of Data,  <a href="https://static.googleusercontent.com/media/research.google.com/en//pubs/archive/35179.pdf">pdf</a>, <a href="https://www.youtube.com/watch?v=yvDCzhbjYWs">video</a>)</p>
+
+<p>Here is an anecdote I like to share in this context:</p>
+
+<blockquote>
+  <p>I was working on an activity recognition classifier that should be able to detect human activities like walking, running, sitting, etc. on the basis of sensor data collected on a mobile phone.
+My colleagues told me that PCA, SVMs and decision trees would be the way to go here.
+So I spent months, learning about these methods, collecting data, doing trials, etc.
+This all worked OK-ish but we were far away from the 99% accuracy claimed in the papers.
+And you could see that if just was not working all that well when you used it on your phone.</p>
+
+  <p>It was on a train ride, when I suddenly realized:
+Gosh!
+I could build something better by extracting a few simple features from accelerometer data and funnel that into a few if statements.
+It took me 30 minutes to write <a href="https://github.com/Institute-Web-Science-and-Technologies/LiveGovWP1/blob/master/server/HARTools/src/main/java/eu/liveandgov/wp1/classifier/ManualClassify.java">this little function</a> that outperformed everything we had done up to that point.</p>
+</blockquote>
+
+<p>The one thing I learned from this was:
+Before ever touching RapidMinder again, implement your baseline!</p>
+
+<p>Another take-away is:
+Get a firm grip on basic statistics, before learning about advanced machine learning models.</p>
+
+<p><span class="hookin">3 </span> <strong>Value Running Code.</strong>
+You will be measured by the value you create for the company.
+The models you built on csv files on your Laptop can be great and everything.
+If you can’t get them in front of customers, they are worthless to the company.</p>
+
+<p>Also, the customer will not care if your model is 99.9% accurate and uses $HOW_NEW_DL_FRAMEWORK and runs on $HOT_NEW_CLOUD_SERVICE.
+All he cares about is: Is the model available? Does it work good enough? Is it fast?
+It’s important to leave behind the academic mind set of p-values and accuracy, and focus on the customer needs.</p>
+
+<p>While Data Science takes largely place in languages like R and Python, the dominant languages met in production systems are Java, C/C++, PHP, JavaScript, Python.
+You will have to find a way to get your models into those environments.</p>
+
+<p>Fundamentally there are two ways how to do it:</p>
+
+<ol>
+  <li>
+    <p>Write your models in a language used in production.</p>
+  </li>
+  <li>
+    <p>Export your models from R/Python. Load them into your production environment.</p>
+  </li>
+</ol>
+
+<p>If you run Python in production, route one is particularly attractive.
+I have mostly worked with C based production systems, which have an embedded <a href="https://www.lua.org/">lua</a> scripting layer.
+So I implemented my models in lua.</p>
+
+<p>Route two is commonly taken in larger organizations, which have a team to run a data platform, and a separate team of Data Scientists who provide the models.
+Tools like <a href="https://deeplearning4j.org/">Deeplearning4j (Java)</a> allow you to import models trained in e.g. <a href="https://keras.io/">Keras (Python)</a> and deploy them on the JVM.</p>
+
+<p>Which route you take will depend on the environment you end up working for.
+In any case, it is your responsibility to make sure your models make it to production, and continue to provide value to the company.</p>
+
+<p><span class="hookin">4 </span> <strong>Avoid perfection.</strong>
+This might be the hardest lesson for an academic to take.
+The software industry had to learn that planning is extremely hard and error prone.
+<a href="https://en.wikipedia.org/wiki/Agile_software_development#The_Agile_Manifesto">Agile Software Development</a> and the <a href="https://en.wikipedia.org/wiki/DevOps">DevOps Movement</a>
+are the reactions of the community to <a href="https://en.wikipedia.org/wiki/List_of_failed_and_overbudget_custom_software_projects">epic failures</a> of many large software projects.
+Instead of writing down requirements and estimating engineering effort, the most effective way to provide value is:</p>
+
+<p>Release early. Release Often. Learn from your mistakes.</p>
+
+<p>For Data Science applications this means:</p>
+
+<ol>
+  <li>Once your model is barely usable, get it in front of users.</li>
+  <li>Evaluate (measure) it’s usefulness in practice.</li>
+  <li>Refine your model.</li>
+  <li>Iterate. Quickly.</li>
+</ol>
+
+<p>It’s much more important to be able to iterate quickly, than to have a 99%-accurate model to start with.
+But iterating quickly is not easy.
+There are a lot of delicate steps involved in getting a new model rolled out into a production environment.
+Make sure to understand the steps involved, and automate them as far as possible.
+Leading companies have fully automated deployment pipelines, that allow them to update (and revert) production code within minutes.</p>
+
+<p><span class="hookin">5 </span> <strong>Take programming seriously.</strong>
+A large part of the day to day work of a Data Scientist, consists of writing code.
+In many circumstances you are effectively a Software Engineer with broad Statistical know-how.
+This means, you should treat programming as a profession.</p>
+
+<p>The good news is: It’s not all that hard.
+If you made it through grad school in pure maths, you are more than smart enough to become a decent programmer.
+After all, a proof is very similar to a program.</p>
+
+<p>The bad news is: It’s a huge mess.
+Approaching programming from first principles (Turing Machines, Lambda Calculus) is a rabbit hole with no end.
+In practice you will have to deal with large piles of undocumented code, that surfaces subtle bugs in the worst possible moments.</p>
+
+<p>The only thing that really helps is exercise.
+Read code.
+Write code.
+Ship code … and watch it burn.
+Debug code.
+Learn from your mistakes.
+You will eventually get better.</p>
+
+<p><span class="hookin">6 </span> <strong>Just get started.</strong>
+Finding an attractive Data Science position with a decent company and a high salary is not easy.
+Job descriptions usually require industry experience, and list a large number of technologies you should be an expert in.
+While you might actually be a good match for those positions (at least after a few months of training), it will be very hard to get such a position if you don’t fulfill the requirements.</p>
+
+<p>To understand the problem one must realize that hiring in the Data Science space is extremely difficult for companies.
+There are tons of young engineers from all over the world, who can do some Python coding and have worked through some TensorFlow tutorials, which apply for Data Science positions.
+Often times, these people can produce certificates and the best grades from schools or universities, yet in practice they are not able to do much.
+Tool-knowledge does not take you very far if you lack basic understanding of what they are doing.</p>
+
+<p>The best strategy that I have encountered, is to just start somewhere.
+Take any job that roughly matches your interest, and will let you develop your skill-set.
+Software engineering roles are a great start if you have some programming experience already.
+Compared to the average CS major, you should have no problems to catch up quickly and exceed expectations.</p>
+
+<p>Once you got some industry experience on your CV and earned some “street cred”, your next job search will be much easier.</p>
+
+<p><span class="hookin">7 </span> <strong>Engage with the community.</strong>
+Get in touch with other people who work in Data Science.
+Talking to other people makes learning much easier and is a great source of inspiration for things to try out.
+In addition, reputation and a network gained from these interactions will allow you to find interesting positions.</p>
+
+<p>Read blogs.
+Leave comments.
+Ask questions.
+Take some online courses.
+Watch out for Meetups or Data Science conferences in cities near you.
+Start a side project that is of personal interest and talk about it at a Meetup.
+Write blog posts about things that you learn or find interesting.
+Teach other people what you have learned.
+Contribute to open source projects.
+There are many ways to get in touch!</p>
+
+<h2 id="conclusion">Conclusion</h2>
+
+<p>In my opinion Data Science presents an attractive opportunity for academics in the STEM fields.
+Thorough mathematical education and fearless manipulation of statistical models are essential skills that most CS majors are lacking.</p>
+
+<p>The biggest huddle to jump is to close the gap in programming skills.
+Here only practice will help.
+Once that step is taken, the door is open for many very attractive positions in an industry which is craving for analytical talent.</p>
+
+<h2 id="acknowledgements">Acknowledgements</h2>
+
+<p>Thanks to <a href="https://twitter.com/quasicoherence">Kevin Lin</a>, <a href="https://twitter.com/maxpumperla">Max Pumperla</a> and <a href="https://twitter.com/thiagoavadore">Thiago de Faria</a> for inspiration and feedback to earlier versions of this writeup.</p>
+
+
+  <br/>
+  <em>View the version history of this post on <a href="https://github.com/HeinrichHartmann/HeinrichHartmann.github.io/commits/source/_posts/2018-09-04-From-Academia-to-Data-Science.md">GitHub</a>.</em>
+  <br/>
+  <!-- Comments -->
+  
+    <em>Comments have been disabled until the dust around the GDPR settled.</em>
+    <!-- <div id="disqus_thread"></div> -->
+    <!-- <script type="text/javascript"> -->
+    <!--   /* * * CONFIGURATION VARIABLES * * */ -->
+    <!--   var disqus_shortname = 'heinrichhartmann'; -->
+    <!--   /* * * DON'T EDIT BELOW THIS LINE * * */ -->
+    <!--   (function() { -->
+    <!--   var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true; -->
+    <!--   dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js'; -->
+    <!--   (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq); -->
+    <!--   })(); -->
+    <!-- </script> -->
+    <!-- <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments</a></noscript> -->
+  
+
+</div>
+
+
+  <div class="footer">
+    <div class="contact">
+      <p>
+        Licensed under <a rel="license" href="http://creativecommons.org/licenses/by/4.0/">CC-BY 4.0.</a>
+        <span xmlns:dct="http://purl.org/dc/terms/" property="dct:title" style="display:none">This blog</span>
+        <span xmlns:cc="http://creativecommons.org/ns#" property="cc:attributionName" style="display:none">Heinrich Hartmann</span>
+      </p>
+    </div>
+  </div>
+</div>
+
+<!-- Google Analytics -->
+
+<!-- <script> -->
+<!--   (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){ -->
+<!--   (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o), -->
+<!--   m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m) -->
+<!--   })(window,document,'script','//www.google-analytics.com/analytics.js','ga'); -->
+
+<!--   ga('create', 'UA-53959000-1', 'auto'); -->
+<!--   ga('send', 'pageview'); -->
+<!-- </script> -->
+
+</body>
+</html>

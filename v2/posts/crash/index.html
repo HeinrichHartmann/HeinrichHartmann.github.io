@@ -1,0 +1,354 @@
+<!DOCTYPE html>
+<html lang="en-us">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title>Better Crash Reporting</title>
+	
+	
+  <link rel="stylesheet" href="../../../v2/css/base.css">
+  <link rel="stylesheet" href="../../../v2/css/syntax.css">
+  <link rel="stylesheet" href="../../../v2/css/markdown.css">
+  
+  
+	
+   <link rel="canonical" href="circonus.com/blog"/>   
+</head>
+<body>
+	<header>
+	<a href="../../../">HeinrichHartmann.com</a>
+</header>
+
+	
+  <main class="markdown-container">
+		<article class="markdown-body">
+			<h1>Better Crash Reporting</h1>
+      <p class="meta">
+        Written on 2020-05-12
+         in Stemwede 
+         for the <a href="circonus.com/blog">Circonus blog</a>. 
+      </p>
+			<div>
+				<p>Crash events are one of the more serious events that can happen when operating a service.  Usually
+it&rsquo;s crashing components that cause cascading failures and service outages.  It&rsquo;s critical to have
+good visibility into those events, since they can cause major damage and should be avoided.</p>
+<p>Unfortunately, debugging crashes is one of the more complicated endeavors.  The state of a crash
+process is usually compromised and the process can&rsquo;t be trusted to collect debugging information on
+it&rsquo;s own.</p>
+<p>In this post, we list a few desirable properties that we want crash reporting to have in order to
+enable and simplify effective debugging.  Afterwards we are going to report on some progress we have
+made towards this goal, with our Circonus internal C/lua-based components.
+The discussed work is available as part of the open-source library <a href="https://github.com/circonus-labs/libmtev/">libmtev</a>.</p>
+<h2 id="crash-reporting-wishlist">Crash Reporting Wishlist</h2>
+<p>In case of a crash key questions to answer are:</p>
+<ul>
+<li>
+<p>What state was the process at the crash event?</p>
+</li>
+<li>
+<p>What are the events that lead to this error?</p>
+</li>
+</ul>
+<p>Of course, we could answer those questions by taking a full core-dump together with a tar&rsquo;ed-up log
+directory, and call it a day. The only downside is, that your crash-handler will take hours to run,
+and leave the operator with the overwhelming task to make sense of GB&rsquo;s worth of unstructured data.</p>
+<p>The core balance to strike when implementing effective crash reporting is between the breath of
+information to capture and the size of the crash report. We have to be selective with the
+information we capture, to allow the crash handler to finish it&rsquo;s work within seconds. The
+crash-report should be no-larger than a few MB and presented it in a way that is useful to
+operators.</p>
+<p>A good crash report should contain the following bits of information:</p>
+<p><strong>Meta Information</strong></p>
+<ol start="0">
+<li>
+<p>Meta information like time, host, service, etc. that the crash occurred (&ldquo;tags&rdquo;).</p>
+</li>
+<li>
+<p>Meta information about the exact version of the loaded executables and libraries.</p>
+</li>
+</ol>
+<p><strong>State Information</strong></p>
+<ol start="2">
+<li>
+<p>The stacktrace of all active threads/coroutines in the process.  Or when using event loops: The
+list of pending events on each queue.</p>
+</li>
+<li>
+<p>The values of all local variables on active stack-frames.  When those variables are pointing to
+structs/objects we want to have the stored attribute values of those objects as well - up to a
+sensible recursion depth.</p>
+</li>
+<li>
+<p>The list of all active work units
+(requests/transactions/<a href="https://github.com/opentracing/specification/blob/master/specification.md">spans</a>)
+that the process was executing at the time of the request.</p>
+</li>
+</ol>
+<p><strong>Context Information</strong></p>
+<ol start="5">
+<li>
+<p>Recent memory, CPU, disk and network utilization.</p>
+</li>
+<li>
+<p>A list of recent completed units of work, e.g. output of <code>tail accesslog</code>.</p>
+</li>
+</ol>
+<h3 id="common-pitfall-logging">Common Pitfall: Logging</h3>
+<p>There is a common pitfall, when trying to extract crash information from logs:
+Logs are only written when request are completed.
+Otherwise you won&rsquo;t have information about http return code, payload length or request duration.</p>
+<p>So, if you crash during a request is being serviced, you will not have log line for this very
+request being written out.
+Here is a public example, of this exact problem:</p>
+<blockquote class="twitter-tweet"><p lang="en" dir="ltr">None of Honeycomb&#39;s traces showed this because the traces in flight were destroyed by the OOM and never transmitted to metamonitoring. The black box monitor of AWS ALB logs did tell us we had a problem, but we misinterpreted the signs.<br><br>Another retrospect graph of the stampede: <a href="https://t.co/pQL5f3KCiS">pic.twitter.com/pQL5f3KCiS</a></p>&mdash; Liz Fong-Jones (方禮真) (@lizthegrey) <a href="https://twitter.com/lizthegrey/status/1192178908982104067?ref_src=twsrc%5Etfw">November 6, 2019</a></blockquote>
+<script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+
+<p>More discussion: <a href="https://twitter.com/heinrichhartman/status/1192594701658075136">here</a>.</p>
+<p>It&rsquo;s for this reason that whish &ldquo;#4 - List of active work units&rdquo; is non-trivial to attain.</p>
+<h3 id="in-process-vs-out-of-process-crash-handling">In-Process vs. Out-of-Process crash handling</h3>
+<blockquote>
+<p>In-Process crash handling is like trying to rescue paper-work from a burning building.
+Out-of-Process crash handling is the forensic work that you carry out on a closed-off crime-scene
+the next day.</p>
+</blockquote>
+<p>In some crash situations the application is able to execute an exception handler before going down.
+This is the case for usual exception handling, as well as for signals like SIGABRT, SIGSEV, SIGTERM
+that can be hooked with a signal handler.</p>
+<p>The application can then try to collect some debugging information on it&rsquo;s own behalf. But there
+are some difficulties that make that task hard:</p>
+<ol>
+<li>
+<p>Signal handlers are called asynchronously. So the process state might be temporary inconsistent:
+Variables might be partially updated. We might be the middle of a malloc or printf operation.</p>
+</li>
+<li>
+<p>The process state might be corrupted. E.g. buffer overflow. Use after free.</p>
+</li>
+</ol>
+<p>So calling any function that is not
+<a href="http://man7.org/linux/man-pages/man7/signal-safety.7.html">async-safe</a> and
+<a href="https://en.wikipedia.org/wiki/Reentrancy_(computing)">reentrant</a> is problematic, if you want to
+avoid messing up the process state even more or crashing within the crash handler (yikes!).</p>
+<p>Out-of-process crash handling looks at a stopped process or a core-dump and treats it as a gigantic
+byte array, together with a few bytes of register state.  From there, it tries to figure out what
+was going on, by poking at the memory contents.</p>
+<p>The good thing about this approach is, that it is always available and much safer.  You can&rsquo;t
+corrupt the state any further.  You are not running insight the restraint environment of a signal
+handler.  Also, you have additional flexibility as an operator, since you need the application
+itself to come with the right crash handling code.</p>
+<p>The downside, of course is, that you have to understand the exact memory contents of your application.
+This quite doable with low-level languages like C, but get&rsquo;s much harder with interpreted languages
+like Java, Python or lua.
+For an example on how this might look like see
+<a href="https://www.youtube.com/watch?v=5TFILa4ju9U">Cantrill,Pacheco - Dynamic Languages in Production (GoTo 2012)</a>,
+which talks about the same problem, in the context of dynamic tracing.</p>
+<h2 id="crash-reporting-at-circonus">Crash Reporting at Circonus</h2>
+<p>In the last months we made took a few step towards our goal of better crash reporting, in our
+open-source application framework <a href="https://github.com/circonus-labs/libmtev/">libmtev</a> that
+underpins most of the Circonus components.</p>
+<h3 id="watchdog-supervision">Watchdog supervision</h3>
+<p>The first piece in the puzzle is the mtev watchdog process. Mtev applications run under the
+supervision of a parent process called &ldquo;watchdog&rdquo;, that coordinates in-process and out-of-process
+crash handling.</p>
+<p>To do so, the chold process registers signal handlers for common crash signals.  From the signal
+handler (<code>emancipate</code>) stop&rsquo;s itself (using <code>SIGSTOP</code>), which in-turn notifies the watchdog process
+to trigger out-of-process crash reporting routines. Afterwards the child process is continued and
+free to perform in-process crash handling and cleanup work (write logs, capture stacktraces) by
+itself.</p>
+<p>Here is a simplified interaction diagram from <a href="https://github.com/circonus-labs/libmtev/blob/master/src/utils/mtev_watchdog.c">src</a>:</p>
+<pre><code>  /-----------------/                                    /-----------------------/
+  /  Child running  /                                    / parent (watchdog)     /
+  /-----------------/                                    / waiting               /
+         |                                               /-----------------------/
+         |                                                     |
+       (crash SIGSEGV/SIGABRT/SIGILL/...)                      |
+         |                                                     |
+  /--------------------------------------------------/         |
+  /   `emancipate`                                   /         |
+  /  Child annotates shared memory CRASHED indicator / ---(notices crash: SIGCLD)
+  /  Child SIGSTOPs itself.                          /         |
+  /--------------------------------------------------/         |
+         |                                                     |
+         |                                               /-------------------------------------------/
+         |                                               /  Parent runs out-of-process crash handler /
+         |&lt;----(wakeup: SIGCONT) ------------------------/  Send SIGCONT to child.                   /
+         |                                               /-------------------------------------------/
+         |                                                     |
+  /------------------/                                         |
+  /  Log stacktrace  /                                         |
+  /  notify parent   /--------(notify parent via shread-mem)--&gt;|
+  /------------------/                                         |
+         |                                               /-------------------------/
+  /-------------------------------------/                / spawn new child process /
+  / Child runs In-Process crash handler /                /-------------------------/
+  / Child reraises signal               /
+  /-------------------------------------/
+         |
+     (terminated)
+</code></pre><h3 id="plain-stack-traces">Plain Stack Traces</h3>
+<p>Stack traces are the most common artifact that is salvaged from a crash.
+It&rsquo;s possible to generate stack traces from inside inside the process (via
+<code>backtrace(3)</code>/<a href="http://www.nongnu.org/libunwind/">libunwind</a>), but it can also be extracted from a
+stopped process or a coredump (via gdb/pstack).</p>
+<p>Here is an example of an in-process stack-trace:</p>
+<pre><code>[ 00 ] ld-2.17.so              _dl_fixup
+[ 01 ] ld-2.17.so              _dl_runtime_resolve_xsave
+[ 02 ] libunwind.so.8.0.1      _ULx86_64_init
+[ 03 ] libunwind.so.8.0.1      unw_init_local_common
+[ 04 ] libunwind.so.8.0.1      _ULx86_64_init_local
+[ 05 ] libmtev.so.1.10.4       mtev_backtrace_ucontext                 ( mtev_stacktrace.c:956 )
+[ 06 ] libmtev.so.1.10.4       mtev_stacktrace_ucontext_skip           ( mtev_stacktrace.c:994 )
+[ 07 ] libmtev.so.1.10.4       emancipate                              ( mtev_watchdog.c:627 )
+[ 08 ] libpthread-2.17.so
+[ 09 ] libc-2.17.so            __GI_raise
+[ 10 ] libc-2.17.so            __GI_abort
+[ 11 ] libluajit-5.1.so.2.1.0  lj_vm_ffi_call                          ( lj_clib.c:38 )
+[ 12 ] libluajit-5.1.so.2.1.0  lj_ccall_func                           ( lj_ccall.c:1161 )
+[ 13 ] libluajit-5.1.so.2.1.0  lj_cf_ffi_meta___call                   ( lib_ffi.c:230 )
+[ 14 ] libluajit-5.1.so.2.1.0  lj_BC_FUNCC                             ( lj_clib.c:38 )
+[ 15 ] lua_mtev.so             mtev_lua_resume                         ( lua.c:296 )
+[ 16 ] lua_mtev.so             lua_web_resume                          ( lua_web.c:141 )
+[ 17 ] lua_mtev.so             mtev_lua_lmc_resume                     ( lua.c:338 )
+[ 18 ] lua_mtev.so             lua_web_handler                         ( lua_web.c:264 )
+[ 19 ] libmtev.so.1.10.4       mtev_rest_request_http2_dispatcher      ( mtev_rest.c:816 )
+[ 20 ] libmtev.so.1.10.4       mtev_http2_resume_all_unpaused_streams  ( mtev_http2.c:1139 )
+[ 21 ] libmtev.so.1.10.4       mtev_http2_session_drive                ( mtev_http2.c:1199 )
+[ 22 ] libmtev.so.1.10.4       mtev_http2_rest_raw_handler             ( mtev_rest.c:1012 )
+[ 23 ] libmtev.so.1.10.4       eventer_run_callback                    ( eventer_impl.c:1417 )
+[ 24 ] libmtev.so.1.10.4       eventer_epoll_impl_trigger              ( eventer_epoll_impl.c:375 )
+[ 25 ] libmtev.so.1.10.4       eventer_epoll_impl_loop                 ( eventer_epoll_impl.c:536 )
+[ 26 ] libmtev.so.1.10.4       thrloopwrap                             ( eventer_impl.c:716 )
+[ 27 ] libpthread-2.17.so      start_thread
+</code></pre><p>There are a few things to note:</p>
+<ol>
+<li>
+<p>We are seeing the signal handler <code>emancipate</code> from mtev_watchdog.c on the stack, since this is
+the place where the stack-trace is taken.</p>
+</li>
+<li>
+<p>We a few frames from <code>libluajit_*</code> on the stacks, which indicates, that we have been running some
+lua code during the crash. Unfortunately, we don&rsquo;t know much about what we where doing inside of
+lua.</p>
+</li>
+</ol>
+<p>We will see how to improve on both of these aspects below.</p>
+<h3 id="full-stacktraces-with-ptracebacktraceio">Full Stacktraces with ptrace/backtrace.io</h3>
+<p>We use the ptrace tool provided by
+<a href="https://help.backtrace.io/en/articles/1717329-snapshots">backtrace.io</a> for out-of-process crash
+reporting.  The stack-traces extracted by this tool include the values of local variables (fully
+symbolized), thereby realizing #2 #3 from our list (at least for parts of the system written in C).</p>
+<p><img src="../../../v2/images/stacktrace-full.png" alt="Full Stacktrace"></p>
+<p>Backtrace reports can further be annotated with meta information about the environment and versions
+in the form of key-value tags, which allows us to realize #0 and #1.</p>
+<h2 id="lua-native-stack-traces">Lua-native Stack Traces</h2>
+<p>When running interpreted languages like lua, the C stack traces shown above will not be very helpful.
+The only information they provide is essentially: &ldquo;You have been running lua code&rdquo; &ndash; Well. Thanks very much.
+The stack we are interested in, is the stack of the interpreted language: lua in that case.</p>
+<p>batcktrace.io provides native stack-traces out of the box for a number of run-times including Python, Java, NodeJs.
+Unfortunately, lua (luajit) is not supported, so we had to cook-up something our own.</p>
+<p>Ideally we would like to have an out-of-process tracer for lua.  A promising approach is provided by
+<a href="https://github.com/openresty/openresty-gdb-utils#lbt">OpenResty/gdb-tools</a>, however, it breaks down
+for us since it&rsquo;s <em>much</em> to slow for us to use it.</p>
+<p>The version we <a href="https://github.com/circonus-labs/libmtev/commit/b33a530964066bf7266b3ebdbf7f3115e9f01537">currently use</a> uses
+in-process debugging, and just calls the <code>lua_getstack</code> from the signal handler: 🤞.
+When it works it looks like this:</p>
+<pre><code>STACKTRACE(23835):
+&gt; /lib64/libc.so.6'gsignal+0x37[0x36387]
+&gt; /lib64/libc.so.6'abort+0x148[0x37a78]
+&gt; /opt/circonus/lib/libluajit-5.1.so.2'lj_vm_ffi_call+0x84[0xccb6]
+&gt; -- mtev lua runtime stacktrace --
+&gt; stack traceback:
+&gt;        [C]: in function 'abort'
+&gt;        [string &quot;return function(http)...&quot;]:16: in function &lt;[string &quot;return function(http)...&quot;]:14&gt;
+&gt;        [C]: in function 'xpcall'
+&gt;        /opt/noit/prod/share/lua/support/rest_utils.lua:74: in function 'handle_request'
+&gt;        [string &quot;return function(http)...&quot;]:19: in function 'f'
+&gt;        /opt/noit/prod/libexec/noit/lua/web.lua:87: in function 'serve'
+&gt;        /opt/noit/prod/libexec/noit/lua/web.lua:124: in function 'serve'
+&gt;        /opt/noit/prod/libexec/noit/lua/web.lua:155: in function &lt;/opt/noit/prod/libexec/noit/lua/web.lua:127&gt;
+&gt; /opt/circonus/lib/libluajit-5.1.so.2'lj_ccall_func+0x35b[0x4df8b]
+&gt; /opt/circonus/lib/libluajit-5.1.so.2'lj_cf_ffi_meta___call+0x37[0x62527]
+&gt; /opt/circonus/lib/libluajit-5.1.so.2'lj_BC_FUNCC+0x1c85[0xa895]
+&gt; /opt/circonus/libexec/mtev/lua_mtev.so'mtev_lua_resume+0x16e[0x812e]
+&gt; /opt/circonus/libexec/mtev/lua_mtev.so'lua_web_resume+0x48[0xabe8]
+&gt; /opt/circonus/libexec/mtev/lua_mtev.so'mtev_lua_lmc_resume+0x3c[0x855c]
+&gt; /opt/circonus/libexec/mtev/lua_mtev.so'lua_web_handler+0x506[0xbb06]
+&gt; /opt/circonus/lib/libmtev.so.1'mtev_rest_request_dispatcher+0x5d[0x5c55d]
+&gt; /opt/circonus/lib/libmtev.so.1'mtev_http1_session_drive+0x6d7[0x76a57]
+&gt; /opt/circonus/lib/libmtev.so.1'mtev_http_rest_handler+0x75[0x5ae45]
+&gt; /opt/circonus/lib/libmtev.so.1'mtev_control_dispatch+0x2c1[0x3ef71]
+&gt; /opt/circonus/lib/libmtev.so.1'eventer_run_callback+0xd9[0x9bf59]
+&gt; /opt/circonus/lib/libmtev.so.1'0xa0e7a
+&gt; /opt/circonus/lib/libmtev.so.1'0xa1e08
+&gt; /opt/circonus/lib/libmtev.so.1'0x9ae79
+&gt; /lib64/libpthread.so.0'start_thread+0xc5[0x7ea5]
+&gt; /lib64/libc.so.6'clone+0x34[0xfe8dd]
+&gt;
+</code></pre><p>When it fails you get a SIGSEGV from inside the signal handler.</p>
+<h2 id="salvaging-active-http-requests">Salvaging Active HTTP Requests</h2>
+<p>The most interesting unit of work in most applications are HTTP requests.  Due it&rsquo;s async
+concurrency model, active requests do not always manifest itself as as stack frames. The request
+might have desintetraged into dozens of micro-tasks that are executed in different even loops,
+waiting to be re-assembled upon completion.  This makes reconstructing active HTTP
+requests from local variable state impractical.</p>
+<p>There are two effective means to salvage active HTTP requests from a crashed mtev app:</p>
+<ol>
+<li>
+<p>Leveraging the DistributedTracing/Zipkin information</p>
+</li>
+<li>
+<p>Using the HTTP observer module</p>
+</li>
+</ol>
+<p>Leveraging tracing data (1) is fundamentally more powerful approach since it is not tied to HTTP
+requests, and applies more generally to application instrumented with tracing technology
+(cf. <a href="https://opentracing.io/">OpenTracing</a>).  Libmtev comes with a Zipkin module, that annotates
+HTTP requests with spans, which could be leveraged for the task at hand. However, we would need to
+not keep a global register of all active spans, that could be poked by a tracer to make this work.
+For performance reasons we want to avoid doing so for the time being.</p>
+<p>For the case of HTTP requests, libmtev already comes with a global register of active spans as part
+of the HTTP observer module (2), which allows the operator to view active and recent HTTP requests
+from within the admin web-console.</p>
+<!-- raw HTML omitted -->
+<p>The list of active HTTP requests can be extracted by an out-of-process tracer by inspecting this
+<a href="https://github.com/circonus-labs/libmtev/blob/master/src/modules/http_observer.c#L47">static hash table</a>.</p>
+<p>We had to do a little bit of extra work to extract the hash content, since mtev&rsquo;s hash tables
+perform some pointer abuse and use the highly performant but badly symbolized <a href="https://github.com/concurrencykit/ck">libck</a>.
+To extract the content, extended ptrace with <a href="https://github.com/circonus-labs/libmtev/blob/master/src/backtrace-support/mtev-hash-module.lua">a module</a>
+that knows how to performs the pointer arithmetic to extract keys and values from the mtev hash.</p>
+<p>The result is a list of active HTTP requests that get&rsquo;s attached to each crash report:</p>
+<!-- raw HTML omitted -->
+<h2 id="conclusion">Conclusion</h2>
+<p>We find that crash reporting is an under-appreciated art form.
+When done right, it can speed up the debugging process for production incidents dramatically,
+and lead to a more methodical approach to isolating root-causes.</p>
+<blockquote>
+<p>It allows you to be less of a fire fighter and more of a police detective.</p>
+</blockquote>
+<p>In this article we outlined a vision on how we would like effective crash reporting tooling to look
+like, and explained some of the steps we have taken in this direction.</p>
+<p>By leveraging tooling provided by backtrace.io we were able to get close to our visibility goals
+into crash events. In particular for native C applications the ability to inspect the state of the
+crashed application is well developed.
+We see room for improvement when it comes to:</p>
+<ol>
+<li>
+<p>Extracting stack traces and variable state from interpreted languages (lua, Python, Java)</p>
+</li>
+<li>
+<p>Leveraging tracing data to annotate crash reports with active spans.</p>
+</li>
+</ol>
+<p>We hope to see progress on this in the future!</p>
+
+			</div>
+		</article>
+	</main>
+
+	<footer>
+	<p>&copy; 2020 <a href="">HeinrichHartmann.com</a></p>
+</footer>
+
+</body>
+</html>

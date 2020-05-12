@@ -1,0 +1,56 @@
+==================================================================
+https://keybase.io/hartmann
+--------------------------------------------------------------------
+
+I hereby claim:
+
+  * I am an admin of http://heinrichhartmann.com
+  * I am hartmann (https://keybase.io/hartmann) on keybase.
+  * I have a public key ASADQm4Cys6zXNQQjsHsuEk7xwjRTWF7VSrdUI2kRjrcuQo
+
+To do so, I am signing this object:
+
+{
+  "body": {
+    "key": {
+      "eldest_kid": "012003426e02caceb35cd4108ec1ecb8493bc708d14d617b552add508da4463adcb90a",
+      "host": "keybase.io",
+      "kid": "012003426e02caceb35cd4108ec1ecb8493bc708d14d617b552add508da4463adcb90a",
+      "uid": "f5b6ca6bc3753ce8e93b377a6f05cd19",
+      "username": "hartmann"
+    },
+    "merkle_root": {
+      "ctime": 1544476967,
+      "hash": "4cc5181de82fc27fb77593f820c4a8f2579615d091eda2fb98e66665db20c3866278fa24d1ed217743b60764989f839ae9434a548c8b97a819d1a1b22b760c52",
+      "hash_meta": "421efb54c689d175560258b86de7280ec6fa9ab63608297a33123626d01ec194",
+      "seqno": 4087381
+    },
+    "service": {
+      "entropy": "zQn5nFFUgOrAdPC+i7aqhMs5",
+      "hostname": "heinrichhartmann.com",
+      "protocol": "http:"
+    },
+    "type": "web_service_binding",
+    "version": 2
+  },
+  "client": {
+    "name": "keybase.io go client",
+    "version": "2.11.0"
+  },
+  "ctime": 1544476990,
+  "expire_in": 504576000,
+  "prev": "1e617c09a366945eea8ab6c92a4c766cbf053a440a789a4ad7fb600af6626b6c",
+  "seqno": 7,
+  "tag": "signature"
+}
+
+which yields the signature:
+
+hKRib2R5hqhkZXRhY2hlZMOpaGFzaF90eXBlCqNrZXnEIwEgA0JuAsrOs1zUEI7B7LhJO8cI0U1he1Uq3VCNpEY63LkKp3BheWxvYWTESpcCB8QgHmF8CaNmlF7qirbJKkx2bL8FOkQKeJpK1/tgCvZia2zEIN3EX+PhMssKnu+YXFk4rinav48je+4rq3Pc4+pD89otAgHCo3NpZ8RAJ5odsIaK03XbqkO9cUqWHmhXDoHmBRHhtF5yFzHBwCoeAzDhaB3mauXdtYa4ipnyuTt4lThHOJ9T1jViBVaXB6hzaWdfdHlwZSCkaGFzaIKkdHlwZQildmFsdWXEIKnqemfjbJ6QOyA+Ql0q2J5RHoEp/+vgOc3VAwWL8AHqo3RhZ80CAqd2ZXJzaW9uAQ==
+
+And finally, I am proving ownership of this host by posting or
+appending to this document.
+
+View my publicly-auditable identity here: https://keybase.io/hartmann
+
+==================================================================

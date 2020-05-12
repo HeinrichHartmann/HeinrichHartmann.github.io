@@ -1,0 +1,400 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en-us">
+<head>
+   <meta http-equiv="content-type" content="text/html; charset=utf-8"/>
+   <title>Monitoring Dropbox</title>
+   <meta name="author" content="Heinrich Hartmann"/>
+
+   <!-- syntax highlighting CSS -->
+   <link rel="stylesheet" href="/css/syntax.css" type="text/css"/>
+
+   <!-- Homepage CSS -->
+   <link rel="stylesheet" href="/css/screen.css" type="text/css" media="screen, projection"/>
+
+   <!-- RSS feed -->
+   <link rel="alternate" type="application/rss+xml" title="RSS" href="/feed.xml">
+
+   <!-- Favicon -->
+   <link rel="icon" type="image/png" href="/images/favicon.png">
+
+   
+   </head>
+<body>
+
+<div class="site">
+  <div class="headline"><a href="/">Heinrich Hartmann</a></div>
+  <div class="title">
+    <a class="extra" href="/">blog</a>
+    <a class="extra" href="/math.html">math</a>
+    <a class="extra" href="/opinion.html">opinion</a>
+    <a class="extra" href="/consulting.html">consulting</a>
+    <a class="extra" href="/about.html">about</a>
+    <div class="social" style='float:right'>
+      <!-- <div style='float:right'> -->
+      <!--   <a href="http://eepurl.com/ccmH-T"><img src="/images/mail_icon.svg" width="25px"/></a> -->
+      <!-- </div> -->
+      <div style='float:right'>
+        <a href="/feed.xml"><img src="/images/rss_icon.svg" width="25px" style="margin: 0 10px 0 0;"/></a>
+      </div>
+      <div style='float:right'>
+        <a href="http://twitter.com/intent/follow?screen_name=HeinrichHartman"><img src="/images/twitter_icon.svg" width="25px" style="margin: 0 10px 0 0;"></a>
+      </div>
+    </div>
+  </div>
+
+  <div id="post">
+
+  <!-- Title -->
+  <h1> Monitoring Dropbox</h1>
+
+  
+
+  <!-- Meta -->
+  
+  <p class="meta">
+    Written on 2018-02-05
+     in Stemwede, Germany 
+    
+  </p>
+
+  <!-- Include Mathjax if needed -->
+  
+
+  <!-- Splash -->
+  
+  <div class="splash">
+    <a href="/assets/capture_1517430553.png">
+      <img src="/assets/capture_1517430553.png" width="100%"/>
+    </a>
+     <p class="credits">click to enlarge</p> 
+  </div>
+  
+
+  <!-- Abstract -->
+  
+
+  <!-- Post content -->
+  <p>I keep a cheap little server in my basement.
+Amongst other things it contains a full checkout of my dropbox.
+In this way, I always have a copy of all my data inside of my walls.
+The content lies in the trusted hands of a <a href="https://wiki.ubuntu.com/ZFS">zfs</a> file system, which allows me to take regular snapshots, so I don’t loose data by accidentally deleting stuff on one of my devices.
+I just sleep better this way.</p>
+
+<p>Working for a <a href="http://circonus.com">monitoring vendor</a>, monitoring the server is not optional.
+Especially for this box.
+It has a surprisingly low availability, since I manage to trigger my <a href="https://en.wikipedia.org/wiki/Residual-current_device">circuit breaker</a> (“FI Sicherung”) twice a week while working “fixing” my lights, heating, garage doors, etc. 🤷.
+So I want to make sure, it comes up as expected and keeps on doing what it should.
+In this case this boils down to:</p>
+
+<ol>
+  <li>Is the dropbox daemon running?</li>
+  <li>How many files are left to sync?</li>
+</ol>
+
+<p>And in case we there are a ton of files left:</p>
+
+<ol start="3">
+  <li>How long will it take until everything is synced up?</li>
+</ol>
+
+<p>I made a little dashboard for this purpose over the weekend and posted it on twitter:</p>
+
+<blockquote class="twitter-tweet" data-lang="en"><p lang="en" dir="ltr">Created a little <a href="https://twitter.com/circonus?ref_src=twsrc%5Etfw">@circonus</a> dashboard to monitor dropbox syncing my 1TB drive. Pretty neat, and straightforward:<br />0: Get an account (<a href="https://t.co/LsBRpSA6JC">https://t.co/LsBRpSA6JC</a>)<br />1: Add your host<br />2: Drop this into cron <a href="https://t.co/u9OxUSQSqv">https://t.co/u9OxUSQSqv</a><br />3: Tweak the USE Dashboard <a href="https://t.co/QzMBcusHte">https://t.co/QzMBcusHte</a> <a href="https://t.co/IfHLuUNHB5">pic.twitter.com/IfHLuUNHB5</a></p>&mdash; Heinrich Hartmann (@heinrichhartman) <a href="https://twitter.com/heinrichhartman/status/958339041191133184?ref_src=twsrc%5Etfw">January 30, 2018</a></blockquote>
+<script async="" src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+
+<p>Since people asked, I am going to elaborate a little here on what I did, and how you can do that, too, if you like.
+Of course, I will be using <a href="http://circonus.com">circonus</a> for this, because I am most familiar with this tool.
+Everything I show here, can be done with a free-tier account, or mutatis mutandis with other tools as well.</p>
+
+<h2 id="system-metrics">System Metrics</h2>
+
+<p>First things first.
+Every box deserves system-level monitoring.
+With Circonus this is a <a href="https://github.com/circonus-labs/circonus-one-step-install#quickstart">single command</a> which you can copy past from the Integrations page:</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>curl -sSL https://onestep.circonus.com/install | sudo bash -s -- --key ...
+</code></pre></div></div>
+
+<p>Now you will say “curl | sudo bash”, that’s <a href="https://www.idontplaydarts.com/2016/04/detecting-curl-pipe-bash-server-side/">a bad idea</a>.
+I know I know. But … it just works. And it’s HTTPS. And I know who wrote that code.
+So we are all good.</p>
+
+<p>This command will install a monitoring agent (nad) on your system and publish a good set of system metrics, which are presented conveniently as <a href="https://www.circonus.com/2017/08/system-monitoring-with-the-use-dashboard/">USE Dashboard</a> for you.</p>
+
+<figure id="figure-1"><a href="/assets/capture_1517435990.png"><img src="/assets/capture_1517435990.png" alt="A generic USE Dashboard" /></a><figcaption>Figure 1: A generic USE Dashboard [<a href="/assets/capture_1517435990.png">PNG</a>]</figcaption></figure>
+
+<p>Looks pretty neat, eh?
+With this, I know if my system is up, and how the basic resources (CPU, memory, network, disks) are doing. Later we will add some dropbox graphs to this dashboard.</p>
+
+<h2 id="gathering-dropbox-statistics">Gathering Dropbox Statistics</h2>
+
+<p>The main hero of this blog entry is the dropbox daemon.
+Unfortunately dropbox does not offer machine-readable statistics (<em>sigh</em>).
+We are left with the <code class="highlighter-rouge">dropbox.py status</code> command, which returns stuff like:</p>
+
+<ul>
+  <li>
+    <div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Dropbox isn't running!
+</code></pre></div>    </div>
+  </li>
+  <li>
+    <div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Starting
+</code></pre></div>    </div>
+  </li>
+  <li>
+    <div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Dropbox isn't responding!
+</code></pre></div>    </div>
+  </li>
+  <li>
+    <div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Syncing (51,938 files remaining, 2 mins left)
+Downloading 51,938 files (3,069 KB/sec, 2 mins left)
+</code></pre></div>    </div>
+  </li>
+  <li>Or occasionally:
+    <div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Up to date
+</code></pre></div>    </div>
+  </li>
+</ul>
+
+<p>So we need to parse out the information we are interested in.
+My first shot at this looked like this:</p>
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code>dropbox.py status <span class="se">\</span>
+  | <span class="nb">grep </span>remaining <span class="se">\</span>
+  | sed <span class="nt">-e</span> <span class="s1">'s/remaining.*//'</span> <span class="nt">-e</span> <span class="s1">'s/[^0-9]//g'</span>
+</code></pre></div></div>
+<p>This will pick out the “files remaining” line if there is any, then delete everything starting from the string “remaining” to get rid of the time estimate “2 mins left”.
+Finally we delete all non numeric content and are left with a number: <code class="highlighter-rouge">N=51938</code>.
+Tada! Good enough for a fist version.</p>
+
+<p>After a few interatons, the script ended up looking like this:</p>
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c">#!/bin/bash</span>
+<span class="nv">socat</span><span class="o">=</span>/usr/bin/socat
+<span class="nb">grep</span><span class="o">=</span>/bin/grep
+<span class="nv">sed</span><span class="o">=</span>/bin/sed
+<span class="nv">dbx</span><span class="o">=</span><span class="nv">$HOME</span>/bin/dropbox.py
+<span class="nv">logger</span><span class="o">=</span>/usr/bin/logger
+
+<span class="c"># $1 metric name</span>
+<span class="c"># $2 value</span>
+<span class="k">function </span>METRIC <span class="o">{</span>
+  logger <span class="nt">-t</span> dropbox-mon <span class="s2">"metric </span><span class="nv">$1</span><span class="s2">: </span><span class="nv">$2</span><span class="s2">"</span>
+  <span class="nb">printf</span> <span class="s1">'dropbox`%s:%d|g'</span> <span class="s2">"</span><span class="nv">$1</span><span class="s2">"</span> <span class="s2">"</span><span class="nv">$2</span><span class="s2">"</span> | <span class="nv">$socat</span> <span class="nt">-t</span> 0 STDIN UDP:localhost:8125
+<span class="o">}</span>
+
+METRIC <span class="s2">"count"</span> <span class="s2">"</span><span class="k">$(</span>pgrep <span class="nt">-c</span> dropbox<span class="k">)</span><span class="s2">"</span>
+
+<span class="nv">STATUS</span><span class="o">=</span><span class="s2">"</span><span class="k">$(</span><span class="nv">$dbx</span> status<span class="k">)</span><span class="s2">"</span>
+<span class="k">case</span> <span class="s2">"</span><span class="nv">$STATUS</span><span class="s2">"</span> <span class="k">in</span>
+  <span class="k">*</span><span class="s2">"Up to date"</span><span class="k">*</span><span class="p">)</span>
+    METRIC <span class="s2">"remaining"</span> 0<span class="p">;</span>
+    <span class="nb">exit </span>0<span class="p">;</span>
+    <span class="p">;;</span>
+  <span class="k">*</span><span class="s2">"files remaining"</span><span class="k">*</span><span class="p">)</span>
+    <span class="nv">N</span><span class="o">=</span><span class="k">$(</span><span class="nb">echo</span> <span class="nv">$STATUS</span> <span class="se">\</span>
+        | <span class="nv">$grep</span> remaining <span class="se">\</span>
+        | <span class="nv">$sed</span> <span class="nt">-e</span> <span class="s1">'s/remaining.*//g'</span> <span class="nt">-e</span> <span class="s1">'s/[^0-9]//g'</span><span class="k">)</span>
+    METRIC <span class="s2">"remaining"</span> <span class="s2">"</span><span class="nv">$N</span><span class="s2">"</span>
+    <span class="nb">exit </span>0
+    <span class="p">;;</span>
+  <span class="k">*</span><span class="p">)</span>
+    <span class="nb">exit </span>1
+<span class="k">esac</span>
+</code></pre></div></div>
+
+<p>Comments:</p>
+
+<ul>
+  <li>
+    <p>We will run this script via <a href="http://man7.org/linux/man-pages/man5/crontab.5.html">crontab(5)</a>, which is famous for invoking arcane shells and not setting up the environment (Thanks cron 🤐).
+So let’s be explicit about where to find the programs we use.</p>
+  </li>
+  <li>
+    <p>We want to send out the data we found as a metric, so we create a function for it.
+The implementation is explained below.</p>
+  </li>
+  <li>
+    <p>We use <a href="http://man7.org/linux/man-pages/man1/pgrep.1.html">pgrep(1)</a> to count the number of dropbox processes that are currently running (should be 0 or 1) and publish the result as a metric “count”.</p>
+  </li>
+  <li>
+    <p>Finally we parse the output of <code class="highlighter-rouge">dropbox.py status</code> in a more formal manner:</p>
+    <ol>
+      <li>If we are up to date, we emit 0 as value for the “remaining” metric.</li>
+      <li>If we have files remaining, we do as before.</li>
+      <li>Otherwise, we don’t emit anything, and exit with RC=1 signaling an error condition.</li>
+    </ol>
+  </li>
+</ul>
+
+<h2 id="sending-custom-metrics-to-circonus">Sending Custom Metrics to Circonus</h2>
+
+<p>There are many ways to send metrics to Circonus. Two of my favorite ones are:</p>
+
+<ol>
+  <li>Push JSON documents to a <a href="https://hartmann.circonus.com/resources/docs/user/Data/CheckTypes/HTTPTrap.html">HTTP Trap</a>.</li>
+  <li>Send <a href="https://github.com/b/statsd_spec">statsd</a> metrics to the monitoring agent (nad).</li>
+</ol>
+
+<p>Option 1 is certainly a good one, and I might go for it next time.
+We will follow option 2 here.
+Since a while ago nad has an integrated statsd server, that allows you to submit metrics via UDP  in statsd format.
+In our case the payload we want to send looks like this:</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>dropbox`count:1|g
+dropbox`remaining:5122|g
+</code></pre></div></div>
+
+<p>The usual way to do this from the command line would be using <a href="https://linux.die.net/man/1/nc">nc(1)</a></p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>echo "dropbox`count:1|g" | nc -u localhost 8125
+echo "dropbox`remaining:5122|g" | nc -u localhost 8125
+</code></pre></div></div>
+
+<p>Unfortunately nc has the bad habbit of hanging occasionally in this situation.
+<a href="https://serverfault.com/questions/498880/nc-netcat-hangs-waiting-for-more-data-in-udp-mode">Others</a> have solved that by using <a href="https://linux.die.net/man/1/socat">socat(1)</a> instead.
+So I copy pasted their code and went with it 😛.
+This is how I arrived at that function listed above:</p>
+
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c"># $1 metric name</span>
+<span class="c"># $2 value</span>
+<span class="k">function </span>METRIC <span class="o">{</span>
+  logger <span class="nt">-t</span> dropbox-mon <span class="s2">"metric </span><span class="nv">$1</span><span class="s2">: </span><span class="nv">$2</span><span class="s2">"</span>
+  <span class="nb">printf</span> <span class="s1">'dropbox`%s:%d|g'</span> <span class="s2">"</span><span class="nv">$1</span><span class="s2">"</span> <span class="s2">"</span><span class="nv">$2</span><span class="s2">"</span> | <span class="nv">$socat</span> <span class="nt">-t</span> 0 STDIN UDP:localhost:8125
+<span class="o">}</span>
+</code></pre></div></div>
+
+<p>Right. We actually write out some system logs as well, mainly for debugging purposes.
+It takes a while until metrics show up on graphs.
+Log lines become visible much more quickly.</p>
+
+<p>We test this script by running it from the shell.</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$ ./cron/dropbox.sh
+</code></pre></div></div>
+
+<p>You should then see log messages appearing in syslog:</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>tail -n2 /var/log/syslog
+Jan 31 18:13:20 HomeFX dropbox-mon: metric count: 1
+Jan 31 18:13:20 HomeFX dropbox-mon: metric remaining: 51222
+</code></pre></div></div>
+
+<p>If it does, type in <code class="highlighter-rouge">crontab -e</code> as your local user and add a line:</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>* * * * * ~/cron/dropbox.sh
+</code></pre></div></div>
+<p>This should run dropbox.sh every minute.
+Check syslog again, to see if this worked.</p>
+
+<h2 id="configuring-the-dashboard">Configuring The Dashboard</h2>
+
+<p>You will need to activate the metric in order for Circonus to collect data from it,
+on the checks page (Integrations &gt; Checks &gt; (select check) &gt; details &gt; [Changes brokers and Metrics])</p>
+<figure id="figure-2"><a href="/assets/capture_1517420969.png"><img src="/assets/capture_1517420969.png" alt="" /></a><figcaption>Figure 2:  [<a href="/assets/capture_1517420969.png">PNG</a>]</figcaption></figure>
+<p>After you did that you should see data flowing into the metric on the check’s page.</p>
+
+<p>Then add the metric to a new graph (Analytics &gt; Graphs &gt; Add Metric).
+Finally add the graph to the USE dashboard.
+I expanded the size of the dashboard a little and re-organized the graphs a little.</p>
+
+<p>Finally I also added a forecasting widget to the dashboard.</p>
+
+<figure id="figure-3"><a href="/assets/capture_1517444961.png"><img src="/assets/capture_1517444961.png" alt="Forecasting Widget: Time until synced" /></a><figcaption>Figure 3: Forecasting Widget: Time until synced [<a href="/assets/capture_1517444961.png">PNG</a>]</figcaption></figure>
+
+<p>This usually tracks the time until we run out disk space (etc.), but it can be used to track the “time until we are fully synced” as well.
+Just put in the “dropbox remainig` metric under “usage” and 0 as resource limit.
+The resulting widget will show the time until you are fully synced (or “Out of Resources” if you are up to date.)</p>
+
+<h2 id="alerting">Alerting</h2>
+
+<p>Like every decent sys-admin, I have one alerting setup to notify me, when the box is down for more than an hour. With Circonus you can also alert on more subtle stuff like: <em>Is dropbox stalled?</em></p>
+
+<p>The stalled condition can be reformulated as:</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>(Is there stuff left to sync?) and (Is it not downloading stuff?)
+</code></pre></div></div>
+
+<p>Roughly translated into <a href="https://login.circonus.com/resources/docs/user/caql_reference.html">CAQL</a> this is:</p>
+<pre><code class="language-CAQL">( // stuff left to sync?
+  metric:average("b6266779-c835-4341-a71b-a250e68d2347",
+                 "statsd`dropbox`remaining") &gt; 0
+)
+and
+( // not downloading stuff?
+  metric:counter("b6266779-c835-4341-a71b-a250e68d2347",
+                 "if`enp2s0`in_bytes") // download rate in byte/sec
+  | rolling:mean(1h) // 1h average
+  | op:lt(1000) // less-than 1.000
+)
+</code></pre>
+<p>I created a <a href="https://login.circonus.com/resources/docs/user/Data/CheckTypes/CAQLCheck.html">CAQL Check</a> for this query, and setup an email alert for it.
+I’ll admit, this is probably a little over the top, but I just like to know directly when my stuff is not doing stuff.</p>
+
+<h2 id="conclusion">Conclusion</h2>
+
+<p>It’s still amazing to me with how little effort, you can arrive at a pretty sophisticated monitoring setup if you know your way around Circonus.
+Also not that the method illustrated here is in pretty universal.
+If you can extract the numerical digest from any tool on the command line you can follow the steps and get your stuff monitored.</p>
+
+<p>For the specific case in point, the files remaining metric really benefited from taking it into the context of the whole system resource usage.
+In many cases, dropbox is the one who is using the resources.
+And it actually uses all of them: network, disks, CPU (to calculate all that checksums) and memory!
+It’s interesting to know where are the bottlenecks.</p>
+
+<p>The tweet above shows just how much information you can get form a glance at the board.
+Using the dashboard I discovered, already that</p>
+
+<ul>
+  <li>Drobox has a long time average download rate is about 10Mbit. Not too bad given my shitty internet connection.</li>
+  <li>The download stalled after ~24h. So, I added a cron-job to restart it every day.</li>
+  <li>I should add more memory to the box. The system is already swapping.</li>
+</ul>
+
+<p>I hope you enjoyed reading this.
+If you like to be informed about future posts, please consider singing up for the <a href="http://eepurl.com/ccmH-T">newsletter</a>.</p>
+
+
+  <br/>
+  <em>View the version history of this post on <a href="https://github.com/HeinrichHartmann/HeinrichHartmann.github.io/commits/source/_posts/2018-02-05-Monitoring-Dropbox.md">GitHub</a>.</em>
+  <br/>
+  <!-- Comments -->
+  
+    <em>Comments have been disabled until the dust around the GDPR settled.</em>
+    <!-- <div id="disqus_thread"></div> -->
+    <!-- <script type="text/javascript"> -->
+    <!--   /* * * CONFIGURATION VARIABLES * * */ -->
+    <!--   var disqus_shortname = 'heinrichhartmann'; -->
+    <!--   /* * * DON'T EDIT BELOW THIS LINE * * */ -->
+    <!--   (function() { -->
+    <!--   var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true; -->
+    <!--   dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js'; -->
+    <!--   (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq); -->
+    <!--   })(); -->
+    <!-- </script> -->
+    <!-- <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments</a></noscript> -->
+  
+
+</div>
+
+
+  <div class="footer">
+    <div class="contact">
+      <p>
+        Licensed under <a rel="license" href="http://creativecommons.org/licenses/by/4.0/">CC-BY 4.0.</a>
+        <span xmlns:dct="http://purl.org/dc/terms/" property="dct:title" style="display:none">This blog</span>
+        <span xmlns:cc="http://creativecommons.org/ns#" property="cc:attributionName" style="display:none">Heinrich Hartmann</span>
+      </p>
+    </div>
+  </div>
+</div>
+
+<!-- Google Analytics -->
+
+<!-- <script> -->
+<!--   (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){ -->
+<!--   (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o), -->
+<!--   m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m) -->
+<!--   })(window,document,'script','//www.google-analytics.com/analytics.js','ga'); -->
+
+<!--   ga('create', 'UA-53959000-1', 'auto'); -->
+<!--   ga('send', 'pageview'); -->
+<!-- </script> -->
+
+</body>
+</html>

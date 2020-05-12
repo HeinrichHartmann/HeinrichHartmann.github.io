@@ -1,0 +1,809 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en-us">
+<head>
+   <meta http-equiv="content-type" content="text/html; charset=utf-8"/>
+   <title>Dissecting Hello World</title>
+   <meta name="author" content="Heinrich Hartmann"/>
+
+   <!-- syntax highlighting CSS -->
+   <link rel="stylesheet" href="/css/syntax.css" type="text/css"/>
+
+   <!-- Homepage CSS -->
+   <link rel="stylesheet" href="/css/screen.css" type="text/css" media="screen, projection"/>
+
+   <!-- RSS feed -->
+   <link rel="alternate" type="application/rss+xml" title="RSS" href="/feed.xml">
+
+   <!-- Favicon -->
+   <link rel="icon" type="image/png" href="/images/favicon.png">
+
+   
+   </head>
+<body>
+
+<div class="site">
+  <div class="headline"><a href="/">Heinrich Hartmann</a></div>
+  <div class="title">
+    <a class="extra" href="/">blog</a>
+    <a class="extra" href="/math.html">math</a>
+    <a class="extra" href="/opinion.html">opinion</a>
+    <a class="extra" href="/consulting.html">consulting</a>
+    <a class="extra" href="/about.html">about</a>
+    <div class="social" style='float:right'>
+      <!-- <div style='float:right'> -->
+      <!--   <a href="http://eepurl.com/ccmH-T"><img src="/images/mail_icon.svg" width="25px"/></a> -->
+      <!-- </div> -->
+      <div style='float:right'>
+        <a href="/feed.xml"><img src="/images/rss_icon.svg" width="25px" style="margin: 0 10px 0 0;"/></a>
+      </div>
+      <div style='float:right'>
+        <a href="http://twitter.com/intent/follow?screen_name=HeinrichHartman"><img src="/images/twitter_icon.svg" width="25px" style="margin: 0 10px 0 0;"></a>
+      </div>
+    </div>
+  </div>
+
+  <div id="post">
+
+  <!-- Title -->
+  <h1> Dissecting Hello World</h1>
+
+  
+
+  <!-- Meta -->
+  
+  <p class="meta">
+    Written on 2012-09-10
+    
+    
+  </p>
+
+  <!-- Include Mathjax if needed -->
+  
+
+  <!-- Splash -->
+  
+
+  <!-- Abstract -->
+  
+
+  <!-- Post content -->
+  <!-- # Dissecting Hello World -->
+
+<p>This note is part of an effort to understand how a PC works. What
+happens from the writing of code until the actual physical comptation
+of inside the CPU?  In particular:</p>
+
+<ul>
+  <li>How does a computer compute? Physical Layout of a CPU, Registers, Boolean Logic.</li>
+  <li>How does a computer execute a program?</li>
+  <li>What operations are atomic, i.e. hard wired inside the CPU and completed in one cycle?</li>
+  <li>How does a computer store data? (RAM or HDD)</li>
+</ul>
+
+<p>Here we follow a simple approach. We write a little program and see how far we can dissect it.</p>
+
+<h2 id="hello-world">Hello World</h2>
+
+<p>We start with a tiny little program which we choose to write in
+<a href="http://en.wikipedia.org/wiki/C_Programming_Language">C</a>, because
+people claim it is nearest to the actual processor logic. We call it
+“simple.c”:</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>main(){
+  int a,b,c;
+  a=5;
+  b=8;
+  c = a+b;
+}
+</code></pre></div></div>
+
+<p>We compile this program on a Linux box with the command</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$ gcc simple.c
+</code></pre></div></div>
+
+<p>and get out an executable file a.out. This file is actually quiet long
+it already has 8446 bytes. Lets look inside:</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$ hexedit a.out
+</code></pre></div></div>
+
+<p>We see that the file starts like that:</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>00000000   7F 45 4C 46  02 01 01 00  00 00 00 00  00 00 00 00  .ELF............
+00000010   02 00 3E 00  01 00 00 00  E0 03 40 00  00 00 00 00  ..&gt;.......@.....
+00000020   40 00 00 00  00 00 00 00  60 11 00 00  00 00 00 00  @.......`.......
+</code></pre></div></div>
+
+<p>and goes on and on for quiet a while. The output has the following structure:</p>
+
+<ul>
+  <li>In the middle we see the content of the file in a hexadecimal encoding grouped into bytes:<br />
+For example 7F stands for the bit string: 0111 1111.</li>
+  <li>The very left colum is a byte counter in a hexadecimal format.<br />
+So the 00000010 in the second line means we are starting with byte 16.</li>
+  <li>On the right we have a translation of the code into ASCII symbols.</li>
+</ul>
+
+<p>What does ELF mean? A quick search on
+<a href="http://en.wikipedia.org/wiki/Executable_and_Linkable_Format
+Wikipedia">wikipedia</a> reveals, that there is a UNIX file format called
+<em>Executable and Linkable Format</em> which has this very
+abreviation. A call of <code class="highlighter-rouge">file a.out</code> reassures that this wilde guess
+might be correct.</p>
+
+<h2 id="the-elf-file-format">The ELF File format</h2>
+
+<p>The best reference on ELF files on the net I could find is the
+<a href="http://www.iecc.com/linker/">John R. Levine - Linkers and Loaders</a>. Our
+treatment is similar to
+<a href="http://www.linuxforums.org/articles/understanding-elf-using-readelf-and-objdump_125.html">LinuxForums.org - ELF using readelf and objdump</a>.</p>
+
+<p>ELF is a container format for executable files suitable for the Linux operating system.
+Before a program can run on the CPU a <a href="http://en.wikipedia.org/wiki/Loader_(computing)">loader</a> or
+<a href="http://en.wikipedia.org/wiki/Dynamic_linker">dynamic linker</a> program (in our case <a href="http://www.kernel.org/doc/man-pages/online/pages/man8/ld.so.8.html">ld.so</a>) of the OS is called which servers the following tasks:</p>
+
+<ul>
+  <li>Find and load shared libraries</li>
+  <li>Load program code and data into the memory</li>
+  <li>Translate adresses used inside the program to physical addresses inside the reserved memory block (<a href="http://en.wikipedia.org/wiki/Relocation_(computer_science)">Relocation</a></li>
+  <li>Puts passed commandline arguments onto the stack</li>
+  <li>Setup registers (e.g. stack pointer)</li>
+  <li>Jumps to the entry point of the program</li>
+</ul>
+
+<h3 id="examining-the-elf-file">Examining the ELF File</h3>
+
+<p>According to the
+<a href="http://downloads.openwatcom.org/ftp/devel/docs/elf-64-gen.pdf">generic format specification</a> an ELF file consists of:</p>
+
+<ul>
+  <li>a <em>File header</em>, which must appear at the beginning of the ﬁle.</li>
+  <li><em>Section table</em></li>
+  <li><em>Program header table</em>: Describes the [..] data structures required for loading a program [..].</li>
+  <li>Contents of the sections and segments</li>
+</ul>
+
+<p>The ELF file is used by the loader and by the linker in two different ways:</p>
+
+<ol>
+  <li>The linker works with <em>sections</em>. It rearranges sections and consolidates them over different files.</li>
+  <li>The loader works with <em>segments</em> specified by the programm headder’s. A segment consists of several consecutive segments an is loaded into the memory at once.</li>
+</ol>
+
+<h3 id="file-header">File Header</h3>
+<p>Diving further into the specification we find that the headder consists of the following components:</p>
+
+<ul>
+  <li>unsigned char e_ident[16]; /* ELF identification */</li>
+  <li>Elf64_Half e_type; /* Object file type */</li>
+  <li>Elf64_Half e_machine; /* Machine type */</li>
+  <li>Elf64_Word e_version; /* Object file version */</li>
+  <li>Elf64_Addr e_entry; /* Entry point address */</li>
+  <li>Elf64_Off e_phoff; /* Program header offset */</li>
+  <li>Elf64_Off e_shoff; /* Section header offset */</li>
+  <li>Elf64_Word e_flags; /* Processor-specific flags */</li>
+  <li>Elf64_Half e_ehsize; /* ELF header size */</li>
+  <li>Elf64_Half e_phentsize; /* Size of program header entry */</li>
+  <li>Elf64_Half e_phnum; /* Number of program header entries */</li>
+  <li>Elf64_Half e_shentsize; /* Size of section header entry */</li>
+  <li>Elf64_Half e_shnum; /* Number of section header entries */</li>
+  <li>Elf64_Half e_shstrndx; /* Section name string table index */</li>
+</ul>
+
+<p>The first column describes the bit length of the corresponding entries.
+The first line describes char=byte array of length 16, carrying the ELF Identification
+In our example this is:</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>7F 45 4C 46  02 01 01 00 00 00 00 00  00 00 00 00
+</code></pre></div></div>
+
+<p>These bytes have the following meaning:</p>
+
+<ul>
+  <li>7F = EI_MAG0 - File identiﬁcation</li>
+  <li>45 = EI_MAG1 = ‘E’</li>
+  <li>4C = EI_MAG2 = ‘L’</li>
+  <li>46 = EI_MAG3 = ‘F’</li>
+  <li>02 = EI_CLASS - File class - 2 for 64 bit</li>
+  <li>01 = EI_DATA  - Data encoding - 1 for [http://en.wikipedia.org/wiki/Endianness little-endian] byte sorting</li>
+  <li>01 = EI_VERSION - File version</li>
+  <li>00 = EI_OSABI - OS/ABI identiﬁcation - 0 for System V ABI</li>
+  <li>00 = EI_ABIVERSION - ABI version</li>
+  <li>00 = EI_PAD - Start of padding bytes</li>
+  <li>[..]</li>
+  <li>00 = EI_NIDENT - Size of e_ident[]</li>
+</ul>
+
+<p>Fortunately we do not need to do all this byte matching by hand. There is already a linux tool that does that for you:</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$ readelf -h a.out
+
+Magic:   7f 45 4c 46 02 01 01 00 00 00 00 00 00 00 00 00
+Class:                             ELF64
+Data:                              2's complement, little endian
+Version:                           1 (current)
+OS/ABI:                            UNIX - System V
+ABI Version:                       0
+Type:                              EXEC (Executable file)
+Machine:                           Advanced Micro Devices X86-64
+Version:                           0x1
+Entry point address:               0x4003e0
+Start of program headers:          64 (bytes into file)
+Start of section headers:          4448 (bytes into file)
+Flags:                             0x0
+Size of this header:               64 (bytes)
+Size of program headers:           56 (bytes)
+Number of program headers:         9
+Size of section headers:           64 (bytes)
+Number of section headers:         31
+Section header string table index: 28
+</code></pre></div></div>
+
+<p>What do we learn from this information:</p>
+
+<ul>
+  <li>The file is to be executed on a UNIX - System V compatible machine, with a 64bit Processor</li>
+  <li>There are 31 sections with each having a header of size 64 bytes</li>
+  <li>There are 9 segments each haveing a program header of size 56 bytes</li>
+  <li>The executable code starts at offset 0x3e0 = 992</li>
+</ul>
+
+<h3 id="elf-file-structure">ELF File structure</h3>
+
+<p>We see that the file has the following structure (byte offsets in []-braces):</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>[0 - 63]                   File headder          (64 bytes)
+[64-120][..][511-567]      Program headders      (9*56 bytes)
+[568-4447]                 ???                   (4327 bytes)
+[4448-4512][..][6368-6431] Section headders      (31*64 bytes)
+[6432-8445]                ???                   (3932 bytes)
+</code></pre></div></div>
+
+<h3 id="sections">Sections</h3>
+
+<p>Lets go ahead and instpect the section headders. Fortunately the byte
+matching to the reference greatly simplyfied by use ‘readelf
+–sections’. We see that there are 31 section headers, starting at
+offset 0x1160:</p>
+
+<p>Section Headers:</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>[Nr] Name              Type             Address           Offset
+     Size              EntSize          Flags  Link  Info  Align
+[ 0]                   NULL             0000000000000000  00000000
+     0000000000000000  0000000000000000           0     0     0
+[ 1] .interp           PROGBITS         0000000000400238  00000238
+     000000000000001c  0000000000000000   A       0     0     1
+[ 2] .note.ABI-tag     NOTE             0000000000400254  00000254
+     0000000000000020  0000000000000000   A       0     0     4
+[..]
+[12] .init             PROGBITS         00000000004003a8  000003a8
+     0000000000000018  0000000000000000  AX       0     0     4
+[13] .plt              PROGBITS         00000000004003c0  000003c0
+     0000000000000020  0000000000000010  AX       0     0     4
+[14] .text             PROGBITS         00000000004003e0  000003e0
+     00000000000001e8  0000000000000000  AX       0     0     16
+[15] .fini             PROGBITS         00000000004005c8  000005c8
+     000000000000000e  0000000000000000  AX       0     0     4
+[16] .rodata           PROGBITS         00000000004005d8  000005d8
+     0000000000000004  0000000000000004  AM       0     0     4
+[..]
+[22] .dynamic          DYNAMIC          0000000000600e40  00000e40
+     00000000000001a0  0000000000000010  WA       7     0     8
+[..]
+[25] .data             PROGBITS         0000000000601008  00001008
+     0000000000000010  0000000000000000  WA       0     0     8
+[26] .bss              NOBITS           0000000000601018  00001018
+     0000000000000010  0000000000000000  WA       0     0     8
+[27] .comment          PROGBITS         0000000000000000  00001018
+     0000000000000048  0000000000000001  MS       0     0     1
+[28] .shstrtab         STRTAB           0000000000000000  00001060
+     00000000000000fe  0000000000000000           0     0     1
+[29] .symtab           SYMTAB           0000000000000000  00001920
+     0000000000000600  0000000000000018          30    47     8
+[30] .strtab           STRTAB           0000000000000000  00001f20
+     00000000000001de  0000000000000000           0     0     1
+
+Key to Flags:
+W (write), A (alloc), X (execute), M (merge), S (strings)
+I (info), L (link order), G (group), x (unknown)
+O (extra OS processing required) o (OS specific), p (processor specific)
+</code></pre></div></div>
+
+<p>From this table we first read off the ‘‘offsets’’ of the sections,
+which is contained in the last column. The first section starts at
+00000238 which is the hex code for 568.  And indeed the first gap
+<code class="highlighter-rouge">[568-4447]</code> just starts at this point.  Comparing the further offests
+we see that the full gap is populated by the sections <code class="highlighter-rouge">[1 .interp]</code> -
+<code class="highlighter-rouge">[28 .shstrtab]</code>.  The latter gap <code class="highlighter-rouge">[6432-8845]</code> is populated by
+sections <code class="highlighter-rouge">[29 .symtab]</code>-<code class="highlighter-rouge">[30 .strtab]</code>.</p>
+
+<p>Another information we can get from this table is that only the sections:</p>
+
+<ul>
+  <li>[12] .init</li>
+  <li>[13] .plt</li>
+  <li>[14] .text</li>
+  <li>[15] .fini</li>
+</ul>
+
+<p>contain executable data.</p>
+
+<h3 id="segments">Segments</h3>
+<p>To extract the information about from the Program header we call:</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$ readelf --segments a.out
+
+Elf file type is EXEC (Executable file)
+Entry point 0x4003e0
+There are 9 program headers, starting at offset 64
+
+Program Headers:
+Type           Offset             VirtAddr           PhysAddr
+               FileSiz            MemSiz              Flags  Align
+PHDR           0x0000000000000040 0x0000000000400040 0x0000000000400040
+               0x00000000000001f8 0x00000000000001f8  R E    8
+INTERP         0x0000000000000238 0x0000000000400238 0x0000000000400238
+               0x000000000000001c 0x000000000000001c  R      1
+    [Requesting program interpreter: /lib64/ld-linux-x86-64.so.2]
+LOAD           0x0000000000000000 0x0000000000400000 0x0000000000400000
+               0x000000000000067c 0x000000000000067c  R E    200000
+LOAD           0x0000000000000e18 0x0000000000600e18 0x0000000000600e18
+               0x0000000000000200 0x0000000000000210  RW     200000
+DYNAMIC        0x0000000000000e40 0x0000000000600e40 0x0000000000600e40
+               0x00000000000001a0 0x00000000000001a0  RW     8
+NOTE           0x0000000000000254 0x0000000000400254 0x0000000000400254
+               0x0000000000000044 0x0000000000000044  R      4
+GNU_EH_FRAME   0x00000000000005dc 0x00000000004005dc 0x00000000004005dc
+               0x0000000000000024 0x0000000000000024  R      4
+GNU_STACK      0x0000000000000000 0x0000000000000000 0x0000000000000000
+               0x0000000000000000 0x0000000000000000  RW     8
+GNU_RELRO      0x0000000000000e18 0x0000000000600e18 0x0000000000600e18
+               0x00000000000001e8 0x00000000000001e8  R      1
+</code></pre></div></div>
+
+<p>Section to Segment mapping:</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Segment Sections...
+ 00
+ 01     .interp
+ 02     .interp .note.ABI-tag .note.gnu.build-id .hash .gnu.hash
+        .dynsym .dynstr .gnu.version .gnu.version_r .rela.dyn
+        .rela.plt .init .plt .text .fini .rodata .eh_frame_hdr .eh_frame
+ 03     .ctors .dtors .jcr .dynamic .got .got.plt .data .bss
+ 04     .dynamic
+ 05     .note.ABI-tag .note.gnu.build-id
+ 06     .eh_frame_hdr
+ 07
+ 08     .ctors .dtors .jcr .dynamic .got
+</code></pre></div></div>
+
+<h2 id="program-code-with-objdump">Program Code with <code class="highlighter-rouge">objdump</code></h2>
+
+<p>After identifying the executable parts of the program lets inspect these parts.
+We disassemble the parts using <a href="https://sourceware.org/binutils/docs-2.23/binutils/objdump.html">objdump</a>.</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$ objdump -d a.out
+</code></pre></div></div>
+
+<p>Disassembly of section .init:</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>00000000004003a8 &lt;_init&gt;:
+  4003a8:	 48 83 ec 08		sub    $0x8,%rsp
+  4003ac:	 e8 5b 00 00 00       	callq  40040c &lt;call_gmon_start&gt;
+  4003b1:	 e8 ea 00 00 00       	callq  4004a0 &lt;frame_dummy&gt;
+  4003b6:	 e8 d5 01 00 00       	callq  400590 &lt;__do_global_ctors_aux&gt;
+  4003bb:	 48 83 c4 08          	add    $0x8,%rsp
+  4003bf:	 c3                   	retq
+</code></pre></div></div>
+
+<p>Disassembly of section .plt:</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>00000000004003c0 &lt;__libc_start_main@plt-0x10&gt;:
+  4003c0:	 ff 35 2a 0c 20 00	pushq  0x200c2a(%rip)
+  4003c6:	 ff 25 2c 0c 20 00    	jmpq   *0x200c2c(%rip)
+  4003cc:	 0f 1f 40 00          	nopl   0x0(%rax)
+
+00000000004003d0 &lt;__libc_start_main@plt&gt;:
+  4003d0:	 ff 25 2a 0c 20 00	jmpq   *0x200c2a(%rip)
+  4003d6:	 68 00 00 00 00       	pushq  $0x0
+  4003db:	 e9 e0 ff ff ff       	jmpq   4003c0 &lt;_init+0x18&gt;
+</code></pre></div></div>
+
+<p>Disassembly of section .text:</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>00000000004003e0 &lt;_start&gt;:
+  4003e0:	 31 ed			xor    %ebp,%ebp
+  4003e2:	 49 89 d1             	mov    %rdx,%r9
+  4003e5:	 5e                   	pop    %rsi
+  4003e6:	 48 89 e2             	mov    %rsp,%rdx
+  4003e9:	 48 83 e4 f0          	and    $0xfffffffffffffff0,%rsp
+  4003ed:	 50                   	push   %rax
+  4003ee:	 54                   	push   %rsp
+  4003ef:	 49 c7 c0 f0 04 40 00 	mov    $0x4004f0,%r8
+  4003f6:	 48 c7 c1 00 05 40 00 	mov    $0x400500,%rcx
+  4003fd:	 48 c7 c7 c4 04 40 00 	mov    $0x4004c4,%rdi
+  400404:	 e8 c7 ff ff ff       	callq  4003d0 &lt;__libc_start_main@plt&gt;
+  400409:	 f4                   	hlt
+  40040a:	 90                   	nop
+  40040b:	 90                   	nop
+
+000000000040040c &lt;call_gmon_start&gt;:
+  40040c:	 48 83 ec 08		sub    $0x8,%rsp
+  400410:	 48 8b 05 c9 0b 20 00 	mov    0x200bc9(%rip),%rax
+  400417:	 48 85 c0             	test   %rax,%rax
+  40041a:	 74 02                	je     40041e &lt;call_gmon_start+0x12&gt;
+  40041c:	 ff d0                	callq  *%rax
+  ...
+
+0000000000400430 &lt;__do_global_dtors_aux&gt;:
+  400430:	 55			push   %rbp
+  400431:	 48 89 e5             	mov    %rsp,%rbp
+  400434:	 53                   	push   %rbx
+  ...
+
+00000000004004a0 &lt;frame_dummy&gt;:
+  4004a0:	 55			push   %rbp
+  4004a1:	 48 83 3d 8f 09 20 00 	cmpq   $0x0,0x20098f(%rip)
+  4004a8:	 00
+
+00000000004004c4 &lt;main&gt;:
+  4004c4:	 55			push   %rbp
+  4004c5:	 48 89 e5             	mov    %rsp,%rbp
+  4004c8:	 c7 45 fc 05 00 00 00 	movl   $0x5,-0x4(%rbp)
+  4004cf:	 c7 45 f8 08 00 00 00 	movl   $0x8,-0x8(%rbp)
+  4004d6:	 8b 45 f8             	mov    -0x8(%rbp),%eax
+  4004d9:	 8b 55 fc             	mov    -0x4(%rbp),%edx
+  4004dc:	 8d 04 02             	lea    (%rdx,%rax,1),%eax
+  4004df:	 89 45 f4             	mov    %eax,-0xc(%rbp)
+  4004e2:	 c9                   	leaveq
+  4004e3:	 c3                   	retq
+  ...
+
+00000000004004f0 &lt;__libc_csu_fini&gt;:
+  ...
+0000000000400500 &lt;__libc_csu_init&gt;:
+  ...
+0000000000400590 &lt;__do_global_ctors_aux&gt;:
+  ...
+</code></pre></div></div>
+
+<p>Disassembly of section .fini:</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>00000000004005c8 &lt;_fini&gt;:
+  4005c8:	 48 83 ec 08		sub    $0x8,%rsp
+  4005cc:	 e8 5f fe ff ff       	callq  400430 &lt;__do_global_dtors_aux&gt;
+  4005d1:	 48 83 c4 08          	add    $0x8,%rsp
+  4005d5:	 c3                   	retq
+</code></pre></div></div>
+
+<p>In this view the content of our executable sections grouped into machine operations in the middle column.
+The colum to the left is an offset counter and on the right we find a translation of the operations
+to the <a href="http://en.wikipedia.org/wiki/Assembly_language">Assembly Language</a>.</p>
+
+<p>Observations:</p>
+
+<ul>
+  <li>The sections are grouped by function names: <code class="highlighter-rouge">&lt; .... &gt;</code></li>
+  <li>The entry point was the adress 0x3e0 and points to the beginning of the <code class="highlighter-rouge">&lt;_start&gt;</code> function</li>
+  <li>There is a function <code class="highlighter-rouge">&lt;main&gt;</code>, which is also the name of the function in our c Progam.</li>
+</ul>
+
+<p>Let’s look inside the <code class="highlighter-rouge">&lt;main&gt;</code> function:</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>push   %rbp
+mov    %rsp,%rbp
+movl   $0x5,-0x4(%rbp)
+movl   $0x8,-0x8(%rbp)
+mov    -0x8(%rbp),%eax
+mov    -0x4(%rbp),%edx
+lea    (%rdx,%rax,1),%eax
+mov    %eax,-0xc(%rbp)
+leaveq
+</code></pre></div></div>
+
+<p>We find our numbers 5 and 8 declared as constants ($) in hexadecimal
+format.  These are stored into a memory location specified by the <code class="highlighter-rouge">%rbp</code>
+register with a certain offset.  Then the values are read from memory
+and copied into the <code class="highlighter-rouge">%eax</code> and <code class="highlighter-rouge">%edx</code> registers.  Afterwards these
+registers are added (<code class="highlighter-rouge">lea</code>) and the result is stored in <code class="highlighter-rouge">%eax</code>.</p>
+
+<h3 id="stepping-through-the-code">Stepping through the code</h3>
+
+<p>We can use the gnu debugger
+<a href="http://en.wikipedia.org/wiki/GNU_Debugger">gdb</a> to see how the program
+is executed.  Call <code class="highlighter-rouge">gdb a.out</code> to start a debuggiong session. Our
+comments appear at after (#):</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$ gdb a.out
+
+GNU gdb (GDB) 7.1-ubuntu
+Copyright (C) 2010 Free Software Foundation, Inc.
+[...]
+(gdb) b _start               # Insert a breakpoint at function _start
+Breakpoint 1 at 0x4003e0
+(gdb) r                      # run the program
+Starting program: /home/heinrich/Desktop/C_experiments/b.out
+
+Breakpoint 1, 0x00000000004003e0 in _start ()
+(gdb) stepi                  # one step forwards
+0x00000000004003e2 in _start ()
+</code></pre></div></div>
+
+<p>Pressing [enter] now repeatedly we can step forwards trough the program.
+It will display the offset of the current instruction and the function being executed.</p>
+
+<p>The following functions are called:</p>
+
+<ol>
+  <li>_start ()</li>
+  <li>__libc_start_main@plt ()</li>
+  <li>?? ()</li>
+  <li>?? () from /lib64/ld-linux-x86-64.so.2 (ca. 1000 instructions!)</li>
+  <li>__do_global_ctors_aux ()</li>
+  <li>init ()</li>
+  <li>__libc_csu_init ()</li>
+  <li>__libc_start_main () from /lib/libc.so.6</li>
+  <li>_setjmp () from /lib/libc.so.6</li>
+  <li>?? () from /lib/libc.so.6</li>
+  <li>__libc_start_main () from /lib/libc.so.6</li>
+  <li>’'’main ()’’’                           ( HERE WE ARE ! – finally )</li>
+  <li>__libc_csu_init ()</li>
+  <li>? () from /lib/libc.so.6  (another 500 instructions)</li>
+</ol>
+
+<p>Now we show last command in assembly language using gdb:</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>(gdb) display/i $pc
+=&gt; 0x4003e2 &lt;_start+2&gt;:	     mov    %rdx,%r9
+(gdb) stepi
+0x00000000004003e5 in _start ()
+1: x/i $pc
+=&gt; 0x4003e5 &lt;_start+5&gt;:	pop    %rsi
+(gdb) info registers         # show contents of registers
+rax            0x1c	     28
+rbx            0x0	     0
+rcx            0x7ffff7ffd040	140737354125376
+rdx            0x7ffff7dec250	140737351959120
+rsi            0x7ffff7df7a83	140737352006275
+...
+r8             0xb	11
+r9             0x7ffff7dec250	140737351959120
+r10            0xb		11
+...
+gs             0x0	0
+</code></pre></div></div>
+
+<h2 id="memory-management">Memory Management</h2>
+
+<p>We have been told, that the segments of the ELF file are loaded into the memory
+of the computer. Can we see how that really works?</p>
+
+<ul>
+  <li>Which memory segments are reserved for the program?</li>
+  <li>What is inside these memoy pages.</li>
+</ul>
+
+<p>A nice explanation of the physical lyout of the memory can be found inside the
+<a href="http://dirac.org/linux/gdb/02a-Memory_Layout_And_The_Stack.php#wherearewegoingtogo">GDB documentation</a>.</p>
+
+<p>As explained in the note, each program assumes that it can access all the memory of the computer
+and starts writing it offset 0. This is of course not the case. The instead the OS provides
+reserved spaces inside the memory (virtual memory pages) which are typically 4kb in size <a href="http://en.wikipedia.org/wiki/Virtual_memory">Wikipedia - Virtual Memory</a>.</p>
+
+<p>The translation of the adresses to the physical location is made on the fly by a special coprocessor called <a href="http://en.wikipedia.org/wiki/Memory_management_unit">Memory Mamagement Unit (MMU)</a>.</p>
+
+<p>The OS binds these VMP to a process. Unless explicitly stated, no other process is allowed
+to read out this memory.</p>
+
+<p>So how do whe memory pages look like that we got for our sweet little program?
+Linux helps us with that. We first run the program inside the debugger in order to have it in the memory.</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$ gdb a.out
+(gdb) b main
+(gdb) r
+</code></pre></div></div>
+
+<p>Then we open another terminal and type (cf. [http://linux.die.net/man/5/proc man proc])</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$ cat /proc/`pgrep a.out`/maps
+</code></pre></div></div>
+
+<p>and get:</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Address                   Per. Offset   Dev.  inode.   Path name
+00400000-00401000         r-xp 00000000 08:05 21775994 /home/.../a.out
+00600000-00601000         r--p 00000000 08:05 21775994 /home/.../a.out
+00601000-00602000         rw-p 00001000 08:05 21775994 /home/.../a.out
+7ffff7a5a000-7ffff7bd4000 r-xp 00000000 08:05 15341246 /lib/libc-2.11.1.so
+7ffff7bd4000-7ffff7dd3000 ---p 0017a000 08:05 15341246 /lib/libc-2.11.1.so
+7ffff7dd3000-7ffff7dd7000 r--p 00179000 08:05 15341246 /lib/libc-2.11.1.so
+7ffff7dd7000-7ffff7dd8000 rw-p 0017d000 08:05 15341246 /lib/libc-2.11.1.so
+7ffff7dd8000-7ffff7ddd000 rw-p 00000000 00:00 0
+7ffff7ddd000-7ffff7dfd000 r-xp 00000000 08:05 15341231 /lib/ld-2.11.1.so
+7ffff7fcf000-7ffff7fd2000 rw-p 00000000 00:00 0
+7ffff7ff9000-7ffff7ffb000 rw-p 00000000 00:00 0
+7ffff7ffb000-7ffff7ffc000 r-xp 00000000 00:00 0        [vdso]
+7ffff7ffc000-7ffff7ffd000 r--p 0001f000 08:05 15341231 /lib/ld-2.11.1.so
+7ffff7ffd000-7ffff7ffe000 rw-p 00020000 08:05 15341231 /lib/ld-2.11.1.so
+7ffff7ffe000-7ffff7fff000 rw-p 00000000 00:00 0
+7ffffffde000-7ffffffff000 rw-p 00000000 00:00 0         [stack]
+ffffffffff600000-ffffffffff601000 r-xp 00000000 00:00 0 [vsyscall]
+</code></pre></div></div>
+
+<p>An better readble version is produced by</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$ cat /proc/`pgrep a.out`/smaps
+</code></pre></div></div>
+
+<p>but uses up too much space to reproduce it here.  We need to compare
+this to the output of the segmet view:</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Type           Offset             VirtAddr           PhysAddr
+               FileSiz            MemSiz              Flags  Align
+PHDR           0x0000000000000040 0x0000000000400040 0x0000000000400040
+               0x00000000000001f8 0x00000000000001f8  R E    8
+INTERP         0x0000000000000238 0x0000000000400238 0x0000000000400238
+               0x000000000000001c 0x000000000000001c  R      1
+    [Requesting program interpreter: /lib64/ld-linux-x86-64.so.2]
+LOAD           0x0000000000000000 0x0000000000400000 0x0000000000400000
+               0x000000000000067c 0x000000000000067c  R E    200000
+LOAD           0x0000000000000e18 0x0000000000600e18 0x0000000000600e18
+               0x0000000000000200 0x0000000000000210  RW     200000
+DYNAMIC        0x0000000000000e40 0x0000000000600e40 0x0000000000600e40
+               0x00000000000001a0 0x00000000000001a0  RW     8
+NOTE           0x0000000000000254 0x0000000000400254 0x0000000000400254
+               0x0000000000000044 0x0000000000000044  R      4
+GNU_EH_FRAME   0x00000000000005dc 0x00000000004005dc 0x00000000004005dc
+               0x0000000000000024 0x0000000000000024  R      4
+GNU_STACK      0x0000000000000000 0x0000000000000000 0x0000000000000000
+               0x0000000000000000 0x0000000000000000  RW     8
+GNU_RELRO      0x0000000000000e18 0x0000000000600e18 0x0000000000600e18
+               0x00000000000001e8 0x00000000000001e8  R      1
+</code></pre></div></div>
+
+<p>Comparing the VirtAddr colum to the Address colum above suggests, that the segments:</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>PHDR           0x0000000000000040 0x0000000000400040 0x0000000000400040
+INTERP         0x0000000000000238 0x0000000000400238 0x0000000000400238
+LOAD           0x0000000000000000 0x0000000000400000 0x0000000000400000
+NOTE           0x0000000000000254 0x0000000000400254 0x0000000000400254
+GNU_EH_FRAME   0x00000000000005dc 0x00000000004005dc 0x00000000004005dc
+</code></pre></div></div>
+
+<p>Are mapped into the the first memory page. And segments:</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>LOAD           0x0000000000000e18 0x0000000000600e18 0x0000000000600e18
+DYNAMIC        0x0000000000000e40 0x0000000000600e40 0x0000000000600e40
+GNU_RELRO      0x0000000000000e18 0x0000000000600e18 0x0000000000600e18
+</code></pre></div></div>
+
+<p>into the second one. The segment:</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>GNU_STACK      0x0000000000000000 0x0000000000000000 0x0000000000000000
+</code></pre></div></div>
+
+<p>has only zero entries and seems to have something to do with the program stack,
+which has its own VM page:</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>7ffffffde000-7ffffffff000 rw-p 00000000 00:00 0         [stack]
+</code></pre></div></div>
+
+<h3 id="inspecting-the-memory">Inspecting the memory</h3>
+
+<p>We can use the GNU debugger to look inside these memory locations!
+Lets first display the beginning of the first memory page starting at 0x400000:</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>(gdb) x/24x 0x00400000
+0x400000:   0x7f	0x45	0x4c	0x46	0x02	0x01	0x01	0x00
+0x400008:   0x00	0x00	0x00	0x00	0x00	0x00	0x00	0x00
+0x400010:   0x02	0x00	0x3e	0x00	0x01	0x00	0x00	0x00
+</code></pre></div></div>
+
+<p>Do you see what this is?? Precisely the beginning of the ELF file: ‘0x7f ELF’</p>
+
+<h1 id="resources">Resources</h1>
+
+<ul>
+  <li>General
+    <ul>
+      <li><a href="http://computer.howstuffworks.com/computer-memory.htm">How Computer Memory work</a></li>
+      <li><a href="http://computer.howstuffworks.com/operating-system.htm">How Operating Systems work</a></li>
+      <li><a href="http://homepage.cs.uri.edu/courses/fall2005/csc101s1/Readings.html">Rhode Iseland University - CSC101</a></li>
+    </ul>
+  </li>
+  <li>Architecture
+    <ul>
+      <li><a href="http://en.wikipedia.org/wiki/X86_architecture">Wikipedia x86 </a></li>
+      <li><a href="http://de.wikipedia.org/wiki/X86-Prozessor">Wikipedia x86 Prozessor</a></li>
+    </ul>
+  </li>
+  <li>ELF Files
+    <ul>
+      <li><a href="http://en.wikipedia.org/wiki/Comparison_of_executable_file_formats">Wikipedia comparison of executable file formats</a></li>
+      <li><a href="http://www.linuxforums.org/articles/understanding-elf-using-readelf-and-objdump_125.html">LinuxForums.org - ELF using readelf and objdump</a></li>
+      <li><a href="http://www.iecc.com/linker/">John R. Levine - Linkers and Loaders</a></li>
+      <li><a href="http://en.wikipedia.org/wiki/Executable_and_Linkable_Format">Wikipedia ELF</a></li>
+      <li><a href="http://en.wikipedia.org/wiki/Objdump">Wikipedia objdump</a></li>
+    </ul>
+  </li>
+  <li>Application Binary Interfaces
+    <ul>
+      <li><a href="http://en.wikipedia.org/wiki/Application_binary_interface">Wikipedia Application Binary Interface</a></li>
+      <li><a href="http://www.sco.com/developers/devspecs/gabi41.pdf">Generic ABI Reference</a></li>
+      <li><a href="http://www.sco.com/developers/devspecs/abi386-4.pdf">SysV-386 ABI supplement</a></li>
+      <li><a href="http://www.x86-64.org/documentation/abi.pdf">SysV-AMD64 ABI supplement</a></li>
+    </ul>
+  </li>
+  <li>Assembler
+    <ul>
+      <li><a href="http://www.cs.cmu.edu/~fp/courses/15213-s07/misc/asm64-handout.pdf">x86 Machine Level Programming</a></li>
+      <li><a href="http://www.eresi-project.org/">Reverse Engeneering Project</a></li>
+      <li><a href="http://en.wikipedia.org/wiki/X86_assembly_language">Wikipedia x86 Assembly language</a></li>
+      <li><a href="http://www.delorie.com/djgpp/v2faq/faq8_20.html">GCC Output Assembler Code</a></li>
+    </ul>
+  </li>
+  <li>C Programming
+    <ul>
+      <li><a href="http://ftp.math.uh.edu/pub/sanders/Math6378-sp12/Documents/C+F77/oxford-CTutorial.pdf">Oxford Computer Science - Programming in C</a></li>
+      <li><a href="http://zanasi.chem.unisa.it/download/C.pdf">The C Programming Language</a></li>
+    </ul>
+  </li>
+  <li>Operating System
+    <ul>
+      <li><a href="http://computer.howstuffworks.com/operating-system5.htm">how OS works</a></li>
+      <li><a href="http://homepage.cs.uri.edu/book/operating_systems/operating_systems.htm">CS101</a></li>
+    </ul>
+  </li>
+</ul>
+
+
+  <br/>
+  <em>View the version history of this post on <a href="https://github.com/HeinrichHartmann/HeinrichHartmann.github.io/commits/source/_posts/2012-09-10-Dissecting-Hello-World.md">GitHub</a>.</em>
+  <br/>
+  <!-- Comments -->
+  
+    <em>Comments have been disabled until the dust around the GDPR settled.</em>
+    <!-- <div id="disqus_thread"></div> -->
+    <!-- <script type="text/javascript"> -->
+    <!--   /* * * CONFIGURATION VARIABLES * * */ -->
+    <!--   var disqus_shortname = 'heinrichhartmann'; -->
+    <!--   /* * * DON'T EDIT BELOW THIS LINE * * */ -->
+    <!--   (function() { -->
+    <!--   var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true; -->
+    <!--   dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js'; -->
+    <!--   (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq); -->
+    <!--   })(); -->
+    <!-- </script> -->
+    <!-- <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments</a></noscript> -->
+  
+
+</div>
+
+
+  <div class="footer">
+    <div class="contact">
+      <p>
+        Licensed under <a rel="license" href="http://creativecommons.org/licenses/by/4.0/">CC-BY 4.0.</a>
+        <span xmlns:dct="http://purl.org/dc/terms/" property="dct:title" style="display:none">This blog</span>
+        <span xmlns:cc="http://creativecommons.org/ns#" property="cc:attributionName" style="display:none">Heinrich Hartmann</span>
+      </p>
+    </div>
+  </div>
+</div>
+
+<!-- Google Analytics -->
+
+<!-- <script> -->
+<!--   (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){ -->
+<!--   (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o), -->
+<!--   m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m) -->
+<!--   })(window,document,'script','//www.google-analytics.com/analytics.js','ga'); -->
+
+<!--   ga('create', 'UA-53959000-1', 'auto'); -->
+<!--   ga('send', 'pageview'); -->
+<!-- </script> -->
+
+</body>
+</html>
