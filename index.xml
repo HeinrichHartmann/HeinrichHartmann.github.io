@@ -18,7 +18,7 @@
       
       <guid>/v2/posts/crash/</guid>
       <description>Crash events are one of the more serious events that can happen when operating a service. Usually it&amp;rsquo;s crashing components that cause cascading failures and service outages. It&amp;rsquo;s critical to have good visibility into those events, since they can cause major damage and should be avoided.
-Unfortunately, debugging crashes is one of the more complicated endeavors. The state of a crash process is usually compromised and the process can&amp;rsquo;t be trusted to collect debugging information on it&amp;rsquo;s own.</description>
+Unfortunately, debugging crashes is one of the more complicated endeavors. The state of a crash process is often compromised and the process can&amp;rsquo;t be trusted to collect debugging information on it&amp;rsquo;s own.</description>
     </item>
     
   </channel>

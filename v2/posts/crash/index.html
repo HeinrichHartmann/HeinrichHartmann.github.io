@@ -23,6 +23,7 @@
 	
   <main class="markdown-container">
 		<article class="markdown-body">
+      <h1 class="sticker"> UNPUBLISHED DRAFT </h1>
 			<h1>Better Crash Reporting</h1>
       <p class="meta">
         Written on 2020-05-12
@@ -34,7 +35,7 @@
 it&rsquo;s crashing components that cause cascading failures and service outages.  It&rsquo;s critical to have
 good visibility into those events, since they can cause major damage and should be avoided.</p>
 <p>Unfortunately, debugging crashes is one of the more complicated endeavors.  The state of a crash
-process is usually compromised and the process can&rsquo;t be trusted to collect debugging information on
+process is often compromised and the process can&rsquo;t be trusted to collect debugging information on
 it&rsquo;s own.</p>
 <p>In this post, we list a few desirable properties that we want crash reporting to have in order to
 enable and simplify effective debugging.  Afterwards we are going to report on some progress we have
@@ -71,13 +72,13 @@ operators.</p>
 <p><strong>State Information</strong></p>
 <ol start="2">
 <li>
-<p>The stacktrace of all active threads/coroutines in the process.  Or when using event loops: The
-list of pending events on each queue.</p>
+<p>Stacktraces of all active threads/coroutines in the process.<br>
+When using event loops: The list of pending events on each queue.</p>
 </li>
 <li>
-<p>The values of all local variables on active stack-frames.  When those variables are pointing to
-structs/objects we want to have the stored attribute values of those objects as well - up to a
-sensible recursion depth.</p>
+<p>The values of all local variables on active stack-frames.<br>
+When those variables are pointing to structs/objects we want to have the stored attribute values of
+those objects as well - up to a sensible recursion depth.</p>
 </li>
 <li>
 <p>The list of all active work units
@@ -100,11 +101,12 @@ Logs are only written when request are completed.
 Otherwise you won&rsquo;t have information about http return code, payload length or request duration.</p>
 <p>So, if you crash during a request is being serviced, you will not have log line for this very
 request being written out.
-Here is a public example, of this exact problem:</p>
-<blockquote class="twitter-tweet"><p lang="en" dir="ltr">None of Honeycomb&#39;s traces showed this because the traces in flight were destroyed by the OOM and never transmitted to metamonitoring. The black box monitor of AWS ALB logs did tell us we had a problem, but we misinterpreted the signs.<br><br>Another retrospect graph of the stampede: <a href="https://t.co/pQL5f3KCiS">pic.twitter.com/pQL5f3KCiS</a></p>&mdash; Liz Fong-Jones (方禮真) (@lizthegrey) <a href="https://twitter.com/lizthegrey/status/1192178908982104067?ref_src=twsrc%5Etfw">November 6, 2019</a></blockquote>
-<script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
-
-<p>More discussion: <a href="https://twitter.com/heinrichhartman/status/1192594701658075136">here</a>.</p>
+A public example, of this exact problem can be found <a href="https://twitter.com/lizthegrey/status/1192178908982104067">here</a>:</p>
+<blockquote>
+<p>None of [our] traces showed this because the traces in flight were destroyed by the OOM and never
+transmitted to metamonitoring.  The black box monitor of AWS ALB logs did tell us we had a
+problem, but we misinterpreted the signs.</p>
+</blockquote>
 <p>It&rsquo;s for this reason that whish &ldquo;#4 - List of active work units&rdquo; is non-trivial to attain.</p>
 <h3 id="in-process-vs-out-of-process-crash-handling">In-Process vs. Out-of-Process crash handling</h3>
 <blockquote>
@@ -186,8 +188,8 @@ itself.</p>
   /-------------------------------------/
          |
      (terminated)
-</code></pre><h3 id="plain-stack-traces">Plain Stack Traces</h3>
-<p>Stack traces are the most common artifact that is salvaged from a crash.
+</code></pre><h3 id="plain-stacktraces">Plain Stacktraces</h3>
+<p>Stacktraces are the most common artifact that is salvaged from a crash.
 It&rsquo;s possible to generate stack traces from inside inside the process (via
 <code>backtrace(3)</code>/<a href="http://www.nongnu.org/libunwind/">libunwind</a>), but it can also be extracted from a
 stopped process or a coredump (via gdb/pstack).</p>
@@ -241,8 +243,8 @@ symbolized), thereby realizing #2 #3 from our list (at least for parts of the sy
 <p><img src="/v2/images/stacktrace-full.png" alt="Full Stacktrace"></p>
 <p>Backtrace reports can further be annotated with meta information about the environment and versions
 in the form of key-value tags, which allows us to realize #0 and #1.</p>
-<h2 id="lua-native-stack-traces">Lua-native Stack Traces</h2>
-<p>When running interpreted languages like lua, the C stack traces shown above will not be very helpful.
+<h2 id="lua-native-stacktraces">Lua-native Stacktraces</h2>
+<p>When running interpreted languages like lua, the C stacktraces shown above will not be very helpful.
 The only information they provide is essentially: &ldquo;You have been running lua code&rdquo; &ndash; Well. Thanks very much.
 The stack we are interested in, is the stack of the interpreted language: lua in that case.</p>
 <p>batcktrace.io provides native stack-traces out of the box for a number of run-times including Python, Java, NodeJs.
@@ -292,32 +294,28 @@ concurrency model, active requests do not always manifest itself as as stack fra
 might have desintetraged into dozens of micro-tasks that are executed in different even loops,
 waiting to be re-assembled upon completion.  This makes reconstructing active HTTP
 requests from local variable state impractical.</p>
-<p>There are two effective means to salvage active HTTP requests from a crashed mtev app:</p>
+<p>There are two approaches to salvaging active HTTP requests from a crashed mtev app:</p>
 <ol>
 <li>
-<p>Leveraging the DistributedTracing/Zipkin information</p>
+<p>Leveraging the DistributedTracing/<a href="https://github.com/circonus-labs/libmtev/blob/master/src/utils/mtev_zipkin.c">zipkin module</a></p>
 </li>
 <li>
-<p>Using the HTTP observer module</p>
+<p>Leveraging the <a href="https://github.com/circonus-labs/libmtev/blob/master/src/modules/http_observer.c">http_observer module</a></p>
 </li>
 </ol>
-<p>Leveraging tracing data (1) is fundamentally more powerful approach since it is not tied to HTTP
+<p>Leveraging DistributedTracing data (1) is fundamentally more powerful approach since it is not tied to HTTP
 requests, and applies more generally to application instrumented with tracing technology
 (cf. <a href="https://opentracing.io/">OpenTracing</a>).  Libmtev comes with a Zipkin module, that annotates
 HTTP requests with spans, which could be leveraged for the task at hand. However, we would need to
-not keep a global register of all active spans, that could be poked by a tracer to make this work.
+keep a global register of all active spans, that could be poked by a tracer to make this work.
 For performance reasons we want to avoid doing so for the time being.</p>
 <p>For the case of HTTP requests, libmtev already comes with a global register of active spans as part
-of the HTTP observer module (2), which allows the operator to view active and recent HTTP requests
-from within the admin web-console.</p>
+of the http_observer module (2), which allows the operator to view active and recent HTTP requests
+from within the admin web-console:</p>
 <p><img src="/v2/images/http-observer-console.png" alt=""></p>
-<p>The list of active HTTP requests can be extracted by an out-of-process tracer by inspecting this
-<a href="https://github.com/circonus-labs/libmtev/blob/master/src/modules/http_observer.c#L47">static hash table</a>.</p>
-<p>We had to do a little bit of extra work to extract the hash content, since mtev&rsquo;s hash tables
-perform some pointer abuse and use the highly performant but badly symbolized <a href="https://github.com/concurrencykit/ck">libck</a>.
-To extract the content, extended ptrace with <a href="https://github.com/circonus-labs/libmtev/blob/master/src/backtrace-support/mtev-hash-module.lua">a module</a>
-that knows how to performs the pointer arithmetic to extract keys and values from the mtev hash.</p>
-<p>The result is a list of active HTTP requests that get&rsquo;s attached to each crash report.</p>
+<p>The list of active HTTP requests can be extracted by an out-of-process tracer by inspecting a
+global (static) hash table. We use a <a href="https://github.com/circonus-labs/libmtev/pull/681">ptrace/lua-module</a> for this task.
+The result is a list of active HTTP requests that get&rsquo;s attached to each backtrace.io crash report:</p>
 <p><img src="/v2/images/http-observer-annotations.png" alt=""></p>
 <h2 id="conclusion">Conclusion</h2>
 <p>We find that crash reporting is an under-appreciated art form.
@@ -331,13 +329,16 @@ like, and explained some of the steps we have taken in this direction.</p>
 <p>By leveraging tooling provided by backtrace.io we were able to get close to our visibility goals
 into crash events. In particular for native C applications the ability to inspect the state of the
 crashed application is well developed.
-We see room for improvement when it comes to:</p>
+However, there is still a lot of room for improvement, when it comes to:</p>
 <ol>
 <li>
-<p>Extracting stack traces and variable state from interpreted languages (lua, Python, Java)</p>
+<p>Extracting stacktraces and variable state from interpreted languages (lua, Python, Java)</p>
 </li>
 <li>
 <p>Leveraging tracing data to annotate crash reports with more high-level information about active work units at the time of the crash.</p>
+</li>
+<li>
+<p>Integrating with monitoring tools to provide better contextual information about resource usage and historic behavior.</p>
 </li>
 </ol>
 <p>We hope to see progress on this in the future!</p>
