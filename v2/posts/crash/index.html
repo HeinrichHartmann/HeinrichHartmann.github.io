@@ -310,15 +310,15 @@ For performance reasons we want to avoid doing so for the time being.</p>
 <p>For the case of HTTP requests, libmtev already comes with a global register of active spans as part
 of the HTTP observer module (2), which allows the operator to view active and recent HTTP requests
 from within the admin web-console.</p>
-<!-- raw HTML omitted -->
+<p><img src="/v2/images/http-observer-console.png" alt=""></p>
 <p>The list of active HTTP requests can be extracted by an out-of-process tracer by inspecting this
 <a href="https://github.com/circonus-labs/libmtev/blob/master/src/modules/http_observer.c#L47">static hash table</a>.</p>
 <p>We had to do a little bit of extra work to extract the hash content, since mtev&rsquo;s hash tables
 perform some pointer abuse and use the highly performant but badly symbolized <a href="https://github.com/concurrencykit/ck">libck</a>.
 To extract the content, extended ptrace with <a href="https://github.com/circonus-labs/libmtev/blob/master/src/backtrace-support/mtev-hash-module.lua">a module</a>
 that knows how to performs the pointer arithmetic to extract keys and values from the mtev hash.</p>
-<p>The result is a list of active HTTP requests that get&rsquo;s attached to each crash report:</p>
-<!-- raw HTML omitted -->
+<p>The result is a list of active HTTP requests that get&rsquo;s attached to each crash report.</p>
+<p><img src="/v2/images/http-observer-annotations.png" alt=""></p>
 <h2 id="conclusion">Conclusion</h2>
 <p>We find that crash reporting is an under-appreciated art form.
 When done right, it can speed up the debugging process for production incidents dramatically,
@@ -337,7 +337,7 @@ We see room for improvement when it comes to:</p>
 <p>Extracting stack traces and variable state from interpreted languages (lua, Python, Java)</p>
 </li>
 <li>
-<p>Leveraging tracing data to annotate crash reports with active spans.</p>
+<p>Leveraging tracing data to annotate crash reports with more high-level information about active work units at the time of the crash.</p>
 </li>
 </ol>
 <p>We hope to see progress on this in the future!</p>
