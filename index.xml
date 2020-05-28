@@ -6,10 +6,20 @@
     <description>Recent content on HeinrichHartmann.com</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Wed, 20 May 2020 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Wed, 27 May 2020 00:00:00 +0000</lastBuildDate>
     
 	<atom:link href="/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Better Crash Reporting</title>
+      <link>/v2/posts/crash/</link>
+      <pubDate>Wed, 27 May 2020 00:00:00 +0000</pubDate>
+      
+      <guid>/v2/posts/crash/</guid>
+      <description>Crash events are some of the more serious events that can happen when operating a service. Usually it is crashing components that cause cascading failures and service outages. It is critical to have good visibility into those events, since they can cause major damage and should be avoided.
+Unfortunately, debugging crashes is one of the more complicated endeavors. The state of a crashed process is often compromised and the process can&amp;rsquo;t be trusted to collect debugging information on its own.</description>
+    </item>
     
     <item>
       <title>Post Mortem Heap Analysis</title>
@@ -20,16 +30,6 @@
       <description>This is report, about debugging an incident at a customer site. Our component, is running out of memory quickly, and getting OOM killed after filling 64Gb of RAM within 20 minutes.
 We have an 18Gb core dump taken after 10 minutes of activity.
 The application is written in C/lua (luajit). We have the source code available, but no clear idea where the memory leaked.</description>
-    </item>
-    
-    <item>
-      <title>Better Crash Reporting</title>
-      <link>/v2/posts/crash/</link>
-      <pubDate>Tue, 12 May 2020 00:00:00 +0000</pubDate>
-      
-      <guid>/v2/posts/crash/</guid>
-      <description>Crash events are some of the more serious events that can happen when operating a service. Usually it is crashing components that cause cascading failures and service outages. It is critical to have good visibility into those events, since they can cause major damage and should be avoided.
-Unfortunately, debugging crashes is one of the more complicated endeavors. The state of a crashed process is often compromised and the process can&amp;rsquo;t be trusted to collect debugging information on its own.</description>
     </item>
     
   </channel>
