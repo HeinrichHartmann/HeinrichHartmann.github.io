@@ -435,5 +435,9 @@ content:
   title: DSA Torgelow 2015 - Academy Manager
   pdf: "https://secure.bildung-und-begabung.de/dsa/empfehlung/download/2015/DSA-Programm_2015.pdf#page=67"
 
+- tags: opinion, post
+  date: 2016-11-15
+  title: A-Digital-Passport-for-Digital-Citizens
+  href: "/archive/A-Digital-Passport-for-Digital-Citizens.html"
 
 ---

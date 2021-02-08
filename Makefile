@@ -33,9 +33,9 @@ OLD_BLOGS=\
   blog/2013/01/17/Why-Openness-benefitts-research.html \
   blog/2012/09/10/Dissecting-Hello-World.html \
   opinion/2020/02/15/Thuringen.html \
-  opinion/2015/03/01/Deutsche-Schuelerakademie.html
+	opinion/2016/11/15/A-Digital-Passport-for-Digital-Citizens.html
 
-docker-hugo-build:
+public:
 	docker run --rm -p 1313:1313 -v $$PWD:/srv/hugo yanqd0/hugo hugo
 
 docker-hugo-server:
@@ -46,15 +46,24 @@ serve:
 
 .PHONY: import
 import:
-	mkdir -p static/archive
-	cd import/jekyll/_site/ && cp $(OLD_BLOGS) ../../../static/archive
+	git checkout hugo-export _site
+	cd _site/ && cp $(OLD_BLOGS) ../static/archive
 
+.PHONY: prepare-publish
+prepare-publish:
+  # ./publish should contain a new git repository with a checkout of the master banch
+	cd public && \
+	  git init && \
+	  git remote add origin git@github.com:HeinrichHartmann/HeinrichHartmann.github.io.git && \
+	  git fetch origin master && \
+	  git reset origin/master
+
+.PHONY: publish
 publish:
-	# make sure that master is up to date with origin/master before proceeding
-	echo "ref: refs/heads/master" > .git/HEAD
-	git reset
-	git add ./public
-	git commit -m "update"
-	git subtree push --prefix public origin master
-	echo "ref: refs/heads/hugo" > .git/HEAD
-	git reset
+	# run prepare-public first if running for the first time
+	cd public && \
+	  git fetch origin master &&\
+	  git reset origin/master &&\
+		git add . && \
+		git commit -m "update" && \
+	  git push origin master
