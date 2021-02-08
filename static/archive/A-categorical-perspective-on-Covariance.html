@@ -1,0 +1,684 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en-us">
+<head>
+   <meta http-equiv="content-type" content="text/html; charset=utf-8"/>
+   <title>A Categorical Perspective On Covariance</title>
+   <meta name="author" content="Heinrich Hartmann"/>
+   
+   </head>
+<body>
+  <div class="site">
+    <div class="headline"><a href="/">Heinrich Hartmann</a></div>
+    <div id="post">
+  <h1 id="h1-title"> A Categorical Perspective On Covariance</h1>
+  
+  
+  <p class="meta">
+    Written on 2014-12-08
+    
+    
+  </p>
+
+  <!-- Splash -->
+  
+
+  <!-- Abstract -->
+  
+
+  
+
+
+  <!-- Post content -->
+  <script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS_HTML" type="text/javascript"></script>
+
+<style> .center { margin-right: auto; margin-left:auto; display: block } </style>
+
+<style src="/css/coderay.css"></style>
+
+<!-- # A categorical perspective on Covariance -->
+
+<p>For functions <script type="math/tex">f,g</script> on a measure space <script type="math/tex">\Omega, \mu</script> (e.g. a real
+interval <script type="math/tex">[0,1]</script>) there is a well known scalar product</p>
+
+<script type="math/tex; mode=display">\langle f,g \rangle = \int f \cdot g \, d\mu.</script>
+
+<p>This scalar product is of fundamental importance to the study of
+function and operators on measure spaces (Function Analysis).  For
+example, there is a rich theory of how to decomposes functions on an
+interval into orthogonal Fourier-components.</p>
+
+<p>If <script type="math/tex">\mu</script> is a probability measure, we can regard <script type="math/tex">f,g</script> as random
+variables. In this setting the viewpoint changes quite a bit.  We give
+<script type="math/tex">f,g</script> new names: <script type="math/tex">X,Y</script>. We are no longer interested in <script type="math/tex">\Omega</script>,
+and also rarely consider the scalar product. Instead the focus lies on
+expectation</p>
+
+<script type="math/tex; mode=display">E[X] = \int X \, d\mu</script>
+
+<p>and the covariance</p>
+
+<script type="math/tex; mode=display">Cov[X,Y] = E[X \cdot Y]  - E[X] E[Y].</script>
+
+<p>This note considers the relation between these the probabilistic
+notions and the functional point of view.</p>
+
+<h2 id="constant-split">Constant Split</h2>
+
+<p>Let <script type="math/tex">\Omega, P</script> be a probability space. Consider the vector space
+of square integrable functions:</p>
+
+<script type="math/tex; mode=display">% <![CDATA[
+\def\IR{\mathbb{R}}
+   \def\LL{L^2(\Omega, \IR)}
+   \LL = \{ x:\Omega \rightarrow \IR \,|\, \int |x|^2 dP < \infty \} / \sim. %]]></script>
+
+<p>See e.g. <a href="https://en.wikipedia.org/wiki/Lp_space#Lp_spaces">wikipedia</a> for
+the details. We have the integral linear operator</p>
+
+<script type="math/tex; mode=display">\def\lra{\longrightarrow}
+   I : \LL \lra \IR, \quad x \mapsto \int x \,dP.</script>
+
+<p>The inclusion of the constant functions <script type="math/tex">\iota</script> leaves us with a sequence:</p>
+
+<script type="math/tex; mode=display">\IR \overset{\iota}{\lra} \LL \overset{I}{\lra} \IR,</script>
+
+<p>whose composition <script type="math/tex">I \circ \iota = id_\IR</script>, since <script type="math/tex">P</script> is a
+probability measure. We get an induced splitting of <script type="math/tex">\LL</script> into
+constant functions plus functions with integral <script type="math/tex">I = 0</script>:</p>
+
+<script type="math/tex; mode=display">% <![CDATA[
+\begin{align*}
+    \def\isom{\cong}
+    \LL   &= \IR \oplus \LL_0. \\
+    \LL_0 &= \{ f \,|\, I(f) = 0 \} \isom \LL / \text{const.}
+\end{align*} %]]></script>
+
+<p>A function <script type="math/tex">x</script> can be decomposed accordingly into its constant part <script type="math/tex">I(x)</script> and
+its integral-0 part: <script type="math/tex">N(x) = x - I(x)</script>.</p>
+
+<h2 id="bilinear-forms">Bilinear Forms</h2>
+
+<p>The space <script type="math/tex">\LL</script> comes with a scalar product</p>
+
+<script type="math/tex; mode=display">S: \LL \times \LL \lra \IR, \quad x,y \mapsto I(x\cdot y)</script>
+
+<p>which is non-degenerate and complete and thus makes this space into a
+<a href="https://en.wikipedia.org/wiki/Hilbert_space">Hilbert Space</a>.</p>
+
+<p>The covariance product is defined as</p>
+
+<script type="math/tex; mode=display">Cov(x,y) = S(x,y) - I(x) I(y) = S(x - I(x), y - I(y)) = S(N(x),N(y)).</script>
+
+<p>This product is bilinear but degenerate. The radical of <script type="math/tex">Cov</script> are
+precisely the
+(<a href="https://en.wikipedia.org/wiki/Almost_everywhere">almost</a>) constant
+functions <script type="math/tex">\iota(\IR)</script>.</p>
+
+<script type="math/tex; mode=display">Cov(x,x) = 0  \Leftrightarrow S(x - I(x), x - I(x)) = 0 \Leftrightarrow x = I(x) \; a.e.</script>
+
+<p>In the light of the above decomposition, we see that <script type="math/tex">Cov</script> is the
+restriction of <script type="math/tex">S</script> to <script type="math/tex">\LL_0</script> extended back to <script type="math/tex">\LL</script> using the
+projection <script type="math/tex">N(x) = x - I(x)</script>.</p>
+
+<h2 id="conclusion">Conclusion</h2>
+
+<ul>
+  <li>
+    <p>The space of integral-0 function <script type="math/tex">\LL_0</script> together with the
+covariance product <script type="math/tex">Cov</script> is a Hilbert Space.</p>
+  </li>
+  <li>
+    <p>The natural inclusion <script type="math/tex">\LL_0 \rightarrow \LL</script> is isometric
+with adjoint linear operator <script type="math/tex">N(x) = x - I(x)</script>.</p>
+  </li>
+  <li>
+    <p>There is an orthogonal direct sum decomposition:</p>
+
+    <script type="math/tex; mode=display">\LL \cong \IR \oplus  \LL_0, \quad f \mapsto (I(f),N(f))</script>
+  </li>
+</ul>
+
+<h2 id="update-2015-05-17-correlation-as-cosine">Update 2015-05-17: Correlation as Cosine</h2>
+
+<p>The <a href="http://en.wikipedia.org/wiki/Pearson_product-moment_correlation_coefficient">Pearson
+correlation</a>
+is defined as:</p>
+
+<script type="math/tex; mode=display">\rho(x,y) = \frac{Cov(x,y)}{\sqrt{Cov(x,x) Cov(y,y)}}.</script>
+
+<p>It measures the linear dependece between two random variables. E.g. in
+ the case of a discrete probability measure obtained from a sample,
+ the correlation is the ratio between explained variance in a linear
+ regression and total variance of the sample
+ cf. <a href="http://en.wikipedia.org/wiki/Coefficient_of_determination">wikipedia</a>.</p>
+
+<figure>
+    <img src="/assets/Covariance_files/cor.png" />
+    <img src="/assets/Covariance_files/nocor.png" />
+    <figcaption>Correlated (\rho ~ 0.88) and non-corrleated (\rho ~ -0.14) samples.</figcaption>
+</figure>
+
+<p>In analogy to the Euclidean plane, we define the cosine similarity between two functions by</p>
+
+<script type="math/tex; mode=display">cossim(x,y) = \frac{S(x,y)}{\sqrt{S(x,x) S(y,y)}}.</script>
+
+<p>Hence for centered functions <script type="math/tex">x,y \in \LL_0</script> we have</p>
+
+<script type="math/tex; mode=display">cossim(x,y) = \rho(x,y),</script>
+
+<p>which gives a surprising relation between two different geometric
+interpretations of the same data:</p>
+
+<ul>
+  <li>Regrssion line of coefficient pairs <script type="math/tex">(x_i,y_i)</script> in <script type="math/tex">\IR^2</script></li>
+  <li>Angle between vectors <script type="math/tex">(x_1,\dots,x_n)</script> and <script type="math/tex">(y_1,\dots,y_n)</script> in <script type="math/tex">\IR^n</script>.</li>
+</ul>
+
+<p>Note, that for cetnered functions (<script type="math/tex">I(x) = I(y) = 0</script>) the regression line
+will always pass through the origin and the slope can be calculated to</p>
+
+<script type="math/tex; mode=display">\hat{a}(x,y) = Cov(x,y)/Cov(x,x).</script>
+
+<p>However, at the moment I do not see how this helps to understand the
+above observation. My feeling is, that there should be a more
+conceptual reason for it. By interpreting <script type="math/tex">x,y</script> as maps <script type="math/tex">\IR^2
+\lra \IR^n</script> we can bring duality theory for vector spaces into play
+and maybe gain more insight form this perspective.</p>
+
+
+  <!-- Include Mathjax if needed -->
+  
+
+</div>
+
+  </div>
+</body>
+<style>
+  ody/*****************************************************************************/
+/*
+/* Common
+/*
+/*****************************************************************************/
+
+/* Global Reset */
+
+* {
+  margin: 0;
+  padding: 0;
+}
+
+html, body {
+  height: 100%;
+}
+
+body {
+  font-family: Helvetica, arial, sans-serif;
+  font-size: 14px;
+  line-height: 1.6;
+  background-color: white;
+  padding: 10px 30px 10px 30px;
+}
+
+h1 {
+  font-size: 1em;
+  text-transform: uppercase;
+  text-alig: left;
+  font-size: 1em;
+  margin-bottom: 1em;
+  margin-top: 2em;
+}
+h2 {
+  font-size: 1em;
+  margin-bottom: 1em;
+  margin-top: 2em;
+}
+p {
+  margin: 1em 0;
+}
+
+a {
+  color: #00a;
+}
+
+a:hover {
+  color: black;
+}
+
+a:visited {
+  color: #a0a;
+}
+
+table {
+  font-size: inherit;
+  font: 100%;
+}
+
+pre {
+  text-align: left;
+  overflow-y: auto;
+}
+
+/*****************************************************************************/
+/*
+/* Home
+/*
+/*****************************************************************************/
+
+ul.posts {
+  list-style-type: none;
+  margin-bottom: 2em;
+}
+
+ul.posts li {
+  line-height: 1.75em;
+}
+
+ul.posts span {
+  color: #aaa;
+  font-family: Monaco, "Courier New", monospace;
+  font-size: 75%;
+}
+
+
+.date {
+  color: #aaa;
+  font-family: Monaco, Courier New, monospace;
+  font-size: 75%;
+  font-weight: normal;
+  float:right;
+}
+
+.quo {
+  position:relative; top:-1px;
+}
+
+#banner {
+  margin-bottom: 1em;
+}
+
+/*****************************************************************************/
+/*
+/* Site
+/*
+/*****************************************************************************/
+
+.site {
+  text-align: justify;
+  width: 48em;
+  margin: 3em auto 2em auto;
+  line-height: 1.5em;
+  margin-bottom: 200px;
+}
+
+.site .headline a {
+    color: #a00;
+    font-weight: bold;
+    margin-bottom: 2em;
+    margin-top: 2em;
+    text-decoration: none;
+}
+
+.title {
+  color: #a00;
+  font-weight: bold;
+  margin-bottom: 2em;
+  margin-top: 2em;
+}
+
+.site .title a {
+  color: #a00;
+  text-decoration: none;
+}
+
+.site .title a:hover {
+  color: black;
+}
+
+.site .title a.extra {
+  color: #aaa;
+  text-decoration: none;
+  margin-right: 1em;
+}
+
+.site .title a.extra:hover {
+  color: black;
+}
+
+.site .meta {
+  color: #aaa;
+}
+
+.site .footer {
+  font-size: 80%;
+  color: #666;
+  border-top: 4px solid #eee;
+  margin-top: 2em;
+  overflow: hidden;
+}
+
+.site .footer .contact {
+  float: left;
+  margin-right: 1em;
+}
+
+.site .footer .contact a {
+  color: #8085C1;
+}
+
+.site .footer .rss {
+  float: right;
+}
+
+.site .footer .rss img {
+  border: 0;
+}
+
+/*****************************************************************************/
+/*
+/* Posts
+/*
+/*****************************************************************************/
+
+#markdown-toc li {
+    line-height: 1;
+}
+
+.abstract p {
+    width: 80%;
+    margin-left: auto;
+    margin-top: 3em;
+    margin-bottom: 3em;
+}
+
+#post h1 {
+  font-size: 2em;
+  text-transform: uppercase;
+  text-align: center;
+  margin: 2em 0 1.5em 0;
+  line-height: 1.5em;
+}
+#post h2, h3, h4, h5, h6 {
+  font-size: 1em;
+  margin-bottom: 1em;
+  margin-top: 2em;
+  border-bottom: 1px solid #cccccc;
+}
+#post h2:before { content: "# "; }
+#post h3:before { content: "## "; }
+#post h4:before { content: "### "; }
+
+/* standard */
+
+#post pre {
+  border: 1px solid #ddd;
+  background-color: #f5f5f5;
+  padding: 3px 5px 3px;
+  margin: 5px 0 5px 0;
+  font-family: Consolas, "Liberation Mono", Menlo, Courier, monospace;
+  font-size: 12px;
+  line-height: 16.79px;
+  word-wrap: normal;
+}
+
+#post ul,
+#post ol {
+  margin-left: 1.35em;
+}
+
+/* extra space for list elements  */
+#post li {
+  margin: 1em 0;
+}
+#post li li { /* ... but not for nested ones */
+  margin: .5em 0;
+}
+
+#post pre code {
+  border: none;
+}
+
+#post blockquote {
+  border-left: 4px solid #e8e8e8;
+  padding-left: 20px;
+  background-color: #f9f9f9;
+  margin: 30px 0;
+}
+
+.pullquote {
+  font-family: Georgia, serif;
+  font-size: 18px;
+  font-style: italic;
+  margin: 0.25em 0;
+  padding: 0.25em 40px;
+  line-height: 1.45;
+  position: relative;
+  color: #383838;
+}
+
+.pullquote:before {
+  display: block;
+  content: "\201C";
+  font-size: 80px;
+  position: absolute;
+  left: 0;
+  top: -20px;
+  color: #7a7a7a;
+}
+
+
+#post .credits {
+  text-align: right;
+  font-size: 70%;
+  color: #aaa;
+}
+
+/* terminal */
+
+#post pre.terminal {
+  border: 1px solid black;
+  background-color: #333;
+  color: white;
+}
+
+#post pre.terminal code {
+  background-color: #333;
+}
+
+#related {
+  border-top: 4px solid #eee;
+  margin-top: 2em;
+}
+
+#related h2 {
+  margin-bottom: 1em;
+}
+
+#disqus_thread {
+  border-top: 4px solid #eee;
+  margin-top: 2em;
+  padding-top: 1em;
+}
+
+#post img {
+  max-width: 100%;
+}
+
+/**
+ * Figure Plugin: https://github.com/lmullen/jekyll_figure
+ **/
+
+figure img {
+  border: 1px solid #ccc;
+  padding: 5px;
+  border-radius: 5px;
+  max-width : 100%;
+}
+
+figure {
+  text-align: center;
+}
+
+figure figcaption {
+  font-style: italic;
+  text-align: center;
+}
+
+.pdflink {
+  float: right;
+}
+
+/**
+ * GITHUB TABLE STYLES: https://github.com/alampros/Docter/blob/master/ghf_marked.css
+ **/
+
+table
+{
+  border-collapse:collapse;
+  margin:20px auto auto;
+  padding:0;
+}
+
+table tr
+{
+  border-top:1px solid #ccc;
+  background-color:#fff;
+  margin:0;
+  padding:0;
+}
+
+table tr:nth-child(2n)
+{
+  background-color:#f8f8f8;
+}
+table tr th[align="center"], table tr td[align="center"] {
+  text-align:center;
+}
+table tr th, table tr td
+{
+  border:1px solid #ccc;
+  text-align:left;
+  margin:0;
+  padding:6px 13px;
+}
+
+/**
+ * Responsive
+ **/
+@media only screen and (max-width: 50em) {
+  .site {
+    text-align: left;
+    width: 100%;
+    margin: 0;
+  }
+  body {
+    padding: 15px;
+  }
+}
+
+@media only screen and (max-width: 30em) {
+  .site {
+    font-size: 20px;
+    line-height: 2.5em;
+  }
+}
+
+.sticker {
+  color:red;
+  border-style:solid;
+  border-color:red;
+  border-radius:0.2em;
+  margin:50px;
+}
+
+@media only print {
+  .splash {
+    visibility: hidden;
+  }
+}
+
+.hookin {
+  float: left;
+  font-size: 2.5em;
+  font-weight: 700;
+  padding-top: 0.2em;
+  margin-right: 0.4em;
+  color: #a00;
+  color: #EC9F2E;
+  font-family: "franklin-gothic-urw",Verdana,Geneva,sans-serif;
+}
+
+.dropcaps::first-letter {
+  font-size: 4.8em;
+  color: #a00;
+  font-family: Georgia;
+  font-weight: 500;
+  line-height: 0.9em;
+  float: left;
+  margin-right: 0.1em;
+}
+
+</style>
+<style>
+  .highlight  { background: #ffffff; }
+.highlight .c { color: #999988; font-style: italic } /* Comment */
+.highlight .err { color: #a61717; background-color: #e3d2d2 } /* Error */
+.highlight .k { font-weight: bold } /* Keyword */
+.highlight .o { font-weight: bold } /* Operator */
+.highlight .cm { color: #999988; font-style: italic } /* Comment.Multiline */
+.highlight .cp { color: #999999; font-weight: bold } /* Comment.Preproc */
+.highlight .c1 { color: #999988; font-style: italic } /* Comment.Single */
+.highlight .cs { color: #999999; font-weight: bold; font-style: italic } /* Comment.Special */
+.highlight .gd { color: #000000; background-color: #ffdddd } /* Generic.Deleted */
+.highlight .gd .x { color: #000000; background-color: #ffaaaa } /* Generic.Deleted.Specific */
+.highlight .ge { font-style: italic } /* Generic.Emph */
+.highlight .gr { color: #aa0000 } /* Generic.Error */
+.highlight .gh { color: #999999 } /* Generic.Heading */
+.highlight .gi { color: #000000; background-color: #ddffdd } /* Generic.Inserted */
+.highlight .gi .x { color: #000000; background-color: #aaffaa } /* Generic.Inserted.Specific */
+.highlight .go { color: #888888 } /* Generic.Output */
+.highlight .gp { color: #555555 } /* Generic.Prompt */
+.highlight .gs { font-weight: bold } /* Generic.Strong */
+.highlight .gu { color: #aaaaaa } /* Generic.Subheading */
+.highlight .gt { color: #aa0000 } /* Generic.Traceback */
+.highlight .kc { font-weight: bold } /* Keyword.Constant */
+.highlight .kd { font-weight: bold } /* Keyword.Declaration */
+.highlight .kp { font-weight: bold } /* Keyword.Pseudo */
+.highlight .kr { font-weight: bold } /* Keyword.Reserved */
+.highlight .kt { color: #445588; font-weight: bold } /* Keyword.Type */
+.highlight .m { color: #009999 } /* Literal.Number */
+.highlight .s { color: #d14 } /* Literal.String */
+.highlight .na { color: #008080 } /* Name.Attribute */
+.highlight .nb { color: #0086B3 } /* Name.Builtin */
+.highlight .nc { color: #445588; font-weight: bold } /* Name.Class */
+.highlight .no { color: #008080 } /* Name.Constant */
+.highlight .ni { color: #800080 } /* Name.Entity */
+.highlight .ne { color: #990000; font-weight: bold } /* Name.Exception */
+.highlight .nf { color: #990000; font-weight: bold } /* Name.Function */
+.highlight .nn { color: #555555 } /* Name.Namespace */
+.highlight .nt { color: #000080 } /* Name.Tag */
+.highlight .nv { color: #008080 } /* Name.Variable */
+.highlight .ow { font-weight: bold } /* Operator.Word */
+.highlight .w { color: #bbbbbb } /* Text.Whitespace */
+.highlight .mf { color: #009999 } /* Literal.Number.Float */
+.highlight .mh { color: #009999 } /* Literal.Number.Hex */
+.highlight .mi { color: #009999 } /* Literal.Number.Integer */
+.highlight .mo { color: #009999 } /* Literal.Number.Oct */
+.highlight .sb { color: #d14 } /* Literal.String.Backtick */
+.highlight .sc { color: #d14 } /* Literal.String.Char */
+.highlight .sd { color: #d14 } /* Literal.String.Doc */
+.highlight .s2 { color: #d14 } /* Literal.String.Double */
+.highlight .se { color: #d14 } /* Literal.String.Escape */
+.highlight .sh { color: #d14 } /* Literal.String.Heredoc */
+.highlight .si { color: #d14 } /* Literal.String.Interpol */
+.highlight .sx { color: #d14 } /* Literal.String.Other */
+.highlight .sr { color: #009926 } /* Literal.String.Regex */
+.highlight .s1 { color: #d14 } /* Literal.String.Single */
+.highlight .ss { color: #990073 } /* Literal.String.Symbol */
+.highlight .bp { color: #999999 } /* Name.Builtin.Pseudo */
+.highlight .vc { color: #008080 } /* Name.Variable.Class */
+.highlight .vg { color: #008080 } /* Name.Variable.Global */
+.highlight .vi { color: #008080 } /* Name.Variable.Instance */
+.highlight .il { color: #009999 } /* Literal.Number.Integer.Long */
+
+</style>
+</html>

@@ -1,0 +1,584 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en-us">
+<head>
+   <meta http-equiv="content-type" content="text/html; charset=utf-8"/>
+   <title>Privacy Protection For Mobile Sensor Data</title>
+   <meta name="author" content="Heinrich Hartmann"/>
+   
+   </head>
+<body>
+  <div class="site">
+    <div class="headline"><a href="/">Heinrich Hartmann</a></div>
+    <div id="post">
+  <h1 id="h1-title"> Privacy Protection For Mobile Sensor Data</h1>
+  
+  
+  <p class="meta">
+    Written on 2014-10-22
+     in Koblenz, Germany 
+    
+  </p>
+
+  <!-- Splash -->
+  
+
+  <!-- Abstract -->
+  
+
+  
+
+
+  <!-- Post content -->
+  <p>Cross post from: http://west.uni-koblenz.de/de/news/blog/privacy-protection-for-mobile-sensor-data</p>
+
+<p>In recent days the importance of privacy protection has been amplified by the reports about the mass surveillance of ordinary citizens on a global scale by the NSA and other intelligence agencies around the world.</p>
+
+<p>While aiming at the noble cause of enhancing eParticipation using mobile technologies, Live+Gov systems do process a large variety data that is potentially infringing the citizens privacy. The captured data includes personal information like name, phone numbers and email addresses and sensor data from GPS and accelerometer sensors. Also with some applications it is possible to gather images and textual input from the citizen.</p>
+
+<p>While the collection of this data is necessary for providing the advanced services that Live+Gov aims to deliver, at he same time, the available raw data can be used to draw a very detailed picture of the private life of the citizen. For instance can GPS location tracking be used to reveal shopping habits (e.g. when a car seller is visited) and associations to political groups (when a meeting is attended). Accelerometer data can be used to infer medical conditions like walking disabilities.
+Images can contain faces of nearby persons to with whom the citizen is associated. All this data is highly sensitive to the citizens privacy and can be used against the citizen if it falls in the wrong hands.</p>
+
+<p>The great importance of protecting the citizens privacy should be apparent from these examples. The European Union, as well as many other countries in the past, has set out a number of directives that regulate the collection, processing and use of privacy sensitive data. The most important legislation on the European Level is the Data Protection Directive 95/46/EC [1], which is also summarized in the European Charta of Fundamental Rights [2] of EU citizens:</p>
+
+<p>Article 7. Respect for private and family life.
+Everyone has the right to respect for his or her private and family life, home and communications.</p>
+
+<p>Article 8. Protection of personal data.
+(1) Everyone has the right to the protection of personal data concerning him or her.
+(2) Such data must be processed fairly for specified purposes and on the basis of the consent of the person concerned or some other legitimate basis laid down by law.
+Everyone has the right of access to data which has been collected concerning him or her, and the right to have it rectified.
+(3) Compliance with these rules shall be subject to control by an independent authority.</p>
+
+<p>The Live+Gov fully consortium complies with this legislation and is moreover committed to convey and enact the ethical values inherent in these texts.</p>
+
+<p>Privacy as Control over Private Data</p>
+
+<p>The ethical aspects of privacy have been the subject of study of many social scientists and philosophers [3]. Many researchers do focus on the ways in which privacy can be infringed. Thus they invest a great amount of work in exploring threats, instead of describing why privacy is so valuable to us. One scholar which follows an alternative aproach in the context of digital monitoring is Charles Fried [4]. He investiages, why we are intuitively so sensitive to violations of our privacy.
+For him privacy is not asserted as an intrinsic value by itself, he rather sated:</p>
+
+<p>Privacy is not simply an absence of information about us in the minds of others;
+rather it is the control we have over information about ourselves.</p>
+
+<p>Depending on the conversation partner, we change the degree of information we share if it is a total stranger, a colleague, close friend or a doctor. With doctors we share information of great intimacy we do not share with anyone else.
+Moreover, we trust those friends to not reveal information about us to others by respecting their privacy. Trust needs the possibility of unknown failure. If we would constantly monitor our partners, they cannot fail unnoticed nor can they willingly share that information with us.</p>
+
+<p>So privacy, according to Fried, is the foundation of our core relations. And thus it is valuable, because those relations are essential to human society.</p>
+
+<p>Fried’s study on the understanding of privacy provided a great contribution to the research on the same term in philosophy and computer science [5] and despite the fact his text was published in 1970, he already included technologies to its viewpoint (like location monitoring) that are particularly relevant to our Context.</p>
+
+<p>Live+Gov Privacy Dashboard gives citizens back the Control</p>
+
+<p>In order to meet the the legal requirements and offer the citiens to keep a maximum of contol about their personal data, Live+Gov systems implements a number of privacy protection measure. One of the measures that is under current development is a Privacy Dashboard (Figure 1). Using this dashboard the citizen will be able to take the following actions:</p>
+
+<p>View and export all data from the citizen that is currently stored in the Live+Gov system
+Selectively delete parts of the stored data
+Get information about processing applied to this data
+Consent or decline selectively to processing steps
+View the end poducts of data mining applied to his data in a comprehensive, graphical way
+These measures provide the citizen with a maximal respect for their privacy while at the same time allowing advanced data processing. Although, abusive exploitation of the data is still possible, the level of transparency offered by the dashboard builds trust between the citizen and the service provider.</p>
+
+<h2 id="references">References</h2>
+
+<p>[1] Directive 95/46/EC of the European Parliament
+[2] Charter of Fundamental Rights of the European Union
+[3] http://plato.stanford.edu/entries/privacy/
+[4] Fried, C., 1970, An Anatomy of Values, Cambridge: Harvard University Press
+[5] Jutla, D.N., Bodorik, P.: Sociotechnical Architecture for Online Privacy. IEEE Security &amp; Privacy 3(2), 29–39 (2005)</p>
+
+
+  <!-- Include Mathjax if needed -->
+  
+
+</div>
+
+  </div>
+</body>
+<style>
+  ody/*****************************************************************************/
+/*
+/* Common
+/*
+/*****************************************************************************/
+
+/* Global Reset */
+
+* {
+  margin: 0;
+  padding: 0;
+}
+
+html, body {
+  height: 100%;
+}
+
+body {
+  font-family: Helvetica, arial, sans-serif;
+  font-size: 14px;
+  line-height: 1.6;
+  background-color: white;
+  padding: 10px 30px 10px 30px;
+}
+
+h1 {
+  font-size: 1em;
+  text-transform: uppercase;
+  text-alig: left;
+  font-size: 1em;
+  margin-bottom: 1em;
+  margin-top: 2em;
+}
+h2 {
+  font-size: 1em;
+  margin-bottom: 1em;
+  margin-top: 2em;
+}
+p {
+  margin: 1em 0;
+}
+
+a {
+  color: #00a;
+}
+
+a:hover {
+  color: black;
+}
+
+a:visited {
+  color: #a0a;
+}
+
+table {
+  font-size: inherit;
+  font: 100%;
+}
+
+pre {
+  text-align: left;
+  overflow-y: auto;
+}
+
+/*****************************************************************************/
+/*
+/* Home
+/*
+/*****************************************************************************/
+
+ul.posts {
+  list-style-type: none;
+  margin-bottom: 2em;
+}
+
+ul.posts li {
+  line-height: 1.75em;
+}
+
+ul.posts span {
+  color: #aaa;
+  font-family: Monaco, "Courier New", monospace;
+  font-size: 75%;
+}
+
+
+.date {
+  color: #aaa;
+  font-family: Monaco, Courier New, monospace;
+  font-size: 75%;
+  font-weight: normal;
+  float:right;
+}
+
+.quo {
+  position:relative; top:-1px;
+}
+
+#banner {
+  margin-bottom: 1em;
+}
+
+/*****************************************************************************/
+/*
+/* Site
+/*
+/*****************************************************************************/
+
+.site {
+  text-align: justify;
+  width: 48em;
+  margin: 3em auto 2em auto;
+  line-height: 1.5em;
+  margin-bottom: 200px;
+}
+
+.site .headline a {
+    color: #a00;
+    font-weight: bold;
+    margin-bottom: 2em;
+    margin-top: 2em;
+    text-decoration: none;
+}
+
+.title {
+  color: #a00;
+  font-weight: bold;
+  margin-bottom: 2em;
+  margin-top: 2em;
+}
+
+.site .title a {
+  color: #a00;
+  text-decoration: none;
+}
+
+.site .title a:hover {
+  color: black;
+}
+
+.site .title a.extra {
+  color: #aaa;
+  text-decoration: none;
+  margin-right: 1em;
+}
+
+.site .title a.extra:hover {
+  color: black;
+}
+
+.site .meta {
+  color: #aaa;
+}
+
+.site .footer {
+  font-size: 80%;
+  color: #666;
+  border-top: 4px solid #eee;
+  margin-top: 2em;
+  overflow: hidden;
+}
+
+.site .footer .contact {
+  float: left;
+  margin-right: 1em;
+}
+
+.site .footer .contact a {
+  color: #8085C1;
+}
+
+.site .footer .rss {
+  float: right;
+}
+
+.site .footer .rss img {
+  border: 0;
+}
+
+/*****************************************************************************/
+/*
+/* Posts
+/*
+/*****************************************************************************/
+
+#markdown-toc li {
+    line-height: 1;
+}
+
+.abstract p {
+    width: 80%;
+    margin-left: auto;
+    margin-top: 3em;
+    margin-bottom: 3em;
+}
+
+#post h1 {
+  font-size: 2em;
+  text-transform: uppercase;
+  text-align: center;
+  margin: 2em 0 1.5em 0;
+  line-height: 1.5em;
+}
+#post h2, h3, h4, h5, h6 {
+  font-size: 1em;
+  margin-bottom: 1em;
+  margin-top: 2em;
+  border-bottom: 1px solid #cccccc;
+}
+#post h2:before { content: "# "; }
+#post h3:before { content: "## "; }
+#post h4:before { content: "### "; }
+
+/* standard */
+
+#post pre {
+  border: 1px solid #ddd;
+  background-color: #f5f5f5;
+  padding: 3px 5px 3px;
+  margin: 5px 0 5px 0;
+  font-family: Consolas, "Liberation Mono", Menlo, Courier, monospace;
+  font-size: 12px;
+  line-height: 16.79px;
+  word-wrap: normal;
+}
+
+#post ul,
+#post ol {
+  margin-left: 1.35em;
+}
+
+/* extra space for list elements  */
+#post li {
+  margin: 1em 0;
+}
+#post li li { /* ... but not for nested ones */
+  margin: .5em 0;
+}
+
+#post pre code {
+  border: none;
+}
+
+#post blockquote {
+  border-left: 4px solid #e8e8e8;
+  padding-left: 20px;
+  background-color: #f9f9f9;
+  margin: 30px 0;
+}
+
+.pullquote {
+  font-family: Georgia, serif;
+  font-size: 18px;
+  font-style: italic;
+  margin: 0.25em 0;
+  padding: 0.25em 40px;
+  line-height: 1.45;
+  position: relative;
+  color: #383838;
+}
+
+.pullquote:before {
+  display: block;
+  content: "\201C";
+  font-size: 80px;
+  position: absolute;
+  left: 0;
+  top: -20px;
+  color: #7a7a7a;
+}
+
+
+#post .credits {
+  text-align: right;
+  font-size: 70%;
+  color: #aaa;
+}
+
+/* terminal */
+
+#post pre.terminal {
+  border: 1px solid black;
+  background-color: #333;
+  color: white;
+}
+
+#post pre.terminal code {
+  background-color: #333;
+}
+
+#related {
+  border-top: 4px solid #eee;
+  margin-top: 2em;
+}
+
+#related h2 {
+  margin-bottom: 1em;
+}
+
+#disqus_thread {
+  border-top: 4px solid #eee;
+  margin-top: 2em;
+  padding-top: 1em;
+}
+
+#post img {
+  max-width: 100%;
+}
+
+/**
+ * Figure Plugin: https://github.com/lmullen/jekyll_figure
+ **/
+
+figure img {
+  border: 1px solid #ccc;
+  padding: 5px;
+  border-radius: 5px;
+  max-width : 100%;
+}
+
+figure {
+  text-align: center;
+}
+
+figure figcaption {
+  font-style: italic;
+  text-align: center;
+}
+
+.pdflink {
+  float: right;
+}
+
+/**
+ * GITHUB TABLE STYLES: https://github.com/alampros/Docter/blob/master/ghf_marked.css
+ **/
+
+table
+{
+  border-collapse:collapse;
+  margin:20px auto auto;
+  padding:0;
+}
+
+table tr
+{
+  border-top:1px solid #ccc;
+  background-color:#fff;
+  margin:0;
+  padding:0;
+}
+
+table tr:nth-child(2n)
+{
+  background-color:#f8f8f8;
+}
+table tr th[align="center"], table tr td[align="center"] {
+  text-align:center;
+}
+table tr th, table tr td
+{
+  border:1px solid #ccc;
+  text-align:left;
+  margin:0;
+  padding:6px 13px;
+}
+
+/**
+ * Responsive
+ **/
+@media only screen and (max-width: 50em) {
+  .site {
+    text-align: left;
+    width: 100%;
+    margin: 0;
+  }
+  body {
+    padding: 15px;
+  }
+}
+
+@media only screen and (max-width: 30em) {
+  .site {
+    font-size: 20px;
+    line-height: 2.5em;
+  }
+}
+
+.sticker {
+  color:red;
+  border-style:solid;
+  border-color:red;
+  border-radius:0.2em;
+  margin:50px;
+}
+
+@media only print {
+  .splash {
+    visibility: hidden;
+  }
+}
+
+.hookin {
+  float: left;
+  font-size: 2.5em;
+  font-weight: 700;
+  padding-top: 0.2em;
+  margin-right: 0.4em;
+  color: #a00;
+  color: #EC9F2E;
+  font-family: "franklin-gothic-urw",Verdana,Geneva,sans-serif;
+}
+
+.dropcaps::first-letter {
+  font-size: 4.8em;
+  color: #a00;
+  font-family: Georgia;
+  font-weight: 500;
+  line-height: 0.9em;
+  float: left;
+  margin-right: 0.1em;
+}
+
+</style>
+<style>
+  .highlight  { background: #ffffff; }
+.highlight .c { color: #999988; font-style: italic } /* Comment */
+.highlight .err { color: #a61717; background-color: #e3d2d2 } /* Error */
+.highlight .k { font-weight: bold } /* Keyword */
+.highlight .o { font-weight: bold } /* Operator */
+.highlight .cm { color: #999988; font-style: italic } /* Comment.Multiline */
+.highlight .cp { color: #999999; font-weight: bold } /* Comment.Preproc */
+.highlight .c1 { color: #999988; font-style: italic } /* Comment.Single */
+.highlight .cs { color: #999999; font-weight: bold; font-style: italic } /* Comment.Special */
+.highlight .gd { color: #000000; background-color: #ffdddd } /* Generic.Deleted */
+.highlight .gd .x { color: #000000; background-color: #ffaaaa } /* Generic.Deleted.Specific */
+.highlight .ge { font-style: italic } /* Generic.Emph */
+.highlight .gr { color: #aa0000 } /* Generic.Error */
+.highlight .gh { color: #999999 } /* Generic.Heading */
+.highlight .gi { color: #000000; background-color: #ddffdd } /* Generic.Inserted */
+.highlight .gi .x { color: #000000; background-color: #aaffaa } /* Generic.Inserted.Specific */
+.highlight .go { color: #888888 } /* Generic.Output */
+.highlight .gp { color: #555555 } /* Generic.Prompt */
+.highlight .gs { font-weight: bold } /* Generic.Strong */
+.highlight .gu { color: #aaaaaa } /* Generic.Subheading */
+.highlight .gt { color: #aa0000 } /* Generic.Traceback */
+.highlight .kc { font-weight: bold } /* Keyword.Constant */
+.highlight .kd { font-weight: bold } /* Keyword.Declaration */
+.highlight .kp { font-weight: bold } /* Keyword.Pseudo */
+.highlight .kr { font-weight: bold } /* Keyword.Reserved */
+.highlight .kt { color: #445588; font-weight: bold } /* Keyword.Type */
+.highlight .m { color: #009999 } /* Literal.Number */
+.highlight .s { color: #d14 } /* Literal.String */
+.highlight .na { color: #008080 } /* Name.Attribute */
+.highlight .nb { color: #0086B3 } /* Name.Builtin */
+.highlight .nc { color: #445588; font-weight: bold } /* Name.Class */
+.highlight .no { color: #008080 } /* Name.Constant */
+.highlight .ni { color: #800080 } /* Name.Entity */
+.highlight .ne { color: #990000; font-weight: bold } /* Name.Exception */
+.highlight .nf { color: #990000; font-weight: bold } /* Name.Function */
+.highlight .nn { color: #555555 } /* Name.Namespace */
+.highlight .nt { color: #000080 } /* Name.Tag */
+.highlight .nv { color: #008080 } /* Name.Variable */
+.highlight .ow { font-weight: bold } /* Operator.Word */
+.highlight .w { color: #bbbbbb } /* Text.Whitespace */
+.highlight .mf { color: #009999 } /* Literal.Number.Float */
+.highlight .mh { color: #009999 } /* Literal.Number.Hex */
+.highlight .mi { color: #009999 } /* Literal.Number.Integer */
+.highlight .mo { color: #009999 } /* Literal.Number.Oct */
+.highlight .sb { color: #d14 } /* Literal.String.Backtick */
+.highlight .sc { color: #d14 } /* Literal.String.Char */
+.highlight .sd { color: #d14 } /* Literal.String.Doc */
+.highlight .s2 { color: #d14 } /* Literal.String.Double */
+.highlight .se { color: #d14 } /* Literal.String.Escape */
+.highlight .sh { color: #d14 } /* Literal.String.Heredoc */
+.highlight .si { color: #d14 } /* Literal.String.Interpol */
+.highlight .sx { color: #d14 } /* Literal.String.Other */
+.highlight .sr { color: #009926 } /* Literal.String.Regex */
+.highlight .s1 { color: #d14 } /* Literal.String.Single */
+.highlight .ss { color: #990073 } /* Literal.String.Symbol */
+.highlight .bp { color: #999999 } /* Name.Builtin.Pseudo */
+.highlight .vc { color: #008080 } /* Name.Variable.Class */
+.highlight .vg { color: #008080 } /* Name.Variable.Global */
+.highlight .vi { color: #008080 } /* Name.Variable.Instance */
+.highlight .il { color: #009999 } /* Literal.Number.Integer.Long */
+
+</style>
+</html>

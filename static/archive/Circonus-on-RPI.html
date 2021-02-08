@@ -1,0 +1,583 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en-us">
+<head>
+   <meta http-equiv="content-type" content="text/html; charset=utf-8"/>
+   <title>Circonus on the Raspberry Pi</title>
+   <meta name="author" content="Heinrich Hartmann"/>
+   <link rel="canonical" href="https://www.circonus.com/2018/02/circonus-raspberry-pi/"/>
+   </head>
+<body>
+  <div class="site">
+    <div class="headline"><a href="/">Heinrich Hartmann</a></div>
+    <div id="post">
+  <h1 id="h1-title"> Circonus on the Raspberry Pi</h1>
+  
+  
+  <p class="meta">
+    Written on 2018-02-13
+     in Stemwede, Germany 
+     for the <a href="https://www.circonus.com/2018/02/circonus-raspberry-pi/">Circonus blog</a>. 
+  </p>
+
+  <!-- Splash -->
+  
+
+  <!-- Abstract -->
+  
+
+  
+
+
+  <!-- Post content -->
+  <p class="dropcaps">There are a lot of interesting monitoring tasks, that can facilitated with a Raspberry Pi (e.g. <a href="http://heinrichhartmann.com/blog/2014/12/14/Sensor-Monitoring-with-RaspberryPi-and-Circonus.html">here</a>, <a href="https://www.circonus.com/2016/10/circonus-api-raspberry-pi/">there</a>).
+Circonus does not officially support “Raspbian Linux on armv6/v7” as a deployment target, but given the steady interest in this topic, we took the time to pave the way and write down some instructions in this post.</p>
+
+<p>Let’s dive right in:</p>
+
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c"># Install dependencies</span>
+<span class="nb">sudo </span>apt-get update
+<span class="nb">sudo </span>apt-get install git make
+
+<span class="c"># Only node node v4 or node v6 are supported. Install official arm package</span>
+wget https://nodejs.org/dist/latest-v6.x/node-v6.12.3-linux-armv6l.tar.xz
+<span class="nb">sudo </span>mkdir <span class="nt">-p</span> /opt/node
+<span class="nb">sudo tar</span> <span class="nt">-vxf</span> node-v6.12.3-linux-armv6l.tar.xz <span class="nt">-C</span> /opt/node <span class="nt">--strip-components</span><span class="o">=</span>1
+<span class="nb">sudo </span>ln <span class="nt">-s</span> /opt/node/bin/node /usr/bin/node
+<span class="nb">sudo </span>ln <span class="nt">-s</span> /opt/node/bin/npm /usr/bin/npm
+<span class="nb">sudo </span>ln <span class="nt">-s</span> /opt/node/bin/node /opt/circonus/bin/node
+
+<span class="c"># Install nad from sources</span>
+git clone https://github.com/circonus-labs/nad.git
+<span class="nb">cd </span>nad
+git checkout v2.5.1
+<span class="nb">sudo </span>make install install-linux-init
+
+<span class="c"># Fix nad disk plugins which depend on /proc/mdstat</span>
+<span class="nb">sudo </span>modprobe md
+</code></pre></div></div>
+
+<p>This should install and enable the monitoring agent nad on the RPI.
+Check that it is up and running using:</p>
+
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c"># Is it up? -&gt; You should see a staus report mentioning "active (running)"</span>
+systemctl status nad
+<span class="c"># Does it serve metrics? -&gt; You should see a large JSON blob, containing metrics</span>
+curl localhost:2609
+</code></pre></div></div>
+
+<p>Now copy paste the one-step-install command from the Integrations &gt; Checks &gt; [New Host] page.
+In my case this is:</p>
+<div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code>curl <span class="nt">-sSL</span> https://onestep.circonus.com/install | bash <span class="se">\</span>
+   <span class="nt">-s</span> <span class="nt">--</span> <span class="se">\</span>
+   <span class="nt">--key</span> xxxxxxxxx-50ce-4118-9145-xxxxxxxxxx <span class="se">\</span>
+   <span class="nt">--app</span> circonus:osi:xxxxxx...
+</code></pre></div></div>
+
+<p>The credentials will be different for you.
+The installer should find the running agent and register checks, graphs and the <a href="https://www.circonus.com/2017/08/system-monitoring-with-the-use-dashboard/">USE Dashboard</a> for you.
+We needed to make <a href="https://github.com/circonus-labs/circonus-one-step-install/pull/51">some tweaks</a> to the COSI installer itself to get this working as it is now.
+Special thanks goes to Matt Maier from Circonus to make this happen so quickly.</p>
+
+<p>These instructions were tested on Raspbian stretch lite
+(Version: November 2017 / Release date: 2017-11-29 / Kernel version: 4.9)
+on a RPI2 Model B.</p>
+
+<p>Happy Monitoring!</p>
+
+
+  <!-- Include Mathjax if needed -->
+  
+
+</div>
+
+  </div>
+</body>
+<style>
+  ody/*****************************************************************************/
+/*
+/* Common
+/*
+/*****************************************************************************/
+
+/* Global Reset */
+
+* {
+  margin: 0;
+  padding: 0;
+}
+
+html, body {
+  height: 100%;
+}
+
+body {
+  font-family: Helvetica, arial, sans-serif;
+  font-size: 14px;
+  line-height: 1.6;
+  background-color: white;
+  padding: 10px 30px 10px 30px;
+}
+
+h1 {
+  font-size: 1em;
+  text-transform: uppercase;
+  text-alig: left;
+  font-size: 1em;
+  margin-bottom: 1em;
+  margin-top: 2em;
+}
+h2 {
+  font-size: 1em;
+  margin-bottom: 1em;
+  margin-top: 2em;
+}
+p {
+  margin: 1em 0;
+}
+
+a {
+  color: #00a;
+}
+
+a:hover {
+  color: black;
+}
+
+a:visited {
+  color: #a0a;
+}
+
+table {
+  font-size: inherit;
+  font: 100%;
+}
+
+pre {
+  text-align: left;
+  overflow-y: auto;
+}
+
+/*****************************************************************************/
+/*
+/* Home
+/*
+/*****************************************************************************/
+
+ul.posts {
+  list-style-type: none;
+  margin-bottom: 2em;
+}
+
+ul.posts li {
+  line-height: 1.75em;
+}
+
+ul.posts span {
+  color: #aaa;
+  font-family: Monaco, "Courier New", monospace;
+  font-size: 75%;
+}
+
+
+.date {
+  color: #aaa;
+  font-family: Monaco, Courier New, monospace;
+  font-size: 75%;
+  font-weight: normal;
+  float:right;
+}
+
+.quo {
+  position:relative; top:-1px;
+}
+
+#banner {
+  margin-bottom: 1em;
+}
+
+/*****************************************************************************/
+/*
+/* Site
+/*
+/*****************************************************************************/
+
+.site {
+  text-align: justify;
+  width: 48em;
+  margin: 3em auto 2em auto;
+  line-height: 1.5em;
+  margin-bottom: 200px;
+}
+
+.site .headline a {
+    color: #a00;
+    font-weight: bold;
+    margin-bottom: 2em;
+    margin-top: 2em;
+    text-decoration: none;
+}
+
+.title {
+  color: #a00;
+  font-weight: bold;
+  margin-bottom: 2em;
+  margin-top: 2em;
+}
+
+.site .title a {
+  color: #a00;
+  text-decoration: none;
+}
+
+.site .title a:hover {
+  color: black;
+}
+
+.site .title a.extra {
+  color: #aaa;
+  text-decoration: none;
+  margin-right: 1em;
+}
+
+.site .title a.extra:hover {
+  color: black;
+}
+
+.site .meta {
+  color: #aaa;
+}
+
+.site .footer {
+  font-size: 80%;
+  color: #666;
+  border-top: 4px solid #eee;
+  margin-top: 2em;
+  overflow: hidden;
+}
+
+.site .footer .contact {
+  float: left;
+  margin-right: 1em;
+}
+
+.site .footer .contact a {
+  color: #8085C1;
+}
+
+.site .footer .rss {
+  float: right;
+}
+
+.site .footer .rss img {
+  border: 0;
+}
+
+/*****************************************************************************/
+/*
+/* Posts
+/*
+/*****************************************************************************/
+
+#markdown-toc li {
+    line-height: 1;
+}
+
+.abstract p {
+    width: 80%;
+    margin-left: auto;
+    margin-top: 3em;
+    margin-bottom: 3em;
+}
+
+#post h1 {
+  font-size: 2em;
+  text-transform: uppercase;
+  text-align: center;
+  margin: 2em 0 1.5em 0;
+  line-height: 1.5em;
+}
+#post h2, h3, h4, h5, h6 {
+  font-size: 1em;
+  margin-bottom: 1em;
+  margin-top: 2em;
+  border-bottom: 1px solid #cccccc;
+}
+#post h2:before { content: "# "; }
+#post h3:before { content: "## "; }
+#post h4:before { content: "### "; }
+
+/* standard */
+
+#post pre {
+  border: 1px solid #ddd;
+  background-color: #f5f5f5;
+  padding: 3px 5px 3px;
+  margin: 5px 0 5px 0;
+  font-family: Consolas, "Liberation Mono", Menlo, Courier, monospace;
+  font-size: 12px;
+  line-height: 16.79px;
+  word-wrap: normal;
+}
+
+#post ul,
+#post ol {
+  margin-left: 1.35em;
+}
+
+/* extra space for list elements  */
+#post li {
+  margin: 1em 0;
+}
+#post li li { /* ... but not for nested ones */
+  margin: .5em 0;
+}
+
+#post pre code {
+  border: none;
+}
+
+#post blockquote {
+  border-left: 4px solid #e8e8e8;
+  padding-left: 20px;
+  background-color: #f9f9f9;
+  margin: 30px 0;
+}
+
+.pullquote {
+  font-family: Georgia, serif;
+  font-size: 18px;
+  font-style: italic;
+  margin: 0.25em 0;
+  padding: 0.25em 40px;
+  line-height: 1.45;
+  position: relative;
+  color: #383838;
+}
+
+.pullquote:before {
+  display: block;
+  content: "\201C";
+  font-size: 80px;
+  position: absolute;
+  left: 0;
+  top: -20px;
+  color: #7a7a7a;
+}
+
+
+#post .credits {
+  text-align: right;
+  font-size: 70%;
+  color: #aaa;
+}
+
+/* terminal */
+
+#post pre.terminal {
+  border: 1px solid black;
+  background-color: #333;
+  color: white;
+}
+
+#post pre.terminal code {
+  background-color: #333;
+}
+
+#related {
+  border-top: 4px solid #eee;
+  margin-top: 2em;
+}
+
+#related h2 {
+  margin-bottom: 1em;
+}
+
+#disqus_thread {
+  border-top: 4px solid #eee;
+  margin-top: 2em;
+  padding-top: 1em;
+}
+
+#post img {
+  max-width: 100%;
+}
+
+/**
+ * Figure Plugin: https://github.com/lmullen/jekyll_figure
+ **/
+
+figure img {
+  border: 1px solid #ccc;
+  padding: 5px;
+  border-radius: 5px;
+  max-width : 100%;
+}
+
+figure {
+  text-align: center;
+}
+
+figure figcaption {
+  font-style: italic;
+  text-align: center;
+}
+
+.pdflink {
+  float: right;
+}
+
+/**
+ * GITHUB TABLE STYLES: https://github.com/alampros/Docter/blob/master/ghf_marked.css
+ **/
+
+table
+{
+  border-collapse:collapse;
+  margin:20px auto auto;
+  padding:0;
+}
+
+table tr
+{
+  border-top:1px solid #ccc;
+  background-color:#fff;
+  margin:0;
+  padding:0;
+}
+
+table tr:nth-child(2n)
+{
+  background-color:#f8f8f8;
+}
+table tr th[align="center"], table tr td[align="center"] {
+  text-align:center;
+}
+table tr th, table tr td
+{
+  border:1px solid #ccc;
+  text-align:left;
+  margin:0;
+  padding:6px 13px;
+}
+
+/**
+ * Responsive
+ **/
+@media only screen and (max-width: 50em) {
+  .site {
+    text-align: left;
+    width: 100%;
+    margin: 0;
+  }
+  body {
+    padding: 15px;
+  }
+}
+
+@media only screen and (max-width: 30em) {
+  .site {
+    font-size: 20px;
+    line-height: 2.5em;
+  }
+}
+
+.sticker {
+  color:red;
+  border-style:solid;
+  border-color:red;
+  border-radius:0.2em;
+  margin:50px;
+}
+
+@media only print {
+  .splash {
+    visibility: hidden;
+  }
+}
+
+.hookin {
+  float: left;
+  font-size: 2.5em;
+  font-weight: 700;
+  padding-top: 0.2em;
+  margin-right: 0.4em;
+  color: #a00;
+  color: #EC9F2E;
+  font-family: "franklin-gothic-urw",Verdana,Geneva,sans-serif;
+}
+
+.dropcaps::first-letter {
+  font-size: 4.8em;
+  color: #a00;
+  font-family: Georgia;
+  font-weight: 500;
+  line-height: 0.9em;
+  float: left;
+  margin-right: 0.1em;
+}
+
+</style>
+<style>
+  .highlight  { background: #ffffff; }
+.highlight .c { color: #999988; font-style: italic } /* Comment */
+.highlight .err { color: #a61717; background-color: #e3d2d2 } /* Error */
+.highlight .k { font-weight: bold } /* Keyword */
+.highlight .o { font-weight: bold } /* Operator */
+.highlight .cm { color: #999988; font-style: italic } /* Comment.Multiline */
+.highlight .cp { color: #999999; font-weight: bold } /* Comment.Preproc */
+.highlight .c1 { color: #999988; font-style: italic } /* Comment.Single */
+.highlight .cs { color: #999999; font-weight: bold; font-style: italic } /* Comment.Special */
+.highlight .gd { color: #000000; background-color: #ffdddd } /* Generic.Deleted */
+.highlight .gd .x { color: #000000; background-color: #ffaaaa } /* Generic.Deleted.Specific */
+.highlight .ge { font-style: italic } /* Generic.Emph */
+.highlight .gr { color: #aa0000 } /* Generic.Error */
+.highlight .gh { color: #999999 } /* Generic.Heading */
+.highlight .gi { color: #000000; background-color: #ddffdd } /* Generic.Inserted */
+.highlight .gi .x { color: #000000; background-color: #aaffaa } /* Generic.Inserted.Specific */
+.highlight .go { color: #888888 } /* Generic.Output */
+.highlight .gp { color: #555555 } /* Generic.Prompt */
+.highlight .gs { font-weight: bold } /* Generic.Strong */
+.highlight .gu { color: #aaaaaa } /* Generic.Subheading */
+.highlight .gt { color: #aa0000 } /* Generic.Traceback */
+.highlight .kc { font-weight: bold } /* Keyword.Constant */
+.highlight .kd { font-weight: bold } /* Keyword.Declaration */
+.highlight .kp { font-weight: bold } /* Keyword.Pseudo */
+.highlight .kr { font-weight: bold } /* Keyword.Reserved */
+.highlight .kt { color: #445588; font-weight: bold } /* Keyword.Type */
+.highlight .m { color: #009999 } /* Literal.Number */
+.highlight .s { color: #d14 } /* Literal.String */
+.highlight .na { color: #008080 } /* Name.Attribute */
+.highlight .nb { color: #0086B3 } /* Name.Builtin */
+.highlight .nc { color: #445588; font-weight: bold } /* Name.Class */
+.highlight .no { color: #008080 } /* Name.Constant */
+.highlight .ni { color: #800080 } /* Name.Entity */
+.highlight .ne { color: #990000; font-weight: bold } /* Name.Exception */
+.highlight .nf { color: #990000; font-weight: bold } /* Name.Function */
+.highlight .nn { color: #555555 } /* Name.Namespace */
+.highlight .nt { color: #000080 } /* Name.Tag */
+.highlight .nv { color: #008080 } /* Name.Variable */
+.highlight .ow { font-weight: bold } /* Operator.Word */
+.highlight .w { color: #bbbbbb } /* Text.Whitespace */
+.highlight .mf { color: #009999 } /* Literal.Number.Float */
+.highlight .mh { color: #009999 } /* Literal.Number.Hex */
+.highlight .mi { color: #009999 } /* Literal.Number.Integer */
+.highlight .mo { color: #009999 } /* Literal.Number.Oct */
+.highlight .sb { color: #d14 } /* Literal.String.Backtick */
+.highlight .sc { color: #d14 } /* Literal.String.Char */
+.highlight .sd { color: #d14 } /* Literal.String.Doc */
+.highlight .s2 { color: #d14 } /* Literal.String.Double */
+.highlight .se { color: #d14 } /* Literal.String.Escape */
+.highlight .sh { color: #d14 } /* Literal.String.Heredoc */
+.highlight .si { color: #d14 } /* Literal.String.Interpol */
+.highlight .sx { color: #d14 } /* Literal.String.Other */
+.highlight .sr { color: #009926 } /* Literal.String.Regex */
+.highlight .s1 { color: #d14 } /* Literal.String.Single */
+.highlight .ss { color: #990073 } /* Literal.String.Symbol */
+.highlight .bp { color: #999999 } /* Name.Builtin.Pseudo */
+.highlight .vc { color: #008080 } /* Name.Variable.Class */
+.highlight .vg { color: #008080 } /* Name.Variable.Global */
+.highlight .vi { color: #008080 } /* Name.Variable.Instance */
+.highlight .il { color: #009999 } /* Literal.Number.Integer.Long */
+
+</style>
+</html>

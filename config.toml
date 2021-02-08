@@ -1,0 +1,16 @@
+baseURL = ""
+languageCode = "en-us"
+title = "HeinrichHartmann.com"
+# relativeurls = true
+# uglyurls = true
+pygmentsUseClasses = true
+
+[markup]
+  [markup.goldmark]
+    [markup.goldmark.renderer]
+      unsafe = true
+
+
+[params]
+  # Only posts from mainSections appear in index
+  mainSections = ["posts"]

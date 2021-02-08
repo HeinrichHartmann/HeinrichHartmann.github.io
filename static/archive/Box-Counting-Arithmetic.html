@@ -1,0 +1,786 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en-us">
+<head>
+   <meta http-equiv="content-type" content="text/html; charset=utf-8"/>
+   <title>Box Counting Arithmetic</title>
+   <meta name="author" content="Heinrich Hartmann"/>
+   
+   </head>
+<body>
+  <div class="site">
+    <div class="headline"><a href="/">Heinrich Hartmann</a></div>
+    <div id="post">
+  <h1 id="h1-title"> Box Counting Arithmetic</h1>
+  
+  
+  <p class="meta">
+    Written on 2016-06-12
+    
+    
+  </p>
+
+  <!-- Splash -->
+  
+
+  <!-- Abstract -->
+  
+
+  
+
+
+  <!-- Post content -->
+  <script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS_HTML" type="text/javascript">
+  MathJax.Hub.Config({ tex2jax: { inlineMath: [['$','$']], processEscapes: true } });
+</script>
+
+<style> img { margin-right: auto; margin-left:auto; display: block } </style>
+
+<p><img src="/assets/BoxCounting_files/headline.png" alt="" /></p>
+
+<p>I was recently invited to a wedding of a friend, where I had the
+pleasure to meet the the 4-year old Benjamin<sup id="fnref:1"><a href="#fn:1" class="footnote">1</a></sup> who was fascinated by
+numbers and arithmetic. Sharing and often repeating the
+<a href="https://www.maa.org/external_archive/devlin/LockhartsLament.pdf">laments of Paul Lockhardt</a>,
+I was eager to show him some aspects of mathematics, that are fun to
+explore and not commonly taught in schools.</p>
+
+<p>Given his young age and tiny size he had already mastered a fair
+amount of arithmetic. His favorite topic where gigantic numbers. He
+had a 30page(!) list of large numbers with their names (Billion,
+Trillion, etc.) with him and he had a burning question for me at the
+very beginning:</p>
+
+<blockquote>
+  <p>“What is the largest number that has a name?”</p>
+</blockquote>
+
+<p>The largest number in his book was the GoogolPlex ($10^{Googol}$), but
+he suspected that there are even larger numbers which have a
+name. While that question is a little deeper than I was comfortable
+going into at that point
+(cf. <a href="https://en.wikipedia.org/wiki/Interesting_number_paradox">Interesting Number Paradox</a>),
+we settled for the moment, by creating another number which was even
+larger than the GoogolPlex:</p>
+
+<script type="math/tex; mode=display">GoogolPlex \cdot 1000 \cdot 100 + 27 + 4 + 100 \cdot 1000000</script>
+
+<p>I suggested to name the number Rachel<sup id="fnref:1:1"><a href="#fn:1" class="footnote">1</a></sup> in honor of his mother, but
+Benjamin replied: “This is not a good name for a number”.  So we went
+with “GoogolPlexilliardenSeptillion” and appended it to his
+list.</p>
+
+<p>While gigantically large numbers fascinated him clearly most, he also
+had a considerable fun at solving arithmetic puzzles (<script type="math/tex">5x7, 9x12</script>), and
+so I told him the following box counting game.</p>
+
+<h2 id="numbers-and-boxes">Numbers and Boxes</h2>
+
+<p>Many arithmetic questions can be conveniently translated into geometry using
+the following rules:</p>
+
+<ul>
+  <li>We represent number $n$ as set of $n$ boxes. The size and color of boxes do not matter.</li>
+  <li>Box sets can be added by merging them.</li>
+  <li>Box sets can be multiplied by counting boxes in rectangles.</li>
+</ul>
+
+<p><img src="/assets/BoxCounting_files/addmul.png" alt="" /></p>
+
+<p>Now what can we do with this almost trivial translation of numbers into boxes?</p>
+
+<p>The main observation is, that now</p>
+
+<blockquote>
+  <p>Every multiplication becomes a problem of counting boxes in a rectangle!</p>
+</blockquote>
+
+<h2 id="warmup-what-is-7x5">Warmup: What is 7x5?</h2>
+
+<p>Presented as a box counting problem, we ask how many boxes there are
+in a 5x7 rectangle!</p>
+
+<p><img src="/assets/BoxCounting_files/7x5grid.png" alt="" /></p>
+
+<p>There are many ways to count the boxes, e.g. by crossing one off after another:</p>
+
+<p><img src="/assets/BoxCounting_files/7x5random.png" alt="" /></p>
+
+<p>But we might also apply some systematic, like this one:</p>
+
+<p><img src="/assets/BoxCounting_files/7x5-A.png" alt="" /></p>
+
+<p>or this one:</p>
+
+<p><img src="/assets/BoxCounting_files/7x5-d.png" alt="" /></p>
+
+<p>Most people would approaching this problem by reciting the succession
+of multiples of seven: 7,14,21,28,35. In terms of box counting this
+corresponds to this pattern here:</p>
+
+<p><img src="/assets/BoxCounting_files/7-14-21.png" alt="" /></p>
+
+<p>In fact, this is more a decomposition of the rectangle in multiple
+lines, as a simple counting pattern. And it reveals a very powerful
+technique for counting box arrangements:</p>
+
+<p><strong>Divide and Conquer:</strong> Chop the rectangle into smaller rectangles,
+that are easier to count.</p>
+
+<p>If you approach $7\times 5$ as a decomposition problem, the following
+decomposition seems more natural and yields a quite convenient way to
+calculate $7\times 5$ as:</p>
+
+<script type="math/tex; mode=display">7\times 5 = 5 \times 5 + 2 \times 5 = 25 + 10 = 35.</script>
+
+<p><img src="/assets/BoxCounting_files/7x5-5x5.png" alt="" /></p>
+
+<p>Here is another variant: If you rearrange the 5x7-rectangle as follows you
+get the identity</p>
+
+<script type="math/tex; mode=display">5\times 7=6\times 6-1=36-1.</script>
+
+<p><img src="/assets/BoxCounting_files/7x5-6x6.png" alt="" /></p>
+
+<p>That was neat, wasn’t it?</p>
+
+<h2 id="what-is-11x11">What is 11x11?</h2>
+
+<p>Let’s do another example: What is 11x11.</p>
+
+<p>I asked Benjamin to calculate this number, and he proceeded, as
+expected, by the standard method of reciting the 11 succession.  It
+was quite impressive to see him handling these calculations at
+pre-school age and arrive at the correct answer: 121.</p>
+
+<p>However, I had just asked him, 10x10, which he knew by heart: 100!</p>
+
+<p>So essentially, he had just counted all boxes in a 10x10 square.  And
+posed with the problem of counting all boxes in an 11x11 square, which
+is just 1 box larger, he started from scratch and recited his series.
+Poor boy!</p>
+
+<p>Here is how you do better:</p>
+
+<script type="math/tex; mode=display">11\times 11 = 10\times 10 + 10 + 10 + 1 = 121</script>
+
+<p><img src="/assets/BoxCounting_files/11x11.png" alt="" /></p>
+
+<h2 id="a-square-number-theorem">A Square Number Theorem</h2>
+
+<p>Those simple observations already open up more questions about the
+large and fascinating topic of square numbers.</p>
+
+<p>The above trick to calculate 11x11 generalizes to the following theorem.</p>
+
+<p><strong>Theorem.</strong> The number of boxes in a square of size $N+1$ is equal to
+the number of boxes in a square of size $N$, plus $2N$ (at the sides)
+plus 1 (at the tip).</p>
+
+<p>It’s not possible to provide a formal proof using the explicit box
+counting methods introduced above. We either need more profound set
+theory and induction, or formal arithmetic $(N+1)^2 = N^2 +2N + 1$,
+which derives this in a breeze. However, there is value in
+illustrations. Benjamin followed that argument quickly, while working
+with parameters $N,x$ and the binomial theorem would have been too
+much and/or boring for him. And frankly, most schools don’t bother to
+present proofs at all and stay at the phenomenological level.</p>
+
+<p>Ok, here is another exercise:</p>
+
+<h2 id="what-is-13x13">What is 13x13?</h2>
+
+<p>If you followed through to here, you will directly say:</p>
+
+<script type="math/tex; mode=display">13\times 13 = 12\times 12 + 2\times 12 + 1 = 12\times 12 + 25</script>
+
+<p>But you might not remember what $12 \times 12$ is. Do you?</p>
+
+<p>So, let’s calculate that first. So what is 12x12?</p>
+
+<p>“I know!”, you will now say, “We can apply that same trick again!”. And indeed:</p>
+
+<script type="math/tex; mode=display">12\times 12 = 11\times 11 + 2\times 11 + 1 = 11\times 11 + 23</script>
+
+<p>Fortunately we have already calculated $11\times 11 = 100 + 21$ so that we can substitute.</p>
+
+<script type="math/tex; mode=display">13\times 13 = 100 + 21 + 23 + 25</script>
+
+<p>Which I’ll leave for you as an exercise from here.</p>
+
+<p>From the perspective of counting boxes, we have just performed the
+following construction:</p>
+
+<p><img src="/assets/BoxCounting_files/13x13.png" alt="" /></p>
+
+<p>Ha, that’s interesting. We decompose a square into layers of square-angles!</p>
+
+<p>But we don’t have to stop at 10x10. We can go all the way down to 1x1!</p>
+
+<p><img src="/assets/BoxCounting_files/13x13rainbow.png" alt="" /></p>
+
+<p>But wait, there is another pattern: The size of those square angles are just the odd numbers!</p>
+
+<p><strong>Theorem.</strong> The number of boxes in a square of size $N$ is equal to the
+sum of all odd numbers smaller than $2N$.</p>
+
+<h2 id="sums-of-even-numbers">Sums of even numbers.</h2>
+
+<p>We have just discovered that the sum of odd numbers are squares. This raises the next
+interesting question immediately:</p>
+
+<blockquote>
+  <p>What are the sums of even numbers: $2 + 4 + … + 2n$ ?</p>
+</blockquote>
+
+<p>There is a cheap trick, how you can get from all odd numbers to all even
+numbers: You can subtract one!</p>
+
+<p>There is a special box, in each square-angle which seems predestinated
+for being tossed: The diagonal box:</p>
+
+<p><img src="/assets/BoxCounting_files/13x13-D.png" alt="" /></p>
+
+<p>Looking at this picture, we can see, that The sum of even numbers up to 24, is equal to the
+full square of size 13 minus the diagonal with 13 elements:</p>
+
+<script type="math/tex; mode=display">2+4+\dots+24 = 13\times 13 - 13.</script>
+
+<p>Generalizing, we find another pattern:</p>
+
+<p><strong>Theorem.</strong> The number sum of all even numbers smaller or equal to than $2n$ is $(n+1)^2 - (n+1)$</p>
+
+<p>We are not at the end. There is another trick that can be applied.</p>
+
+<p>By removing the diagonal the box count just got symmetric! There are
+as many boxes on the top as there are on the left side: In other words
+we can extract a factor of $2$:</p>
+
+<script type="math/tex; mode=display">2 + 4 + ... + 2n = 2 \times (1 + 2 + ... + n)</script>
+
+<p><img src="/assets/BoxCounting_files/13x13-half.png" alt="" /></p>
+
+<p>Combining both tricks, we have just found another derivation of the <a href="https://en.wikipedia.org/wiki/1_%2B_2_%2B_3_%2B_4_%2B_⋯">Little Gauss’ Theorem</a>:</p>
+
+<p><strong>Theorem (Little Gauss).</strong> The sum of all number smaller or equal to $n$ is</p>
+
+<script type="math/tex; mode=display">\frac{(n+1)^2 - (n+1)}{2} = \frac{n(n+1)}{2}.</script>
+
+<h2 id="going-further">Going further</h2>
+
+<p>We are clearly just at the beginning here. Framing arithmetic problems
+as box counting problems allows creative approaches and raises many
+interesting questions: Can you find the identity hidden in the picture
+at the very top?</p>
+
+<h2 id="meta">Meta</h2>
+
+<ul>
+  <li>The images have been created with a <a href="http://amzn.to/1UL59I2">HUION Tablet</a> (this is an Amazon-affiliate link) and <a href="http://tayasui.com/sketches/">Sketches by Tayasui</a>.</li>
+  <li>Thanks for your comments and corrections. I am fixing those as they appear. Check the <a href="https://github.com/HeinrichHartmann/HeinrichHartmann.github.io/commits/source/_posts/2016-06-12-Box-Counting-Arithmetic.md">Version History</a> to see what changed and when.</li>
+</ul>
+
+<div class="footnotes">
+  <ol>
+    <li id="fn:1">
+      <p>Name changed.&nbsp;<a href="#fnref:1" class="reversefootnote">&#8617;</a>&nbsp;<a href="#fnref:1:1" class="reversefootnote">&#8617;<sup>2</sup></a></p>
+    </li>
+  </ol>
+</div>
+
+
+  <!-- Include Mathjax if needed -->
+  
+
+</div>
+
+  </div>
+</body>
+<style>
+  ody/*****************************************************************************/
+/*
+/* Common
+/*
+/*****************************************************************************/
+
+/* Global Reset */
+
+* {
+  margin: 0;
+  padding: 0;
+}
+
+html, body {
+  height: 100%;
+}
+
+body {
+  font-family: Helvetica, arial, sans-serif;
+  font-size: 14px;
+  line-height: 1.6;
+  background-color: white;
+  padding: 10px 30px 10px 30px;
+}
+
+h1 {
+  font-size: 1em;
+  text-transform: uppercase;
+  text-alig: left;
+  font-size: 1em;
+  margin-bottom: 1em;
+  margin-top: 2em;
+}
+h2 {
+  font-size: 1em;
+  margin-bottom: 1em;
+  margin-top: 2em;
+}
+p {
+  margin: 1em 0;
+}
+
+a {
+  color: #00a;
+}
+
+a:hover {
+  color: black;
+}
+
+a:visited {
+  color: #a0a;
+}
+
+table {
+  font-size: inherit;
+  font: 100%;
+}
+
+pre {
+  text-align: left;
+  overflow-y: auto;
+}
+
+/*****************************************************************************/
+/*
+/* Home
+/*
+/*****************************************************************************/
+
+ul.posts {
+  list-style-type: none;
+  margin-bottom: 2em;
+}
+
+ul.posts li {
+  line-height: 1.75em;
+}
+
+ul.posts span {
+  color: #aaa;
+  font-family: Monaco, "Courier New", monospace;
+  font-size: 75%;
+}
+
+
+.date {
+  color: #aaa;
+  font-family: Monaco, Courier New, monospace;
+  font-size: 75%;
+  font-weight: normal;
+  float:right;
+}
+
+.quo {
+  position:relative; top:-1px;
+}
+
+#banner {
+  margin-bottom: 1em;
+}
+
+/*****************************************************************************/
+/*
+/* Site
+/*
+/*****************************************************************************/
+
+.site {
+  text-align: justify;
+  width: 48em;
+  margin: 3em auto 2em auto;
+  line-height: 1.5em;
+  margin-bottom: 200px;
+}
+
+.site .headline a {
+    color: #a00;
+    font-weight: bold;
+    margin-bottom: 2em;
+    margin-top: 2em;
+    text-decoration: none;
+}
+
+.title {
+  color: #a00;
+  font-weight: bold;
+  margin-bottom: 2em;
+  margin-top: 2em;
+}
+
+.site .title a {
+  color: #a00;
+  text-decoration: none;
+}
+
+.site .title a:hover {
+  color: black;
+}
+
+.site .title a.extra {
+  color: #aaa;
+  text-decoration: none;
+  margin-right: 1em;
+}
+
+.site .title a.extra:hover {
+  color: black;
+}
+
+.site .meta {
+  color: #aaa;
+}
+
+.site .footer {
+  font-size: 80%;
+  color: #666;
+  border-top: 4px solid #eee;
+  margin-top: 2em;
+  overflow: hidden;
+}
+
+.site .footer .contact {
+  float: left;
+  margin-right: 1em;
+}
+
+.site .footer .contact a {
+  color: #8085C1;
+}
+
+.site .footer .rss {
+  float: right;
+}
+
+.site .footer .rss img {
+  border: 0;
+}
+
+/*****************************************************************************/
+/*
+/* Posts
+/*
+/*****************************************************************************/
+
+#markdown-toc li {
+    line-height: 1;
+}
+
+.abstract p {
+    width: 80%;
+    margin-left: auto;
+    margin-top: 3em;
+    margin-bottom: 3em;
+}
+
+#post h1 {
+  font-size: 2em;
+  text-transform: uppercase;
+  text-align: center;
+  margin: 2em 0 1.5em 0;
+  line-height: 1.5em;
+}
+#post h2, h3, h4, h5, h6 {
+  font-size: 1em;
+  margin-bottom: 1em;
+  margin-top: 2em;
+  border-bottom: 1px solid #cccccc;
+}
+#post h2:before { content: "# "; }
+#post h3:before { content: "## "; }
+#post h4:before { content: "### "; }
+
+/* standard */
+
+#post pre {
+  border: 1px solid #ddd;
+  background-color: #f5f5f5;
+  padding: 3px 5px 3px;
+  margin: 5px 0 5px 0;
+  font-family: Consolas, "Liberation Mono", Menlo, Courier, monospace;
+  font-size: 12px;
+  line-height: 16.79px;
+  word-wrap: normal;
+}
+
+#post ul,
+#post ol {
+  margin-left: 1.35em;
+}
+
+/* extra space for list elements  */
+#post li {
+  margin: 1em 0;
+}
+#post li li { /* ... but not for nested ones */
+  margin: .5em 0;
+}
+
+#post pre code {
+  border: none;
+}
+
+#post blockquote {
+  border-left: 4px solid #e8e8e8;
+  padding-left: 20px;
+  background-color: #f9f9f9;
+  margin: 30px 0;
+}
+
+.pullquote {
+  font-family: Georgia, serif;
+  font-size: 18px;
+  font-style: italic;
+  margin: 0.25em 0;
+  padding: 0.25em 40px;
+  line-height: 1.45;
+  position: relative;
+  color: #383838;
+}
+
+.pullquote:before {
+  display: block;
+  content: "\201C";
+  font-size: 80px;
+  position: absolute;
+  left: 0;
+  top: -20px;
+  color: #7a7a7a;
+}
+
+
+#post .credits {
+  text-align: right;
+  font-size: 70%;
+  color: #aaa;
+}
+
+/* terminal */
+
+#post pre.terminal {
+  border: 1px solid black;
+  background-color: #333;
+  color: white;
+}
+
+#post pre.terminal code {
+  background-color: #333;
+}
+
+#related {
+  border-top: 4px solid #eee;
+  margin-top: 2em;
+}
+
+#related h2 {
+  margin-bottom: 1em;
+}
+
+#disqus_thread {
+  border-top: 4px solid #eee;
+  margin-top: 2em;
+  padding-top: 1em;
+}
+
+#post img {
+  max-width: 100%;
+}
+
+/**
+ * Figure Plugin: https://github.com/lmullen/jekyll_figure
+ **/
+
+figure img {
+  border: 1px solid #ccc;
+  padding: 5px;
+  border-radius: 5px;
+  max-width : 100%;
+}
+
+figure {
+  text-align: center;
+}
+
+figure figcaption {
+  font-style: italic;
+  text-align: center;
+}
+
+.pdflink {
+  float: right;
+}
+
+/**
+ * GITHUB TABLE STYLES: https://github.com/alampros/Docter/blob/master/ghf_marked.css
+ **/
+
+table
+{
+  border-collapse:collapse;
+  margin:20px auto auto;
+  padding:0;
+}
+
+table tr
+{
+  border-top:1px solid #ccc;
+  background-color:#fff;
+  margin:0;
+  padding:0;
+}
+
+table tr:nth-child(2n)
+{
+  background-color:#f8f8f8;
+}
+table tr th[align="center"], table tr td[align="center"] {
+  text-align:center;
+}
+table tr th, table tr td
+{
+  border:1px solid #ccc;
+  text-align:left;
+  margin:0;
+  padding:6px 13px;
+}
+
+/**
+ * Responsive
+ **/
+@media only screen and (max-width: 50em) {
+  .site {
+    text-align: left;
+    width: 100%;
+    margin: 0;
+  }
+  body {
+    padding: 15px;
+  }
+}
+
+@media only screen and (max-width: 30em) {
+  .site {
+    font-size: 20px;
+    line-height: 2.5em;
+  }
+}
+
+.sticker {
+  color:red;
+  border-style:solid;
+  border-color:red;
+  border-radius:0.2em;
+  margin:50px;
+}
+
+@media only print {
+  .splash {
+    visibility: hidden;
+  }
+}
+
+.hookin {
+  float: left;
+  font-size: 2.5em;
+  font-weight: 700;
+  padding-top: 0.2em;
+  margin-right: 0.4em;
+  color: #a00;
+  color: #EC9F2E;
+  font-family: "franklin-gothic-urw",Verdana,Geneva,sans-serif;
+}
+
+.dropcaps::first-letter {
+  font-size: 4.8em;
+  color: #a00;
+  font-family: Georgia;
+  font-weight: 500;
+  line-height: 0.9em;
+  float: left;
+  margin-right: 0.1em;
+}
+
+</style>
+<style>
+  .highlight  { background: #ffffff; }
+.highlight .c { color: #999988; font-style: italic } /* Comment */
+.highlight .err { color: #a61717; background-color: #e3d2d2 } /* Error */
+.highlight .k { font-weight: bold } /* Keyword */
+.highlight .o { font-weight: bold } /* Operator */
+.highlight .cm { color: #999988; font-style: italic } /* Comment.Multiline */
+.highlight .cp { color: #999999; font-weight: bold } /* Comment.Preproc */
+.highlight .c1 { color: #999988; font-style: italic } /* Comment.Single */
+.highlight .cs { color: #999999; font-weight: bold; font-style: italic } /* Comment.Special */
+.highlight .gd { color: #000000; background-color: #ffdddd } /* Generic.Deleted */
+.highlight .gd .x { color: #000000; background-color: #ffaaaa } /* Generic.Deleted.Specific */
+.highlight .ge { font-style: italic } /* Generic.Emph */
+.highlight .gr { color: #aa0000 } /* Generic.Error */
+.highlight .gh { color: #999999 } /* Generic.Heading */
+.highlight .gi { color: #000000; background-color: #ddffdd } /* Generic.Inserted */
+.highlight .gi .x { color: #000000; background-color: #aaffaa } /* Generic.Inserted.Specific */
+.highlight .go { color: #888888 } /* Generic.Output */
+.highlight .gp { color: #555555 } /* Generic.Prompt */
+.highlight .gs { font-weight: bold } /* Generic.Strong */
+.highlight .gu { color: #aaaaaa } /* Generic.Subheading */
+.highlight .gt { color: #aa0000 } /* Generic.Traceback */
+.highlight .kc { font-weight: bold } /* Keyword.Constant */
+.highlight .kd { font-weight: bold } /* Keyword.Declaration */
+.highlight .kp { font-weight: bold } /* Keyword.Pseudo */
+.highlight .kr { font-weight: bold } /* Keyword.Reserved */
+.highlight .kt { color: #445588; font-weight: bold } /* Keyword.Type */
+.highlight .m { color: #009999 } /* Literal.Number */
+.highlight .s { color: #d14 } /* Literal.String */
+.highlight .na { color: #008080 } /* Name.Attribute */
+.highlight .nb { color: #0086B3 } /* Name.Builtin */
+.highlight .nc { color: #445588; font-weight: bold } /* Name.Class */
+.highlight .no { color: #008080 } /* Name.Constant */
+.highlight .ni { color: #800080 } /* Name.Entity */
+.highlight .ne { color: #990000; font-weight: bold } /* Name.Exception */
+.highlight .nf { color: #990000; font-weight: bold } /* Name.Function */
+.highlight .nn { color: #555555 } /* Name.Namespace */
+.highlight .nt { color: #000080 } /* Name.Tag */
+.highlight .nv { color: #008080 } /* Name.Variable */
+.highlight .ow { font-weight: bold } /* Operator.Word */
+.highlight .w { color: #bbbbbb } /* Text.Whitespace */
+.highlight .mf { color: #009999 } /* Literal.Number.Float */
+.highlight .mh { color: #009999 } /* Literal.Number.Hex */
+.highlight .mi { color: #009999 } /* Literal.Number.Integer */
+.highlight .mo { color: #009999 } /* Literal.Number.Oct */
+.highlight .sb { color: #d14 } /* Literal.String.Backtick */
+.highlight .sc { color: #d14 } /* Literal.String.Char */
+.highlight .sd { color: #d14 } /* Literal.String.Doc */
+.highlight .s2 { color: #d14 } /* Literal.String.Double */
+.highlight .se { color: #d14 } /* Literal.String.Escape */
+.highlight .sh { color: #d14 } /* Literal.String.Heredoc */
+.highlight .si { color: #d14 } /* Literal.String.Interpol */
+.highlight .sx { color: #d14 } /* Literal.String.Other */
+.highlight .sr { color: #009926 } /* Literal.String.Regex */
+.highlight .s1 { color: #d14 } /* Literal.String.Single */
+.highlight .ss { color: #990073 } /* Literal.String.Symbol */
+.highlight .bp { color: #999999 } /* Name.Builtin.Pseudo */
+.highlight .vc { color: #008080 } /* Name.Variable.Class */
+.highlight .vg { color: #008080 } /* Name.Variable.Global */
+.highlight .vi { color: #008080 } /* Name.Variable.Instance */
+.highlight .il { color: #009999 } /* Literal.Number.Integer.Long */
+
+</style>
+</html>

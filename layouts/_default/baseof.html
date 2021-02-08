@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="{{ .Site.LanguageCode | default "en-us" }}">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title>{{ .Title }}</title>
+	{{ with .Site.Params.description }}<meta name="description" content="{{ . }}">{{ end }}
+	{{ with .Site.Params.author }}<meta name="author" content="{{ . }}">{{ end }}
+  <link rel="stylesheet" href="{{ "/v2/css/base.css" | relURL }}">
+  <link rel="stylesheet" href="{{ "/v2/css/syntax.css" | relURL }}">
+  {{ if eq .Params.style "markdown" }}<link rel="stylesheet" href="{{ "v2/css/markdown.css" | relURL }}">
+  {{ else }} <link rel="stylesheet" href="{{ "/v2/css/screen.css" | relURL }}">
+  {{ end }}
+	{{ with .OutputFormats.Get "RSS" -}}
+		{{ printf `<link rel="%s" type="%s" href="%s" title="%s">` .Rel .MediaType.Type .RelPermalink $.Site.Title | safeHTML }}
+	{{- end }}
+  {{ with .Params.canonical }} <link rel="canonical" href="{{ .url }}"/>   {{ end }}
+</head>
+<body>
+	{{ partial "header" . }}
+	{{ block "main" . }}{{ end }}
+	{{ partial "footer" . }}
+</body>
+  {{ with .Params.mathjax }}
+  <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+    MathJax.Hub.Config({
+      tex2jax: {
+        displayMath: [['$$','$$']],
+        inlineMath: [['$','$']],
+        processEscapes: false
+      }
+    });
+  </script>{{ end }}
+</html>

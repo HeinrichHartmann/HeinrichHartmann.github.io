@@ -1,0 +1,717 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en-us">
+<head>
+   <meta http-equiv="content-type" content="text/html; charset=utf-8"/>
+   <title>Using The Google Drive Spreadsheet Api</title>
+   <meta name="author" content="Heinrich Hartmann"/>
+   
+   </head>
+<body>
+  <div class="site">
+    <div class="headline"><a href="/">Heinrich Hartmann</a></div>
+    <div id="post">
+  <h1 id="h1-title"> Using The Google Drive Spreadsheet Api</h1>
+  
+  
+  <p class="meta">
+    Written on 2015-05-17
+    
+    
+  </p>
+
+  <!-- Splash -->
+  
+
+  <!-- Abstract -->
+  
+
+  
+
+
+  <!-- Post content -->
+  <style> .center { margin-right: auto; margin-left:auto; display: block; max-width:600px } </style>
+
+<!--# Using the Google Spreadsheets Python API -->
+
+<p>Update 2015-11-29: The described authentification method has been
+<a href="https://developers.google.com/gdata/docs/auth/clientlogin">depredated</a>. Thx
+to m@ for pointing this out.</p>
+
+<p>In this note we will receive and send rows to a Google Spreadsheet.</p>
+
+<p><a href="https://www.google.com/sheets/about/">Google Spreadsheets</a> is a great
+tool to store all kinds of tables e.g. for expenses or contacts, in a
+human readable, editable and globally accessible form.  With the
+<a href="https://developers.google.com/drive/web/about-sdk">Google Drive API</a>
+it is possible to automate access to Google Spreadsheets and use these
+worksheets as little databases that can be modified from the command
+line.</p>
+
+<p>The API is even more powerfull and supports applications to access
+data from third party users (e.g. for a image manipulation tool). This
+power brings a lot of complexity, in particular to the
+authentification process, that makes the documentation hard to
+understand. This note walks you through a simple data access example,
+while avoiding a lot of this complexity.</p>
+
+<p>##Step 1: Install gdata Library</p>
+
+<p>We will be using the <a href="https://github.com/google/gdata-python-client/">gdata-python-client</a>.
+You can either install it from source or using a package manager, e.g. using</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$ pip install gdata
+</code></pre></div></div>
+
+<h2 id="step-2-get-an-application-specific-password">Step 2: Get an application specific password</h2>
+
+<p>We will need to access your Google Drive data but do not require to
+access data from third parties.  Therefore we don’t need 
+<a href="https://developers.google.com/identity/protocols/OAuth2">OAuth2</a>
+but can use application specific passwords:</p>
+
+<ol>
+  <li>
+    <p>Generate a password at <a href="https://security.google.com/settings/security/apppasswords">https://security.google.com/settings/security/apppasswords</a></p>
+  </li>
+  <li>
+    <p>Store it an a json file (do not check it into version control) e.g. using</p>
+
+    <div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$ cat &lt;&lt;EOF &gt; GoogleAppPw.json
+{
+   "email" : "&lt;put your email here&gt;",
+   "password" : "&lt;put generated password here&gt;"
+}
+EOF
+</code></pre></div>    </div>
+  </li>
+</ol>
+
+<p>We can read the password from a python script as follows:</p>
+
+<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="kn">import</span> <span class="nn">json</span>
+<span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s">"GoogleAppPw.json"</span><span class="p">)</span> <span class="k">as</span> <span class="n">fh</span><span class="p">:</span>
+    <span class="n">config</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">fh</span><span class="p">)</span>
+
+<span class="c"># Print the password on the screen</span>
+<span class="k">print</span> <span class="n">config</span><span class="p">[</span><span class="s">'password'</span><span class="p">]</span></code></pre></figure>
+
+<h2 id="step-3-access-google-sheets-api">Step 3: Access Google Sheets API</h2>
+
+<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="kn">import</span> <span class="nn">gdata.spreadsheet.service</span>
+
+<span class="c"># Create connection object</span>
+<span class="n">client</span> <span class="o">=</span> <span class="n">gdata</span><span class="o">.</span><span class="n">spreadsheet</span><span class="o">.</span><span class="n">service</span><span class="o">.</span><span class="n">SpreadsheetsService</span><span class="p">()</span>
+
+<span class="c"># Login using credentials</span>
+<span class="n">client</span><span class="o">.</span><span class="n">ClientLogin</span><span class="p">(</span><span class="n">config</span><span class="p">[</span><span class="s">'email'</span><span class="p">],</span> <span class="n">config</span><span class="p">[</span><span class="s">'password'</span><span class="p">])</span></code></pre></figure>
+
+<p>If the last command did not raise an error, you have successfully connected to the Google API.
+Let’s print all available spreadsheets:</p>
+
+<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="c"># List all spreadsheets</span>
+<span class="n">documents_feed</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="n">GetSpreadsheetsFeed</span><span class="p">()</span>
+<span class="k">for</span> <span class="n">document_entry</span> <span class="ow">in</span> <span class="n">documents_feed</span><span class="o">.</span><span class="n">entry</span><span class="p">:</span>
+    <span class="k">print</span> <span class="n">document_entry</span><span class="o">.</span><span class="n">title</span><span class="o">.</span><span class="n">text</span></code></pre></figure>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Expenses
+Untitled spreadsheet 1
+Untitled spreadsheet 2
+Untitled spreadsheet 3
+...
+</code></pre></div></div>
+
+<h2 id="step-4-select-the-right-spreadsheet">Step 4: Select the right Spreadsheet</h2>
+
+<p>First, we read the name of the spreadsheet and the worksheet we want to access into variables.
+I have added them to the config file to leave the code more generic, feel free to use
+string literals instead.</p>
+
+<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="n">spreadsheet_name</span> <span class="o">=</span> <span class="n">config</span><span class="p">[</span><span class="s">'spreadsheet'</span><span class="p">]</span>
+<span class="n">worksheet_name</span>   <span class="o">=</span> <span class="n">config</span><span class="p">[</span><span class="s">'worksheet'</span><span class="p">]</span></code></pre></figure>
+
+<p>Now we iterate through the document feed and select the spreadsheet entry with matching title:</p>
+
+<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="k">for</span> <span class="n">entry</span> <span class="ow">in</span> <span class="n">documents_feed</span><span class="o">.</span><span class="n">entry</span><span class="p">:</span>
+    <span class="k">if</span> <span class="n">entry</span><span class="o">.</span><span class="n">title</span><span class="o">.</span><span class="n">text</span> <span class="o">==</span> <span class="n">spreadsheet_name</span><span class="p">:</span>
+        <span class="n">spreadsheet_entry</span> <span class="o">=</span> <span class="n">entry</span>
+        <span class="k">break</span>
+<span class="k">else</span><span class="p">:</span> <span class="c"># no-break</span>
+    <span class="k">print</span> <span class="s">"Spreadsheet not found!"</span></code></pre></figure>
+
+<p>Unfortunately, there is no easy way to obtain a spreadsheet object,
+from the entry which we can query for cells. Instead, we have to
+manually extract the key field from the id (this is no
+joke. cf. <a href="https://github.com/google/gdata-python-client/blob/master/samples/spreadsheets/spreadsheetExample.py#L52">example</a>)
+and pass it back to the client library:</p>
+
+<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="n">spreadsheet_key</span> <span class="o">=</span> <span class="n">spreadsheet_entry</span><span class="o">.</span><span class="nb">id</span><span class="o">.</span><span class="n">text</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s">'/'</span><span class="p">)[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+<span class="n">worksheet_feed</span>  <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="n">GetWorksheetsFeed</span><span class="p">(</span><span class="n">spreadsheet_key</span><span class="p">)</span></code></pre></figure>
+
+<p>Now we can iterate over the worksheets in a similar way:</p>
+
+<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="k">for</span> <span class="n">entry</span> <span class="ow">in</span> <span class="n">worksheet_feed</span><span class="o">.</span><span class="n">entry</span><span class="p">:</span>
+    <span class="k">if</span> <span class="n">entry</span><span class="o">.</span><span class="n">title</span><span class="o">.</span><span class="n">text</span> <span class="o">==</span> <span class="n">worksheet_name</span><span class="p">:</span>
+        <span class="n">worksheet_entry</span> <span class="o">=</span> <span class="n">entry</span>
+        <span class="k">break</span>
+<span class="k">else</span><span class="p">:</span> <span class="c"># no-break</span>
+    <span class="k">print</span> <span class="s">"Worksheet not found!"</span>
+
+<span class="n">worksheet_key</span> <span class="o">=</span> <span class="n">worksheet_entry</span><span class="o">.</span><span class="nb">id</span><span class="o">.</span><span class="n">text</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s">'/'</span><span class="p">)[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span></code></pre></figure>
+
+<p>Now we have found the keys of the worksheet and spreadsheet.</p>
+
+<h2 id="step-5-list-rows-in-the-worksheet">Step 5: List rows in the Worksheet</h2>
+
+<p>We retrieve the rows of a worksheet as iterator of dictionaries.  For
+this to work, the spreadsheet has to comply to a format.  The first
+row (header) defines the key of the dictionary the following rows
+provide the subsequent values.</p>
+
+<p>Here is an example:</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>| date       | comment    | amount   | currency |
+| 2015-01-10 | Dinner     | 29.30    | EUR      |
+| 2015-01-10 | Taxi       | 12.00    | EUR      |
+</code></pre></div></div>
+
+<p>The worksheet can be accessed as follows:</p>
+
+<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="n">list_feed</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="n">GetListFeed</span><span class="p">(</span><span class="n">spreadsheet_key</span><span class="p">,</span> <span class="n">worksheet_key</span><span class="p">)</span>
+
+<span class="c"># Iterator that lists all rows as</span>
+<span class="k">def</span> <span class="nf">rows</span><span class="p">():</span>
+    <span class="k">for</span> <span class="n">entry</span> <span class="ow">in</span> <span class="n">list_feed</span><span class="o">.</span><span class="n">entry</span><span class="p">:</span>
+        <span class="k">yield</span> <span class="nb">dict</span><span class="p">(</span> <span class="p">(</span><span class="n">key</span><span class="p">,</span> <span class="n">entry</span><span class="o">.</span><span class="n">custom</span><span class="p">[</span><span class="n">key</span><span class="p">]</span><span class="o">.</span><span class="n">text</span><span class="p">)</span> <span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="n">entry</span><span class="o">.</span><span class="n">custom</span> <span class="p">)</span></code></pre></figure>
+
+<p>Now, we print out all rows in the sheet:</p>
+
+<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="k">print</span> <span class="n">rows</span><span class="p">()</span><span class="o">.</span><span class="nb">next</span><span class="p">()</span><span class="o">.</span><span class="n">keys</span><span class="p">()</span> <span class="c"># col names</span>
+<span class="k">print</span> <span class="s">"---"</span>
+<span class="k">for</span> <span class="n">row</span> <span class="ow">in</span> <span class="n">rows</span><span class="p">():</span>
+    <span class="k">print</span> <span class="n">row</span><span class="o">.</span><span class="n">values</span><span class="p">()</span> <span class="c"># row entries</span></code></pre></figure>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>['date', 'comment', 'amount', 'currency']
+---
+['2015-01-10', 'Dinner', '29.30', 'EUR']
+['2015-01-10', 'Taxi', '12.00', 'EUR']
+</code></pre></div></div>
+
+<h2 id="step-6-append-a-row-to-the-worksheet">Step 6: Append a row to the Worksheet</h2>
+
+<p>This is surprisingly straight forward.</p>
+
+<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="n">row</span> <span class="o">=</span> <span class="p">{</span><span class="s">'date'</span><span class="p">:</span><span class="s">'2015-05-15'</span><span class="p">,</span> <span class="s">'comment'</span><span class="p">:</span><span class="s">'Bus'</span><span class="p">,</span> <span class="s">'amount'</span><span class="p">:</span><span class="s">'10'</span><span class="p">,</span> <span class="s">'currency'</span><span class="p">:</span><span class="s">'EUR'</span><span class="p">}</span>
+
+<span class="n">result</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="n">InsertRow</span><span class="p">(</span><span class="n">row</span><span class="p">,</span> <span class="n">spreadsheet_key</span><span class="p">,</span> <span class="n">worksheet_key</span><span class="p">)</span>
+
+<span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">result</span><span class="p">,</span> <span class="n">gdata</span><span class="o">.</span><span class="n">spreadsheet</span><span class="o">.</span><span class="n">SpreadsheetsList</span><span class="p">):</span> <span class="k">print</span> <span class="s">"success"</span></code></pre></figure>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>success
+</code></pre></div></div>
+
+<h2 id="step7-wrapping-it-up-in-a-convenience-class">Step7: Wrapping it up in a convenience class</h2>
+
+<p>For future use we wrap the above functions in a few classes. 
+In the future I might add a few more methods to it. The current
+version can be found on <a href="https://gist.github.com/HeinrichHartmann/fedc3fd54314ac4cec41">GitHub</a>.</p>
+
+<script src="https://gist.github.com/HeinrichHartmann/fedc3fd54314ac4cec41.js"></script>
+
+
+
+  <!-- Include Mathjax if needed -->
+  
+
+</div>
+
+  </div>
+</body>
+<style>
+  ody/*****************************************************************************/
+/*
+/* Common
+/*
+/*****************************************************************************/
+
+/* Global Reset */
+
+* {
+  margin: 0;
+  padding: 0;
+}
+
+html, body {
+  height: 100%;
+}
+
+body {
+  font-family: Helvetica, arial, sans-serif;
+  font-size: 14px;
+  line-height: 1.6;
+  background-color: white;
+  padding: 10px 30px 10px 30px;
+}
+
+h1 {
+  font-size: 1em;
+  text-transform: uppercase;
+  text-alig: left;
+  font-size: 1em;
+  margin-bottom: 1em;
+  margin-top: 2em;
+}
+h2 {
+  font-size: 1em;
+  margin-bottom: 1em;
+  margin-top: 2em;
+}
+p {
+  margin: 1em 0;
+}
+
+a {
+  color: #00a;
+}
+
+a:hover {
+  color: black;
+}
+
+a:visited {
+  color: #a0a;
+}
+
+table {
+  font-size: inherit;
+  font: 100%;
+}
+
+pre {
+  text-align: left;
+  overflow-y: auto;
+}
+
+/*****************************************************************************/
+/*
+/* Home
+/*
+/*****************************************************************************/
+
+ul.posts {
+  list-style-type: none;
+  margin-bottom: 2em;
+}
+
+ul.posts li {
+  line-height: 1.75em;
+}
+
+ul.posts span {
+  color: #aaa;
+  font-family: Monaco, "Courier New", monospace;
+  font-size: 75%;
+}
+
+
+.date {
+  color: #aaa;
+  font-family: Monaco, Courier New, monospace;
+  font-size: 75%;
+  font-weight: normal;
+  float:right;
+}
+
+.quo {
+  position:relative; top:-1px;
+}
+
+#banner {
+  margin-bottom: 1em;
+}
+
+/*****************************************************************************/
+/*
+/* Site
+/*
+/*****************************************************************************/
+
+.site {
+  text-align: justify;
+  width: 48em;
+  margin: 3em auto 2em auto;
+  line-height: 1.5em;
+  margin-bottom: 200px;
+}
+
+.site .headline a {
+    color: #a00;
+    font-weight: bold;
+    margin-bottom: 2em;
+    margin-top: 2em;
+    text-decoration: none;
+}
+
+.title {
+  color: #a00;
+  font-weight: bold;
+  margin-bottom: 2em;
+  margin-top: 2em;
+}
+
+.site .title a {
+  color: #a00;
+  text-decoration: none;
+}
+
+.site .title a:hover {
+  color: black;
+}
+
+.site .title a.extra {
+  color: #aaa;
+  text-decoration: none;
+  margin-right: 1em;
+}
+
+.site .title a.extra:hover {
+  color: black;
+}
+
+.site .meta {
+  color: #aaa;
+}
+
+.site .footer {
+  font-size: 80%;
+  color: #666;
+  border-top: 4px solid #eee;
+  margin-top: 2em;
+  overflow: hidden;
+}
+
+.site .footer .contact {
+  float: left;
+  margin-right: 1em;
+}
+
+.site .footer .contact a {
+  color: #8085C1;
+}
+
+.site .footer .rss {
+  float: right;
+}
+
+.site .footer .rss img {
+  border: 0;
+}
+
+/*****************************************************************************/
+/*
+/* Posts
+/*
+/*****************************************************************************/
+
+#markdown-toc li {
+    line-height: 1;
+}
+
+.abstract p {
+    width: 80%;
+    margin-left: auto;
+    margin-top: 3em;
+    margin-bottom: 3em;
+}
+
+#post h1 {
+  font-size: 2em;
+  text-transform: uppercase;
+  text-align: center;
+  margin: 2em 0 1.5em 0;
+  line-height: 1.5em;
+}
+#post h2, h3, h4, h5, h6 {
+  font-size: 1em;
+  margin-bottom: 1em;
+  margin-top: 2em;
+  border-bottom: 1px solid #cccccc;
+}
+#post h2:before { content: "# "; }
+#post h3:before { content: "## "; }
+#post h4:before { content: "### "; }
+
+/* standard */
+
+#post pre {
+  border: 1px solid #ddd;
+  background-color: #f5f5f5;
+  padding: 3px 5px 3px;
+  margin: 5px 0 5px 0;
+  font-family: Consolas, "Liberation Mono", Menlo, Courier, monospace;
+  font-size: 12px;
+  line-height: 16.79px;
+  word-wrap: normal;
+}
+
+#post ul,
+#post ol {
+  margin-left: 1.35em;
+}
+
+/* extra space for list elements  */
+#post li {
+  margin: 1em 0;
+}
+#post li li { /* ... but not for nested ones */
+  margin: .5em 0;
+}
+
+#post pre code {
+  border: none;
+}
+
+#post blockquote {
+  border-left: 4px solid #e8e8e8;
+  padding-left: 20px;
+  background-color: #f9f9f9;
+  margin: 30px 0;
+}
+
+.pullquote {
+  font-family: Georgia, serif;
+  font-size: 18px;
+  font-style: italic;
+  margin: 0.25em 0;
+  padding: 0.25em 40px;
+  line-height: 1.45;
+  position: relative;
+  color: #383838;
+}
+
+.pullquote:before {
+  display: block;
+  content: "\201C";
+  font-size: 80px;
+  position: absolute;
+  left: 0;
+  top: -20px;
+  color: #7a7a7a;
+}
+
+
+#post .credits {
+  text-align: right;
+  font-size: 70%;
+  color: #aaa;
+}
+
+/* terminal */
+
+#post pre.terminal {
+  border: 1px solid black;
+  background-color: #333;
+  color: white;
+}
+
+#post pre.terminal code {
+  background-color: #333;
+}
+
+#related {
+  border-top: 4px solid #eee;
+  margin-top: 2em;
+}
+
+#related h2 {
+  margin-bottom: 1em;
+}
+
+#disqus_thread {
+  border-top: 4px solid #eee;
+  margin-top: 2em;
+  padding-top: 1em;
+}
+
+#post img {
+  max-width: 100%;
+}
+
+/**
+ * Figure Plugin: https://github.com/lmullen/jekyll_figure
+ **/
+
+figure img {
+  border: 1px solid #ccc;
+  padding: 5px;
+  border-radius: 5px;
+  max-width : 100%;
+}
+
+figure {
+  text-align: center;
+}
+
+figure figcaption {
+  font-style: italic;
+  text-align: center;
+}
+
+.pdflink {
+  float: right;
+}
+
+/**
+ * GITHUB TABLE STYLES: https://github.com/alampros/Docter/blob/master/ghf_marked.css
+ **/
+
+table
+{
+  border-collapse:collapse;
+  margin:20px auto auto;
+  padding:0;
+}
+
+table tr
+{
+  border-top:1px solid #ccc;
+  background-color:#fff;
+  margin:0;
+  padding:0;
+}
+
+table tr:nth-child(2n)
+{
+  background-color:#f8f8f8;
+}
+table tr th[align="center"], table tr td[align="center"] {
+  text-align:center;
+}
+table tr th, table tr td
+{
+  border:1px solid #ccc;
+  text-align:left;
+  margin:0;
+  padding:6px 13px;
+}
+
+/**
+ * Responsive
+ **/
+@media only screen and (max-width: 50em) {
+  .site {
+    text-align: left;
+    width: 100%;
+    margin: 0;
+  }
+  body {
+    padding: 15px;
+  }
+}
+
+@media only screen and (max-width: 30em) {
+  .site {
+    font-size: 20px;
+    line-height: 2.5em;
+  }
+}
+
+.sticker {
+  color:red;
+  border-style:solid;
+  border-color:red;
+  border-radius:0.2em;
+  margin:50px;
+}
+
+@media only print {
+  .splash {
+    visibility: hidden;
+  }
+}
+
+.hookin {
+  float: left;
+  font-size: 2.5em;
+  font-weight: 700;
+  padding-top: 0.2em;
+  margin-right: 0.4em;
+  color: #a00;
+  color: #EC9F2E;
+  font-family: "franklin-gothic-urw",Verdana,Geneva,sans-serif;
+}
+
+.dropcaps::first-letter {
+  font-size: 4.8em;
+  color: #a00;
+  font-family: Georgia;
+  font-weight: 500;
+  line-height: 0.9em;
+  float: left;
+  margin-right: 0.1em;
+}
+
+</style>
+<style>
+  .highlight  { background: #ffffff; }
+.highlight .c { color: #999988; font-style: italic } /* Comment */
+.highlight .err { color: #a61717; background-color: #e3d2d2 } /* Error */
+.highlight .k { font-weight: bold } /* Keyword */
+.highlight .o { font-weight: bold } /* Operator */
+.highlight .cm { color: #999988; font-style: italic } /* Comment.Multiline */
+.highlight .cp { color: #999999; font-weight: bold } /* Comment.Preproc */
+.highlight .c1 { color: #999988; font-style: italic } /* Comment.Single */
+.highlight .cs { color: #999999; font-weight: bold; font-style: italic } /* Comment.Special */
+.highlight .gd { color: #000000; background-color: #ffdddd } /* Generic.Deleted */
+.highlight .gd .x { color: #000000; background-color: #ffaaaa } /* Generic.Deleted.Specific */
+.highlight .ge { font-style: italic } /* Generic.Emph */
+.highlight .gr { color: #aa0000 } /* Generic.Error */
+.highlight .gh { color: #999999 } /* Generic.Heading */
+.highlight .gi { color: #000000; background-color: #ddffdd } /* Generic.Inserted */
+.highlight .gi .x { color: #000000; background-color: #aaffaa } /* Generic.Inserted.Specific */
+.highlight .go { color: #888888 } /* Generic.Output */
+.highlight .gp { color: #555555 } /* Generic.Prompt */
+.highlight .gs { font-weight: bold } /* Generic.Strong */
+.highlight .gu { color: #aaaaaa } /* Generic.Subheading */
+.highlight .gt { color: #aa0000 } /* Generic.Traceback */
+.highlight .kc { font-weight: bold } /* Keyword.Constant */
+.highlight .kd { font-weight: bold } /* Keyword.Declaration */
+.highlight .kp { font-weight: bold } /* Keyword.Pseudo */
+.highlight .kr { font-weight: bold } /* Keyword.Reserved */
+.highlight .kt { color: #445588; font-weight: bold } /* Keyword.Type */
+.highlight .m { color: #009999 } /* Literal.Number */
+.highlight .s { color: #d14 } /* Literal.String */
+.highlight .na { color: #008080 } /* Name.Attribute */
+.highlight .nb { color: #0086B3 } /* Name.Builtin */
+.highlight .nc { color: #445588; font-weight: bold } /* Name.Class */
+.highlight .no { color: #008080 } /* Name.Constant */
+.highlight .ni { color: #800080 } /* Name.Entity */
+.highlight .ne { color: #990000; font-weight: bold } /* Name.Exception */
+.highlight .nf { color: #990000; font-weight: bold } /* Name.Function */
+.highlight .nn { color: #555555 } /* Name.Namespace */
+.highlight .nt { color: #000080 } /* Name.Tag */
+.highlight .nv { color: #008080 } /* Name.Variable */
+.highlight .ow { font-weight: bold } /* Operator.Word */
+.highlight .w { color: #bbbbbb } /* Text.Whitespace */
+.highlight .mf { color: #009999 } /* Literal.Number.Float */
+.highlight .mh { color: #009999 } /* Literal.Number.Hex */
+.highlight .mi { color: #009999 } /* Literal.Number.Integer */
+.highlight .mo { color: #009999 } /* Literal.Number.Oct */
+.highlight .sb { color: #d14 } /* Literal.String.Backtick */
+.highlight .sc { color: #d14 } /* Literal.String.Char */
+.highlight .sd { color: #d14 } /* Literal.String.Doc */
+.highlight .s2 { color: #d14 } /* Literal.String.Double */
+.highlight .se { color: #d14 } /* Literal.String.Escape */
+.highlight .sh { color: #d14 } /* Literal.String.Heredoc */
+.highlight .si { color: #d14 } /* Literal.String.Interpol */
+.highlight .sx { color: #d14 } /* Literal.String.Other */
+.highlight .sr { color: #009926 } /* Literal.String.Regex */
+.highlight .s1 { color: #d14 } /* Literal.String.Single */
+.highlight .ss { color: #990073 } /* Literal.String.Symbol */
+.highlight .bp { color: #999999 } /* Name.Builtin.Pseudo */
+.highlight .vc { color: #008080 } /* Name.Variable.Class */
+.highlight .vg { color: #008080 } /* Name.Variable.Global */
+.highlight .vi { color: #008080 } /* Name.Variable.Instance */
+.highlight .il { color: #009999 } /* Literal.Number.Integer.Long */
+
+</style>
+</html>

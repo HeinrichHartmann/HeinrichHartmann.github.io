@@ -1,0 +1,137 @@
+{{ define "main" }}
+<script src="/js/jquery-3.4.1.min.js"></script>
+<script>
+  function filter() {
+    const pattern = $("#filter").val().toLowerCase()
+    // const pattern = event.currentTarget.value.replace(/ +/g, ' ').toLowerCase();
+    const fragments = pattern.split(/[ ]+/);
+    $("#posts").children().each((i, li) => {
+      var text = li.textContent.toLowerCase();
+      fragments.every(function(pat){
+        if (!~text.indexOf(pat)) { // no match
+          li.hidden = true
+          return 0;
+        } else {
+          li.hidden = false
+          return 1
+        }
+      })
+    });
+  }
+  $(function() {
+    $('#filter').keyup(() => {filter();});
+    $('#filter').val(window.location.hash.substr(1))
+    filter();
+    $(document).keydown(function(e){
+      if (e.key == "Enter") {
+        var li = $("#posts").children().filter((i, li) => {
+          console.log(li);
+          console.log(li.hidden);
+          console.log(!li.hidden);
+          return !li.hidden
+        }).first();
+        var a = li.find("a");
+        var href = a.attr("href");
+        window.location = href;
+      }
+    });
+    $("a.nav").on("click", (e) => {
+      var f = e.target.attributes['href'].value.substr(2) // remove '/#'
+      console.log(f)
+      $('#filter').val(f)
+      filter()
+    })
+
+  });
+</script>
+<style>
+  #filter {
+      margin: 0 auto;
+      display: block;
+      width: 100%;
+      margin-top: 3em;
+      margin-bottom: 3em;
+      font-size: 100%;
+      background: transparent;
+      border: none;
+      border-bottom: 1px solid #AAA;
+  }
+  #filter:focus {
+      border: none;
+      border-bottom: 1px solid #AAA;
+      outline: none;
+  }
+</style>
+<main>
+  <div class="site">
+  <div class="title">
+    <a class="extra nav" href="/#">home</a>
+    <a class="extra nav" href="/#post">posts</a>
+    <a class="extra nav" href="/#talk">talks</a>
+    <a class="extra nav" href="/#math">math</a>
+    <a class="extra nav" href="/#paper">paper</a>
+    <div class="social" style='float:right'>
+    <a class="extra" href="/about">about</a>
+      <div style='float:right'>
+        <a href="http://twitter.com/intent/follow?screen_name=HeinrichHartman"><img src="/images/twitter_icon.svg" width="25px" style="margin: 0 10px 0 0;"></a>
+      </div>
+      <div style='float:right'>
+        <a href="https://github.com/HeinrichHartmann/"><img src="/images/github_icon.svg" width="25px" style="margin: 0 10px 0 0;"></a>
+      </div>
+      <div style='float:right'>
+         <a href="https://groups.google.com/g/heinrichhartmann/"><img src="/images/mail_icon.svg" width="25px" style="margin: 0 10px 0 0;"/></a>
+      </div>
+    </div>
+  </div>
+  <blockquote style="text-align:right; margin: 50px 0 50px 0;">Schreiben, nur schreiben macht selig! -- D. Stuhrmann</blockquote>
+    <div id="home">
+    <input type="search" id="filter" placeholder="Filter" autofocus="autofocus">
+  <ul class="posts" id="posts">
+    {{ range  (where site.RegularPages "Type" "in" site.Params.mainSections) }}
+    <li><span>{{ .Date.Format "2006-01-02" }} </span> &raquo;&nbsp;
+      <a href="{{ .Permalink }}">{{ .Title }}</a>
+      <small>
+      {{- if isset .Params "comment" -}} {{ .Params.comment }}{{end}}
+      </small>
+      <span style="float:right">{{ .Params.tags | default "post" }}</span>
+    </li>
+    {{ end }}
+    {{ range sort .Params.content "date" "desc" }}
+    {{ if and ( isset . "type" ) ( eq .type "paper" ) }}
+    <li style="clear:both"><span>{{.date}} </span> &raquo;&nbsp;
+      {{.title}}
+      <small>
+      {{- if isset . "comment" -}} {{ .comment }}{{end}}
+      {{- with .journal -}}, <em><a href="{{.href}}">{{.title}}</a></em>{{ end }}
+      {{- if isset . "doi" -}}, <a href="{{.doi}}">[doi]</a> {{ end }}
+      {{- if isset . "arxiv" -}}, <a href="{{.arxiv}}">arxiv</a> {{ end }}
+      {{- if isset . "pdf" -}}, <a href="{{.pdf}}">[pdf]</a> {{ end }}
+      </small>
+      <span style="float:right">{{ .tags | default "paper" }}</span></li>
+    {{ else if and ( isset . "type" ) ( eq .type "talk" ) }}
+    <li><span>{{.date}} </span> &raquo;&nbsp;
+      <a href="{{.href}}">{{.occasion}}</a> -- <em>{{.title}}</em><small>
+      {{- if isset . "comment" -}} {{ .comment }}{{end}}
+      {{- if isset . "notes" -}}, <a href="{{.notes}}">[notes]</a>{{ end }}
+      {{- if isset . "slides" -}}, <a href="{{.slides}}">[slides]</a>{{ end }}
+      {{- if isset . "video" -}}, <a href="{{.video}}">[video]</a>{{ end }}
+      </small>
+      <span style="float:right">{{ .tags | default "talk" }}</span></li>
+    {{ else }}
+    <li><span>{{.date}} </span> &raquo;&nbsp;
+      {{ if isset . "href" }}<a href="{{.href}}">{{.title}}</a>{{- else -}} {{.title}}{{ end }}
+      <small>
+      {{- if isset . "comment" -}}&nbsp;{{ .comment }}{{ end }}
+      {{- if isset . "hn" -}}, <a href="{{.hn}}">[hn]</a>{{ end }}
+      {{- if isset . "archive" -}}, <a href="{{.archive}}">[archive]</a>{{ end }}
+      {{- if isset . "pdf" -}}, <a href="{{.pdf}}">[pdf]</a>{{ end }}
+      {{- if isset . "code" -}}, <a href="{{.code}}">[code]</a> {{ end }}
+      </small>
+      <span style="float:right">{{.tags | default "post" }}</span></li>
+      {{ end }}
+    {{ end }}
+  </ul>
+  {{.Content}}
+</div>
+</main>
+{{ end }}

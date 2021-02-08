@@ -1,0 +1,16 @@
+{{ define "main" }}
+  <main class="markdown-container">
+		<article class="markdown-body">
+      {{ with.Params.draft }}<h1 class="sticker"> UNPUBLISHED DRAFT </h1>{{ end }}
+			<h1>{{ .Title }}</h1>
+      <p class="meta">
+        Written on {{ dateFormat "2006-01-02" .Params.date }}
+        {{ with .Params.location }} in {{ . }} {{ end }}
+        {{ with .Params.canonical }} for the <a href="{{ .url }}">{{ .name }}</a>. {{ end }}
+      </p>
+			<div>
+				{{ .Content }}
+			</div>
+		</article>
+	</main>
+{{ end }}
