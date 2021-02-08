@@ -50,12 +50,11 @@ import:
 	cd import/jekyll/_site/ && cp $(OLD_BLOGS) ../../../static/archive
 
 publish:
-	# hugo -D
-	# make -B import
+	# make sure that master is up to date with origin/master before proceeding
 	echo "ref: refs/heads/master" > .git/HEAD
 	git reset
 	git add ./public
 	git commit -m "update"
-	git subtree push --prefix public public master
-	echo "ref: refs/heads/dev" > .git/HEAD
+	git subtree push --prefix public origin master
+	echo "ref: refs/heads/hugo" > .git/HEAD
 	git reset
