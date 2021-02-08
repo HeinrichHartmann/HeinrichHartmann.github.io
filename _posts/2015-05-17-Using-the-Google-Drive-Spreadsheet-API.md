@@ -32,7 +32,7 @@ understand. This note walks you through a simple data access example,
 while avoiding a lot of this complexity.
 
 
-## Step 1: Install gdata Library
+##Step 1: Install gdata Library
 
 We will be using the [gdata-python-client](https://github.com/google/gdata-python-client/).
 You can either install it from source or using a package manager, e.g. using

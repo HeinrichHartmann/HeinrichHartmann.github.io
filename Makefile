@@ -1,3 +1,6 @@
+python3-serve:
+	cd _site; python -m http.server 4444
+
 python-serve:
 	cd _site; python -m SimpleHTTPServer 4444
 

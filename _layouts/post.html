@@ -3,15 +3,10 @@ layout: default
 ---
 
 <div id="post">
-
-  <!-- Title -->
-  <h1> {{ page.title }}</h1>
-
+  <h1 id="h1-title"> {{ page.title }}</h1>
   {% if page.hidden %}
-  <h1 class="sticker"> UNPUBLISHED DRAFT </h1>
+  <h1 id="h1-hidden" class="sticker"> UNPUBLISHED DRAFT </h1>
   {% endif %}
-
-  <!-- Meta -->
   {% if page.pdflink %}
   <div class="pdflink">
     <a href="{{ site.url }}{{ page.pdflink }}">[pdf]</a>
@@ -22,6 +17,30 @@ layout: default
     {% if page.location %} in {{ page.location }} {% endif %}
     {% if page.canonical %} for the <a href="{{ page.canonical.url }}">{{ page.canonical.name }}</a>. {% endif %}
   </p>
+
+  <!-- Splash -->
+  {% if page.splash %}
+  <div class="splash">
+    {% if page.splash.link %}<a href="{{ page.splash.link }}">{% endif %}
+      <img src="{{ page.splash.src }}" width="100%"/>
+    {% if page.splash.link %}</a>{% endif %}
+    {% if page.splash.credits %} <p class="credits">{{ page.splash.credits }}</p> {% endif %}
+  </div>
+  {% endif %}
+
+  <!-- Abstract -->
+  {% if page.abstract %}
+  <p class="abstract">{{ page.abstract }}</p>
+  {% endif %}
+
+  {% if page.mathjax %}
+     <!-- Mathjax preamble -->
+     <div style="visibility:hidden; display:none;">$${% include mathjax-preamble.tex %}$$</div>
+  {% endif %}
+
+
+  <!-- Post content -->
+  {{ content }}
 
   <!-- Include Mathjax if needed -->
   {% if page.mathjax %}
@@ -41,50 +60,6 @@ layout: default
                                        console.log(message);
                                      });
   </script>
-  <!-- Mathjax preamble -->
-  <div style="visibility:hidden; display:none;">
-    $$
-    {% include mathjax-preamble.tex %}
-    $$
-  </div>
   {% endif %}
-
-  <!-- Splash -->
-  {% if page.splash %}
-  <div class="splash">
-    {% if page.splash.link %}<a href="{{ page.splash.link }}">{% endif %}
-      <img src="{{ page.splash.src }}" width="100%"/>
-    {% if page.splash.link %}</a>{% endif %}
-    {% if page.splash.credits %} <p class="credits">{{ page.splash.credits }}</p> {% endif %}
-  </div>
-  {% endif %}
-
-  <!-- Abstract -->
-  {% if page.abstract %}
-  <p class="abstract">{{ page.abstract }}</p>
-  {% endif %}
-
-  <!-- Post content -->
-  {{ content }}
-
-  <br/>
-  <em>View the version history of this post on <a href="https://github.com/HeinrichHartmann/HeinrichHartmann.github.io/commits/source/{{page.path}}">GitHub</a>.</em>
-  <br/>
-  <!-- Comments -->
-  {% unless page.nocomments %}
-    <em>Comments have been disabled until the dust around the GDPR settled.</em>
-    <!-- <div id="disqus_thread"></div> -->
-    <!-- <script type="text/javascript"> -->
-    <!--   /* * * CONFIGURATION VARIABLES * * */ -->
-    <!--   var disqus_shortname = 'heinrichhartmann'; -->
-    <!--   /* * * DON'T EDIT BELOW THIS LINE * * */ -->
-    <!--   (function() { -->
-    <!--   var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true; -->
-    <!--   dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js'; -->
-    <!--   (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq); -->
-    <!--   })(); -->
-    <!-- </script> -->
-    <!-- <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments</a></noscript> -->
-  {% endunless %}
 
 </div>
