@@ -12,24 +12,27 @@
     
     
     <item>
-      <title>Better Crash Reporting</title>
-      <link>/v2/posts/crash/</link>
-      <pubDate>Wed, 27 May 2020 00:00:00 +0000</pubDate>
+      <title>About</title>
+      <link>/about/</link>
+      <pubDate>Mon, 01 Feb 2021 00:00:00 +0000</pubDate>
       
-      <guid>/v2/posts/crash/</guid>
-      <description>Crash events are some of the more serious events that can happen when operating a service. Usually it is crashing components that cause cascading failures and service outages. It is critical to have good visibility into those events, since they can cause major damage and should be avoided.
-Unfortunately, debugging crashes is one of the more complicated endeavors. The state of a crashed process is often compromised and the process can&amp;rsquo;t be trusted to collect debugging information on its own.</description>
+      <guid>/about/</guid>
+      <description>Credits  Social icons by Alfredo Creates jekyll theme by Tom Preston-Werner  Impressum This statment of ownership is legally mandated in Germany (cf. Wikipedia).
+Impressum dieser Website erstellt über den Generator der Deutschen Anwaltshotline AG
+Angaben gem. § 5 TMG
+Betreiber und Kontakt:
+Dr. Heinrich Hartmann Am Bökel 3 32351 Stemwede Telefonnummer: +49 1525 3638134 E-Mail-Adresse: heinrich@heinrichhartmann.com USt-IdNr.: DE295519544  Die Europäische Kommission stellt eine Plattform zur Online-Streitbeilegung (OS) bereit, die Sie hier finden.</description>
     </item>
     
     <item>
-      <title>Post Mortem Heap Analysis</title>
-      <link>/v2/posts/core/</link>
-      <pubDate>Wed, 20 May 2020 00:00:00 +0000</pubDate>
+      <title>Better Crash Reporting</title>
+      <link>/posts/crash/</link>
+      <pubDate>Wed, 27 May 2020 00:00:00 +0000</pubDate>
       
-      <guid>/v2/posts/core/</guid>
-      <description>This is report, about debugging an incident at a customer site. Our component, is running out of memory quickly, and getting OOM killed after filling 64Gb of RAM within 20 minutes.
-We have an 18Gb core dump taken after 10 minutes of activity.
-The application is written in C/lua (luajit). We have the source code available, but no clear idea where the memory leaked.</description>
+      <guid>/posts/crash/</guid>
+      <description>&lt;p&gt;Crash events are some of the more serious events that can happen when operating a service.  Usually
+it is crashing components that cause cascading failures and service outages.  It is critical to have
+good visibility into those events, since they can cause major damage and should be avoided.&lt;/p&gt;</description>
     </item>
     
   </channel>

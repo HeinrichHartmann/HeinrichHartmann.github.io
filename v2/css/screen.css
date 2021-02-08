@@ -113,7 +113,7 @@ ul.posts span {
 
 .site {
   text-align: justify;
-  width: 48em;
+  width: 60em;
   margin: 3em auto 2em auto;
   line-height: 1.5em;
 }
@@ -372,7 +372,7 @@ table tr th, table tr td
 /**
  * Responsive
  **/
-@media only screen and (max-width: 50em) {
+@media only screen and (max-width: 60em) {
   .site {
     text-align: left;
     width: 100%;

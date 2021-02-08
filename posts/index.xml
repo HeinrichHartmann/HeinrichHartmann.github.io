@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Posts on HeinrichHartmann.com</title>
+    <link>/posts/</link>
+    <description>Recent content in Posts on HeinrichHartmann.com</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Wed, 27 May 2020 00:00:00 +0000</lastBuildDate>
+    
+	<atom:link href="/posts/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Better Crash Reporting</title>
+      <link>/posts/crash/</link>
+      <pubDate>Wed, 27 May 2020 00:00:00 +0000</pubDate>
+      
+      <guid>/posts/crash/</guid>
+      <description>&lt;p&gt;Crash events are some of the more serious events that can happen when operating a service.  Usually
+it is crashing components that cause cascading failures and service outages.  It is critical to have
+good visibility into those events, since they can cause major damage and should be avoided.&lt;/p&gt;</description>
+    </item>
+    
+  </channel>
+</rss>

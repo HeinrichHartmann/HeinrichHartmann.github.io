@@ -2,71 +2,182 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en-us">
 <head>
    <meta http-equiv="content-type" content="text/html; charset=utf-8"/>
-   <title>Heinrich Hartmann - Consulting</title>
+   <title>Setting Up A Virtual Cluster</title>
    <meta name="author" content="Heinrich Hartmann"/>
    
    </head>
 <body>
   <div class="site">
     <div class="headline"><a href="/">Heinrich Hartmann</a></div>
+    <div id="post">
+  <h1 id="h1-title"> Setting Up A Virtual Cluster</h1>
+  
+  
+  <p class="meta">
+    Written on 2013-12-25
+    
+    
+  </p>
 
-<h1 id="hartmann-it-gmbh">Hartmann IT GmbH</h1>
+  <!-- Splash -->
+  
 
-<p><img src="/images/consulting.png" width="100%" /></p>
+  <!-- Abstract -->
+  
 
-<h2 id="services">Services</h2>
+  
+
+
+  <!-- Post content -->
+  <!-- # Virtual Cluster -->
+
+<p>When playing around with distributed technologies like hadoop or
+databases, it becomes at some point important to have a number of
+machines available to perform tests in a truly distributed
+environment. In this note I am going to explain how to setup a virtual
+cluster using virtual box, so that you can simulate such an environment
+on a single laptop.</p>
+
+<h2 id="target-network-configuration">Target Network Configuration</h2>
+
+<p>Each host has two network interfaces.</p>
 
 <ul>
-  <li>
-    <p>Training “Statistics for Engineers”, teaching best practices and common pitfalls in analyzing telemetry data from IT systems</p>
-  </li>
-  <li>
-    <p>Improvement of existing monitoring infrastructure for observability, operability, debugability and accountability needs</p>
-  </li>
-  <li>
-    <p>Setting and managing Service Level Expectations with SRE-methods</p>
-  </li>
+  <li>Adapter 1: Host Only Interface. This is a virtual network used to
+connect the virtual hosts and the physical host system.</li>
+  <li>Adapter 2: NAT. Used to connect the virtual hosts to the internet.</li>
 </ul>
 
-<h2 id="credentials">Credentials</h2>
+<p>Network Setup Sketch:</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>                     vboxnet0  inet
+					 
+                              [GW]
+ HOST:                          |
+      [wlan0|auto,NAT]----------+
+      [vboxnet0|.1]-----+       |
+                        |       |
+ VLB1:                  |       |
+      [eth0|auto]-------|-------+
+      [eth1|.101]-------+       |
+                        |       |
+ VLB2:                  |       |
+ 	  [eth0|auto]-------|-------+
+      [eth1|.102]-------+
+</code></pre></div></div>
+
+<h2 id="vm-setup">VM Setup</h2>
+
+<ol>
+  <li>Create a new virtual machine<br />
+I used the following specs:
+    <ul>
+      <li>1Gb Memory</li>
+      <li>5Gb Disk (dynamically allocated)</li>
+      <li>two network adapters as described above.</li>
+    </ul>
+  </li>
+  <li>Install linux.<br />
+I used Ubuntu 12.04 Server.
+Update packages and install basic tools (e.g. <code class="highlighter-rouge">openssh, emacs</code>)</li>
+  <li>Network configuration<br />
+Enable dhcp on both network interfaces in <code class="highlighter-rouge">/etc/network/interfaces</code>.</li>
+  <li>
+    <p>Setup ssh access.<br />
+I like to be able to get a remote shell by simply typing <code class="highlighter-rouge">ssh &lt;hostname&gt;</code>.
+Use <code class="highlighter-rouge">.ssh/config</code> to set the default user name (user), and copy the ssh key
+as described e.g. at https://help.ubuntu.com/community/SSH/OpenSSH/</p>
+
+    <div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code> cat ~/.ssh/id_rsa.pub | ssh VLB "cat &gt;&gt; .ssh/authorized_keys"
+</code></pre></div>    </div>
+  </li>
+</ol>
+
+<p>Excerpt from <code class="highlighter-rouge">/etc/network/interfaces</code> on the virtual hosts:</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>auto eth0
+iface eth0 inet dhcp
+
+auto eth1
+iface eth1 inet dhcp
+</code></pre></div></div>
+
+<p>Excerpt from <code class="highlighter-rouge">~/.ssh/config</code> on the hosts:</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Host VLB
+HostName 192.168.56.101
+User user
+</code></pre></div></div>
+
+<h2 id="cloning">Cloning</h2>
+
+<p>Before shutting down the root VM for cloning execute the following
+command on the shell:</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>sudo rm -f /etc/udev/rules.d/70-persistent-net.rules
+</code></pre></div></div>
+
+<p>This will erase the network card configuration.  Now shutdown the VM
+and clone the virtual machine in virtual box. Select ‘Reinitialize the
+MAC addresses of all network cards’.</p>
+
+<p>We need different mac addresses to have both cards in the same
+network. As a result the linux kernel will detect the network cards as
+new interfaces and give them new names (<code class="highlighter-rouge">eth1</code>, <code class="highlighter-rouge">eth2</code>) - and not be
+automatically activated and configured on boot.</p>
+
+<h2 id="hostnames-and-ssh-config">Hostnames and SSH Config</h2>
+
+<p>First adapt your <code class="highlighter-rouge">~/.ssh/config</code> and <code class="highlighter-rouge">etc/hosts</code> to list both machines
+as <code class="highlighter-rouge">VLB1</code> and <code class="highlighter-rouge">VLB2</code>.  Then cofigure the remote hostnames:</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>echo "VLB1" | ssh VLB1 "cat | sudo tee /etc/hostname"
+echo "127.0.0.1 VLB1" | ssh VLB1 "cat | sudo tee -a /etc/hosts"
+</code></pre></div></div>
+
+<p>Similarly for VLB2.</p>
+
+<p>Remark: A drawback of this approach is that each time the 2nd command
+is executed a new line is appended at to /etc/hosts. In particular the
+command is not idempotent. An alternative variant would be to use
+<code class="highlighter-rouge">sed</code> for a global string replacement, which has similar issues. <code class="highlighter-rouge">sed
+s/VLB/VLB1/g</code> transforms <code class="highlighter-rouge">VLB -&gt; VLB1 -&gt; VLB11</code>. Maybe <code class="highlighter-rouge">sed
+s/VLB$/VLB1/g</code> could work.</p>
+
+<p>Also it would be nice to set /etc/hosts correctly on the remote, but
+this gets too far. It seems <a href="http://zookeeper.apache.org/">zookeper</a>
+is the right tool for this kind of problems.</p>
+
+<h2 id="network-check">Network check</h2>
+
+<p>To see if all hosts are sucessfully connected to the network, run a
+ip-range scan. E.g.</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>nmap 192.168.56.*
+</code></pre></div></div>
+
+<p>You should see three machines at <code class="highlighter-rouge">.1</code>, <code class="highlighter-rouge">.101</code>, <code class="highlighter-rouge">.102</code>.</p>
+
+<h2 id="startup-script">Startup Script</h2>
+
+<p>Convenience script to start the whole “cluster” at once:</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c">#!/bin/bash</span>
+nohup vboxheadless <span class="nt">-s</span> LinuxBox &amp;
+nohup vboxheadless <span class="nt">-s</span> LinuxBox_1 &amp;
+</code></pre></div></div>
+
+<h1 id="references">References</h1>
 
 <ul>
-  <li>
-    <p>PhD in Mathematics</p>
-  </li>
-  <li>
-    <p>5years+ of consulting experience in the IT monitoring space</p>
-  </li>
-  <li>
-    <p><a href="http://cacm.acm.org/magazines/2016/7/204029-statistics-for-engineers/abstract">CACM Vol. 59 No. 7</a> – Statistics for Engineers - Applying statistical techniques to operations data</p>
-  </li>
-  <li>
-    <p><a href="http://monitorama.com/2016/pdx.html#welcome">Monitorama PDX, 2016</a> – <a href="https://vimeo.com/173610069">A Tale of API Monitoring</a></p>
-  </li>
-  <li>
-    <p>Keynote <a href="https://www.usenix.org/conference/srecon18europe/presentation/schlossnagle">SRECon EMEA 2018</a> – Circonus Design (Failures) Case Study</p>
-  </li>
-  <li>
-    <p>Training <a href="https://github.com/HeinrichHartmann/Statistics-for-Engineers/">Statistics for Engineers</a> at
-SRECon <a href="https://www.usenix.org/conference/srecon19emea/program">19</a>, <a href="https://www.usenix.org/conference/srecon18emea/program">18</a>, <a href="https://www.usenix.org/conference/srecon17europe">17</a>, <a href="https://www.usenix.org/conference/srecon16europe">16</a>, <a href="https://www.usenix.org/conference/srecon15europe">15</a>;
-Velocity <a href="https://conferences.oreilly.com/velocity/devops-web-performance-eu-2015/public/schedule/detail/45241">Amsterdam</a>,
-<a href="https://conferences.oreilly.com/velocity/vl-eu/public/schedule/full/public">London</a>;
-<a href="http://www.statscraft.org.il/event/2016/">StatsCraft</a>;
-<a href="https://devopsdays.org/events/2018-kiel/workshop/heinrich-hartmann/">DevOpsDays Kiel</a></p>
-  </li>
+  <li><a href="http://cs.smith.edu/dftwiki/index.php/Setup_Virtual_Hadoop_Cluster_under_Ubuntu_with_VirtualBox">D. Thiebaut - Setup Virtual Hadoop Cluster under Ubuntu with VirtualBox</a></li>
 </ul>
 
-<h2 id="testimonials">Testimonials</h2>
 
-<p><img src="https://upload.wikimedia.org/wikipedia/en/5/59/Swisscom_logo.svg" class="logo" /></p>
-<p class="quote">"This was an excellent course. Heinrich explained the theoretical foundations with exceptional clarity and great thoroughness, while keeping a clear view on practical applications."</p>
-<p class="author">Thomas Zippo, Lean Agile Leader for Data Analytics</p>
+  <!-- Include Mathjax if needed -->
+  
 
-<div style="clear:both" />
-
-<h2 id="contact">Contact</h2>
-
-<p>Email: <a href="mailto:consulting@heinrichhartmann.com">consulting@heinrichhartmann.com</a></p>
+</div>
 
   </div>
 </body>
@@ -557,32 +668,5 @@ table tr th, table tr td
 .highlight .vi { color: #008080 } /* Name.Variable.Instance */
 .highlight .il { color: #009999 } /* Literal.Number.Integer.Long */
 
-</style>
-    <style>
-h1 {
-    font-size: 2em;
-    text-transform: none;
-    text-align: center;
-    margin: 2em 0 1.5em 0;
-    line-height: 1.5em;
-}
-.site {
-    text-align: left;
-    }
-
-.logo {
-  float:right;
-  margin-left: 20px;
-  width:80px;
-  height 80px;
-}
-.author {
-  float:right;
-  margin-right: 20px;
-  margin-top: 0px;
-}
-.quote {
-  margin: 0px;
-}
 </style>
 </html>

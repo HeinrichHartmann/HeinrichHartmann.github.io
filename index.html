@@ -1,296 +1,658 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en-us">
+<html lang="en-us">
 <head>
-   <meta http-equiv="content-type" content="text/html; charset=utf-8"/>
-   <title>Heinrich Hartmann</title>
-   <meta name="author" content="Heinrich Hartmann"/>
-
-   <!-- syntax highlighting CSS -->
-   <link rel="stylesheet" href="/css/syntax.css" type="text/css"/>
-
-   <!-- Homepage CSS -->
-   <link rel="stylesheet" href="/css/screen.css" type="text/css" media="screen, projection"/>
-
-   <!-- RSS feed -->
-   <link rel="alternate" type="application/rss+xml" title="RSS" href="/feed.xml">
-
-   <!-- Favicon -->
-   <link rel="icon" type="image/png" href="/images/favicon.png">
-
-   
-   </head>
+	<meta name="generator" content="Hugo 0.74.3" />
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title></title>
+	
+	
+  <link rel="stylesheet" href="/v2/css/base.css">
+  <link rel="stylesheet" href="/v2/css/syntax.css">
+   <link rel="stylesheet" href="/v2/css/screen.css">
+  
+	<link rel="alternate" type="application/rss+xml" href="/index.xml" title="HeinrichHartmann.com">
+  
+  <link rel="icon" type="image/png" href="/favicon.png"> 
+</head>
 <body>
+	<header>
+	<a href="/">HeinrichHartmann.com</a>
+</header>
 
-<div class="site">
-  <div class="headline"><a href="/">Heinrich Hartmann</a></div>
+	
+<script src="/js/jquery-3.4.1.min.js"></script>
+<script>
+  function filter() {
+    const pattern = $("#filter").val().toLowerCase()
+    
+    const fragments = pattern.split(/[ ]+/);
+    $("#posts").children().each((i, li) => {
+      var text = li.textContent.toLowerCase();
+      fragments.every(function(pat){
+        if (!~text.indexOf(pat)) { 
+          li.hidden = true
+          return 0;
+        } else {
+          li.hidden = false
+          return 1
+        }
+      })
+    });
+  }
+  $(function() {
+    $('#filter').keyup(() => {filter();});
+    $('#filter').val(window.location.hash.substr(1))
+    filter();
+    $(document).keydown(function(e){
+      if (e.key == "Enter") {
+        var li = $("#posts").children().filter((i, li) => {
+          console.log(li);
+          console.log(li.hidden);
+          console.log(!li.hidden);
+          return !li.hidden
+        }).first();
+        var a = li.find("a");
+        var href = a.attr("href");
+        window.location = href;
+      }
+    });
+    $("a.nav").on("click", (e) => {
+      var f = e.target.attributes['href'].value.substr(2) 
+      console.log(f)
+      $('#filter').val(f)
+      filter()
+    })
+
+  });
+</script>
+<style>
+  #filter {
+      margin: 0 auto;
+      display: block;
+      width: 100%;
+      margin-top: 3em;
+      margin-bottom: 3em;
+      font-size: 100%;
+      background: transparent;
+      border: none;
+      border-bottom: 1px solid #AAA;
+  }
+  #filter:focus {
+      border: none;
+      border-bottom: 1px solid #AAA;
+      outline: none;
+  }
+</style>
+<main>
+  <div class="site">
   <div class="title">
-    <a class="extra" href="/">blog</a>
-    <a class="extra" href="/math.html">math</a>
-    <a class="extra" href="/opinion.html">opinion</a>
-    <a class="extra" href="/consulting.html">consulting</a>
-    <a class="extra" href="/about.html">about</a>
+    <a class="extra nav" href="/#">home</a>
+    <a class="extra nav" href="/#post">posts</a>
+    <a class="extra nav" href="/#talk">talks</a>
+    <a class="extra nav" href="/#math">math</a>
+    <a class="extra nav" href="/#paper">paper</a>
     <div class="social" style='float:right'>
-      <!-- <div style='float:right'> -->
-      <!--   <a href="http://eepurl.com/ccmH-T"><img src="/images/mail_icon.svg" width="25px"/></a> -->
-      <!-- </div> -->
-      <div style='float:right'>
-        <a href="/feed.xml"><img src="/images/rss_icon.svg" width="25px" style="margin: 0 10px 0 0;"/></a>
-      </div>
+    <a class="extra" href="/about">about</a>
       <div style='float:right'>
         <a href="http://twitter.com/intent/follow?screen_name=HeinrichHartman"><img src="/images/twitter_icon.svg" width="25px" style="margin: 0 10px 0 0;"></a>
       </div>
+      <div style='float:right'>
+        <a href="https://github.com/HeinrichHartmann/"><img src="/images/github_icon.svg" width="25px" style="margin: 0 10px 0 0;"></a>
+      </div>
+      <div style='float:right'>
+         <a href="https://groups.google.com/g/heinrichhartmann/"><img src="/images/mail_icon.svg" width="25px" style="margin: 0 10px 0 0;"/></a>
+      </div>
     </div>
   </div>
-
   <blockquote style="text-align:right; margin: 50px 0 50px 0;">Schreiben, nur schreiben macht selig! -- D. Stuhrmann</blockquote>
-
-<div id="home">
-
-  <h1>Blogs</h1>
-
-  <ul class="posts">
+    <div id="home">
+    <input type="search" id="filter" placeholder="Filter" autofocus="autofocus">
+  <ul class="posts" id="posts">
     
-    <li><span>2019-10-04</span> &raquo; <a href="/math/quantiles.html">Quantiles</a>
-      
-      
+    <li><span>2020-05-27 </span> &raquo;&nbsp;
+      <a href="/posts/crash/">Better Crash Reporting</a>
+      <small>
+      </small>
+      <span style="float:right">post</span>
     </li>
     
-    <li><span>2018-10-12</span> &raquo; <a href="/blog/problem-lisp.html">The Problem with Lisp</a>
-      
-      
-    </li>
     
-    <li><span>2018-09-15</span> &raquo; <a href="/blog/data-science.html">From Academia to Data Science</a>
-      
-      
-    </li>
     
-    <li><span>2018-09-02</span> &raquo; <a href="/blog/Latency-SLOs.html">Latency SLOs done right</a>
+    <li><span>2020-02-15 </span> &raquo;&nbsp;
+      <a href="/archive/Thuringen.html">Landtagswahl Thüringen</a>
+      <small>&nbsp;Kommentar
+      </small>
+      <span style="float:right">opinion, GER, post</span></li>
       
-      
-    </li>
     
-    <li><span>2018-05-29</span> &raquo; <a href="/blog/more-toil-less-coil.html">Less Toil, More Coil: Telemetry analysis with Python</a>
-      
-       (on circonus.com) 
-    </li>
     
-    <li><span>2018-04-29</span> &raquo; <a href="/blog/linux-monitoring-with-ebpf.html">Linux System Monitoring with eBPF</a>
-      
-       (on circonus.com) 
-    </li>
+    <li style="clear:both"><span>2020-01-17 </span> &raquo;&nbsp;
+      Circllhist - A Log-Linear Histogram Data Structure...
+      <small> with Theo Schlossnagle, <em><a href="https://arxiv.org/abs/2001.06561">arxiv/CS</a></em>
+      </small>
+      <span style="float:right">mon, paper</span></li>
     
-    <li><span>2018-03-23</span> &raquo; <a href="/blog/quality-time.html">Quality Time</a>
-      
-      
-    </li>
     
-    <li><span>2018-03-12</span> &raquo; <a href="/VCB.html">Virtual Coffee Break</a>
-      
-      
-    </li>
     
-    <li><span>2018-03-11</span> &raquo; <a href="/blog/all-is-loss.html">All is loss</a>
+    <li><span>2019-10-04 </span> &raquo;&nbsp;
+      <a href="/archive/quantiles.html">Quantiles</a>
+      <small>
+      </small>
+      <span style="float:right">math, post</span></li>
       
-      
-    </li>
     
-    <li><span>2018-02-13</span> &raquo; <a href="/blog/Circonus-on-RPI.html">Circonus on the Raspberry Pi</a>
-      
-      
-    </li>
     
-    <li><span>2018-02-05</span> &raquo; <a href="/blog/Monitoring-Dropbox.html">Monitoring Dropbox</a>
+    <li><span>2018-10-12 </span> &raquo;&nbsp;
+      <a href="/archive/problem-lisp.html">The Problem with Lisp</a>
+      <small>
+      </small>
+      <span style="float:right">post</span></li>
       
-      
-    </li>
     
-    <li><span>2017-12-29</span> &raquo; <a href="/blog/2017/12/31/Quitting-Facebook.html">Quitting Facebook</a>
-      
-      
-    </li>
     
-    <li><span>2017-08-21</span> &raquo; <a href="/blog/Use-Dashboard.html">System Monitoring With The Use Dashboard</a>
+    <li><span>2018-09-15 </span> &raquo;&nbsp;
+      <a href="/archive/data-science.html">From Academia to Data Science</a>
+      <small>, <a href="/pdf/Heinrich%20Hartmann%20-%20From%20Academia%20to%20Data%20Science%20%282018%29.pdf">[pdf]</a>
+      </small>
+      <span style="float:right">post</span></li>
       
-       (on circonus.com) 
-    </li>
     
-    <li><span>2016-11-19</span> &raquo; <a href="/blog/2016/11/19/The-Electoral-College.html">The Electoral College</a>
-      
-      
-    </li>
     
-    <li><span>2016-11-01</span> &raquo; <a href="/blog/2016/11/01/Outlier-Detection-at-TouchTunes.html">Outlier Detection At Touchtunes</a>
-       - <em>with Hugo Lafleur</em>
-       (on circonus.com) 
-    </li>
+    <li><span>2018-09-02 </span> &raquo;&nbsp;
+      <a href="/archive/Latency-SLOs.html">Latency SLOs done right</a>
+      <small>
+      </small>
+      <span style="float:right">monitoring, post</span></li>
+      
     
-    <li><span>2016-06-30</span> &raquo; <a href="/blog/2016/06/30/Percentiles-can't-be-aggregated.html">Percentiles Can't Be Aggregated</a>
-       - <em>a letter to John Rauser</em>
-       (on twitter) 
-    </li>
     
-    <li><span>2016-06-12</span> &raquo; <a href="/blog/2016/06/12/Box-Counting-Arithmetic.html">Box Counting Arithmetic</a>
+    <li><span>2018-05-29 </span> &raquo;&nbsp;
+      <a href="/archive/more-toil-less-coil.html">Less Toil, More Coil: Telemetry analysis with Python</a>
+      <small>&nbsp;on circonus.com, <a href="https://web.archive.org/web/20200926022915/https://www.circonus.com/2018/05/less-toil-more-coil-telemetry-analysis-with-python/">[archive]</a>
+      </small>
+      <span style="float:right">post</span></li>
       
-      
-    </li>
     
-    <li><span>2016-04-03</span> &raquo; <a href="/blog/2016/04/03/Dijkstra's-Prime-Number-Algorithm.html">Dijkstra's Prime Number Algorithm</a>
-      
-      
-    </li>
     
-    <li><span>2016-01-28</span> &raquo; <a href="/blog/2016/01/28/The-Emacs-Key-Bindings.html">The Emacs Key Bindings</a>
+    <li><span>2018-04-29 </span> &raquo;&nbsp;
+      <a href="/archive/linux-monitoring-with-ebpf.html">Linux System Monitoring with eBPF</a>
+      <small>&nbsp;on circonus.com, <a href="https://web.archive.org/web/20201109030908/https://www.circonus.com/2018/05/linux-system-monitoring-with-ebpf/">[archive]</a>
+      </small>
+      <span style="float:right">monitoring, post</span></li>
       
-      
-    </li>
     
-    <li><span>2016-01-15</span> &raquo; <a href="/blog/2016/01/15/Spike-Erosion.html">Spike Erosion</a>
-      
-       (on circonus.com) 
-    </li>
     
-    <li><span>2015-05-17</span> &raquo; <a href="/blog/2015/05/17/Using-the-Google-Drive-Spreadsheet-API.html">Using The Google Drive Spreadsheet Api</a>
+    <li><span>2018-03-23 </span> &raquo;&nbsp;
+      <a href="/archive/quality-time.html">Quality Time</a>
+      <small>
+      </small>
+      <span style="float:right">post</span></li>
       
-      
-    </li>
     
-    <li><span>2014-12-14</span> &raquo; <a href="/blog/2014/12/14/Sensor-Monitoring-with-RaspberryPi-and-Circonus.html">Sensor Monitoring With Raspberrypi And Circonus</a>
-      
-      
-    </li>
     
-    <li><span>2014-12-11</span> &raquo; <a href="/blog/Generative-Models-for-Time-Series.html">Generative Models For Time Series</a>
+    <li><span>2018-03-12 </span> &raquo;&nbsp;
+      <a href="/archive/VCB.html">Virtual Coffee Break</a>
+      <small>
+      </small>
+      <span style="float:right">culture, post</span></li>
       
-      
-    </li>
     
-    <li><span>2014-12-08</span> &raquo; <a href="/blog/A-categorical-perspective-on-Covariance.html">A Categorical Perspective On Covariance</a>
-      
-      
-    </li>
     
-    <li><span>2014-11-22</span> &raquo; <a href="/blog/2014/11/22/Raspberry-Pi-SunFounder-GPIO-Layout.html">Raspberry Pi Sunfounder Gpio Layout</a>
+    <li><span>2018-03-11 </span> &raquo;&nbsp;
+      <a href="/archive/all-is-loss.html">All is loss</a>
+      <small>
+      </small>
+      <span style="float:right">dsci, math, post</span></li>
       
-      
-    </li>
     
-    <li><span>2014-11-16</span> &raquo; <a href="/blog/2014/11/16/Secure-Email-Communication.html">Secure Email Communication</a>
-      
-      
-    </li>
     
-    <li><span>2014-10-22</span> &raquo; <a href="/opinion/blog/2014/10/22/Privacy-Protection-for-Mobile-Sensor-Data.html">Privacy Protection For Mobile Sensor Data</a>
+    <li><span>2018-02-13 </span> &raquo;&nbsp;
+      <a href="/archive/Circonus-on-RPI.html">Circonus on the Raspberry Pi</a>
+      <small>
+      </small>
+      <span style="float:right">diy, post</span></li>
       
-      
-    </li>
     
-    <li><span>2014-07-10</span> &raquo; <a href="/blog/2014/07/10/Anomaly-Detection.html">Anomaly Detection</a>
-      
-      
-    </li>
     
-    <li><span>2014-04-14</span> &raquo; <a href="/blog/2014/04/14/Digging-into-R.html">Digging Into R</a>
+    <li><span>2018-02-05 </span> &raquo;&nbsp;
+      <a href="/archive/Monitoring-Dropbox.html">Monitoring Dropbox</a>
+      <small>
+      </small>
+      <span style="float:right">mon, post</span></li>
       
-      
-    </li>
     
-    <li><span>2014-01-15</span> &raquo; <a href="/blog/2014/01/15/Distributed-scraper-design.html">Distributed Scraper Design</a>
-      
-      
-    </li>
     
-    <li><span>2014-01-01</span> &raquo; <a href="/blog/2014/01/01/Monitoring-with-Ganglia.html">Monitoring With Ganglia</a>
+    <li><span>2017-12-29 </span> &raquo;&nbsp;
+      <a href="/archive/Quitting-Facebook.html">Quitting Facebook</a>
+      <small>
+      </small>
+      <span style="float:right">culture, post</span></li>
       
-      
-    </li>
     
-    <li><span>2013-12-25</span> &raquo; <a href="/blog/2013/12/25/Setting-up-a-Virtual-Cluster.html">Setting Up A Virtual Cluster</a>
-      
-      
-    </li>
     
-    <li><span>2013-01-17</span> &raquo; <a href="/blog/2013/01/17/Why-Openness-benefitts-research.html">Why Openness Benefitts Research</a>
+    <li><span>2017-08-21 </span> &raquo;&nbsp;
+      <a href="/archive/Use-Dashboard.html">System Monitoring With The Use Dashboard</a>
+      <small>&nbsp;on circonus.com, <a href="https://web.archive.org/web/20201111235247/https://www.circonus.com/2017/08/system-monitoring-with-the-use-dashboard/">[archive]</a>
+      </small>
+      <span style="float:right">mon, post</span></li>
       
-      
-    </li>
     
-    <li><span>2012-09-10</span> &raquo; <a href="/blog/2012/09/10/Dissecting-Hello-World.html">Dissecting Hello World</a>
+    
+    <li><span>2016-11-29 </span> &raquo;&nbsp;
+      <a href="https://www.netways.de/en/events_trainings/osmc/">OSMC 2016</a> -- <em>Friends and foes in API Monitoring</em><small>
+      </small>
+      <span style="float:right">mon, talk</span></li>
+    
+    
+    
+    <li><span>2016-11-19 </span> &raquo;&nbsp;
+      <a href="/archive/The-Electoral-College.html">The Electoral College</a>
+      <small>
+      </small>
+      <span style="float:right">dsci, post</span></li>
       
+    
+    
+    <li><span>2016-11-01 </span> &raquo;&nbsp;
+      <a href="https://web.archive.org/web/20191004015025/https://www.circonus.com/customer-stories/monitoring-touchtunes-streaming-media-kpis-with-circonus/">Outlier Detection At Touchtunes</a>
+      <small>&nbsp;with Hugo Lafleur on circonus.com, <a href="https://web.archive.org/web/20191004015025/https://www.circonus.com/customer-stories/monitoring-touchtunes-streaming-media-kpis-with-circonus/">[archive]</a>
+      </small>
+      <span style="float:right">mon, post</span></li>
       
-    </li>
+    
+    
+    <li><span>2016-07-12 </span> &raquo;&nbsp;
+      <a href="https://srecon16europe.sched.org/event/7VkQ/statistics-for-engineers">SREcon16Europe</a> -- <em>Workshop: Statistics for Engineers</em><small>
+      </small>
+      <span style="float:right">mon, talk</span></li>
+    
+    
+    
+    <li style="clear:both"><span>2016-07-01 </span> &raquo;&nbsp;
+      Statistics for Engineers
+      <small>, <em><a href="http://cacm.acm.org/magazines/2016/7/204029-statistics-for-engineers/abstract">CACM Vol. 59 No. 7</a></em>
+      </small>
+      <span style="float:right">mon, paper</span></li>
+    
+    
+    
+    <li><span>2016-06-30 </span> &raquo;&nbsp;
+      <a href="/archive/Percentiles-can%27t-be-aggregated.html">Percentiles Can&#39;t Be Aggregated</a>
+      <small>&nbsp;- a letter to John Rauser (on twitter)
+      </small>
+      <span style="float:right">mon, post</span></li>
+      
+    
+    
+    <li><span>2016-06-27 </span> &raquo;&nbsp;
+      <a href="http://monitorama.com">Monitorama PDX 2016</a> -- <em>A Tale of API Monitoring</em><small>, <a href="http://www.slideshare.net/HeinrichHartmann/statistics-for-engineers-63589022">[slides]</a>, <a href="https://vimeo.com/173610069">[video]</a>
+      </small>
+      <span style="float:right">mon, talk</span></li>
+    
+    
+    
+    <li><span>2016-06-12 </span> &raquo;&nbsp;
+      <a href="/archive/Box-Counting-Arithmetic.html">Box Counting Arithmetic</a>
+      <small>
+      </small>
+      <span style="float:right">math, post</span></li>
+      
+    
+    
+    <li style="clear:both"><span>2016-04-19 </span> &raquo;&nbsp;
+      A Privacy Aware Mobile Sensor Application
+      <small> with Wambach, Meffert, Grimm, <em><a href="https://www.uni-koblenz-landau.de/de/koblenz/fb4/publikationen/reports/pdfs/arbeitsberichte_3_2016.pdf">ABFBI 2016</a></em>, <a href="/pdf/Hartmann,%20Wambach,%20Meffert,%20Grimm%20-%20A%20Privacy%20Aware%20Mobile%20Sensor%20Application.pdf">[pdf]</a> 
+      </small>
+      <span style="float:right">mon, paper</span></li>
+    
+    
+    
+    <li><span>2016-04-03 </span> &raquo;&nbsp;
+      <a href="/archive/Dijkstra%27s-Prime-Number-Algorithm.html">Dijkstra&#39;s Prime Number Algorithm</a>
+      <small>, <a href="https://news.ycombinator.com/item?id=11429163">[hn]</a>
+      </small>
+      <span style="float:right">prog, post</span></li>
+      
+    
+    
+    <li style="clear:both"><span>2016-03-11 </span> &raquo;&nbsp;
+      Statistics for Engineers
+      <small>, <em><a href="https://queue.acm.org/detail.cfm?id=2903468">ACM Queue 14/1</a></em>
+      </small>
+      <span style="float:right">mon, paper</span></li>
+    
+    
+    
+    <li><span>2016-01-28 </span> &raquo;&nbsp;
+      <a href="/archive/The-Emacs-Key-Bindings.html">The Emacs Key Bindings</a>
+      <small>
+      </small>
+      <span style="float:right">post</span></li>
+      
+    
+    
+    <li><span>2016-01-15 </span> &raquo;&nbsp;
+      <a href="/archive/Spike-Erosion.html">Spike Erosion</a>
+      <small>&nbsp;(on circonus.com), <a href="https://web.archive.org/web/20201203201939/https://www.circonus.com/2016/01/spike-erosion/">[archive]</a>
+      </small>
+      <span style="float:right">mon, post</span></li>
+      
+    
+    
+    <li><span>2016-01-01 </span> &raquo;&nbsp;
+      <a href="https://excite.informatik.uni-stuttgart.de/index.html">Excite - Extraction of Citations from PDF Documents</a>
+      <small>&nbsp;Founder, <a href="https://github.com/exciteproject">[code]</a> 
+      </small>
+      <span style="float:right">project</span></li>
+      
+    
+    
+    <li><span>2015-11-13 </span> &raquo;&nbsp;
+      <a href="https://www.usenix.org/conference/lisa15/conference-program/presentation/hartmann">LISA15</a> -- <em>Scalable Online Analytics for Monitoring</em><small>, <a href="http://www.slideshare.net/HeinrichHartmann/scalable-online-analytics-for-monitoring">[slides]</a>
+      </small>
+      <span style="float:right">mon, talk</span></li>
+    
+    
+    
+    <li><span>2015-10-23 </span> &raquo;&nbsp;
+      <a href="http://velocityconf.com/devops-web-performance-eu-2015/public/schedule/detail/45241">Velocity 2015</a> -- <em>Statistics for Engineers</em><small>
+      </small>
+      <span style="float:right">mon, talk</span></li>
+    
+    
+    
+    <li><span>2015-08-01 </span> &raquo;&nbsp;
+      DSA Torgelow 2015 - Academy Manager
+      <small>, <a href="https://secure.bildung-und-begabung.de/dsa/empfehlung/download/2015/DSA-Programm_2015.pdf#page=67">[pdf]</a>
+      </small>
+      <span style="float:right">post</span></li>
+      
+    
+    
+    <li><span>2015-06-30 </span> &raquo;&nbsp;
+      <a href="http://www.statscraft.org.il/">StatsCraft</a> -- <em>Workshop: Statistics for Engineers</em><small>
+      </small>
+      <span style="float:right">mon, talk</span></li>
+    
+    
+    
+    <li><span>2015-05-17 </span> &raquo;&nbsp;
+      <a href="/archive/Using-the-Google-Drive-Spreadsheet-API.html">Using The Google Drive Spreadsheet Api</a>
+      <small>
+      </small>
+      <span style="float:right">prog, post</span></li>
+      
+    
+    
+    <li><span>2015-05-14 </span> &raquo;&nbsp;
+      <a href="https://www.usenix.org/conference/srecon15europe">SRECon15Europe</a> -- <em>Tutorial: Statistics for Engineers</em><small>, <a href="https://github.com/HeinrichHartmann/StatisticsTutorial">[notes]</a>
+      </small>
+      <span style="float:right">mon, talk</span></li>
+    
+    
+    
+    <li><span>2015-05-14 </span> &raquo;&nbsp;
+      <a href="https://github.com/HeinrichHartmann/Statistics-for-Engineers">Statistics for Engineers. Tutorial notes and datasets.</a>
+      <small>
+      </small>
+      <span style="float:right">github</span></li>
+      
+    
+    
+    <li style="clear:both"><span>2015-03-26 </span> &raquo;&nbsp;
+      A study of Liquid Feedback in the German Pirate Party
+      <small> with Kling, Junegis, Strohmaier, <em><a href="http://www.icwsm.org/2015">ICWSM 2015</a></em>, <a href="http://arxiv.org/abs/1503.07723">arxiv</a> 
+      </small>
+      <span style="float:right">paper</span></li>
+    
+    
+    
+    <li><span>2015-03-11 </span> &raquo;&nbsp;
+      <a href="https://archive.fosdem.org/2013/">FOSDEM 2015</a> -- <em>related-work.net -- A neo4j powered discussion platform</em><small>, <a href="/pdf/Pickhardt,%20Hartmann%20-%20Related-Work.net%20%28FOSDEM%202015%29.pdf">[slides]</a>, <a href="https://www.youtube.com/watch?v=GnJZUOpY91Q">[video]</a>
+      </small>
+      <span style="float:right">mon, talk</span></li>
+    
+    
+    
+    <li><span>2015-03-01 </span> &raquo;&nbsp;
+      <a href="/archive/Deutsche-Schuelerakademie.html">Deutsche Schülerakademie</a>
+      <small>
+      </small>
+      <span style="float:right">opinion, post</span></li>
+      
+    
+    
+    <li><span>2014-12-14 </span> &raquo;&nbsp;
+      <a href="/archive/Sensor-Monitoring-with-RaspberryPi-and-Circonus.html">Sensor Monitoring With Raspberrypi And Circonus</a>
+      <small>
+      </small>
+      <span style="float:right">diy, post</span></li>
+      
+    
+    
+    <li><span>2014-12-11 </span> &raquo;&nbsp;
+      <a href="/archive/Generative-Models-for-Time-Series.html">Generative Models For Time Series</a>
+      <small>
+      </small>
+      <span style="float:right">math, post</span></li>
+      
+    
+    
+    <li><span>2014-12-08 </span> &raquo;&nbsp;
+      <a href="/archive/A-categorical-perspective-on-Covariance.html">A Categorical Perspective On Covariance</a>
+      <small>
+      </small>
+      <span style="float:right">math, post</span></li>
+      
+    
+    
+    <li><span>2014-11-22 </span> &raquo;&nbsp;
+      <a href="/archive/Raspberry-Pi-SunFounder-GPIO-Layout.html">Raspberry Pi Sunfounder Gpio Layout</a>
+      <small>
+      </small>
+      <span style="float:right">diy, post</span></li>
+      
+    
+    
+    <li><span>2014-11-16 </span> &raquo;&nbsp;
+      <a href="/archive/Secure-Email-Communication.html">Secure Email Communication</a>
+      <small>
+      </small>
+      <span style="float:right">post</span></li>
+      
+    
+    
+    <li><span>2014-10-31 </span> &raquo;&nbsp;
+      <a href="https://cordis.europa.eu/docs/projects/cnect/5/288815/080/deliverables/001-D13.pdf">Privacy Aware Sensor Data Storage and Miner</a>
+      <small>&nbsp;UKoblenz / Live&#43;Gov Project, <a href="/pdf/LiveGov-D1.3.pdf">[pdf]</a>
+      </small>
+      <span style="float:right">deliverable</span></li>
+      
+    
+    
+    <li><span>2014-10-22 </span> &raquo;&nbsp;
+      <a href="/archive/Privacy-Protection-for-Mobile-Sensor-Data.html">Privacy Protection For Mobile Sensor Data</a>
+      <small>
+      </small>
+      <span style="float:right">post</span></li>
+      
+    
+    
+    <li><span>2014-07-10 </span> &raquo;&nbsp;
+      <a href="/archive/Anomaly-Detection.html">Anomaly Detection</a>
+      <small>
+      </small>
+      <span style="float:right">math, post</span></li>
+      
+    
+    
+    <li><span>2014-06-01 </span> &raquo;&nbsp;
+      Completionary: auto-completion as a service.
+      <small>&nbsp;Founder, <a href="https://github.com/Completionary/">[code]</a> 
+      </small>
+      <span style="float:right">project</span></li>
+      
+    
+    
+    <li><span>2014-04-14 </span> &raquo;&nbsp;
+      <a href="https://github.com/HeinrichHartmann/RequestDispatcher">Request Dispatcher</a>
+      <small>&nbsp;asynchronus callback framework for Java using ZeroMQ
+      </small>
+      <span style="float:right">code</span></li>
+      
+    
+    
+    <li><span>2014-04-14 </span> &raquo;&nbsp;
+      <a href="/archive/Digging-into-R.html">Digging Into R</a>
+      <small>
+      </small>
+      <span style="float:right">prog, post</span></li>
+      
+    
+    
+    <li><span>2014-03-27 </span> &raquo;&nbsp;
+      <a href="https://cordis.europa.eu/docs/projects/cnect/5/288815/080/deliverables/001-D121.pdf">Mobile Sensor App with Mining Functionality</a>
+      <small>&nbsp;UKoblenz / Live&#43;Gov Project, <a href="/pdf/LiveGov-D1.2.pdf">[pdf]</a>, <a href="https://github.com/Institute-Web-Science-and-Technologies/LiveGovWP1">[code]</a> 
+      </small>
+      <span style="float:right">deliverable</span></li>
+      
+    
+    
+    <li><span>2014-02-01 </span> &raquo;&nbsp;
+      <a href="https://github.com/HeinrichHartmann/zmqdump">zmqdump -- tcpdump for ZeorMQ</a>
+      <small>
+      </small>
+      <span style="float:right">code</span></li>
+      
+    
+    
+    <li><span>2014-01-15 </span> &raquo;&nbsp;
+      <a href="/archive/Distributed-scraper-design.html">Distributed Scraper Design</a>
+      <small>
+      </small>
+      <span style="float:right">prog, post</span></li>
+      
+    
+    
+    <li><span>2014-01-01 </span> &raquo;&nbsp;
+      <a href="/archive/Monitoring-with-Ganglia.html">Monitoring With Ganglia</a>
+      <small>
+      </small>
+      <span style="float:right">mon, post</span></li>
+      
+    
+    
+    <li><span>2013-12-25 </span> &raquo;&nbsp;
+      <a href="/archive/Setting-up-a-Virtual-Cluster.html">Setting Up A Virtual Cluster</a>
+      <small>
+      </small>
+      <span style="float:right">prog, post</span></li>
+      
+    
+    
+    <li><span>2013-08-01 </span> &raquo;&nbsp;
+      DJA Meisenheim 2013 - Academy Manager
+      <small>, <a href="http://www.deutsche-juniorakademien.de/download/2013/DJA_Rheinland-Pfalz_2013.pdf#page=12">[pdf]</a>
+      </small>
+      <span style="float:right">post</span></li>
+      
+    
+    
+    <li><span>2013-04-13 </span> &raquo;&nbsp;
+      <a href="https://web.archive.org/web/20130915181534/http://rigourandopenness.org/">Rigour and Openness Conference</a> -- <em>Organizer</em><small>, <a href="https://www.youtube.com/user/RigourAndOpenness/videos">[video]</a>
+      </small>
+      <span style="float:right">mon, talk</span></li>
+    
+    
+    
+    <li><span>2013-01-17 </span> &raquo;&nbsp;
+      <a href="/archive/Why-Openness-benefitts-research.html">Why Openness Benefitts Research</a>
+      <small>
+      </small>
+      <span style="float:right">culture, post</span></li>
+      
+    
+    
+    <li><span>2012-09-10 </span> &raquo;&nbsp;
+      <a href="/archive/Dissecting-Hello-World.html">Dissecting Hello World</a>
+      <small>
+      </small>
+      <span style="float:right">prog, post</span></li>
+      
+    
+    
+    <li><span>2012-08-01 </span> &raquo;&nbsp;
+      DJA Meisenheim 2012 - Course: Efficient algorithms
+      <small>&nbsp;Prof. Johann Baumeistet, <a href="http://www.deutsche-juniorakademien.de/download/2012/DJA_Rheinland-Pfalz_2012.pdf">[pdf]</a>
+      </small>
+      <span style="float:right">post</span></li>
+      
+    
+    
+    <li><span>2012-03-01 </span> &raquo;&nbsp;
+      <a href="https://web.archive.org/web/20160323083651/http://blog.related-work.net/">Related-Work.net - Paper Network and Discussion Platform</a>
+      <small>&nbsp;Founder, <a href="https://github.com/exciteproject/related-work.net">[code]</a> 
+      </small>
+      <span style="float:right">project</span></li>
+      
+    
+    
+    <li><span>2011-08-01 </span> &raquo;&nbsp;
+      DSA Schulpforte 2011 - Course: Web Applications
+      <small>&nbsp;with Rene Pickhardt, <a href="http://www.deutsche-schuelerakademie.de/download/dsa-programm-2011">[pdf]</a>
+      </small>
+      <span style="float:right">post</span></li>
+      
+    
+    
+    <li style="clear:both"><span>2011-05-14 </span> &raquo;&nbsp;
+      Mirror symmetry and stability conditions on K3 surfaces
+      <small>, <em><a href="https://bonndoc.ulb.uni-bonn.de/xmlui/handle/20.500.11811/5012">Uni-Bonn</a></em>, <a href="/pdf/Heinrich%20Hartmann%20-%20Mirror%20symmetry%20and%20stability%20conditions%20on%20K3%20surfaces%20%28PhD%20Thesis,%20Bonn%202011%29.pdf">[pdf]</a> 
+      </small>
+      <span style="float:right">phd-thesis</span></li>
+    
+    
+    
+    <li style="clear:both"><span>2011-01-14 </span> &raquo;&nbsp;
+      Period and Mirror Maps for the Quartic K3
+      <small>, <em><a href="">Man. Math.</a></em>, <a href="http://dx.doi.org/10.1007/s00229-012-0577-7">[doi]</a> , <a href="http://arxiv.org/abs/1101.4601">arxiv</a> 
+      </small>
+      <span style="float:right">math, paper</span></li>
+    
+    
+    
+    <li style="clear:both"><span>2010-12-14 </span> &raquo;&nbsp;
+      Cusps of the Kähler moduli space
+      <small>, <em><a href="https://link.springer.com/article/10.1007/s00208-011-0719-3">Math. Ann.</a></em>, <a href="http://dx.doi.org/10.1007/s00208-011-0719-3">[doi]</a> , <a href="http://arxiv.org/abs/1012.3121">arxiv</a> 
+      </small>
+      <span style="float:right">math, paper</span></li>
+    
+    
+    
+    <li style="clear:both"><span>2007-05-14 </span> &raquo;&nbsp;
+      Nodale Kurven und Hilbertschemata
+      <small>, Uni-Mainz, <a href="/pdf/Heinrich%20Hartmann%20-%20Nodale%20Kurven%20und%20Hilbertschemata%20%28Diplomarbeit,%20Mainz%202007%29.pdf">[pdf]</a> 
+      </small>
+      <span style="float:right">diplom</span></li>
+    
+    
+    
+    <li><span>1999-02-16 </span> &raquo;&nbsp;
+      <a href="http://www.google.com/patents/DE19906459A1?cl=de">DE19906459 Butterbrotschmiermaschine</a>
+      <small>
+      </small>
+      <span style="float:right">patent</span></li>
+      
     
   </ul>
-
-  <h1>Papers</h1>
-  <ul class="posts">
-    <li><span>2016-07-01 </span> &raquo; <a href="http://cacm.acm.org/magazines/2016/7/204029-statistics-for-engineers/abstract">CACM Vol. 59 No. 7</a> Statistics for Engineers (<a href="http://dx.doi.org/10.1145/2890780">doi</a>)</li>
-  <li><span>2016-04-19 </span> &raquo; -, Wambach, Meffert, Grimm - A Privacy Aware Mobile Sensor Application. <a href="/assets/A Privacy Aware Mobile Sensor Application.pdf">pdf</a></li>
-  <li><span>2016-03-11 </span> &raquo; <a href="https://queue.acm.org/detail.cfm?id=2903468">ACM Queue 14/1</a> Statistics for Engineers</li>
-  <li><span>2015-03-26 </span> &raquo; Kling et. al. - Voting Power in Online Democracy, <em><a href="http://www.icwsm.org/2015">ICWSM 2015</a></em>, <a href="http://arxiv.org/abs/1503.07723">arxiv</a></li>
-  <li><span>2010-12-14 </span> &raquo; Cusps of the Kähler moduli space, <em>Mathematische Annalen</em>, 2012 <a href="http://dx.doi.org/10.1007/s00208-011-0719-3">doi</a>, <a href="http://arxiv.org/abs/1012.3121">arxiv</a></li>
-  <li><span>2011-01-14 </span> &raquo; Period and Mirror Maps for the Quartic K3, <em>Man. Math.</em>, 2013, <a href="http://dx.doi.org/10.1007/s00229-012-0577-7">doi</a>, <a href="http://arxiv.org/abs/1101.4601">arxiv</a></li>
-  <li><span>2011-05-14 </span> &raquo; Mirror symmetry and stability conditions on K3 surfaces, <em>PhD thesis</em>, <a href="http://hss.ulb.uni-bonn.de/2011/2598/2598.pdf">pdf</a></li>
-  <li><span>2007-06-01 </span> &raquo; Nodale Kurven und Hilbertschemata, <em>Diplomarbeit</em>, Mainz, 2007, <a href="http://www.slideshare.net/HeinrichHartmann/nodale-kurven-und-hilbertschemata">pdf</a></li>
-  </ul>
-
-  <h1>Talks</h1>
-  <ul class="posts">
-    <li><span>2016-11-29 </span> &raquo; <a href="https://www.netways.de/en/events_trainings/osmc/">OSMC</a>, Nürnberg - Friends and foes in API Monitoring</li>
-    <li><span>2016-07-01 </span> &raquo; <a href="http://cacm.acm.org/magazines/2016/7/204029-statistics-for-engineers/abstract">CACM Vol. 59 No. 7</a> Statistics for Engineers (<a href="http://dx.doi.org/10.1145/2890780">doi</a>)</li>
-    <li><span>2016-07-12 </span> &raquo; <a href="https://srecon16europe.sched.org/event/7VkQ/statistics-for-engineers">SREcon16Europe</a>, Dublin - Workshop: Statistics for Engineers</li>
-    <li><span>2016-06-27 </span> &raquo; <a href="http://monitorama.com">Monitorama PDX, 2016</a> - A Tale of API Monitoring (<a href="http://www.slideshare.net/HeinrichHartmann/statistics-for-engineers-63589022">slides</a>, <a href="https://vimeo.com/173610069">video</a>)</li>
-    <li><span>2015-11-13 </span> &raquo; <a href="https://www.usenix.org/conference/lisa15/conference-program/presentation/hartmann">LISA15 - Scalable Online Analytics for Monitoring</a> in Washington D.C. (<a href="http://www.slideshare.net/HeinrichHartmann/scalable-online-analytics-for-monitoring">slides</a>)
-    <li><span>2015-10-23 </span> &raquo; <a href="http://velocityconf.com/devops-web-performance-eu-2015/public/schedule/detail/45241">Velocity - Statistics for Engineers</a> in Amsterdam, Netherlends
-    <li><span>2015-06-30 </span> &raquo; <a href="http://www.statscraft.org.il/">StatsCraft</a>  in Tel-Aviv, Israel -- Tutorial Statistics for Engineers
-    <li><span>2015-05-14 </span> &raquo; <a href="https://www.usenix.org/conference/srecon15europe">SREcon</a> in Dublin -- Tutorial Statistics for Engineers (<a href="https://github.com/HeinrichHartmann/StatisticsTutorial">slides</a>)
-    <li><span>2013-04-13 </span> &raquo; <a href="http://rigourandopenness.org">Rigour and Openness Conference</a> at Oxford University (Organizer)
-    <li><span>2015-03-11 </span> &raquo; <a href="https://archive.fosdem.org/2013/">FOSDEM</a> in Brussels -- <a href="http://www.rene-pickhardt.de/wp-content/uploads/2013/02/FOSDEMrelatedwork.pdf">Talk on Related-Work.net</a> with Rene Pickhardt (<a href="https://www.youtube.com/watch?v=GnJZUOpY91Q">video</a>)</li>
-  </ul>
-
-  <h1>Misc</h1>
-  <ul class="posts">
-    <li><span>2015-05-14 </span> &raquo; <a href="https://github.com/HeinrichHartmann/Statistics-for-Engineers">Statistics for Engineers</a> Tutorial notes and datasets.</li>
-    <li><span>2014-10-22 </span> &raquo; <a href="https://blog.west.uni-koblenz.de/2014-10-22/privacy-protection">Privacy Protection for Mobile Sensor Data</a></span> for <a href="http://west.uni-koblenz.de/">WeST</a>-Blog</li>
-  <li><span>1999-02-16 </span> &raquo; <a href="http://www.google.com/patents/DE19906459A1?cl=de">Patent DE19906459</a> Butterbrotschmiermaschine.
-  <li><span style="display: inline-block; width: 84px;"></span> &raquo; &raquo; &raquo; <a href="http://www.slideshare.net/HeinrichHartmann">more on slideshare.net</a></li>
-  </ul>
-
-  <h1>Software</h1>
-  <ul class="posts">
-    <li><a href="http://related-work.net/">Related-Work.net:</a> an open paper discussion platform. (Co-founder)</li>
-    <li><a href="https://github.com/Completionary/">Completionary:</a> auto-completion as a service. (Co-founder)</li>
-    <li><a href="https://github.com/HeinrichHartmann/MORA">MORA:</a>  Mobile Sensor Analysis Toolkit</li>
-    <li><a href="https://github.com/HeinrichHartmann/RequestDispatcher">Request Dispatcher:</a> asynchronus callback framework for Java using ZeroMQ.</li>
-    <li><a href="https://github.com/HeinrichHartmann/zmqdump">zmqdump:</a> tcpdump for ZeorMQ</li>
-    <li><a href="https://github.com/zeromq/jeromq">JeroMQ:</a> Messaging library (contributor)</li>
-    <li><a href="https://github.com/jech/polipo">Polipo</a> HTTP Proxy (contributor)</li>
-  </ul>
+  
 </div>
+</main>
 
-
-  <div class="footer">
-    <div class="contact">
-      <p>
-        Licensed under <a rel="license" href="http://creativecommons.org/licenses/by/4.0/">CC-BY 4.0.</a>
-        <span xmlns:dct="http://purl.org/dc/terms/" property="dct:title" style="display:none">This blog</span>
-        <span xmlns:cc="http://creativecommons.org/ns#" property="cc:attributionName" style="display:none">Heinrich Hartmann</span>
-      </p>
-    </div>
-  </div>
-</div>
-
-<!-- Google Analytics -->
-
-<!-- <script> -->
-<!--   (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){ -->
-<!--   (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o), -->
-<!--   m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m) -->
-<!--   })(window,document,'script','//www.google-analytics.com/analytics.js','ga'); -->
-
-<!--   ga('create', 'UA-53959000-1', 'auto'); -->
-<!--   ga('send', 'pageview'); -->
-<!-- </script> -->
+	<footer style="float:right; margin: 20px auto 20px auto; color:#AAA">&copy; 2021 Heinrich Hartmann. All rights reserved.</footer>
 
 </body>
+  
 </html>

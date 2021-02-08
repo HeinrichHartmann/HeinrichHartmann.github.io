@@ -2,71 +2,162 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en-us">
 <head>
    <meta http-equiv="content-type" content="text/html; charset=utf-8"/>
-   <title>Heinrich Hartmann - Consulting</title>
+   <title>Quality Time</title>
    <meta name="author" content="Heinrich Hartmann"/>
    
    </head>
 <body>
   <div class="site">
     <div class="headline"><a href="/">Heinrich Hartmann</a></div>
+    <div id="post">
+  <h1 id="h1-title"> Quality Time</h1>
+  
+  
+  <p class="meta">
+    Written on 2018-03-23
+     in Stemwede, Germany 
+    
+  </p>
 
-<h1 id="hartmann-it-gmbh">Hartmann IT GmbH</h1>
+  <!-- Splash -->
+  
 
-<p><img src="/images/consulting.png" width="100%" /></p>
+  <!-- Abstract -->
+  
 
-<h2 id="services">Services</h2>
+  
+
+
+  <!-- Post content -->
+  <p>It was thus said, that the great <a href="https://twitter.com/postwait">@poswait</a> once <a href="https://twitter.com/postwait/status/960987392424529922">stated</a>:</p>
+
+<div class="pullquote">
+I just spent some quality time with tcpdump; it really paid off.
+
+Remember to spend quality time with your loved ones while you can.
+</div>
+
+<p>At first I was like: “What? Quality time with … what?. I am pretty sure my wife want’s something different when she demands quality time!”
+However, that quote stuck in my head for a while.
+And thinking about it longer, I found it makes indeed some sense.</p>
+
+<h2 id="what-is-quality-time">What is Quality Time?</h2>
+
+<p>We live in a world where we are constantly distracted by our phones, slack channels, email, twitter, etc.
+For me quality time is the opposite of interruptions.
+“Let me just do that real quick” is <em>not</em> quality time.</p>
+
+<p>It’s much more about being in the moment, and taking enough time for the task at hand.
+In my romantic fantasies about woodworking, a carpenter spends quality time with his materials.
+It takes a lot of dedication to make nice furniture.
+He does not rush to get some grooves in.
+He takes his time and carves them out one by one.</p>
+
+<h2 id="how-can-we-spent-quality-time-with-software">How can we spent quality time with software?</h2>
+
+<p>I sure think it’s possible! Here are some ideas on how to do it:</p>
 
 <ul>
   <li>
-    <p>Training “Statistics for Engineers”, teaching best practices and common pitfalls in analyzing telemetry data from IT systems</p>
+    <p><strong>Go offline</strong> if you can.
+The internet is the most distracting invention ever made.
+Getting rid of it for a while is great.
+I think the <a href="https://duckduckgo.com/?q=Internet+distraction+comic+-+Asher+Sarlin&amp;iax=images&amp;ia=images" target="_blank">Internet Distraction Comic</a> by Asher Sarlin is pretty accurate.
+As a PhD student I used to have this as my desktop background image.</p>
   </li>
   <li>
-    <p>Improvement of existing monitoring infrastructure for observability, operability, debugability and accountability needs</p>
+    <p><strong>Avoid screens</strong> if you can.
+The typographer <a href="https://en.wikipedia.org/wiki/The_Elements_of_Typographic_Style">Bringhurst</a> writes:</p>
+
+    <blockquote>
+      <p>The screen mimics the sky, not the earth. It bombards the eye
+with light instead of waiting to repay the gift of vision. It is not
+simultaneously restful and lively, like a field full of flowers, or the
+face of a thinking human being, or a well-made typographic page.
+And we read the screen the way we read the sky: in quick sweeps,
+guessing at the weather from the changing shapes of clouds, or
+like astronomers, in magnified small bits, examining details. We
+look to it for clues and revelations more than wisdom. This makes
+it an attractive place for the open storage of pulverized
+information - names, dates, library call numbers, for instance - but not
+so good a place for thoughtful text.</p>
+    </blockquote>
+
+    <p>It’s near impossible for me to get into a calm state of mind when staring at a screen.
+If I can turn it off it’s a huge win.
+(Unfortunately the same holds true for for iPad screens as well. Even in Night-shift mode.
+epaper might be different. I have not tried it, yet.)</p>
   </li>
   <li>
-    <p>Setting and managing Service Level Expectations with SRE-methods</p>
+    <p><strong>Print out manuals</strong> or at least get an offline version to read on the screen.
+Find a nice place in the sun, grab a cup of coffee, and work through the manual.
+Highlight stuff you find potentially useful in the future.
+It’s not about remembering every command line option.
+It’s about understanding the involved concepts, and getting an idea of the capabilities.</p>
+
+    <p>Here is what I use for printing out man pages, in this case for curl(1):</p>
+    <div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>man -t curl &gt; man.ps &amp;&amp; ps2pdf man.ps &amp;&amp; open man.pdf
+</code></pre></div>    </div>
   </li>
+  <li><strong>Print out source code</strong>.
+This is a bit controversial, but I found this working for me.
+Oftentimes documentation is simply missing out of date or not detailed or precise enough,
+so you need to “use the source” (… Luke).
+So here is what I do:
+    <ul>
+      <li>I don’t print out whole components. It’s just too much paper, and you will not need everything.
+Instead, print one module/class/file at a time.</li>
+      <li>Use GitHub for printing.
+Just navigate to the file you need to print (Hint: Use the <code class="highlighter-rouge">t</code> shortcut),
+with a WebKit-browser (Chrome, Opera, not Firefox) and hit the print button.
+(Before I was using a2ps(1) with a few tweaks, but GitHub just looks better.)</li>
+      <li>Print one page per sheet, two-sided if you can. It’s just too small otherwise.</li>
+      <li>Make annotations with marker and pencil. Structure the code. Is it cohesive? Write down questions you want to clarify with a debugger.</li>
+    </ul>
+  </li>
+  <li>
+    <p><strong>Play with the tool</strong>. 
+Unfortunately this will involve screens.
+Experiment with some options/switches that you found in the docs.
+Try something fun or interesting.
+Tweak your personal config file (if supports such a thing).</p>
+  </li>
+  <li>
+    <p><strong>Inspect the internals</strong>.
+Improve and verify your mental model by inspecting the internals.
+Turn on verbose logging, to see what it does (e.g. <code class="highlighter-rouge">ssh -vvv</code> has some interesting output).
+Run the tool under strace(1) to see how it interacts with the OS.
+Attach gdb(1) and look at some typical back-traces and step thought some interesting places.
+Capture and examine network traffice emmitted by the tool with tcpdump(1) and wireshark.</p>
+  </li>
+  <li>
+    <p><strong>Write about it</strong>.
+Take notes for yourself.
+If you found a nice command line argument, share it with your peers in a tweet.
+If you discovered a new method to do stuff, write a blog post about it.
+Some discoveries also make great lightning talks at conferences (e.g. <a href="https://www.youtube.com/watch?v=MxRTh8wlmJk">readline</a>, <a href="https://www.youtube.com/watch?v=PorfLSr3DDI&amp;t=625s">gdb</a>).</p>
+  </li>
+  <li><strong>Take your time</strong>.
+This is maybe the most obvious and important bit.
+Realize that you are not going to write any code for the next few hours.
+It’s an investment into building a mental model of the software you are running.
+This will pay of in the mid term.
+I have had numerous situations where fixing a bug took ages, b/c I did not understand the component well enough.
+Taking a few hours to read more docs and code would have been quicker and less stressful.
+Also, your next debugging session will profit from improved understanding.</li>
 </ul>
 
-<h2 id="credentials">Credentials</h2>
+<p>I am pretty sure that this was <em>not</em> exactly what @postwait did in his quality time with tcpdump(1).
+That’s OK. Everyone will have a different flavor of quality time, that works for him/her.
+I hope that this post will give you some ideas to make working with software more enjoyable for you.</p>
 
-<ul>
-  <li>
-    <p>PhD in Mathematics</p>
-  </li>
-  <li>
-    <p>5years+ of consulting experience in the IT monitoring space</p>
-  </li>
-  <li>
-    <p><a href="http://cacm.acm.org/magazines/2016/7/204029-statistics-for-engineers/abstract">CACM Vol. 59 No. 7</a> – Statistics for Engineers - Applying statistical techniques to operations data</p>
-  </li>
-  <li>
-    <p><a href="http://monitorama.com/2016/pdx.html#welcome">Monitorama PDX, 2016</a> – <a href="https://vimeo.com/173610069">A Tale of API Monitoring</a></p>
-  </li>
-  <li>
-    <p>Keynote <a href="https://www.usenix.org/conference/srecon18europe/presentation/schlossnagle">SRECon EMEA 2018</a> – Circonus Design (Failures) Case Study</p>
-  </li>
-  <li>
-    <p>Training <a href="https://github.com/HeinrichHartmann/Statistics-for-Engineers/">Statistics for Engineers</a> at
-SRECon <a href="https://www.usenix.org/conference/srecon19emea/program">19</a>, <a href="https://www.usenix.org/conference/srecon18emea/program">18</a>, <a href="https://www.usenix.org/conference/srecon17europe">17</a>, <a href="https://www.usenix.org/conference/srecon16europe">16</a>, <a href="https://www.usenix.org/conference/srecon15europe">15</a>;
-Velocity <a href="https://conferences.oreilly.com/velocity/devops-web-performance-eu-2015/public/schedule/detail/45241">Amsterdam</a>,
-<a href="https://conferences.oreilly.com/velocity/vl-eu/public/schedule/full/public">London</a>;
-<a href="http://www.statscraft.org.il/event/2016/">StatsCraft</a>;
-<a href="https://devopsdays.org/events/2018-kiel/workshop/heinrich-hartmann/">DevOpsDays Kiel</a></p>
-  </li>
-</ul>
+<p>Happy Hacking!</p>
 
-<h2 id="testimonials">Testimonials</h2>
 
-<p><img src="https://upload.wikimedia.org/wikipedia/en/5/59/Swisscom_logo.svg" class="logo" /></p>
-<p class="quote">"This was an excellent course. Heinrich explained the theoretical foundations with exceptional clarity and great thoroughness, while keeping a clear view on practical applications."</p>
-<p class="author">Thomas Zippo, Lean Agile Leader for Data Analytics</p>
+  <!-- Include Mathjax if needed -->
+  
 
-<div style="clear:both" />
-
-<h2 id="contact">Contact</h2>
-
-<p>Email: <a href="mailto:consulting@heinrichhartmann.com">consulting@heinrichhartmann.com</a></p>
+</div>
 
   </div>
 </body>
@@ -557,32 +648,5 @@ table tr th, table tr td
 .highlight .vi { color: #008080 } /* Name.Variable.Instance */
 .highlight .il { color: #009999 } /* Literal.Number.Integer.Long */
 
-</style>
-    <style>
-h1 {
-    font-size: 2em;
-    text-transform: none;
-    text-align: center;
-    margin: 2em 0 1.5em 0;
-    line-height: 1.5em;
-}
-.site {
-    text-align: left;
-    }
-
-.logo {
-  float:right;
-  margin-left: 20px;
-  width:80px;
-  height 80px;
-}
-.author {
-  float:right;
-  margin-right: 20px;
-  margin-top: 0px;
-}
-.quote {
-  margin: 0px;
-}
 </style>
 </html>

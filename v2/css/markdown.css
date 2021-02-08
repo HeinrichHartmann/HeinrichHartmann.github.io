@@ -1,9 +1,23 @@
 .markdown-container {
-  width: 980px;
+  width: 60em;
   margin-right: auto;
   margin-left: auto;
   box-sizing: border-box;
   padding: 45px 45px 5px 45px;
+}
+
+
+/**
+ * Responsive
+ **/
+@media only screen and (max-width: 60em) {
+    .markdown-container {
+        text-align: left;
+        width: 100%;
+        margin: 0;
+        margin-top: 3em;
+        padding: 0.1em;
+    }
 }
 
 .markdown-container:after {

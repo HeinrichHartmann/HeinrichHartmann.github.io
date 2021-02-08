@@ -2,71 +2,123 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en-us">
 <head>
    <meta http-equiv="content-type" content="text/html; charset=utf-8"/>
-   <title>Heinrich Hartmann - Consulting</title>
+   <title>Virtual Coffee Break</title>
    <meta name="author" content="Heinrich Hartmann"/>
    
    </head>
 <body>
   <div class="site">
     <div class="headline"><a href="/">Heinrich Hartmann</a></div>
+    <div id="post">
+  <h1 id="h1-title"> Virtual Coffee Break</h1>
+  
+  
+  <p class="meta">
+    Written on 2018-03-12
+     in Stemwede, Germany 
+    
+  </p>
 
-<h1 id="hartmann-it-gmbh">Hartmann IT GmbH</h1>
+  <!-- Splash -->
+  
+  <div class="splash">
+    
+      <img src="/assets/vcb.png" width="100%"/>
+    
+     <p class="credits">Photo by <a href="https://unsplash.com/@karlchor">karl chor</a> on Unsplash</p> 
+  </div>
+  
 
-<p><img src="/images/consulting.png" width="100%" /></p>
+  <!-- Abstract -->
+  
 
-<h2 id="services">Services</h2>
+  
 
-<ul>
-  <li>
-    <p>Training “Statistics for Engineers”, teaching best practices and common pitfalls in analyzing telemetry data from IT systems</p>
+
+  <!-- Post content -->
+  <p>Virtual Coffee Breaks (VCBs) are the analogue of coffee breaks for remote workers.
+Here are the rules for holding a Virtual Coffee Break.</p>
+
+<ol>
+  <li>VCBs are initiated with a text message “VCB?”
+    <ul>
+      <li>Other media (email/chat) are allowed, as long as they are text based. No calls.</li>
+      <li>The message must include a way to reach you, e.g. hangout link, phone number or a skype name.</li>
+      <li>If you sent this text to a VCB first timer then include a link to this post.</li>
+    </ul>
   </li>
   <li>
-    <p>Improvement of existing monitoring infrastructure for observability, operability, debugability and accountability needs</p>
+    <p>To accept a VCB the recipient enters the hangout / returns the call / …</p>
   </li>
   <li>
-    <p>Setting and managing Service Level Expectations with SRE-methods</p>
-  </li>
-</ul>
-
-<h2 id="credentials">Credentials</h2>
-
-<ul>
-  <li>
-    <p>PhD in Mathematics</p>
+    <p>The recipient may ask for a short delay before joining.</p>
   </li>
   <li>
-    <p>5years+ of consulting experience in the IT monitoring space</p>
+    <p>The recipient may turn down a request directly by answering “busy”.</p>
   </li>
-  <li>
-    <p><a href="http://cacm.acm.org/magazines/2016/7/204029-statistics-for-engineers/abstract">CACM Vol. 59 No. 7</a> – Statistics for Engineers - Applying statistical techniques to operations data</p>
+  <li>VCB requests silently expire after 5 minutes.
+    <ul>
+      <li>If the recipient did not get back to you, he was apparently busy. No apologies needed.</li>
+      <li>Once a request has expired, the initiator has probably picked up work again.
+Further interruptions might not be welcome.</li>
+      <li>If he missed the request before it expired, the recipient can always initiate a new VCB.</li>
+    </ul>
   </li>
-  <li>
-    <p><a href="http://monitorama.com/2016/pdx.html#welcome">Monitorama PDX, 2016</a> – <a href="https://vimeo.com/173610069">A Tale of API Monitoring</a></p>
+  <li>A VCB session must be ended after a maximal duration of 15 minutes.
+    <ul>
+      <li>The initiator of the VCB is responsible to end the session in time.</li>
+    </ul>
   </li>
-  <li>
-    <p>Keynote <a href="https://www.usenix.org/conference/srecon18europe/presentation/schlossnagle">SRECon EMEA 2018</a> – Circonus Design (Failures) Case Study</p>
-  </li>
-  <li>
-    <p>Training <a href="https://github.com/HeinrichHartmann/Statistics-for-Engineers/">Statistics for Engineers</a> at
-SRECon <a href="https://www.usenix.org/conference/srecon19emea/program">19</a>, <a href="https://www.usenix.org/conference/srecon18emea/program">18</a>, <a href="https://www.usenix.org/conference/srecon17europe">17</a>, <a href="https://www.usenix.org/conference/srecon16europe">16</a>, <a href="https://www.usenix.org/conference/srecon15europe">15</a>;
-Velocity <a href="https://conferences.oreilly.com/velocity/devops-web-performance-eu-2015/public/schedule/detail/45241">Amsterdam</a>,
-<a href="https://conferences.oreilly.com/velocity/vl-eu/public/schedule/full/public">London</a>;
-<a href="http://www.statscraft.org.il/event/2016/">StatsCraft</a>;
-<a href="https://devopsdays.org/events/2018-kiel/workshop/heinrich-hartmann/">DevOpsDays Kiel</a></p>
-  </li>
-</ul>
+  <li>A VCB session may or may not involve the consumption of coffee.</li>
+</ol>
 
-<h2 id="testimonials">Testimonials</h2>
+<p>That’s it. Enjoy your virtual coffee!</p>
 
-<p><img src="https://upload.wikimedia.org/wikipedia/en/5/59/Swisscom_logo.svg" class="logo" /></p>
-<p class="quote">"This was an excellent course. Heinrich explained the theoretical foundations with exceptional clarity and great thoroughness, while keeping a clear view on practical applications."</p>
-<p class="author">Thomas Zippo, Lean Agile Leader for Data Analytics</p>
+<h2 id="rationale">Rationale</h2>
 
-<div style="clear:both" />
+<p>Not having colleagues around is clearly the biggest drawback of working remotely.
+The VCB is a way to bring the inofficial refreshing coffee sessions from the office to the remote work space.</p>
 
-<h2 id="contact">Contact</h2>
+<p>There are additional complications in the remote settings.
+The most obvious one that remote communication technologies are involves (which sucks, but can’t be avoided).
+Here are the design goals, that lead to the above format:</p>
 
-<p>Email: <a href="mailto:consulting@heinrichhartmann.com">consulting@heinrichhartmann.com</a></p>
+<p><strong>Low distraction.</strong>
+In a remote setting it’s not possible to see if someone is busy.
+You would not yell at someone who is two hands deep into code with his headphone on.
+Whereas if you see someone reading the news or wandering around the office a coffee break might be highly welcome.
+This is the reason we include text messages here.
+They need to be push based, but easy to discard or ignore.</p>
+
+<p><strong>Keep it short.</strong>
+With a VCB you might get in touch with people you have not seen for a while.
+Catching up with all life events since your wedding can take hours.
+A coffee break in within the working hours is not the right place for this.
+The hard cut at 15 minutes explicitly shuts down this kind of conversations.</p>
+
+<p><strong>No scheduling.</strong>
+A scheduled meeting costs much more than the scheduled time.
+You can’t start any task, which requires some context to keep in mind up to 30 min before the meeting.
+Also the time in your day is now blocked, and you can’t take in anything else, like going to lunch.
+VCBs are not scheduled.
+It’s either happening now or not at all.</p>
+
+<p><strong>No obligations.</strong>
+If you are busy.
+It’s fine.
+Unanswered VCB requests won’t pile up in your inbox and wait to be responded to.
+Just delete and ignore the request.
+That’s the protocol.
+Of course you may come back to these people by initiating a new VCB but there is no obligation.
+Not even an implicit one.</p>
+
+<p>Feel free to suggest further improvements to the protocol.</p>
+
+
+  <!-- Include Mathjax if needed -->
+  
+
+</div>
 
   </div>
 </body>
@@ -557,32 +609,5 @@ table tr th, table tr td
 .highlight .vi { color: #008080 } /* Name.Variable.Instance */
 .highlight .il { color: #009999 } /* Literal.Number.Integer.Long */
 
-</style>
-    <style>
-h1 {
-    font-size: 2em;
-    text-transform: none;
-    text-align: center;
-    margin: 2em 0 1.5em 0;
-    line-height: 1.5em;
-}
-.site {
-    text-align: left;
-    }
-
-.logo {
-  float:right;
-  margin-left: 20px;
-  width:80px;
-  height 80px;
-}
-.author {
-  float:right;
-  margin-right: 20px;
-  margin-top: 0px;
-}
-.quote {
-  margin: 0px;
-}
 </style>
 </html>

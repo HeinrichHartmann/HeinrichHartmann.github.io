@@ -2,71 +2,344 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en-us">
 <head>
    <meta http-equiv="content-type" content="text/html; charset=utf-8"/>
-   <title>Heinrich Hartmann - Consulting</title>
+   <title>Raspberry Pi Sunfounder Gpio Layout</title>
    <meta name="author" content="Heinrich Hartmann"/>
    
    </head>
 <body>
   <div class="site">
     <div class="headline"><a href="/">Heinrich Hartmann</a></div>
+    <div id="post">
+  <h1 id="h1-title"> Raspberry Pi Sunfounder Gpio Layout</h1>
+  
+  
+  <p class="meta">
+    Written on 2014-11-22
+    
+    
+  </p>
 
-<h1 id="hartmann-it-gmbh">Hartmann IT GmbH</h1>
+  <!-- Splash -->
+  
 
-<p><img src="/images/consulting.png" width="100%" /></p>
+  <!-- Abstract -->
+  
 
-<h2 id="services">Services</h2>
+  
+
+
+  <!-- Post content -->
+  <!-- # Raspberry Pi SunFounder GPIO Layout -->
+
+<p>I have recently bought a <a href="http://www.raspberrypi.org/">Raspberry Pi</a>
+together with a <a href="http://www.sunfounder.com/index.php?c=show&amp;id=21&amp;model=LCD%20Starter%20Kit">SunFounder LCD Starter
+Kit</a>
+in order to do some experiments.  Of special interest are the GPIO
+pins that enable communication with electroinc components like LEDs,
+buttons, all kinds of sensors and even simple LED screens.</p>
+
+<p>These pins can be addressed from a python program using a simple
+syntax. An example is provided <a href="http://www.thirdeyevis.com/pi-page-2.php">here</a>:</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>import RPi.GPIO as GPIO  ## Import GPIO library
+GPIO.setmode(GPIO.BOARD) ## Use board pin numbering
+GPIO.setup(7, GPIO.OUT)  ## Setup GPIO Pin 7 to OUT
+GPIO.output(7,True)      ## Turn on GPIO pin 7
+</code></pre></div></div>
+
+<p>This will turn on GPIO pin no. 7. But which one is it?  It turns out
+this question is surprisingly hard to anwser. There are several
+subtilities in the pin referencing:</p>
+
+<ol>
+  <li>There are two different referencing schemes: <code class="highlighter-rouge">BCM</code> and <code class="highlighter-rouge">BOARD</code></li>
+  <li>The BCM reference schemes differes for different Raspberry Pi versions</li>
+  <li>The SunFounder extension board (see below) mixes up the
+pins again and is neither consistent with <code class="highlighter-rouge">BCM</code> nor with <code class="highlighter-rouge">BOARD</code>
+referencing.</li>
+</ol>
+
+<p>As you might imagine, this is more than enough complexity to cause a
+lot of errors. In this note I am going to explain how to get a
+thorough grip on the referencing scheme.</p>
+
+<h1 id="setup-a-led-probe">Setup a LED Probe</h1>
+
+<p>Grab a 3.3V LED, a 1K OHM resistor and some wires and connect them
+like described in this document <a href="https://projects.drogon.net/raspberry-pi/gpio-examples/tux-crossing/gpio-examples-1-a-single-led/">here</a>.
+The top right pin of the Raspberry Pi board is always connected to 3.3V.
+The lower right pin is always connected to the ground.
+The connected LED is shown below:</p>
+
+<figure id="figure-1"><a href="/assets/GPIO_files/LED_probe.jpg"><img src="/assets/GPIO_files/LED_probe.jpg" alt="LED Probe" /></a><figcaption>Figure 1: LED Probe [<a href="/assets/GPIO_files/LED_probe.jpg">JPG</a>]</figcaption></figure>
+
+<p>Once you have completed this setup, you can disconnect the wire from
+the ground pin (white wire) and use the free wire as a probe.</p>
+
+<p>Now we want to identify pin “No 7” in the above example. By probing
+along the with our white wire we find several pins that are also
+connected to a ground (LED on) or a potential of 3.3V or 5V (LED off).
+But which on is the right one?</p>
+
+<p>To simplify this task, we can set pin “No 7” to an alternating
+signal. The following
+<a href="https://gist.github.com/HeinrichHartmann/4affce9f06368d946e9d">script</a>
+does the trick:</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>sudo python blink.py BOARD 7
+</code></pre></div></div>
+
+<p>Now we can find the correct pin by watching out for a blinking LED.
+(Solution: 4th pin counting from the black wire downwards.)</p>
+
+<p>In a similar fashing we can go on and find all pin references in the
+<code class="highlighter-rouge">BOARD</code> and <code class="highlighter-rouge">BCM</code> schemes. The full table for my RPi looks
+like that:</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>BCM</th>
+      <th>BOARD</th>
+      <th>BOARD</th>
+      <th>BCM</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>3.3V</td>
+      <td>(1)</td>
+      <td>2</td>
+      <td>5V</td>
+    </tr>
+    <tr>
+      <td>2</td>
+      <td>3</td>
+      <td>4</td>
+      <td>5V</td>
+    </tr>
+    <tr>
+      <td>3</td>
+      <td>5</td>
+      <td>(6)</td>
+      <td>GND</td>
+    </tr>
+    <tr>
+      <td>4</td>
+      <td>7</td>
+      <td>8</td>
+      <td>14</td>
+    </tr>
+    <tr>
+      <td>GND</td>
+      <td>(9)</td>
+      <td>10</td>
+      <td>15</td>
+    </tr>
+    <tr>
+      <td>17</td>
+      <td>11</td>
+      <td>12</td>
+      <td>18</td>
+    </tr>
+    <tr>
+      <td>27</td>
+      <td>13</td>
+      <td>(14)</td>
+      <td>GND</td>
+    </tr>
+    <tr>
+      <td>22</td>
+      <td>15</td>
+      <td>16</td>
+      <td>23</td>
+    </tr>
+    <tr>
+      <td>3.3V</td>
+      <td>(17)</td>
+      <td>18</td>
+      <td>24</td>
+    </tr>
+    <tr>
+      <td>10</td>
+      <td>19</td>
+      <td>(20)</td>
+      <td>GND</td>
+    </tr>
+    <tr>
+      <td>9</td>
+      <td>21</td>
+      <td>22</td>
+      <td>25</td>
+    </tr>
+    <tr>
+      <td>11</td>
+      <td>23</td>
+      <td>24</td>
+      <td>8</td>
+    </tr>
+    <tr>
+      <td>GND</td>
+      <td>(25)</td>
+      <td>26</td>
+      <td>7</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>The numbers in parantheses correspond to pins, that are not available
+via the GPIO api but have a special meaning. E.g. the pins 1 and 25 used
+in the above examples are always wired to 3.3V and ground (GND).</p>
+
+<h1 id="meltwaters-gpio-layout-script">Meltwaters GPIO Layout Script</h1>
+
+<p>Thankfully, you do not have to repeat this exercise above for your every
+RPi again. <a href="http://pihw.wordpress.com/2013/01/30/sometimes-it-can-be-simple/">Meltwaters</a> has published a script that finds the precise Raspberry Pi version and
+prints out the <code class="highlighter-rouge">BCM</code> pin layount on the console.</p>
+
+<p>The script can be used as follows:</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>curl http://pastebin.com/raw.php?i=T43HpgYp &gt; iolayout.py
+less iolayout.py
+</code></pre></div></div>
+
+<p>Check carefully, that you downloaded the right code. Then run as root:</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>sudo python iolayout.py
+</code></pre></div></div>
+
+<p>You should see an output that resembles the above tables but might
+differ slightly.</p>
+
+<h1 id="monks--raspberry-pi-leaf">Monks  Raspberry Pi leaf</h1>
+
+<p>If you want to make sure you do remember the <code class="highlighter-rouge">BCM</code> labeling of the pins,
+you can us the following brilliant “Raspberry PI leaf” by <a href="http://doctormonk.com">Dr. Monk</a>:</p>
+
+<figure id="figure-2"><a href="/assets/GPIO_files/pi_leaf.jpg"><img src="/assets/GPIO_files/pi_leaf.jpg" alt="Rasperry PI IO Leaf" /></a><figcaption>Figure 2: Rasperry PI IO Leaf [<a href="/assets/GPIO_files/pi_leaf.jpg">JPG</a>]</figcaption></figure>
+
+<p>It can be obtained
+<a href="http://www.doctormonk.com/2013/02/raspberry-pi-and-breadboard-raspberry.html">here</a>
+make sure to downlaod the right one by comparing with the output of <code class="highlighter-rouge">iolayout.py</code>.</p>
+
+<h1 id="sunfounder-extension-board-referencing">SunFounder Extension Board Referencing</h1>
+
+<p>The SunFounder starter kit comes with an ribbon-cable and an extension
+board that grately simplifys access to the pins.</p>
+
+<figure id="figure-3"><a href="/assets/GPIO_files/extension_board.jpg"><img src="/assets/GPIO_files/extension_board.jpg" alt="GPIO Extension Board" /></a><figcaption>Figure 3: GPIO Extension Board [<a href="/assets/GPIO_files/extension_board.jpg">JPG</a>]</figcaption></figure>
+
+<p>Surprisingly the lables on the SunFounder extension board do not match
+the BCM, nor the BOARD referencing scheme.  Manuall checking 
+with the LED Probe reveals the following table:</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>BCM</th>
+      <th>BOARD</th>
+      <th>EXT.</th>
+      <th>EXT.</th>
+      <th>BOARD</th>
+      <th>BCM</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>7</td>
+      <td>26</td>
+      <td>CE1</td>
+      <td>P0</td>
+      <td>11</td>
+      <td>17</td>
+    </tr>
+    <tr>
+      <td>8</td>
+      <td>24</td>
+      <td>CE0</td>
+      <td>P1</td>
+      <td>12</td>
+      <td>18</td>
+    </tr>
+    <tr>
+      <td>11</td>
+      <td>23</td>
+      <td>SCLK</td>
+      <td>P2</td>
+      <td>13</td>
+      <td>27</td>
+    </tr>
+    <tr>
+      <td>9</td>
+      <td>21</td>
+      <td>MSOP</td>
+      <td>P3</td>
+      <td>15</td>
+      <td>22</td>
+    </tr>
+    <tr>
+      <td>10</td>
+      <td>19</td>
+      <td>MOSP</td>
+      <td>P4</td>
+      <td>16</td>
+      <td>23</td>
+    </tr>
+    <tr>
+      <td>15</td>
+      <td>10</td>
+      <td>RXD</td>
+      <td>P5</td>
+      <td>18</td>
+      <td>24</td>
+    </tr>
+    <tr>
+      <td>14</td>
+      <td>8</td>
+      <td>TXD</td>
+      <td>P6</td>
+      <td>22</td>
+      <td>25</td>
+    </tr>
+    <tr>
+      <td>3</td>
+      <td>5</td>
+      <td>SCL</td>
+      <td>P7</td>
+      <td>7</td>
+      <td>4</td>
+    </tr>
+    <tr>
+      <td>2</td>
+      <td>3</td>
+      <td>SDA</td>
+      <td>GND</td>
+      <td>-</td>
+      <td>-</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>The wiring of the LED probe on the extension board is much easier to handle,
+and with the above table the pin referencing can easily be translated to the
+SunFounder extension board labels.</p>
+
+<figure id="figure-4"><a href="/assets/GPIO_files/LED_extension.jpg"><img src="/assets/GPIO_files/LED_extension.jpg" alt="LED on extension board" /></a><figcaption>Figure 4: LED on extension board [<a href="/assets/GPIO_files/LED_extension.jpg">JPG</a>]</figcaption></figure>
+
+<h1 id="further-reading">Further Reading</h1>
 
 <ul>
-  <li>
-    <p>Training “Statistics for Engineers”, teaching best practices and common pitfalls in analyzing telemetry data from IT systems</p>
-  </li>
-  <li>
-    <p>Improvement of existing monitoring infrastructure for observability, operability, debugability and accountability needs</p>
-  </li>
-  <li>
-    <p>Setting and managing Service Level Expectations with SRE-methods</p>
-  </li>
+  <li><a href="http://elinux.org/RPi_Low-level_peripherals">elinux - RPi Low Level Peripherals</a></li>
+  <li><a href="http://elinux.org/RPi_BCM2835_GPIOs">elinux - BCM datasheet</a></li>
+  <li><a href="http://www.thebox.myzen.co.uk/Raspberry/Understanding_Outputs.html">Understanding Outputs</a></li>
+  <li><a href="http://makezine.com/projects/tutorial-raspberry-pi-gpio-pins-and-python/">GPIO Input Tuturial</a></li>
 </ul>
 
-<h2 id="credentials">Credentials</h2>
 
-<ul>
-  <li>
-    <p>PhD in Mathematics</p>
-  </li>
-  <li>
-    <p>5years+ of consulting experience in the IT monitoring space</p>
-  </li>
-  <li>
-    <p><a href="http://cacm.acm.org/magazines/2016/7/204029-statistics-for-engineers/abstract">CACM Vol. 59 No. 7</a> – Statistics for Engineers - Applying statistical techniques to operations data</p>
-  </li>
-  <li>
-    <p><a href="http://monitorama.com/2016/pdx.html#welcome">Monitorama PDX, 2016</a> – <a href="https://vimeo.com/173610069">A Tale of API Monitoring</a></p>
-  </li>
-  <li>
-    <p>Keynote <a href="https://www.usenix.org/conference/srecon18europe/presentation/schlossnagle">SRECon EMEA 2018</a> – Circonus Design (Failures) Case Study</p>
-  </li>
-  <li>
-    <p>Training <a href="https://github.com/HeinrichHartmann/Statistics-for-Engineers/">Statistics for Engineers</a> at
-SRECon <a href="https://www.usenix.org/conference/srecon19emea/program">19</a>, <a href="https://www.usenix.org/conference/srecon18emea/program">18</a>, <a href="https://www.usenix.org/conference/srecon17europe">17</a>, <a href="https://www.usenix.org/conference/srecon16europe">16</a>, <a href="https://www.usenix.org/conference/srecon15europe">15</a>;
-Velocity <a href="https://conferences.oreilly.com/velocity/devops-web-performance-eu-2015/public/schedule/detail/45241">Amsterdam</a>,
-<a href="https://conferences.oreilly.com/velocity/vl-eu/public/schedule/full/public">London</a>;
-<a href="http://www.statscraft.org.il/event/2016/">StatsCraft</a>;
-<a href="https://devopsdays.org/events/2018-kiel/workshop/heinrich-hartmann/">DevOpsDays Kiel</a></p>
-  </li>
-</ul>
+  <!-- Include Mathjax if needed -->
+  
 
-<h2 id="testimonials">Testimonials</h2>
-
-<p><img src="https://upload.wikimedia.org/wikipedia/en/5/59/Swisscom_logo.svg" class="logo" /></p>
-<p class="quote">"This was an excellent course. Heinrich explained the theoretical foundations with exceptional clarity and great thoroughness, while keeping a clear view on practical applications."</p>
-<p class="author">Thomas Zippo, Lean Agile Leader for Data Analytics</p>
-
-<div style="clear:both" />
-
-<h2 id="contact">Contact</h2>
-
-<p>Email: <a href="mailto:consulting@heinrichhartmann.com">consulting@heinrichhartmann.com</a></p>
+</div>
 
   </div>
 </body>
@@ -557,32 +830,5 @@ table tr th, table tr td
 .highlight .vi { color: #008080 } /* Name.Variable.Instance */
 .highlight .il { color: #009999 } /* Literal.Number.Integer.Long */
 
-</style>
-    <style>
-h1 {
-    font-size: 2em;
-    text-transform: none;
-    text-align: center;
-    margin: 2em 0 1.5em 0;
-    line-height: 1.5em;
-}
-.site {
-    text-align: left;
-    }
-
-.logo {
-  float:right;
-  margin-left: 20px;
-  width:80px;
-  height 80px;
-}
-.author {
-  float:right;
-  margin-right: 20px;
-  margin-top: 0px;
-}
-.quote {
-  margin: 0px;
-}
 </style>
 </html>

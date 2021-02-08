@@ -2,71 +2,194 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en-us">
 <head>
    <meta http-equiv="content-type" content="text/html; charset=utf-8"/>
-   <title>Heinrich Hartmann - Consulting</title>
+   <title>A Categorical Perspective On Covariance</title>
    <meta name="author" content="Heinrich Hartmann"/>
    
    </head>
 <body>
   <div class="site">
     <div class="headline"><a href="/">Heinrich Hartmann</a></div>
+    <div id="post">
+  <h1 id="h1-title"> A Categorical Perspective On Covariance</h1>
+  
+  
+  <p class="meta">
+    Written on 2014-12-08
+    
+    
+  </p>
 
-<h1 id="hartmann-it-gmbh">Hartmann IT GmbH</h1>
+  <!-- Splash -->
+  
 
-<p><img src="/images/consulting.png" width="100%" /></p>
+  <!-- Abstract -->
+  
 
-<h2 id="services">Services</h2>
+  
+
+
+  <!-- Post content -->
+  <script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS_HTML" type="text/javascript"></script>
+
+<style> .center { margin-right: auto; margin-left:auto; display: block } </style>
+
+<style src="/css/coderay.css"></style>
+
+<!-- # A categorical perspective on Covariance -->
+
+<p>For functions <script type="math/tex">f,g</script> on a measure space <script type="math/tex">\Omega, \mu</script> (e.g. a real
+interval <script type="math/tex">[0,1]</script>) there is a well known scalar product</p>
+
+<script type="math/tex; mode=display">\langle f,g \rangle = \int f \cdot g \, d\mu.</script>
+
+<p>This scalar product is of fundamental importance to the study of
+function and operators on measure spaces (Function Analysis).  For
+example, there is a rich theory of how to decomposes functions on an
+interval into orthogonal Fourier-components.</p>
+
+<p>If <script type="math/tex">\mu</script> is a probability measure, we can regard <script type="math/tex">f,g</script> as random
+variables. In this setting the viewpoint changes quite a bit.  We give
+<script type="math/tex">f,g</script> new names: <script type="math/tex">X,Y</script>. We are no longer interested in <script type="math/tex">\Omega</script>,
+and also rarely consider the scalar product. Instead the focus lies on
+expectation</p>
+
+<script type="math/tex; mode=display">E[X] = \int X \, d\mu</script>
+
+<p>and the covariance</p>
+
+<script type="math/tex; mode=display">Cov[X,Y] = E[X \cdot Y]  - E[X] E[Y].</script>
+
+<p>This note considers the relation between these the probabilistic
+notions and the functional point of view.</p>
+
+<h2 id="constant-split">Constant Split</h2>
+
+<p>Let <script type="math/tex">\Omega, P</script> be a probability space. Consider the vector space
+of square integrable functions:</p>
+
+<script type="math/tex; mode=display">% <![CDATA[
+\def\IR{\mathbb{R}}
+   \def\LL{L^2(\Omega, \IR)}
+   \LL = \{ x:\Omega \rightarrow \IR \,|\, \int |x|^2 dP < \infty \} / \sim. %]]></script>
+
+<p>See e.g. <a href="https://en.wikipedia.org/wiki/Lp_space#Lp_spaces">wikipedia</a> for
+the details. We have the integral linear operator</p>
+
+<script type="math/tex; mode=display">\def\lra{\longrightarrow}
+   I : \LL \lra \IR, \quad x \mapsto \int x \,dP.</script>
+
+<p>The inclusion of the constant functions <script type="math/tex">\iota</script> leaves us with a sequence:</p>
+
+<script type="math/tex; mode=display">\IR \overset{\iota}{\lra} \LL \overset{I}{\lra} \IR,</script>
+
+<p>whose composition <script type="math/tex">I \circ \iota = id_\IR</script>, since <script type="math/tex">P</script> is a
+probability measure. We get an induced splitting of <script type="math/tex">\LL</script> into
+constant functions plus functions with integral <script type="math/tex">I = 0</script>:</p>
+
+<script type="math/tex; mode=display">% <![CDATA[
+\begin{align*}
+    \def\isom{\cong}
+    \LL   &= \IR \oplus \LL_0. \\
+    \LL_0 &= \{ f \,|\, I(f) = 0 \} \isom \LL / \text{const.}
+\end{align*} %]]></script>
+
+<p>A function <script type="math/tex">x</script> can be decomposed accordingly into its constant part <script type="math/tex">I(x)</script> and
+its integral-0 part: <script type="math/tex">N(x) = x - I(x)</script>.</p>
+
+<h2 id="bilinear-forms">Bilinear Forms</h2>
+
+<p>The space <script type="math/tex">\LL</script> comes with a scalar product</p>
+
+<script type="math/tex; mode=display">S: \LL \times \LL \lra \IR, \quad x,y \mapsto I(x\cdot y)</script>
+
+<p>which is non-degenerate and complete and thus makes this space into a
+<a href="https://en.wikipedia.org/wiki/Hilbert_space">Hilbert Space</a>.</p>
+
+<p>The covariance product is defined as</p>
+
+<script type="math/tex; mode=display">Cov(x,y) = S(x,y) - I(x) I(y) = S(x - I(x), y - I(y)) = S(N(x),N(y)).</script>
+
+<p>This product is bilinear but degenerate. The radical of <script type="math/tex">Cov</script> are
+precisely the
+(<a href="https://en.wikipedia.org/wiki/Almost_everywhere">almost</a>) constant
+functions <script type="math/tex">\iota(\IR)</script>.</p>
+
+<script type="math/tex; mode=display">Cov(x,x) = 0  \Leftrightarrow S(x - I(x), x - I(x)) = 0 \Leftrightarrow x = I(x) \; a.e.</script>
+
+<p>In the light of the above decomposition, we see that <script type="math/tex">Cov</script> is the
+restriction of <script type="math/tex">S</script> to <script type="math/tex">\LL_0</script> extended back to <script type="math/tex">\LL</script> using the
+projection <script type="math/tex">N(x) = x - I(x)</script>.</p>
+
+<h2 id="conclusion">Conclusion</h2>
 
 <ul>
   <li>
-    <p>Training “Statistics for Engineers”, teaching best practices and common pitfalls in analyzing telemetry data from IT systems</p>
+    <p>The space of integral-0 function <script type="math/tex">\LL_0</script> together with the
+covariance product <script type="math/tex">Cov</script> is a Hilbert Space.</p>
   </li>
   <li>
-    <p>Improvement of existing monitoring infrastructure for observability, operability, debugability and accountability needs</p>
+    <p>The natural inclusion <script type="math/tex">\LL_0 \rightarrow \LL</script> is isometric
+with adjoint linear operator <script type="math/tex">N(x) = x - I(x)</script>.</p>
   </li>
   <li>
-    <p>Setting and managing Service Level Expectations with SRE-methods</p>
+    <p>There is an orthogonal direct sum decomposition:</p>
+
+    <script type="math/tex; mode=display">\LL \cong \IR \oplus  \LL_0, \quad f \mapsto (I(f),N(f))</script>
   </li>
 </ul>
 
-<h2 id="credentials">Credentials</h2>
+<h2 id="update-2015-05-17-correlation-as-cosine">Update 2015-05-17: Correlation as Cosine</h2>
+
+<p>The <a href="http://en.wikipedia.org/wiki/Pearson_product-moment_correlation_coefficient">Pearson
+correlation</a>
+is defined as:</p>
+
+<script type="math/tex; mode=display">\rho(x,y) = \frac{Cov(x,y)}{\sqrt{Cov(x,x) Cov(y,y)}}.</script>
+
+<p>It measures the linear dependece between two random variables. E.g. in
+ the case of a discrete probability measure obtained from a sample,
+ the correlation is the ratio between explained variance in a linear
+ regression and total variance of the sample
+ cf. <a href="http://en.wikipedia.org/wiki/Coefficient_of_determination">wikipedia</a>.</p>
+
+<figure>
+    <img src="/assets/Covariance_files/cor.png" />
+    <img src="/assets/Covariance_files/nocor.png" />
+    <figcaption>Correlated (\rho ~ 0.88) and non-corrleated (\rho ~ -0.14) samples.</figcaption>
+</figure>
+
+<p>In analogy to the Euclidean plane, we define the cosine similarity between two functions by</p>
+
+<script type="math/tex; mode=display">cossim(x,y) = \frac{S(x,y)}{\sqrt{S(x,x) S(y,y)}}.</script>
+
+<p>Hence for centered functions <script type="math/tex">x,y \in \LL_0</script> we have</p>
+
+<script type="math/tex; mode=display">cossim(x,y) = \rho(x,y),</script>
+
+<p>which gives a surprising relation between two different geometric
+interpretations of the same data:</p>
 
 <ul>
-  <li>
-    <p>PhD in Mathematics</p>
-  </li>
-  <li>
-    <p>5years+ of consulting experience in the IT monitoring space</p>
-  </li>
-  <li>
-    <p><a href="http://cacm.acm.org/magazines/2016/7/204029-statistics-for-engineers/abstract">CACM Vol. 59 No. 7</a> – Statistics for Engineers - Applying statistical techniques to operations data</p>
-  </li>
-  <li>
-    <p><a href="http://monitorama.com/2016/pdx.html#welcome">Monitorama PDX, 2016</a> – <a href="https://vimeo.com/173610069">A Tale of API Monitoring</a></p>
-  </li>
-  <li>
-    <p>Keynote <a href="https://www.usenix.org/conference/srecon18europe/presentation/schlossnagle">SRECon EMEA 2018</a> – Circonus Design (Failures) Case Study</p>
-  </li>
-  <li>
-    <p>Training <a href="https://github.com/HeinrichHartmann/Statistics-for-Engineers/">Statistics for Engineers</a> at
-SRECon <a href="https://www.usenix.org/conference/srecon19emea/program">19</a>, <a href="https://www.usenix.org/conference/srecon18emea/program">18</a>, <a href="https://www.usenix.org/conference/srecon17europe">17</a>, <a href="https://www.usenix.org/conference/srecon16europe">16</a>, <a href="https://www.usenix.org/conference/srecon15europe">15</a>;
-Velocity <a href="https://conferences.oreilly.com/velocity/devops-web-performance-eu-2015/public/schedule/detail/45241">Amsterdam</a>,
-<a href="https://conferences.oreilly.com/velocity/vl-eu/public/schedule/full/public">London</a>;
-<a href="http://www.statscraft.org.il/event/2016/">StatsCraft</a>;
-<a href="https://devopsdays.org/events/2018-kiel/workshop/heinrich-hartmann/">DevOpsDays Kiel</a></p>
-  </li>
+  <li>Regrssion line of coefficient pairs <script type="math/tex">(x_i,y_i)</script> in <script type="math/tex">\IR^2</script></li>
+  <li>Angle between vectors <script type="math/tex">(x_1,\dots,x_n)</script> and <script type="math/tex">(y_1,\dots,y_n)</script> in <script type="math/tex">\IR^n</script>.</li>
 </ul>
 
-<h2 id="testimonials">Testimonials</h2>
+<p>Note, that for cetnered functions (<script type="math/tex">I(x) = I(y) = 0</script>) the regression line
+will always pass through the origin and the slope can be calculated to</p>
 
-<p><img src="https://upload.wikimedia.org/wikipedia/en/5/59/Swisscom_logo.svg" class="logo" /></p>
-<p class="quote">"This was an excellent course. Heinrich explained the theoretical foundations with exceptional clarity and great thoroughness, while keeping a clear view on practical applications."</p>
-<p class="author">Thomas Zippo, Lean Agile Leader for Data Analytics</p>
+<script type="math/tex; mode=display">\hat{a}(x,y) = Cov(x,y)/Cov(x,x).</script>
 
-<div style="clear:both" />
+<p>However, at the moment I do not see how this helps to understand the
+above observation. My feeling is, that there should be a more
+conceptual reason for it. By interpreting <script type="math/tex">x,y</script> as maps <script type="math/tex">\IR^2
+\lra \IR^n</script> we can bring duality theory for vector spaces into play
+and maybe gain more insight form this perspective.</p>
 
-<h2 id="contact">Contact</h2>
 
-<p>Email: <a href="mailto:consulting@heinrichhartmann.com">consulting@heinrichhartmann.com</a></p>
+  <!-- Include Mathjax if needed -->
+  
+
+</div>
 
   </div>
 </body>
@@ -557,32 +680,5 @@ table tr th, table tr td
 .highlight .vi { color: #008080 } /* Name.Variable.Instance */
 .highlight .il { color: #009999 } /* Literal.Number.Integer.Long */
 
-</style>
-    <style>
-h1 {
-    font-size: 2em;
-    text-transform: none;
-    text-align: center;
-    margin: 2em 0 1.5em 0;
-    line-height: 1.5em;
-}
-.site {
-    text-align: left;
-    }
-
-.logo {
-  float:right;
-  margin-left: 20px;
-  width:80px;
-  height 80px;
-}
-.author {
-  float:right;
-  margin-right: 20px;
-  margin-top: 0px;
-}
-.quote {
-  margin: 0px;
-}
 </style>
 </html>

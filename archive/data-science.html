@@ -1,0 +1,739 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en-us">
+<head>
+   <meta http-equiv="content-type" content="text/html; charset=utf-8"/>
+   <title>From Academia to Data Science</title>
+   <meta name="author" content="Heinrich Hartmann"/>
+   
+   </head>
+<body>
+  <div class="site">
+    <div class="headline"><a href="/">Heinrich Hartmann</a></div>
+    <div id="post">
+  <h1 id="h1-title"> From Academia to Data Science</h1>
+  
+  
+  <div class="pdflink">
+    <a href="http://heinrichhartmann.com/pdf/Heinrich Hartmann - From Academia to Data Science (2018).pdf">[pdf]</a>
+  </div>
+  
+  <p class="meta">
+    Written on 2018-09-15
+     in Stemwede, Germany 
+    
+  </p>
+
+  <!-- Splash -->
+  
+
+  <!-- Abstract -->
+  
+
+  
+
+
+  <!-- Post content -->
+  <p>Over the last years, many people have asked me:
+How do I enter Data Science?
+I don’t have a definite answer to this question, but having transitioned from an academic career in pure Mathematics to working as a Data Scientist, I have experiences that I can share.</p>
+
+<p>Before we dive in, let’s take a step back and clarify terminology.</p>
+
+<h2 id="what-is-data-science">What is Data Science?</h2>
+
+<p>Data Science is the realization that businesses needs advanced mathematics to make sense of their data.
+The analysis of balance sheets and order books does not involve that much mathematics.
+Nowadays, companies are gathering every bit of information they can get their hands on:
+User data, sensor data, market data, web datasets, etc.
+If you want to extract information from this kind of scattered, high volume data, you need to apply some more mathematics.
+This is what Data Science is all about: Extracting business value from data.</p>
+
+<h2 id="what-do-data-scientists-do">What do Data Scientists do?</h2>
+
+<p>The role description is still in flux, but typically the duties of a Data Scientist involve:</p>
+
+<ol>
+  <li>Find, explore, transform, normalize and curate datasets.</li>
+  <li>Develop machine learning models in Python/R.</li>
+  <li>Implement, debug and operate systems that run those models.</li>
+  <li>Talk about those models in documentation, blogs, seminars, conferences.</li>
+</ol>
+
+<p>In smaller companies a large chunk of your time will be spent on (3).
+Right now it takes up more than 80% of my time.
+In larger organizations, this figure will be much lower.
+In particular the operational burden might rest entirely upon another team.
+Nevertheless, getting your models operational is critical for the value you deliver to the company.
+A good understanding of what it takes to run code in production will help you to become more effective.</p>
+
+<h2 id="how-to-get-there">How to get there?</h2>
+
+<p><span class="hookin">1 </span> <strong>Trust in your Abilities.</strong>
+Seasoned academics bring a great skill-set to the table that computer science (CS) majors often do not have.
+This includes: A high tolerance for frustration. Ability to reason formally. No fear of equations.
+Grasp how a high-level description is reflected in formulas.
+The ability to manipulate mathematical models creatively.
+Incorporate new ideas and extend a given model.
+Communicate theory and results in written and oral form.
+Teach colleagues and peers.</p>
+
+<p>The CS majors I have worked with were not able to work with equations very well.
+Many are scared of matrices.
+Getting a firm grip on mathematical models is <em>really</em> hard for CS master students.
+Often times, machine learning papers are just impenetrable for them.</p>
+
+<p>So while CS majors do have an edge in programming, they also have to catch up with a whole set of equally valuable skills.
+It’s easy to forget how far you have already made it, when you are 2 years into your PhD.
+Don’t be afraid.</p>
+
+<p><span class="hookin">2 </span> <strong>Start with Simple Models.</strong>
+Make sure to cover the simple things first.
+Linear regression is a very powerful tool, that can solve a lot of problems on the spot.
+90% of your models you will write will only involve basic statistics and linear regressions.
+Don’t apply sophisticated machine learning algorithms before you tried a bunch of if statements.</p>
+
+<p>Also simple models can be surprisingly effective if trained on enough data.
+(Peter Norvig – The Unreasonable Effectiveness of Data,  <a href="https://static.googleusercontent.com/media/research.google.com/en//pubs/archive/35179.pdf">pdf</a>, <a href="https://www.youtube.com/watch?v=yvDCzhbjYWs">video</a>)</p>
+
+<p>Here is an anecdote I like to share in this context:</p>
+
+<blockquote>
+  <p>I was working on an activity recognition classifier that should be able to detect human activities like walking, running, sitting, etc. on the basis of sensor data collected on a mobile phone.
+My colleagues told me that PCA, SVMs and decision trees would be the way to go here.
+So I spent months, learning about these methods, collecting data, doing trials, etc.
+This all worked OK-ish but we were far away from the 99% accuracy claimed in the papers.
+And you could see that if just was not working all that well when you used it on your phone.</p>
+
+  <p>It was on a train ride, when I suddenly realized:
+Gosh!
+I could build something better by extracting a few simple features from accelerometer data and funnel that into a few if statements.
+It took me 30 minutes to write <a href="https://github.com/Institute-Web-Science-and-Technologies/LiveGovWP1/blob/master/server/HARTools/src/main/java/eu/liveandgov/wp1/classifier/ManualClassify.java">this little function</a> that outperformed everything we had done up to that point.</p>
+</blockquote>
+
+<p>The one thing I learned from this was:
+Before ever touching RapidMinder again, implement your baseline!</p>
+
+<p>Another take-away is:
+Get a firm grip on basic statistics, before learning about advanced machine learning models.</p>
+
+<p><span class="hookin">3 </span> <strong>Value Running Code.</strong>
+You will be measured by the value you create for the company.
+The models you built on csv files on your Laptop can be great and everything.
+If you can’t get them in front of customers, they are worthless to the company.</p>
+
+<p>Also, the customer will not care if your model is 99.9% accurate and uses $HOW_NEW_DL_FRAMEWORK and runs on $HOT_NEW_CLOUD_SERVICE.
+All he cares about is: Is the model available? Does it work good enough? Is it fast?
+It’s important to leave behind the academic mind set of p-values and accuracy, and focus on the customer needs.</p>
+
+<p>While Data Science takes largely place in languages like R and Python, the dominant languages met in production systems are Java, C/C++, PHP, JavaScript, Python.
+You will have to find a way to get your models into those environments.</p>
+
+<p>Fundamentally there are two ways how to do it:</p>
+
+<ol>
+  <li>
+    <p>Write your models in a language used in production.</p>
+  </li>
+  <li>
+    <p>Export your models from R/Python. Load them into your production environment.</p>
+  </li>
+</ol>
+
+<p>If you run Python in production, route one is particularly attractive.
+I have mostly worked with C based production systems, which have an embedded <a href="https://www.lua.org/">lua</a> scripting layer.
+So I implemented my models in lua.</p>
+
+<p>Route two is commonly taken in larger organizations, which have a team to run a data platform, and a separate team of Data Scientists who provide the models.
+Tools like <a href="https://deeplearning4j.org/">Deeplearning4j (Java)</a> allow you to import models trained in e.g. <a href="https://keras.io/">Keras (Python)</a> and deploy them on the JVM.</p>
+
+<p>Which route you take will depend on the environment you end up working for.
+In any case, it is your responsibility to make sure your models make it to production, and continue to provide value to the company.</p>
+
+<p><span class="hookin">4 </span> <strong>Avoid perfection.</strong>
+This might be the hardest lesson for an academic to take.
+The software industry had to learn that planning is extremely hard and error prone.
+<a href="https://en.wikipedia.org/wiki/Agile_software_development#The_Agile_Manifesto">Agile Software Development</a> and the <a href="https://en.wikipedia.org/wiki/DevOps">DevOps Movement</a>
+are the reactions of the community to <a href="https://en.wikipedia.org/wiki/List_of_failed_and_overbudget_custom_software_projects">epic failures</a> of many large software projects.
+Instead of writing down requirements and estimating engineering effort, the most effective way to provide value is:</p>
+
+<p>Release early. Release Often. Learn from your mistakes.</p>
+
+<p>For Data Science applications this means:</p>
+
+<ol>
+  <li>Once your model is barely usable, get it in front of users.</li>
+  <li>Evaluate (measure) it’s usefulness in practice.</li>
+  <li>Refine your model.</li>
+  <li>Iterate. Quickly.</li>
+</ol>
+
+<p>It’s much more important to be able to iterate quickly, than to have a 99%-accurate model to start with.
+But iterating quickly is not easy.
+There are a lot of delicate steps involved in getting a new model rolled out into a production environment.
+Make sure to understand the steps involved, and automate them as far as possible.
+Leading companies have fully automated deployment pipelines, that allow them to update (and revert) production code within minutes.</p>
+
+<p><span class="hookin">5 </span> <strong>Take programming seriously.</strong>
+A large part of the day to day work of a Data Scientist, consists of writing code.
+In many circumstances you are effectively a Software Engineer with broad Statistical know-how.
+This means, you should treat programming as a profession.</p>
+
+<p>The good news is: It’s not all that hard.
+If you made it through grad school in pure maths, you are more than smart enough to become a decent programmer.
+After all, a proof is very similar to a program.</p>
+
+<p>The bad news is: It’s a huge mess.
+Approaching programming from first principles (Turing Machines, Lambda Calculus) is a rabbit hole with no end.
+In practice you will have to deal with large piles of undocumented code, that surfaces subtle bugs in the worst possible moments.</p>
+
+<p>The only thing that really helps is exercise.
+Read code.
+Write code.
+Ship code … and watch it burn.
+Debug code.
+Learn from your mistakes.
+You will eventually get better.</p>
+
+<p><span class="hookin">6 </span> <strong>Just get started.</strong>
+Finding an attractive Data Science position with a decent company and a high salary is not easy.
+Job descriptions usually require industry experience, and list a large number of technologies you should be an expert in.
+While you might actually be a good match for those positions (at least after a few months of training), it will be very hard to get such a position if you don’t fulfill the requirements.</p>
+
+<p>To understand the problem one must realize that hiring in the Data Science space is extremely difficult for companies.
+There are tons of young engineers from all over the world, who can do some Python coding and have worked through some TensorFlow tutorials, which apply for Data Science positions.
+Often times, these people can produce certificates and the best grades from schools or universities, yet in practice they are not able to do much.
+Tool-knowledge does not take you very far if you lack basic understanding of what they are doing.</p>
+
+<p>The best strategy that I have encountered, is to just start somewhere.
+Take any job that roughly matches your interest, and will let you develop your skill-set.
+Software engineering roles are a great start if you have some programming experience already.
+Compared to the average CS major, you should have no problems to catch up quickly and exceed expectations.</p>
+
+<p>Once you got some industry experience on your CV and earned some “street cred”, your next job search will be much easier.</p>
+
+<p><span class="hookin">7 </span> <strong>Engage with the community.</strong>
+Get in touch with other people who work in Data Science.
+Talking to other people makes learning much easier and is a great source of inspiration for things to try out.
+In addition, reputation and a network gained from these interactions will allow you to find interesting positions.</p>
+
+<p>Read blogs.
+Leave comments.
+Ask questions.
+Take some online courses.
+Watch out for Meetups or Data Science conferences in cities near you.
+Start a side project that is of personal interest and talk about it at a Meetup.
+Write blog posts about things that you learn or find interesting.
+Teach other people what you have learned.
+Contribute to open source projects.
+There are many ways to get in touch!</p>
+
+<h2 id="conclusion">Conclusion</h2>
+
+<p>In my opinion Data Science presents an attractive opportunity for academics in the STEM fields.
+Thorough mathematical education and fearless manipulation of statistical models are essential skills that most CS majors are lacking.</p>
+
+<p>The biggest huddle to jump is to close the gap in programming skills.
+Here only practice will help.
+Once that step is taken, the door is open for many very attractive positions in an industry which is craving for analytical talent.</p>
+
+<h2 id="acknowledgements">Acknowledgements</h2>
+
+<p>Thanks to <a href="https://twitter.com/quasicoherence">Kevin Lin</a>, <a href="https://twitter.com/maxpumperla">Max Pumperla</a> and <a href="https://twitter.com/thiagoavadore">Thiago de Faria</a> for inspiration and feedback to earlier versions of this writeup.</p>
+
+
+  <!-- Include Mathjax if needed -->
+  
+
+</div>
+
+  </div>
+</body>
+<style>
+  ody/*****************************************************************************/
+/*
+/* Common
+/*
+/*****************************************************************************/
+
+/* Global Reset */
+
+* {
+  margin: 0;
+  padding: 0;
+}
+
+html, body {
+  height: 100%;
+}
+
+body {
+  font-family: Helvetica, arial, sans-serif;
+  font-size: 14px;
+  line-height: 1.6;
+  background-color: white;
+  padding: 10px 30px 10px 30px;
+}
+
+h1 {
+  font-size: 1em;
+  text-transform: uppercase;
+  text-alig: left;
+  font-size: 1em;
+  margin-bottom: 1em;
+  margin-top: 2em;
+}
+h2 {
+  font-size: 1em;
+  margin-bottom: 1em;
+  margin-top: 2em;
+}
+p {
+  margin: 1em 0;
+}
+
+a {
+  color: #00a;
+}
+
+a:hover {
+  color: black;
+}
+
+a:visited {
+  color: #a0a;
+}
+
+table {
+  font-size: inherit;
+  font: 100%;
+}
+
+pre {
+  text-align: left;
+  overflow-y: auto;
+}
+
+/*****************************************************************************/
+/*
+/* Home
+/*
+/*****************************************************************************/
+
+ul.posts {
+  list-style-type: none;
+  margin-bottom: 2em;
+}
+
+ul.posts li {
+  line-height: 1.75em;
+}
+
+ul.posts span {
+  color: #aaa;
+  font-family: Monaco, "Courier New", monospace;
+  font-size: 75%;
+}
+
+
+.date {
+  color: #aaa;
+  font-family: Monaco, Courier New, monospace;
+  font-size: 75%;
+  font-weight: normal;
+  float:right;
+}
+
+.quo {
+  position:relative; top:-1px;
+}
+
+#banner {
+  margin-bottom: 1em;
+}
+
+/*****************************************************************************/
+/*
+/* Site
+/*
+/*****************************************************************************/
+
+.site {
+  text-align: justify;
+  width: 48em;
+  margin: 3em auto 2em auto;
+  line-height: 1.5em;
+  margin-bottom: 200px;
+}
+
+.site .headline a {
+    color: #a00;
+    font-weight: bold;
+    margin-bottom: 2em;
+    margin-top: 2em;
+    text-decoration: none;
+}
+
+.title {
+  color: #a00;
+  font-weight: bold;
+  margin-bottom: 2em;
+  margin-top: 2em;
+}
+
+.site .title a {
+  color: #a00;
+  text-decoration: none;
+}
+
+.site .title a:hover {
+  color: black;
+}
+
+.site .title a.extra {
+  color: #aaa;
+  text-decoration: none;
+  margin-right: 1em;
+}
+
+.site .title a.extra:hover {
+  color: black;
+}
+
+.site .meta {
+  color: #aaa;
+}
+
+.site .footer {
+  font-size: 80%;
+  color: #666;
+  border-top: 4px solid #eee;
+  margin-top: 2em;
+  overflow: hidden;
+}
+
+.site .footer .contact {
+  float: left;
+  margin-right: 1em;
+}
+
+.site .footer .contact a {
+  color: #8085C1;
+}
+
+.site .footer .rss {
+  float: right;
+}
+
+.site .footer .rss img {
+  border: 0;
+}
+
+/*****************************************************************************/
+/*
+/* Posts
+/*
+/*****************************************************************************/
+
+#markdown-toc li {
+    line-height: 1;
+}
+
+.abstract p {
+    width: 80%;
+    margin-left: auto;
+    margin-top: 3em;
+    margin-bottom: 3em;
+}
+
+#post h1 {
+  font-size: 2em;
+  text-transform: uppercase;
+  text-align: center;
+  margin: 2em 0 1.5em 0;
+  line-height: 1.5em;
+}
+#post h2, h3, h4, h5, h6 {
+  font-size: 1em;
+  margin-bottom: 1em;
+  margin-top: 2em;
+  border-bottom: 1px solid #cccccc;
+}
+#post h2:before { content: "# "; }
+#post h3:before { content: "## "; }
+#post h4:before { content: "### "; }
+
+/* standard */
+
+#post pre {
+  border: 1px solid #ddd;
+  background-color: #f5f5f5;
+  padding: 3px 5px 3px;
+  margin: 5px 0 5px 0;
+  font-family: Consolas, "Liberation Mono", Menlo, Courier, monospace;
+  font-size: 12px;
+  line-height: 16.79px;
+  word-wrap: normal;
+}
+
+#post ul,
+#post ol {
+  margin-left: 1.35em;
+}
+
+/* extra space for list elements  */
+#post li {
+  margin: 1em 0;
+}
+#post li li { /* ... but not for nested ones */
+  margin: .5em 0;
+}
+
+#post pre code {
+  border: none;
+}
+
+#post blockquote {
+  border-left: 4px solid #e8e8e8;
+  padding-left: 20px;
+  background-color: #f9f9f9;
+  margin: 30px 0;
+}
+
+.pullquote {
+  font-family: Georgia, serif;
+  font-size: 18px;
+  font-style: italic;
+  margin: 0.25em 0;
+  padding: 0.25em 40px;
+  line-height: 1.45;
+  position: relative;
+  color: #383838;
+}
+
+.pullquote:before {
+  display: block;
+  content: "\201C";
+  font-size: 80px;
+  position: absolute;
+  left: 0;
+  top: -20px;
+  color: #7a7a7a;
+}
+
+
+#post .credits {
+  text-align: right;
+  font-size: 70%;
+  color: #aaa;
+}
+
+/* terminal */
+
+#post pre.terminal {
+  border: 1px solid black;
+  background-color: #333;
+  color: white;
+}
+
+#post pre.terminal code {
+  background-color: #333;
+}
+
+#related {
+  border-top: 4px solid #eee;
+  margin-top: 2em;
+}
+
+#related h2 {
+  margin-bottom: 1em;
+}
+
+#disqus_thread {
+  border-top: 4px solid #eee;
+  margin-top: 2em;
+  padding-top: 1em;
+}
+
+#post img {
+  max-width: 100%;
+}
+
+/**
+ * Figure Plugin: https://github.com/lmullen/jekyll_figure
+ **/
+
+figure img {
+  border: 1px solid #ccc;
+  padding: 5px;
+  border-radius: 5px;
+  max-width : 100%;
+}
+
+figure {
+  text-align: center;
+}
+
+figure figcaption {
+  font-style: italic;
+  text-align: center;
+}
+
+.pdflink {
+  float: right;
+}
+
+/**
+ * GITHUB TABLE STYLES: https://github.com/alampros/Docter/blob/master/ghf_marked.css
+ **/
+
+table
+{
+  border-collapse:collapse;
+  margin:20px auto auto;
+  padding:0;
+}
+
+table tr
+{
+  border-top:1px solid #ccc;
+  background-color:#fff;
+  margin:0;
+  padding:0;
+}
+
+table tr:nth-child(2n)
+{
+  background-color:#f8f8f8;
+}
+table tr th[align="center"], table tr td[align="center"] {
+  text-align:center;
+}
+table tr th, table tr td
+{
+  border:1px solid #ccc;
+  text-align:left;
+  margin:0;
+  padding:6px 13px;
+}
+
+/**
+ * Responsive
+ **/
+@media only screen and (max-width: 50em) {
+  .site {
+    text-align: left;
+    width: 100%;
+    margin: 0;
+  }
+  body {
+    padding: 15px;
+  }
+}
+
+@media only screen and (max-width: 30em) {
+  .site {
+    font-size: 20px;
+    line-height: 2.5em;
+  }
+}
+
+.sticker {
+  color:red;
+  border-style:solid;
+  border-color:red;
+  border-radius:0.2em;
+  margin:50px;
+}
+
+@media only print {
+  .splash {
+    visibility: hidden;
+  }
+}
+
+.hookin {
+  float: left;
+  font-size: 2.5em;
+  font-weight: 700;
+  padding-top: 0.2em;
+  margin-right: 0.4em;
+  color: #a00;
+  color: #EC9F2E;
+  font-family: "franklin-gothic-urw",Verdana,Geneva,sans-serif;
+}
+
+.dropcaps::first-letter {
+  font-size: 4.8em;
+  color: #a00;
+  font-family: Georgia;
+  font-weight: 500;
+  line-height: 0.9em;
+  float: left;
+  margin-right: 0.1em;
+}
+
+</style>
+<style>
+  .highlight  { background: #ffffff; }
+.highlight .c { color: #999988; font-style: italic } /* Comment */
+.highlight .err { color: #a61717; background-color: #e3d2d2 } /* Error */
+.highlight .k { font-weight: bold } /* Keyword */
+.highlight .o { font-weight: bold } /* Operator */
+.highlight .cm { color: #999988; font-style: italic } /* Comment.Multiline */
+.highlight .cp { color: #999999; font-weight: bold } /* Comment.Preproc */
+.highlight .c1 { color: #999988; font-style: italic } /* Comment.Single */
+.highlight .cs { color: #999999; font-weight: bold; font-style: italic } /* Comment.Special */
+.highlight .gd { color: #000000; background-color: #ffdddd } /* Generic.Deleted */
+.highlight .gd .x { color: #000000; background-color: #ffaaaa } /* Generic.Deleted.Specific */
+.highlight .ge { font-style: italic } /* Generic.Emph */
+.highlight .gr { color: #aa0000 } /* Generic.Error */
+.highlight .gh { color: #999999 } /* Generic.Heading */
+.highlight .gi { color: #000000; background-color: #ddffdd } /* Generic.Inserted */
+.highlight .gi .x { color: #000000; background-color: #aaffaa } /* Generic.Inserted.Specific */
+.highlight .go { color: #888888 } /* Generic.Output */
+.highlight .gp { color: #555555 } /* Generic.Prompt */
+.highlight .gs { font-weight: bold } /* Generic.Strong */
+.highlight .gu { color: #aaaaaa } /* Generic.Subheading */
+.highlight .gt { color: #aa0000 } /* Generic.Traceback */
+.highlight .kc { font-weight: bold } /* Keyword.Constant */
+.highlight .kd { font-weight: bold } /* Keyword.Declaration */
+.highlight .kp { font-weight: bold } /* Keyword.Pseudo */
+.highlight .kr { font-weight: bold } /* Keyword.Reserved */
+.highlight .kt { color: #445588; font-weight: bold } /* Keyword.Type */
+.highlight .m { color: #009999 } /* Literal.Number */
+.highlight .s { color: #d14 } /* Literal.String */
+.highlight .na { color: #008080 } /* Name.Attribute */
+.highlight .nb { color: #0086B3 } /* Name.Builtin */
+.highlight .nc { color: #445588; font-weight: bold } /* Name.Class */
+.highlight .no { color: #008080 } /* Name.Constant */
+.highlight .ni { color: #800080 } /* Name.Entity */
+.highlight .ne { color: #990000; font-weight: bold } /* Name.Exception */
+.highlight .nf { color: #990000; font-weight: bold } /* Name.Function */
+.highlight .nn { color: #555555 } /* Name.Namespace */
+.highlight .nt { color: #000080 } /* Name.Tag */
+.highlight .nv { color: #008080 } /* Name.Variable */
+.highlight .ow { font-weight: bold } /* Operator.Word */
+.highlight .w { color: #bbbbbb } /* Text.Whitespace */
+.highlight .mf { color: #009999 } /* Literal.Number.Float */
+.highlight .mh { color: #009999 } /* Literal.Number.Hex */
+.highlight .mi { color: #009999 } /* Literal.Number.Integer */
+.highlight .mo { color: #009999 } /* Literal.Number.Oct */
+.highlight .sb { color: #d14 } /* Literal.String.Backtick */
+.highlight .sc { color: #d14 } /* Literal.String.Char */
+.highlight .sd { color: #d14 } /* Literal.String.Doc */
+.highlight .s2 { color: #d14 } /* Literal.String.Double */
+.highlight .se { color: #d14 } /* Literal.String.Escape */
+.highlight .sh { color: #d14 } /* Literal.String.Heredoc */
+.highlight .si { color: #d14 } /* Literal.String.Interpol */
+.highlight .sx { color: #d14 } /* Literal.String.Other */
+.highlight .sr { color: #009926 } /* Literal.String.Regex */
+.highlight .s1 { color: #d14 } /* Literal.String.Single */
+.highlight .ss { color: #990073 } /* Literal.String.Symbol */
+.highlight .bp { color: #999999 } /* Name.Builtin.Pseudo */
+.highlight .vc { color: #008080 } /* Name.Variable.Class */
+.highlight .vg { color: #008080 } /* Name.Variable.Global */
+.highlight .vi { color: #008080 } /* Name.Variable.Instance */
+.highlight .il { color: #009999 } /* Literal.Number.Integer.Long */
+
+</style>
+</html>

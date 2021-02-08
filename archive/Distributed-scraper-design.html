@@ -2,71 +2,220 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en-us">
 <head>
    <meta http-equiv="content-type" content="text/html; charset=utf-8"/>
-   <title>Heinrich Hartmann - Consulting</title>
+   <title>Distributed Scraper Design</title>
    <meta name="author" content="Heinrich Hartmann"/>
    
    </head>
 <body>
   <div class="site">
     <div class="headline"><a href="/">Heinrich Hartmann</a></div>
+    <div id="post">
+  <h1 id="h1-title"> Distributed Scraper Design</h1>
+  
+  
+  <p class="meta">
+    Written on 2014-01-15
+    
+    
+  </p>
 
-<h1 id="hartmann-it-gmbh">Hartmann IT GmbH</h1>
+  <!-- Splash -->
+  
 
-<p><img src="/images/consulting.png" width="100%" /></p>
+  <!-- Abstract -->
+  
 
-<h2 id="services">Services</h2>
+  
+
+
+  <!-- Post content -->
+  <!-- # Distributed Scraper Design -->
+
+<p>We are am confronted with the following situation:</p>
 
 <ul>
-  <li>
-    <p>Training “Statistics for Engineers”, teaching best practices and common pitfalls in analyzing telemetry data from IT systems</p>
+  <li>A scraper process is downloading files from a remote location. The files are 1-10MB in size, and there are many of them (~500K).</li>
+  <li>Each file shall pre processed by a worker process, which extracts some information (about 1K each) and passes them on to a collector process, which does further processing.</li>
+</ul>
+
+<p>We search an architecture meeting the following requirements:</p>
+
+<ul>
+  <li>Allow multiple workers. The worker task is CPU intensive and I want to be able to exhaust all CPU cores or multiple machines on a cluster.</li>
+  <li>Allow multiple scrapers. Further files may be downloaded from different sources or on different machines.</li>
+  <li>We want to keep a copy of the donwloaded blops at a centralized location. At a later time we might decide to re-ingest all the files at once.</li>
+</ul>
+
+<p><img src="/assets/Distributed-Scraper_files/zrw_overview.png" alt="png" width="100%" /></p>
+
+<p>We will use the zmq messaging library [1] for message passing and queing.</p>
+
+<h2 id="draft-1-all-in-one">Draft 1: All in one</h2>
+
+<p>Scraper and Worker are executed in one process, and comunicate directly with the collector process.</p>
+
+<p><img src="/assets/Distributed-Scraper_files/zrw_all_in_one.png" alt="png" width="50%" align="center" /></p>
+
+<ul>
+  <li><strong>Processes</strong>
+    <ul>
+      <li>ScraperWorkers: Download blop and perform work on it. Dynamic component that can have several instances.</li>
+      <li>Collector: Receives processed data. Static component, that exists only once.</li>
+    </ul>
   </li>
-  <li>
-    <p>Improvement of existing monitoring infrastructure for observability, operability, debugability and accountability needs</p>
-  </li>
-  <li>
-    <p>Setting and managing Service Level Expectations with SRE-methods</p>
+  <li><strong>Channels</strong>
+    <ul>
+      <li><code class="highlighter-rouge">[ScraperWorker|PUSH] -&gt; [PULL|Output Collector]</code> - output as string messages (line by line).</li>
+    </ul>
   </li>
 </ul>
 
-<h2 id="credentials">Credentials</h2>
+<h3 id="discussion">Discussion</h3>
 
 <ul>
-  <li>
-    <p>PhD in Mathematics</p>
+  <li>Pros:
+    <ul>
+      <li>Simple architecture</li>
+      <li>few static pieces (only the Collector)</li>
+    </ul>
   </li>
-  <li>
-    <p>5years+ of consulting experience in the IT monitoring space</p>
-  </li>
-  <li>
-    <p><a href="http://cacm.acm.org/magazines/2016/7/204029-statistics-for-engineers/abstract">CACM Vol. 59 No. 7</a> – Statistics for Engineers - Applying statistical techniques to operations data</p>
-  </li>
-  <li>
-    <p><a href="http://monitorama.com/2016/pdx.html#welcome">Monitorama PDX, 2016</a> – <a href="https://vimeo.com/173610069">A Tale of API Monitoring</a></p>
-  </li>
-  <li>
-    <p>Keynote <a href="https://www.usenix.org/conference/srecon18europe/presentation/schlossnagle">SRECon EMEA 2018</a> – Circonus Design (Failures) Case Study</p>
-  </li>
-  <li>
-    <p>Training <a href="https://github.com/HeinrichHartmann/Statistics-for-Engineers/">Statistics for Engineers</a> at
-SRECon <a href="https://www.usenix.org/conference/srecon19emea/program">19</a>, <a href="https://www.usenix.org/conference/srecon18emea/program">18</a>, <a href="https://www.usenix.org/conference/srecon17europe">17</a>, <a href="https://www.usenix.org/conference/srecon16europe">16</a>, <a href="https://www.usenix.org/conference/srecon15europe">15</a>;
-Velocity <a href="https://conferences.oreilly.com/velocity/devops-web-performance-eu-2015/public/schedule/detail/45241">Amsterdam</a>,
-<a href="https://conferences.oreilly.com/velocity/vl-eu/public/schedule/full/public">London</a>;
-<a href="http://www.statscraft.org.il/event/2016/">StatsCraft</a>;
-<a href="https://devopsdays.org/events/2018-kiel/workshop/heinrich-hartmann/">DevOpsDays Kiel</a></p>
+  <li>Cons
+    <ul>
+      <li>Parallelism of worker threads coupled to download scripts.</li>
+      <li>Monolytic architecture violates principle of separation of concerns [2]</li>
+      <li>Central storage of the downloaded files has to be added.</li>
+    </ul>
   </li>
 </ul>
 
-<h2 id="testimonials">Testimonials</h2>
+<p>The architecture is clearly not optimal, although it might get you a long way. There can be many ScraperWorkers, that give room for parallelism. In my application the download is the bottleneck, so that there is not too much time wasted by waiting for the worker to finish. The network can be easily kept saturated with a few more ScraperWorker tasks.</p>
 
-<p><img src="https://upload.wikimedia.org/wikipedia/en/5/59/Swisscom_logo.svg" class="logo" /></p>
-<p class="quote">"This was an excellent course. Heinrich explained the theoretical foundations with exceptional clarity and great thoroughness, while keeping a clear view on practical applications."</p>
-<p class="author">Thomas Zippo, Lean Agile Leader for Data Analytics</p>
+<p>There is a architecture principle, that is violated here, of spreading out the work in as may intermediate steps as possible. In this way testing and monitoring becomes easy. Process steps can be reused, and paralellism can be added preciesly where the current bottlenecks are. When the implementation is matured several steps of the architecture might be squashed to a single step.</p>
 
-<div style="clear:both" />
+<h2 id="draft-2-pass-everything">Draft 2: Pass everything</h2>
 
-<h2 id="contact">Contact</h2>
+<p>Pass the donwloaded blops as messages to the worker. Add a proxy to allow dynamic allocation of workers and scrapers.</p>
 
-<p>Email: <a href="mailto:consulting@heinrichhartmann.com">consulting@heinrichhartmann.com</a></p>
+<p><img src="/assets/Distributed-Scraper_files/zrw_pass_everything.png" alt="png" width="100%" /></p>
+
+<ul>
+  <li><strong>Processes</strong>
+    <ul>
+      <li>Scrapers. Dynamic component.</li>
+      <li>Proxy. Static component. Collects downloaded files, passes them to workers.</li>
+      <li>Workers. Dynamic component.</li>
+      <li>Collector.</li>
+    </ul>
+  </li>
+  <li><strong>Channels</strong>
+    <ul>
+      <li><code class="highlighter-rouge">[Scraper|PUSH] -&gt; [PULL|Proxy]</code> - pass downlaoded blop as binary message.</li>
+      <li><code class="highlighter-rouge">[Proxy|PUSH] -&gt; [PULL|Worker]</code> - pass downlaoded blop as binary message.</li>
+      <li><code class="highlighter-rouge">[Worker|PUSH] -&gt; [PULL|Collector]</code> - output as string messages.</li>
+    </ul>
+  </li>
+</ul>
+
+<h3 id="discussion-1">Discussion</h3>
+
+<ul>
+  <li>Pros:
+    <ul>
+      <li>Simple design</li>
+      <li>Separation of Concerns</li>
+    </ul>
+  </li>
+  <li>Cons:
+    <ul>
+      <li>Downloaded blops are transfered through network twice.</li>
+      <li>Changing the architecture by adding routing is expensive.</li>
+      <li>Central storage of the downloaded files has to be added.</li>
+      <li>Reingest of the data requires re-download of files</li>
+    </ul>
+  </li>
+</ul>
+
+<h1 id="draft-3-central-storage">Draft 3: Central storage</h1>
+
+<p>Scraper store downloaded blops on a centralized storage node. The central storage could be a file system location or a database. The passed messages contain only paths to files on the storage node.</p>
+
+<p>The storage node could be mounted at the boxes running the scrapers and the workers, so that the details of the storage solutions are abstracted from the components.</p>
+
+<p><img src="/assets/Distributed-Scraper_files/zrw_central_storage.png" alt="png" width="100%" /></p>
+
+<ul>
+  <li>Pros:
+    <ul>
+      <li>Small message size. Easy routing. Little overhead for proxy.</li>
+      <li>Centralized storage built in.</li>
+    </ul>
+  </li>
+  <li>Cons:
+    <ul>
+      <li>Storage node is bottleneck and single point of failiure</li>
+    </ul>
+  </li>
+</ul>
+
+<h2 id="draft-3b-distributed-storage">Draft 3b: Distributed storage</h2>
+
+<p>Scraper store downloaded blops to a distributed file system. The files will be cut into containers and distributed around all available storage nodes. The storage nodes can be different from the nodes running the scrapers/workers but do not have to be.</p>
+
+<p><img src="/assets/Distributed-Scraper_files/zrw_distributed_storage.png" alt="png" width="100%" /></p>
+
+<ul>
+  <li>Pros:
+    <ul>
+      <li>Relieable storage with high write throughput.</li>
+    </ul>
+  </li>
+  <li>Cons:
+    <ul>
+      <li>Additional network overhead for synchronization of files.</li>
+    </ul>
+  </li>
+</ul>
+
+<p>There is additional juice in this option as it allows to bring the computation to the storage. It should be possible to run the worker tasks processing the downloaded files on the node that runs the scraper. This would allow the scraper box to use its computing power for something sensible while waiting for the network.</p>
+
+<p>Since HDFS [3] can be mounted to a folder, this solution can be interchanged with draft 3.</p>
+
+<h2 id="draft-4-scraper-storage">Draft 4: Scraper storage</h2>
+
+<p>Scrapers store downloaded blops locally. The network locations (<code class="highlighter-rouge">$HOST:$PATH</code>) of the downloaded files are passed as messages. The worker thread reads the contents of the file directly from the scraper’s file system (e.g. via <code class="highlighter-rouge">ssh</code>)</p>
+
+<p><img src="/assets/Distributed-Scraper_files/zrw_scraper_storage.png" alt="png" width="100%" /></p>
+
+<ul>
+  <li>Pros:
+    <ul>
+      <li>Minimizes network overhead. No file transfer unless absolutely necessary.</li>
+    </ul>
+  </li>
+  <li>Cons:
+    <ul>
+      <li>Makes scrapers inflexible. Need to be up and running while processing.</li>
+      <li>Bottleneck: scraper storage.</li>
+    </ul>
+  </li>
+</ul>
+
+<h2 id="final-discussion">Final Discussion</h2>
+
+<p>Currently I like the Draft 3 option best, since it is reasonably simple, while allowing parallelism and compying to the separation of concerns principle. It allows to resume work when the service is stopped or crashes rather easily, since the downloaded files are available on a central location. When the storage becomes a problem it is possible to upgrade to Draft 3b, which uses a distributed file system.</p>
+
+<h1 id="references">References</h1>
+<ol>
+  <li>http://zeromq.org</li>
+  <li>http://en.wikipedia.org/wiki/Separation_of_concerns</li>
+  <li>http://en.wikipedia.org/wiki/Apache_Hadoop#Hadoop_distributed_file_system</li>
+</ol>
+
+
+  <!-- Include Mathjax if needed -->
+  
+
+</div>
 
   </div>
 </body>
@@ -557,32 +706,5 @@ table tr th, table tr td
 .highlight .vi { color: #008080 } /* Name.Variable.Instance */
 .highlight .il { color: #009999 } /* Literal.Number.Integer.Long */
 
-</style>
-    <style>
-h1 {
-    font-size: 2em;
-    text-transform: none;
-    text-align: center;
-    margin: 2em 0 1.5em 0;
-    line-height: 1.5em;
-}
-.site {
-    text-align: left;
-    }
-
-.logo {
-  float:right;
-  margin-left: 20px;
-  width:80px;
-  height 80px;
-}
-.author {
-  float:right;
-  margin-right: 20px;
-  margin-top: 0px;
-}
-.quote {
-  margin: 0px;
-}
 </style>
 </html>
