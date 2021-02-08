@@ -16,6 +16,7 @@
 		{{ printf `<link rel="%s" type="%s" href="%s" title="%s">` .Rel .MediaType.Type .RelPermalink $.Site.Title | safeHTML }}
 	{{- end }}
   {{ with .Params.canonical }} <link rel="canonical" href="{{ .url }}"/>   {{ end }}
+  <link rel="icon" type="image/png" href="/favicon.png"> 
 </head>
 <body>
 	{{ partial "header" . }}
