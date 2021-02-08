@@ -1,0 +1,725 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en-us">
+<head>
+   <meta http-equiv="content-type" content="text/html; charset=utf-8"/>
+   <title>Latency SLOs done right</title>
+   <meta name="author" content="Heinrich Hartmann"/>
+   <link rel="canonical" href="https://www.circonus.com/2018/08/latency-slos-done-right/"/>
+   </head>
+<body>
+  <div class="site">
+    <div class="headline"><a href="/">Heinrich Hartmann</a></div>
+    <div id="post">
+  <h1 id="h1-title"> Latency SLOs done right</h1>
+  
+  
+  <p class="meta">
+    Written on 2018-09-02
+     in Stemwede, Germany 
+     for the <a href="https://www.circonus.com/2018/08/latency-slos-done-right/">Circonus blog</a>. 
+  </p>
+
+  <!-- Splash -->
+  
+
+  <!-- Abstract -->
+  
+
+  
+
+
+  <!-- Post content -->
+  <p>In their excellent SLO-workshop at SRECon2018 (<a href="https://www.usenix.org/conference/srecon18europe/presentation/fong-jones-0">program</a>) Liz Fong-Jones, Kristina Bennett and Stephen Thorne (Google) presented some best practice examples for Latency SLI/SLOs. At Circonus we care deeply about measuring latency and SRE techniques such as SLI/SLOs. As we will explain here, Latency SLOs are particularly delicate to implement and benefit from having Histogram-data available to  understand distributions and adjust SLO targets.</p>
+
+<h2 id="latency-sli">Latency SLI</h2>
+
+<p><img src="/images/2018-09-02-Latency-SLOs-done-right_5_0.png" alt="png" /></p>
+
+<h2 id="latency-slo">Latency SLO</h2>
+
+<p><img src="/images/2018-09-02-Latency-SLOs-done-right_7_0.png" alt="png" /></p>
+
+<h2 id="latency-metrics">Latency Metrics</h2>
+
+<p>These days latency is very typically measured with percentile metrics like these, which were presented for a similar use case:</p>
+
+<p><img src="/images/2018-09-02-Latency-SLOs-done-right_9_0.png" alt="png" /></p>
+
+<p>Given this data, what can we say about the SLO?</p>
+
+<blockquote>
+  <p>What is the p90 computed over the full 28days?</p>
+</blockquote>
+
+<p>It’s very tempting to take the average of the p90 metric which is displayed in the graph, which would be just below the 500ms mark.</p>
+
+<p>It’s important to note, and it was correclty pointed out during the session, that this is not generally true.
+You have no mathematical way determine the 28day-percentile from the series of 1h(?)-percentiles that are shown on the above graphs (<a href="https://www.reddit.com/r/devops/comments/941n2k/tsdbs_at_scale_part_one/e3po8d3/">reddit</a>, <a href="www.circonus.com/problem-math/">blog</a>, <a href="https://github.com/HeinrichHartmann/Statistics-for-Engineers/blob/master/2018-08-29-SRECon-Duesseldorf/3%20Data%20Aggregation%20Methods.ipynb">math</a>).
+You need to look at different metrics if you want to implement a latency SLO. 
+In this post we will discuss three different methods how to do this correctly.</p>
+
+<h2 id="another-example">Another Example</h2>
+
+<p>In the example above the error of averaging percentile might actually not be that dramatic.
+The system seems to be very well-behaved with a very high constant load. 
+In this situation like this the average p90/1h is typically close to the total p90/28days.</p>
+
+<p>So let’s look at another API, which is less constantly loaded system.
+This API does barely serve any load between 2:00am and 4:00am:</p>
+
+<p><img src="/images/2018-09-02-Latency-SLOs-done-right_13_0.png" alt="png" /></p>
+
+<p>What’s the true p90 over the 6h drawn on the graph? Is it above or below 30ms?</p>
+
+<p>The average p90/1M (36.28ms) looks far less appealing then before.</p>
+
+<h2 id="computing-latency-slos">Computing Latency SLOs</h2>
+
+<p>So how to do better? There are three ways to go about this:</p>
+
+<p>(1) compute the SLO from stored raw data (logs)</p>
+
+<p>(2) count the number of bad requests in a separate metric</p>
+
+<p>(3) use histograms to store latency distribution.</p>
+
+<h3 id="method-1-using-rawlog-data">Method 1: Using Raw/Log data</h3>
+
+<p>Storing access logs with latency data is clearly possible and gives you accurate results.
+The drawback with this approach is that you must keep your logs over long time periods (28days) which can be very (very) expensive.</p>
+
+<h3 id="method-2-counting-bad-requests">Method 2: Counting bad requests</h3>
+
+<p>For the first case you will need to instrument you application to count the number of requests that violated your threshold.
+The resulting metrics will look like this:</p>
+
+<p><img src="/images/2018-09-02-Latency-SLOs-done-right_18_0.png" alt="png" /></p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Percent good = 57862/60124 = 96.238%
+</code></pre></div></div>
+
+<p>Using this metrics we see that 96% of our requests over the past 6h were faster than 30ms. 
+Our SLO stated, that 90% of the requests should be good.
+So we met that objective.</p>
+
+<p>The drawbacks of this appraoch is that you have to chosse the latency threshold upfront.
+There is no way to calculate the percentage of requests that were faster than say 200ms form the recorded data.</p>
+
+<p>If your SLO changes, you will need to change the executable or the service configuation to count requests above a different threshold.</p>
+
+<h3 id="method-3-storing-histograms">Method 3: Storing Histograms</h3>
+
+<p>The third practical option you have for computing accurate SLOs is storing your request latency data as histograms.
+The advantage of storing latency data as histograms are that:</p>
+
+<p>(1) Histograms can be freely aggregated across time.</p>
+
+<p>(2) Histograms can be used to derive approximations of arbitrary percentiles.</p>
+
+<p>For (1) to be true, it’s critical, that your histograms have common bin choices.
+It’s usually a good idea to mandate the bin boundaries for your whole organization.
+Otherwise you will not be able to aggregate histograms from different services.</p>
+
+<p>For (2) it’s critical that you have enough bins in the latency range that is relevant for your percentile.
+Sparsely encoded log linear histograms allow you to cover a large floating point range (E.g. <code class="highlighter-rouge">10^-127..10^128</code>) with a fixed relative precision (E.g. 5%).
+In this way you can guarantee 5% accuracy on all percentiles, no matter how the data is distributed.</p>
+
+<p>Two popular implementations of log linear histograms are:</p>
+
+<ul>
+  <li>HDR-Histogram - https://HDrhistogram.org</li>
+  <li>Circllhist - https://github.com/circonus-labs/libcircllhist/</li>
+</ul>
+
+<p><a href="https://circonus.com">Circonus</a> (where I work) comes with native support for Circllhist and will be used for this example.</p>
+
+<p>Histogram metrics store latency information per minute, and are commonly visualized as heatmap:</p>
+
+<p><img src="/images/2018-09-02-Latency-SLOs-done-right_25_0.png" alt="png" /></p>
+
+<p>Merging those 360x1M-histograms shown above into a single 6h-Histogram, we arrive at the following graph:</p>
+
+<p><img src="/images/2018-09-02-Latency-SLOs-done-right_27_0.png" alt="png" /></p>
+
+<p>This is the true latency distribution over the full SLO reporting period of 6h (in this case).</p>
+
+<p>At the time of this writing, there is no nice UI option to overlay percentiles in the above histogram graph.
+As we will see, you can perform the SLO calculation with CAQL or Python.</p>
+
+<h3 id="slo-reporting-via-caql">SLO Reporting via CAQL</h3>
+
+<p>We can use the CAQL functions <code class="highlighter-rouge">histogram:rolling(6h)</code> and <code class="highlighter-rouge">histogram:percentile()</code> to aggregate histograms over the last 6h and compute precentiles over the aggregated histograms. 
+The SLO value we are looking for will be the very last value displayed on the graph.</p>
+
+<p><img src="/images/2018-09-02-Latency-SLOs-done-right_31_0.png" alt="png" /></p>
+
+<h3 id="slo-reporting-using-python">SLO Reporting using Python</h3>
+
+<p>Using the Python API the calculation could look as follows:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c"># 0. Setup Python</span>
+<span class="o">%</span><span class="n">matplotlib</span> <span class="n">inline</span>
+<span class="kn">from</span> <span class="nn">circonusapi</span> <span class="kn">import</span> <span class="n">circonusdata</span>
+<span class="kn">from</span> <span class="nn">circllhist</span> <span class="kn">import</span> <span class="n">Circllhist</span>
+<span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">expanduser</span><span class="p">(</span><span class="s">"~/host/home/.circonusrc.json"</span><span class="p">),</span><span class="s">"r"</span><span class="p">)</span> <span class="k">as</span> <span class="n">fh</span><span class="p">:</span>
+    <span class="n">config</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">fh</span><span class="p">)</span>
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c"># 1. Fetch Histogram Data</span>
+<span class="n">t</span> <span class="o">=</span> <span class="mi">1528171020</span> <span class="c"># exact start time of the graph </span>
+<span class="n">N</span> <span class="o">=</span> <span class="mi">364</span>        <span class="c"># exact number of minutes on the above graph</span>
+<span class="n">circ</span> <span class="o">=</span> <span class="n">circonusdata</span><span class="o">.</span><span class="n">CirconusData</span><span class="p">(</span><span class="n">config</span><span class="p">[</span><span class="s">"demo"</span><span class="p">])</span>
+<span class="n">data</span> <span class="o">=</span> <span class="n">circ</span><span class="o">.</span><span class="n">caql</span><span class="p">(</span><span class="s">'search:metric:histogram("api`GET`/getState")'</span><span class="p">,</span> <span class="n">t</span><span class="p">,</span> <span class="mi">60</span><span class="p">,</span> <span class="n">N</span><span class="p">)</span>
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c"># 2. Merge Histograms</span>
+<span class="n">H</span><span class="o">=</span><span class="n">Circllhist</span><span class="p">()</span>
+<span class="k">for</span> <span class="n">h</span> <span class="ow">in</span> <span class="n">data</span><span class="p">[</span><span class="s">'output[0]'</span><span class="p">]:</span> <span class="n">H</span><span class="o">.</span><span class="n">merge</span><span class="p">(</span><span class="n">h</span><span class="p">)</span>
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c"># Let's check the fetched data is consistent with Histogram in the UI</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">20</span><span class="p">,</span><span class="mi">5</span><span class="p">))</span>
+<span class="n">circllhist_plot</span><span class="p">(</span><span class="n">H</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlim</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">100</span><span class="p">)</span>
+</code></pre></div></div>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>(0, 100)
+</code></pre></div></div>
+
+<p><img src="/images/2018-09-02-Latency-SLOs-done-right_37_1.png" alt="png" /></p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c"># 3. Calculate Aggregated Precentiles:</span>
+<span class="n">P</span> <span class="o">=</span> <span class="p">[</span><span class="mi">50</span><span class="p">,</span> <span class="mi">90</span><span class="p">,</span> <span class="mi">95</span><span class="p">,</span> <span class="mi">99</span><span class="p">,</span> <span class="mf">99.9</span><span class="p">]</span> <span class="c"># arbitrary percentiles</span>
+<span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="n">P</span><span class="p">:</span> <span class="k">print</span><span class="p">(</span><span class="s">"{:&gt;8}-latency percentile over 6h: {:&gt;8.3f}ms"</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">p</span><span class="p">,</span> <span class="n">H</span><span class="o">.</span><span class="n">quantile</span><span class="p">(</span><span class="n">p</span><span class="o">/</span><span class="mi">100</span><span class="p">)))</span>
+</code></pre></div></div>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>      50-latency percentile over 6h:   13.507ms
+      90-latency percentile over 6h:   21.065ms
+      95-latency percentile over 6h:   27.796ms
+      99-latency percentile over 6h:   56.058ms
+    99.9-latency percentile over 6h:  918.760ms
+</code></pre></div></div>
+
+<p>In particular we see that the true p90 is around 21ms, which is far away from the average p90 of 36.28 we computed earlier.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c"># 4. Calculate Aggregated Counts:</span>
+<span class="n">Y</span> <span class="o">=</span> <span class="p">[</span><span class="mi">10</span><span class="p">,</span> <span class="mi">30</span><span class="p">,</span> <span class="mi">50</span><span class="p">,</span> <span class="mi">100</span><span class="p">,</span> <span class="mi">200</span><span class="p">]</span> <span class="c"># Arbitrary thresholds</span>
+<span class="k">for</span> <span class="n">y</span> <span class="ow">in</span> <span class="n">Y</span><span class="p">:</span> <span class="k">print</span><span class="p">(</span><span class="s">"{:&gt;10.3f} percent faster than {}ms"</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">H</span><span class="o">.</span><span class="n">count_below</span><span class="p">(</span><span class="n">y</span><span class="p">)</span><span class="o">/</span><span class="n">H</span><span class="o">.</span><span class="n">count</span><span class="p">()</span><span class="o">*</span><span class="mi">100</span><span class="p">,</span><span class="n">y</span><span class="p">))</span>
+</code></pre></div></div>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>    18.465 percent faster than 10ms
+    96.238 percent faster than 30ms
+    98.859 percent faster than 50ms
+    99.484 percent faster than 100ms
+    99.649 percent faster than 200ms
+</code></pre></div></div>
+
+<p>In particular we replicate the “96.238% below 30ms” result, that we calculated using the counter metrics before.</p>
+
+<h2 id="conclusion">Conclusion</h2>
+
+<p>It’s imporant to understand that percentile metrics do not allow you to implement accurate Service Level Objectives that are forumlated against hours or weeks.
+Aggregating 1M-percentiles seems tempting but can produce materially wrong results, in particular if your load is highly volatile.</p>
+
+<p>Practical ways to calculate correct SLO percentiles are counters and histograms.
+Histograms give you additional flexibility to choose the latency threshold after the fact.
+This comes in particularly handy when you are still evaluating your service and are not ready to commit yourself to a latency threshold just yet.</p>
+
+
+
+  <!-- Include Mathjax if needed -->
+  
+
+</div>
+
+  </div>
+</body>
+<style>
+  ody/*****************************************************************************/
+/*
+/* Common
+/*
+/*****************************************************************************/
+
+/* Global Reset */
+
+* {
+  margin: 0;
+  padding: 0;
+}
+
+html, body {
+  height: 100%;
+}
+
+body {
+  font-family: Helvetica, arial, sans-serif;
+  font-size: 14px;
+  line-height: 1.6;
+  background-color: white;
+  padding: 10px 30px 10px 30px;
+}
+
+h1 {
+  font-size: 1em;
+  text-transform: uppercase;
+  text-alig: left;
+  font-size: 1em;
+  margin-bottom: 1em;
+  margin-top: 2em;
+}
+h2 {
+  font-size: 1em;
+  margin-bottom: 1em;
+  margin-top: 2em;
+}
+p {
+  margin: 1em 0;
+}
+
+a {
+  color: #00a;
+}
+
+a:hover {
+  color: black;
+}
+
+a:visited {
+  color: #a0a;
+}
+
+table {
+  font-size: inherit;
+  font: 100%;
+}
+
+pre {
+  text-align: left;
+  overflow-y: auto;
+}
+
+/*****************************************************************************/
+/*
+/* Home
+/*
+/*****************************************************************************/
+
+ul.posts {
+  list-style-type: none;
+  margin-bottom: 2em;
+}
+
+ul.posts li {
+  line-height: 1.75em;
+}
+
+ul.posts span {
+  color: #aaa;
+  font-family: Monaco, "Courier New", monospace;
+  font-size: 75%;
+}
+
+
+.date {
+  color: #aaa;
+  font-family: Monaco, Courier New, monospace;
+  font-size: 75%;
+  font-weight: normal;
+  float:right;
+}
+
+.quo {
+  position:relative; top:-1px;
+}
+
+#banner {
+  margin-bottom: 1em;
+}
+
+/*****************************************************************************/
+/*
+/* Site
+/*
+/*****************************************************************************/
+
+.site {
+  text-align: justify;
+  width: 48em;
+  margin: 3em auto 2em auto;
+  line-height: 1.5em;
+  margin-bottom: 200px;
+}
+
+.site .headline a {
+    color: #a00;
+    font-weight: bold;
+    margin-bottom: 2em;
+    margin-top: 2em;
+    text-decoration: none;
+}
+
+.title {
+  color: #a00;
+  font-weight: bold;
+  margin-bottom: 2em;
+  margin-top: 2em;
+}
+
+.site .title a {
+  color: #a00;
+  text-decoration: none;
+}
+
+.site .title a:hover {
+  color: black;
+}
+
+.site .title a.extra {
+  color: #aaa;
+  text-decoration: none;
+  margin-right: 1em;
+}
+
+.site .title a.extra:hover {
+  color: black;
+}
+
+.site .meta {
+  color: #aaa;
+}
+
+.site .footer {
+  font-size: 80%;
+  color: #666;
+  border-top: 4px solid #eee;
+  margin-top: 2em;
+  overflow: hidden;
+}
+
+.site .footer .contact {
+  float: left;
+  margin-right: 1em;
+}
+
+.site .footer .contact a {
+  color: #8085C1;
+}
+
+.site .footer .rss {
+  float: right;
+}
+
+.site .footer .rss img {
+  border: 0;
+}
+
+/*****************************************************************************/
+/*
+/* Posts
+/*
+/*****************************************************************************/
+
+#markdown-toc li {
+    line-height: 1;
+}
+
+.abstract p {
+    width: 80%;
+    margin-left: auto;
+    margin-top: 3em;
+    margin-bottom: 3em;
+}
+
+#post h1 {
+  font-size: 2em;
+  text-transform: uppercase;
+  text-align: center;
+  margin: 2em 0 1.5em 0;
+  line-height: 1.5em;
+}
+#post h2, h3, h4, h5, h6 {
+  font-size: 1em;
+  margin-bottom: 1em;
+  margin-top: 2em;
+  border-bottom: 1px solid #cccccc;
+}
+#post h2:before { content: "# "; }
+#post h3:before { content: "## "; }
+#post h4:before { content: "### "; }
+
+/* standard */
+
+#post pre {
+  border: 1px solid #ddd;
+  background-color: #f5f5f5;
+  padding: 3px 5px 3px;
+  margin: 5px 0 5px 0;
+  font-family: Consolas, "Liberation Mono", Menlo, Courier, monospace;
+  font-size: 12px;
+  line-height: 16.79px;
+  word-wrap: normal;
+}
+
+#post ul,
+#post ol {
+  margin-left: 1.35em;
+}
+
+/* extra space for list elements  */
+#post li {
+  margin: 1em 0;
+}
+#post li li { /* ... but not for nested ones */
+  margin: .5em 0;
+}
+
+#post pre code {
+  border: none;
+}
+
+#post blockquote {
+  border-left: 4px solid #e8e8e8;
+  padding-left: 20px;
+  background-color: #f9f9f9;
+  margin: 30px 0;
+}
+
+.pullquote {
+  font-family: Georgia, serif;
+  font-size: 18px;
+  font-style: italic;
+  margin: 0.25em 0;
+  padding: 0.25em 40px;
+  line-height: 1.45;
+  position: relative;
+  color: #383838;
+}
+
+.pullquote:before {
+  display: block;
+  content: "\201C";
+  font-size: 80px;
+  position: absolute;
+  left: 0;
+  top: -20px;
+  color: #7a7a7a;
+}
+
+
+#post .credits {
+  text-align: right;
+  font-size: 70%;
+  color: #aaa;
+}
+
+/* terminal */
+
+#post pre.terminal {
+  border: 1px solid black;
+  background-color: #333;
+  color: white;
+}
+
+#post pre.terminal code {
+  background-color: #333;
+}
+
+#related {
+  border-top: 4px solid #eee;
+  margin-top: 2em;
+}
+
+#related h2 {
+  margin-bottom: 1em;
+}
+
+#disqus_thread {
+  border-top: 4px solid #eee;
+  margin-top: 2em;
+  padding-top: 1em;
+}
+
+#post img {
+  max-width: 100%;
+}
+
+/**
+ * Figure Plugin: https://github.com/lmullen/jekyll_figure
+ **/
+
+figure img {
+  border: 1px solid #ccc;
+  padding: 5px;
+  border-radius: 5px;
+  max-width : 100%;
+}
+
+figure {
+  text-align: center;
+}
+
+figure figcaption {
+  font-style: italic;
+  text-align: center;
+}
+
+.pdflink {
+  float: right;
+}
+
+/**
+ * GITHUB TABLE STYLES: https://github.com/alampros/Docter/blob/master/ghf_marked.css
+ **/
+
+table
+{
+  border-collapse:collapse;
+  margin:20px auto auto;
+  padding:0;
+}
+
+table tr
+{
+  border-top:1px solid #ccc;
+  background-color:#fff;
+  margin:0;
+  padding:0;
+}
+
+table tr:nth-child(2n)
+{
+  background-color:#f8f8f8;
+}
+table tr th[align="center"], table tr td[align="center"] {
+  text-align:center;
+}
+table tr th, table tr td
+{
+  border:1px solid #ccc;
+  text-align:left;
+  margin:0;
+  padding:6px 13px;
+}
+
+/**
+ * Responsive
+ **/
+@media only screen and (max-width: 50em) {
+  .site {
+    text-align: left;
+    width: 100%;
+    margin: 0;
+  }
+  body {
+    padding: 15px;
+  }
+}
+
+@media only screen and (max-width: 30em) {
+  .site {
+    font-size: 20px;
+    line-height: 2.5em;
+  }
+}
+
+.sticker {
+  color:red;
+  border-style:solid;
+  border-color:red;
+  border-radius:0.2em;
+  margin:50px;
+}
+
+@media only print {
+  .splash {
+    visibility: hidden;
+  }
+}
+
+.hookin {
+  float: left;
+  font-size: 2.5em;
+  font-weight: 700;
+  padding-top: 0.2em;
+  margin-right: 0.4em;
+  color: #a00;
+  color: #EC9F2E;
+  font-family: "franklin-gothic-urw",Verdana,Geneva,sans-serif;
+}
+
+.dropcaps::first-letter {
+  font-size: 4.8em;
+  color: #a00;
+  font-family: Georgia;
+  font-weight: 500;
+  line-height: 0.9em;
+  float: left;
+  margin-right: 0.1em;
+}
+
+</style>
+<style>
+  .highlight  { background: #ffffff; }
+.highlight .c { color: #999988; font-style: italic } /* Comment */
+.highlight .err { color: #a61717; background-color: #e3d2d2 } /* Error */
+.highlight .k { font-weight: bold } /* Keyword */
+.highlight .o { font-weight: bold } /* Operator */
+.highlight .cm { color: #999988; font-style: italic } /* Comment.Multiline */
+.highlight .cp { color: #999999; font-weight: bold } /* Comment.Preproc */
+.highlight .c1 { color: #999988; font-style: italic } /* Comment.Single */
+.highlight .cs { color: #999999; font-weight: bold; font-style: italic } /* Comment.Special */
+.highlight .gd { color: #000000; background-color: #ffdddd } /* Generic.Deleted */
+.highlight .gd .x { color: #000000; background-color: #ffaaaa } /* Generic.Deleted.Specific */
+.highlight .ge { font-style: italic } /* Generic.Emph */
+.highlight .gr { color: #aa0000 } /* Generic.Error */
+.highlight .gh { color: #999999 } /* Generic.Heading */
+.highlight .gi { color: #000000; background-color: #ddffdd } /* Generic.Inserted */
+.highlight .gi .x { color: #000000; background-color: #aaffaa } /* Generic.Inserted.Specific */
+.highlight .go { color: #888888 } /* Generic.Output */
+.highlight .gp { color: #555555 } /* Generic.Prompt */
+.highlight .gs { font-weight: bold } /* Generic.Strong */
+.highlight .gu { color: #aaaaaa } /* Generic.Subheading */
+.highlight .gt { color: #aa0000 } /* Generic.Traceback */
+.highlight .kc { font-weight: bold } /* Keyword.Constant */
+.highlight .kd { font-weight: bold } /* Keyword.Declaration */
+.highlight .kp { font-weight: bold } /* Keyword.Pseudo */
+.highlight .kr { font-weight: bold } /* Keyword.Reserved */
+.highlight .kt { color: #445588; font-weight: bold } /* Keyword.Type */
+.highlight .m { color: #009999 } /* Literal.Number */
+.highlight .s { color: #d14 } /* Literal.String */
+.highlight .na { color: #008080 } /* Name.Attribute */
+.highlight .nb { color: #0086B3 } /* Name.Builtin */
+.highlight .nc { color: #445588; font-weight: bold } /* Name.Class */
+.highlight .no { color: #008080 } /* Name.Constant */
+.highlight .ni { color: #800080 } /* Name.Entity */
+.highlight .ne { color: #990000; font-weight: bold } /* Name.Exception */
+.highlight .nf { color: #990000; font-weight: bold } /* Name.Function */
+.highlight .nn { color: #555555 } /* Name.Namespace */
+.highlight .nt { color: #000080 } /* Name.Tag */
+.highlight .nv { color: #008080 } /* Name.Variable */
+.highlight .ow { font-weight: bold } /* Operator.Word */
+.highlight .w { color: #bbbbbb } /* Text.Whitespace */
+.highlight .mf { color: #009999 } /* Literal.Number.Float */
+.highlight .mh { color: #009999 } /* Literal.Number.Hex */
+.highlight .mi { color: #009999 } /* Literal.Number.Integer */
+.highlight .mo { color: #009999 } /* Literal.Number.Oct */
+.highlight .sb { color: #d14 } /* Literal.String.Backtick */
+.highlight .sc { color: #d14 } /* Literal.String.Char */
+.highlight .sd { color: #d14 } /* Literal.String.Doc */
+.highlight .s2 { color: #d14 } /* Literal.String.Double */
+.highlight .se { color: #d14 } /* Literal.String.Escape */
+.highlight .sh { color: #d14 } /* Literal.String.Heredoc */
+.highlight .si { color: #d14 } /* Literal.String.Interpol */
+.highlight .sx { color: #d14 } /* Literal.String.Other */
+.highlight .sr { color: #009926 } /* Literal.String.Regex */
+.highlight .s1 { color: #d14 } /* Literal.String.Single */
+.highlight .ss { color: #990073 } /* Literal.String.Symbol */
+.highlight .bp { color: #999999 } /* Name.Builtin.Pseudo */
+.highlight .vc { color: #008080 } /* Name.Variable.Class */
+.highlight .vg { color: #008080 } /* Name.Variable.Global */
+.highlight .vi { color: #008080 } /* Name.Variable.Instance */
+.highlight .il { color: #009999 } /* Literal.Number.Integer.Long */
+
+</style>
+</html>

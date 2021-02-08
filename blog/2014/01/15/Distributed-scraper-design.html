@@ -1,0 +1,710 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en-us">
+<head>
+   <meta http-equiv="content-type" content="text/html; charset=utf-8"/>
+   <title>Distributed Scraper Design</title>
+   <meta name="author" content="Heinrich Hartmann"/>
+   
+   </head>
+<body>
+  <div class="site">
+    <div class="headline"><a href="/">Heinrich Hartmann</a></div>
+    <div id="post">
+  <h1 id="h1-title"> Distributed Scraper Design</h1>
+  
+  
+  <p class="meta">
+    Written on 2014-01-15
+    
+    
+  </p>
+
+  <!-- Splash -->
+  
+
+  <!-- Abstract -->
+  
+
+  
+
+
+  <!-- Post content -->
+  <!-- # Distributed Scraper Design -->
+
+<p>We are am confronted with the following situation:</p>
+
+<ul>
+  <li>A scraper process is downloading files from a remote location. The files are 1-10MB in size, and there are many of them (~500K).</li>
+  <li>Each file shall pre processed by a worker process, which extracts some information (about 1K each) and passes them on to a collector process, which does further processing.</li>
+</ul>
+
+<p>We search an architecture meeting the following requirements:</p>
+
+<ul>
+  <li>Allow multiple workers. The worker task is CPU intensive and I want to be able to exhaust all CPU cores or multiple machines on a cluster.</li>
+  <li>Allow multiple scrapers. Further files may be downloaded from different sources or on different machines.</li>
+  <li>We want to keep a copy of the donwloaded blops at a centralized location. At a later time we might decide to re-ingest all the files at once.</li>
+</ul>
+
+<p><img src="/assets/Distributed-Scraper_files/zrw_overview.png" alt="png" width="100%" /></p>
+
+<p>We will use the zmq messaging library [1] for message passing and queing.</p>
+
+<h2 id="draft-1-all-in-one">Draft 1: All in one</h2>
+
+<p>Scraper and Worker are executed in one process, and comunicate directly with the collector process.</p>
+
+<p><img src="/assets/Distributed-Scraper_files/zrw_all_in_one.png" alt="png" width="50%" align="center" /></p>
+
+<ul>
+  <li><strong>Processes</strong>
+    <ul>
+      <li>ScraperWorkers: Download blop and perform work on it. Dynamic component that can have several instances.</li>
+      <li>Collector: Receives processed data. Static component, that exists only once.</li>
+    </ul>
+  </li>
+  <li><strong>Channels</strong>
+    <ul>
+      <li><code class="highlighter-rouge">[ScraperWorker|PUSH] -&gt; [PULL|Output Collector]</code> - output as string messages (line by line).</li>
+    </ul>
+  </li>
+</ul>
+
+<h3 id="discussion">Discussion</h3>
+
+<ul>
+  <li>Pros:
+    <ul>
+      <li>Simple architecture</li>
+      <li>few static pieces (only the Collector)</li>
+    </ul>
+  </li>
+  <li>Cons
+    <ul>
+      <li>Parallelism of worker threads coupled to download scripts.</li>
+      <li>Monolytic architecture violates principle of separation of concerns [2]</li>
+      <li>Central storage of the downloaded files has to be added.</li>
+    </ul>
+  </li>
+</ul>
+
+<p>The architecture is clearly not optimal, although it might get you a long way. There can be many ScraperWorkers, that give room for parallelism. In my application the download is the bottleneck, so that there is not too much time wasted by waiting for the worker to finish. The network can be easily kept saturated with a few more ScraperWorker tasks.</p>
+
+<p>There is a architecture principle, that is violated here, of spreading out the work in as may intermediate steps as possible. In this way testing and monitoring becomes easy. Process steps can be reused, and paralellism can be added preciesly where the current bottlenecks are. When the implementation is matured several steps of the architecture might be squashed to a single step.</p>
+
+<h2 id="draft-2-pass-everything">Draft 2: Pass everything</h2>
+
+<p>Pass the donwloaded blops as messages to the worker. Add a proxy to allow dynamic allocation of workers and scrapers.</p>
+
+<p><img src="/assets/Distributed-Scraper_files/zrw_pass_everything.png" alt="png" width="100%" /></p>
+
+<ul>
+  <li><strong>Processes</strong>
+    <ul>
+      <li>Scrapers. Dynamic component.</li>
+      <li>Proxy. Static component. Collects downloaded files, passes them to workers.</li>
+      <li>Workers. Dynamic component.</li>
+      <li>Collector.</li>
+    </ul>
+  </li>
+  <li><strong>Channels</strong>
+    <ul>
+      <li><code class="highlighter-rouge">[Scraper|PUSH] -&gt; [PULL|Proxy]</code> - pass downlaoded blop as binary message.</li>
+      <li><code class="highlighter-rouge">[Proxy|PUSH] -&gt; [PULL|Worker]</code> - pass downlaoded blop as binary message.</li>
+      <li><code class="highlighter-rouge">[Worker|PUSH] -&gt; [PULL|Collector]</code> - output as string messages.</li>
+    </ul>
+  </li>
+</ul>
+
+<h3 id="discussion-1">Discussion</h3>
+
+<ul>
+  <li>Pros:
+    <ul>
+      <li>Simple design</li>
+      <li>Separation of Concerns</li>
+    </ul>
+  </li>
+  <li>Cons:
+    <ul>
+      <li>Downloaded blops are transfered through network twice.</li>
+      <li>Changing the architecture by adding routing is expensive.</li>
+      <li>Central storage of the downloaded files has to be added.</li>
+      <li>Reingest of the data requires re-download of files</li>
+    </ul>
+  </li>
+</ul>
+
+<h1 id="draft-3-central-storage">Draft 3: Central storage</h1>
+
+<p>Scraper store downloaded blops on a centralized storage node. The central storage could be a file system location or a database. The passed messages contain only paths to files on the storage node.</p>
+
+<p>The storage node could be mounted at the boxes running the scrapers and the workers, so that the details of the storage solutions are abstracted from the components.</p>
+
+<p><img src="/assets/Distributed-Scraper_files/zrw_central_storage.png" alt="png" width="100%" /></p>
+
+<ul>
+  <li>Pros:
+    <ul>
+      <li>Small message size. Easy routing. Little overhead for proxy.</li>
+      <li>Centralized storage built in.</li>
+    </ul>
+  </li>
+  <li>Cons:
+    <ul>
+      <li>Storage node is bottleneck and single point of failiure</li>
+    </ul>
+  </li>
+</ul>
+
+<h2 id="draft-3b-distributed-storage">Draft 3b: Distributed storage</h2>
+
+<p>Scraper store downloaded blops to a distributed file system. The files will be cut into containers and distributed around all available storage nodes. The storage nodes can be different from the nodes running the scrapers/workers but do not have to be.</p>
+
+<p><img src="/assets/Distributed-Scraper_files/zrw_distributed_storage.png" alt="png" width="100%" /></p>
+
+<ul>
+  <li>Pros:
+    <ul>
+      <li>Relieable storage with high write throughput.</li>
+    </ul>
+  </li>
+  <li>Cons:
+    <ul>
+      <li>Additional network overhead for synchronization of files.</li>
+    </ul>
+  </li>
+</ul>
+
+<p>There is additional juice in this option as it allows to bring the computation to the storage. It should be possible to run the worker tasks processing the downloaded files on the node that runs the scraper. This would allow the scraper box to use its computing power for something sensible while waiting for the network.</p>
+
+<p>Since HDFS [3] can be mounted to a folder, this solution can be interchanged with draft 3.</p>
+
+<h2 id="draft-4-scraper-storage">Draft 4: Scraper storage</h2>
+
+<p>Scrapers store downloaded blops locally. The network locations (<code class="highlighter-rouge">$HOST:$PATH</code>) of the downloaded files are passed as messages. The worker thread reads the contents of the file directly from the scraper’s file system (e.g. via <code class="highlighter-rouge">ssh</code>)</p>
+
+<p><img src="/assets/Distributed-Scraper_files/zrw_scraper_storage.png" alt="png" width="100%" /></p>
+
+<ul>
+  <li>Pros:
+    <ul>
+      <li>Minimizes network overhead. No file transfer unless absolutely necessary.</li>
+    </ul>
+  </li>
+  <li>Cons:
+    <ul>
+      <li>Makes scrapers inflexible. Need to be up and running while processing.</li>
+      <li>Bottleneck: scraper storage.</li>
+    </ul>
+  </li>
+</ul>
+
+<h2 id="final-discussion">Final Discussion</h2>
+
+<p>Currently I like the Draft 3 option best, since it is reasonably simple, while allowing parallelism and compying to the separation of concerns principle. It allows to resume work when the service is stopped or crashes rather easily, since the downloaded files are available on a central location. When the storage becomes a problem it is possible to upgrade to Draft 3b, which uses a distributed file system.</p>
+
+<h1 id="references">References</h1>
+<ol>
+  <li>http://zeromq.org</li>
+  <li>http://en.wikipedia.org/wiki/Separation_of_concerns</li>
+  <li>http://en.wikipedia.org/wiki/Apache_Hadoop#Hadoop_distributed_file_system</li>
+</ol>
+
+
+  <!-- Include Mathjax if needed -->
+  
+
+</div>
+
+  </div>
+</body>
+<style>
+  ody/*****************************************************************************/
+/*
+/* Common
+/*
+/*****************************************************************************/
+
+/* Global Reset */
+
+* {
+  margin: 0;
+  padding: 0;
+}
+
+html, body {
+  height: 100%;
+}
+
+body {
+  font-family: Helvetica, arial, sans-serif;
+  font-size: 14px;
+  line-height: 1.6;
+  background-color: white;
+  padding: 10px 30px 10px 30px;
+}
+
+h1 {
+  font-size: 1em;
+  text-transform: uppercase;
+  text-alig: left;
+  font-size: 1em;
+  margin-bottom: 1em;
+  margin-top: 2em;
+}
+h2 {
+  font-size: 1em;
+  margin-bottom: 1em;
+  margin-top: 2em;
+}
+p {
+  margin: 1em 0;
+}
+
+a {
+  color: #00a;
+}
+
+a:hover {
+  color: black;
+}
+
+a:visited {
+  color: #a0a;
+}
+
+table {
+  font-size: inherit;
+  font: 100%;
+}
+
+pre {
+  text-align: left;
+  overflow-y: auto;
+}
+
+/*****************************************************************************/
+/*
+/* Home
+/*
+/*****************************************************************************/
+
+ul.posts {
+  list-style-type: none;
+  margin-bottom: 2em;
+}
+
+ul.posts li {
+  line-height: 1.75em;
+}
+
+ul.posts span {
+  color: #aaa;
+  font-family: Monaco, "Courier New", monospace;
+  font-size: 75%;
+}
+
+
+.date {
+  color: #aaa;
+  font-family: Monaco, Courier New, monospace;
+  font-size: 75%;
+  font-weight: normal;
+  float:right;
+}
+
+.quo {
+  position:relative; top:-1px;
+}
+
+#banner {
+  margin-bottom: 1em;
+}
+
+/*****************************************************************************/
+/*
+/* Site
+/*
+/*****************************************************************************/
+
+.site {
+  text-align: justify;
+  width: 48em;
+  margin: 3em auto 2em auto;
+  line-height: 1.5em;
+  margin-bottom: 200px;
+}
+
+.site .headline a {
+    color: #a00;
+    font-weight: bold;
+    margin-bottom: 2em;
+    margin-top: 2em;
+    text-decoration: none;
+}
+
+.title {
+  color: #a00;
+  font-weight: bold;
+  margin-bottom: 2em;
+  margin-top: 2em;
+}
+
+.site .title a {
+  color: #a00;
+  text-decoration: none;
+}
+
+.site .title a:hover {
+  color: black;
+}
+
+.site .title a.extra {
+  color: #aaa;
+  text-decoration: none;
+  margin-right: 1em;
+}
+
+.site .title a.extra:hover {
+  color: black;
+}
+
+.site .meta {
+  color: #aaa;
+}
+
+.site .footer {
+  font-size: 80%;
+  color: #666;
+  border-top: 4px solid #eee;
+  margin-top: 2em;
+  overflow: hidden;
+}
+
+.site .footer .contact {
+  float: left;
+  margin-right: 1em;
+}
+
+.site .footer .contact a {
+  color: #8085C1;
+}
+
+.site .footer .rss {
+  float: right;
+}
+
+.site .footer .rss img {
+  border: 0;
+}
+
+/*****************************************************************************/
+/*
+/* Posts
+/*
+/*****************************************************************************/
+
+#markdown-toc li {
+    line-height: 1;
+}
+
+.abstract p {
+    width: 80%;
+    margin-left: auto;
+    margin-top: 3em;
+    margin-bottom: 3em;
+}
+
+#post h1 {
+  font-size: 2em;
+  text-transform: uppercase;
+  text-align: center;
+  margin: 2em 0 1.5em 0;
+  line-height: 1.5em;
+}
+#post h2, h3, h4, h5, h6 {
+  font-size: 1em;
+  margin-bottom: 1em;
+  margin-top: 2em;
+  border-bottom: 1px solid #cccccc;
+}
+#post h2:before { content: "# "; }
+#post h3:before { content: "## "; }
+#post h4:before { content: "### "; }
+
+/* standard */
+
+#post pre {
+  border: 1px solid #ddd;
+  background-color: #f5f5f5;
+  padding: 3px 5px 3px;
+  margin: 5px 0 5px 0;
+  font-family: Consolas, "Liberation Mono", Menlo, Courier, monospace;
+  font-size: 12px;
+  line-height: 16.79px;
+  word-wrap: normal;
+}
+
+#post ul,
+#post ol {
+  margin-left: 1.35em;
+}
+
+/* extra space for list elements  */
+#post li {
+  margin: 1em 0;
+}
+#post li li { /* ... but not for nested ones */
+  margin: .5em 0;
+}
+
+#post pre code {
+  border: none;
+}
+
+#post blockquote {
+  border-left: 4px solid #e8e8e8;
+  padding-left: 20px;
+  background-color: #f9f9f9;
+  margin: 30px 0;
+}
+
+.pullquote {
+  font-family: Georgia, serif;
+  font-size: 18px;
+  font-style: italic;
+  margin: 0.25em 0;
+  padding: 0.25em 40px;
+  line-height: 1.45;
+  position: relative;
+  color: #383838;
+}
+
+.pullquote:before {
+  display: block;
+  content: "\201C";
+  font-size: 80px;
+  position: absolute;
+  left: 0;
+  top: -20px;
+  color: #7a7a7a;
+}
+
+
+#post .credits {
+  text-align: right;
+  font-size: 70%;
+  color: #aaa;
+}
+
+/* terminal */
+
+#post pre.terminal {
+  border: 1px solid black;
+  background-color: #333;
+  color: white;
+}
+
+#post pre.terminal code {
+  background-color: #333;
+}
+
+#related {
+  border-top: 4px solid #eee;
+  margin-top: 2em;
+}
+
+#related h2 {
+  margin-bottom: 1em;
+}
+
+#disqus_thread {
+  border-top: 4px solid #eee;
+  margin-top: 2em;
+  padding-top: 1em;
+}
+
+#post img {
+  max-width: 100%;
+}
+
+/**
+ * Figure Plugin: https://github.com/lmullen/jekyll_figure
+ **/
+
+figure img {
+  border: 1px solid #ccc;
+  padding: 5px;
+  border-radius: 5px;
+  max-width : 100%;
+}
+
+figure {
+  text-align: center;
+}
+
+figure figcaption {
+  font-style: italic;
+  text-align: center;
+}
+
+.pdflink {
+  float: right;
+}
+
+/**
+ * GITHUB TABLE STYLES: https://github.com/alampros/Docter/blob/master/ghf_marked.css
+ **/
+
+table
+{
+  border-collapse:collapse;
+  margin:20px auto auto;
+  padding:0;
+}
+
+table tr
+{
+  border-top:1px solid #ccc;
+  background-color:#fff;
+  margin:0;
+  padding:0;
+}
+
+table tr:nth-child(2n)
+{
+  background-color:#f8f8f8;
+}
+table tr th[align="center"], table tr td[align="center"] {
+  text-align:center;
+}
+table tr th, table tr td
+{
+  border:1px solid #ccc;
+  text-align:left;
+  margin:0;
+  padding:6px 13px;
+}
+
+/**
+ * Responsive
+ **/
+@media only screen and (max-width: 50em) {
+  .site {
+    text-align: left;
+    width: 100%;
+    margin: 0;
+  }
+  body {
+    padding: 15px;
+  }
+}
+
+@media only screen and (max-width: 30em) {
+  .site {
+    font-size: 20px;
+    line-height: 2.5em;
+  }
+}
+
+.sticker {
+  color:red;
+  border-style:solid;
+  border-color:red;
+  border-radius:0.2em;
+  margin:50px;
+}
+
+@media only print {
+  .splash {
+    visibility: hidden;
+  }
+}
+
+.hookin {
+  float: left;
+  font-size: 2.5em;
+  font-weight: 700;
+  padding-top: 0.2em;
+  margin-right: 0.4em;
+  color: #a00;
+  color: #EC9F2E;
+  font-family: "franklin-gothic-urw",Verdana,Geneva,sans-serif;
+}
+
+.dropcaps::first-letter {
+  font-size: 4.8em;
+  color: #a00;
+  font-family: Georgia;
+  font-weight: 500;
+  line-height: 0.9em;
+  float: left;
+  margin-right: 0.1em;
+}
+
+</style>
+<style>
+  .highlight  { background: #ffffff; }
+.highlight .c { color: #999988; font-style: italic } /* Comment */
+.highlight .err { color: #a61717; background-color: #e3d2d2 } /* Error */
+.highlight .k { font-weight: bold } /* Keyword */
+.highlight .o { font-weight: bold } /* Operator */
+.highlight .cm { color: #999988; font-style: italic } /* Comment.Multiline */
+.highlight .cp { color: #999999; font-weight: bold } /* Comment.Preproc */
+.highlight .c1 { color: #999988; font-style: italic } /* Comment.Single */
+.highlight .cs { color: #999999; font-weight: bold; font-style: italic } /* Comment.Special */
+.highlight .gd { color: #000000; background-color: #ffdddd } /* Generic.Deleted */
+.highlight .gd .x { color: #000000; background-color: #ffaaaa } /* Generic.Deleted.Specific */
+.highlight .ge { font-style: italic } /* Generic.Emph */
+.highlight .gr { color: #aa0000 } /* Generic.Error */
+.highlight .gh { color: #999999 } /* Generic.Heading */
+.highlight .gi { color: #000000; background-color: #ddffdd } /* Generic.Inserted */
+.highlight .gi .x { color: #000000; background-color: #aaffaa } /* Generic.Inserted.Specific */
+.highlight .go { color: #888888 } /* Generic.Output */
+.highlight .gp { color: #555555 } /* Generic.Prompt */
+.highlight .gs { font-weight: bold } /* Generic.Strong */
+.highlight .gu { color: #aaaaaa } /* Generic.Subheading */
+.highlight .gt { color: #aa0000 } /* Generic.Traceback */
+.highlight .kc { font-weight: bold } /* Keyword.Constant */
+.highlight .kd { font-weight: bold } /* Keyword.Declaration */
+.highlight .kp { font-weight: bold } /* Keyword.Pseudo */
+.highlight .kr { font-weight: bold } /* Keyword.Reserved */
+.highlight .kt { color: #445588; font-weight: bold } /* Keyword.Type */
+.highlight .m { color: #009999 } /* Literal.Number */
+.highlight .s { color: #d14 } /* Literal.String */
+.highlight .na { color: #008080 } /* Name.Attribute */
+.highlight .nb { color: #0086B3 } /* Name.Builtin */
+.highlight .nc { color: #445588; font-weight: bold } /* Name.Class */
+.highlight .no { color: #008080 } /* Name.Constant */
+.highlight .ni { color: #800080 } /* Name.Entity */
+.highlight .ne { color: #990000; font-weight: bold } /* Name.Exception */
+.highlight .nf { color: #990000; font-weight: bold } /* Name.Function */
+.highlight .nn { color: #555555 } /* Name.Namespace */
+.highlight .nt { color: #000080 } /* Name.Tag */
+.highlight .nv { color: #008080 } /* Name.Variable */
+.highlight .ow { font-weight: bold } /* Operator.Word */
+.highlight .w { color: #bbbbbb } /* Text.Whitespace */
+.highlight .mf { color: #009999 } /* Literal.Number.Float */
+.highlight .mh { color: #009999 } /* Literal.Number.Hex */
+.highlight .mi { color: #009999 } /* Literal.Number.Integer */
+.highlight .mo { color: #009999 } /* Literal.Number.Oct */
+.highlight .sb { color: #d14 } /* Literal.String.Backtick */
+.highlight .sc { color: #d14 } /* Literal.String.Char */
+.highlight .sd { color: #d14 } /* Literal.String.Doc */
+.highlight .s2 { color: #d14 } /* Literal.String.Double */
+.highlight .se { color: #d14 } /* Literal.String.Escape */
+.highlight .sh { color: #d14 } /* Literal.String.Heredoc */
+.highlight .si { color: #d14 } /* Literal.String.Interpol */
+.highlight .sx { color: #d14 } /* Literal.String.Other */
+.highlight .sr { color: #009926 } /* Literal.String.Regex */
+.highlight .s1 { color: #d14 } /* Literal.String.Single */
+.highlight .ss { color: #990073 } /* Literal.String.Symbol */
+.highlight .bp { color: #999999 } /* Name.Builtin.Pseudo */
+.highlight .vc { color: #008080 } /* Name.Variable.Class */
+.highlight .vg { color: #008080 } /* Name.Variable.Global */
+.highlight .vi { color: #008080 } /* Name.Variable.Instance */
+.highlight .il { color: #009999 } /* Literal.Number.Integer.Long */
+
+</style>
+</html>
