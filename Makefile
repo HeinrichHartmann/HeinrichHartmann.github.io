@@ -63,6 +63,7 @@ prepare-publish:
 
 .PHONY: publish
 publish:
+	git checkout hugo-export _site
 	cp -r _site/* public/
 	make build
 	cd public && \
