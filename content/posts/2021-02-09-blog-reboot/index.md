@@ -40,16 +40,16 @@ directory, that is going to be imported, as well linking pages form a new index.
 
 Try it for yourself: Save this page as HTML and open your local copy. Does it work?
 
-Also it measn that content pages will make no use of shared resources, and can no longer break
+Also it means that content pages will make no use of shared resources, and can no longer break
 if I make changes to some CSS/JS files, while working on a draft.
 
 The drawback of course is, that pages will look inconsistent. We have a lot of repeated CSS/JS
-spread out over the articles. It's a tradeoff I gladly make, since barely anyone notices or cares
+spread out over the articles. It's a trade-off I gladly make, since barely anyone notices or cares
 about those inconsistencies, and if the source code in this blog is DRY.
 
 ## Fast iterations with Hugo
 
-Iteration speed was the main driver for me to switch to Hugo.  I am writing this text in emacs, with
+Iteration speed was the main driver for me to switch to Hugo.  I am writing this text in Emacs, with
 the browser window to the left.
 
 <img src="{{% b64 file="/posts/2021-02-09-blog-reboot/window.png" %}}" />
@@ -57,13 +57,13 @@ the browser window to the left.
 The moment I hit save on the editor, the browser view updates instantly.  Even scroll state is
 saved.
 
-This is a huge improvement over jekyll, which I was using earlier, which required me to wait 10
+This is a huge improvement over Jekyll, which I was using earlier, which required me to wait 10
 seconds until I could review the formatting of what I just wrote. Optimizing the editing loop and
-the publication pipeline is essntial for my (preceived) writing productivity.
+the publication pipeline is essential for my (perceived) writing productivity.
 
 ## Content Discovery with Tags and Instant Filter Bar
 
-I will not make an effort to come up with sections or url schemas to organize content.  Instead,
+I will not make an effort to come up with sections or url schemes to organize content.  Instead,
 posts get a set of tags associated to them. The [index page](/) contains a big list that shows those
 tags and provides an instant-filter search bar, that can be used to navigate to topics easily.
 
@@ -77,7 +77,7 @@ quick navigation is becoming more important for me to be able to lookup things.
 
 ## GitHub Markdown Theme
 
-When it comes to aestetics the GitHub Flavored Markdown is hard to beat.  Simple style that get's
+When it comes to aesthetics the GitHub Flavored Markdown is hard to beat.  Simple style that gets
 the job done, that is already familiar to the technical readers.  Embedded code and syntax
 highlighting work well, and are polished in general:
 
@@ -104,12 +104,12 @@ or HTML anymore.
   either link them for download from the index page, or embed them as iframe.
 
 * **Jupyter.** Jupyter notebooks can be exported to HTML in various ways. I have written posts in the
-  past, that originated from Jupyter notebooks, and were converted to Mardown/HTML. Marking
+  past, that originated from Jupyter notebooks, and were converted to Markdown/HTML. Marking
   cells/output as hidden is the most complicated bit here. With the new concept direct output to
   HTML is the way to go, and the integration should become simpler.
 
 * **org-mode.** In have not used org-mode much recently, but integrating posts from org-mode in
-  various output forms, e.g. html, pdf, text, is rather straight forward.
+  various output forms, e.g. HTML, pdf, text, is rather straight forward.
 
 Hugo allows posts to be published from a folder not a file.  So it's possible to aggregate all the
 supporting material in a folder, before producing the results.
@@ -124,11 +124,11 @@ blog has been 100% tracking free.
 
 I am excited to getting hold of a well-oiled publishing pipeline again.
 
-With these changes in place, I hope to be able to get a more posts written, without too much hazzles
+With these changes in place, I hope to be able to get a more posts written, without too much hassles
 getting into my way.
 
 We will see how this goes!
 
 <br>
 
-PS: If you want to be notified when new posts consider subsribing to updates via [email](https://groups.google.com/g/heinrichhartmann/).
+PS: If you want to be notified when new posts consider subscribing to updates via [email](https://groups.google.com/g/heinrichhartmann/).
