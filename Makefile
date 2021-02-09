@@ -35,7 +35,8 @@ OLD_BLOGS=\
   opinion/2020/02/15/Thuringen.html \
 	opinion/2016/11/15/A-Digital-Passport-for-Digital-Citizens.html
 
-public:
+.PHONY: build
+build:
 	docker run --rm -p 1313:1313 -v $$PWD:/srv/hugo yanqd0/hugo hugo
 
 docker-hugo-server:
@@ -52,6 +53,8 @@ import:
 .PHONY: prepare-publish
 prepare-publish:
   # ./publish should contain a new git repository with a checkout of the master banch
+	mkdir -p public
+	git checkout hugo-export _site
 	cd public && \
 	  git init && \
 	  git remote add origin git@github.com:HeinrichHartmann/HeinrichHartmann.github.io.git && \
@@ -60,7 +63,8 @@ prepare-publish:
 
 .PHONY: publish
 publish:
-	# run prepare-public first if running for the first time
+	cp -r _site/* public/
+	make build
 	cd public && \
 	  git fetch origin master &&\
 	  git reset origin/master &&\
