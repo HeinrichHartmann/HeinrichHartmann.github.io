@@ -89,7 +89,7 @@
   <ul class="posts" id="posts">
     {{ range  (where site.RegularPages "Type" "in" site.Params.mainSections) }}
     <li><span>{{ .Date.Format "2006-01-02" }} </span> &raquo;&nbsp;
-      <a href="{{ .Permalink }}">{{ .Title }}</a>
+      <a href="{{ .Params.href | default .Permalink }}">{{ .Title }}</a>
       <small>
       {{- if isset .Params "comment" -}} {{ .Params.comment }}{{end}}
       </small>
