@@ -440,4 +440,14 @@ content:
   title: A-Digital-Passport-for-Digital-Citizens
   href: "/archive/A-Digital-Passport-for-Digital-Citizens.html"
 
+- type: talk
+  tags: mon, talk
+  date: 2019-02-03
+  href: "https://archive.fosdem.org/2019/schedule/event/latency_slos_done_right/"
+  occasion: FOSDEM 2019
+  location: Brussels
+  title: "Latency SLOs done right"
+  slides: "/pdf/Heinrich Hartmann - Latency SLOs Done Right (FOSDEM, 2019).pdf"
+  video: "https://video.fosdem.org/2019/UB2.252A/latency_slos_done_right.mp4"
+
 ---
