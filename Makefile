@@ -59,8 +59,7 @@ prepare-publish:
 	  git reset origin/master
 
 .PHONY: publish
-publish:
-	git checkout hugo-export _site
+publish: _site
 	cp -r _site/* public/
 	make build
 	cd public && \
@@ -69,3 +68,4 @@ publish:
 		git add . && \
 		git commit -m "update" && \
 	  git push origin master
+
