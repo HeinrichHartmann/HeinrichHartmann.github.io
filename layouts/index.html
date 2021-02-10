@@ -110,8 +110,8 @@
       <span style="float:right">{{ .tags | default "paper" }}</span></li>
     {{ else if and ( isset . "type" ) ( eq .type "talk" ) }}
     <li><span>{{.date}} </span> &raquo;&nbsp;
-      <a href="{{.href}}">{{.occasion}}</a> -- <em>{{.title}}</em><small>
-      {{- if isset . "comment" -}} {{ .comment }}{{end}}
+      <a href="{{.href}}">{{.occasion}}</a> &mdash; {{.title}}<small>
+      {{- if isset . "comment" -}}&nbsp;{{ .comment }}{{end}}
       {{- if isset . "notes" -}}, <a href="{{.notes}}">[notes]</a>{{ end }}
       {{- if isset . "slides" -}}, <a href="{{.slides}}">[slides]</a>{{ end }}
       {{- if isset . "video" -}}, <a href="{{.video}}">[video]</a>{{ end }}

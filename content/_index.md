@@ -277,14 +277,6 @@ content:
 
 - type: talk
   tags: mon, talk
-  date: 2016-07-12
-  href: "https://srecon16europe.sched.org/event/7VkQ/statistics-for-engineers"
-  occasion: SREcon16Europe
-  location: Dublin
-  title: "Workshop: Statistics for Engineers"
-
-- type: talk
-  tags: mon, talk
   date: 2016-06-27
   href: "http://monitorama.com"
   occasion: Monitorama PDX 2016
@@ -317,14 +309,6 @@ content:
   location: Tel-Aviv, Israel
   title: "Workshop: Statistics for Engineers"
 
-- type: talk
-  tags: mon, talk
-  date: 2015-05-14
-  href: "https://www.usenix.org/conference/srecon15europe"
-  occasion: SRECon15Europe
-  location: Dublin
-  title: "Tutorial: Statistics for Engineers"
-  notes: "https://github.com/HeinrichHartmann/StatisticsTutorial"
 
 - tags: mon, post
   date: 2015-05-14
@@ -449,5 +433,64 @@ content:
   title: "Latency SLOs done right"
   slides: "/pdf/Heinrich Hartmann - Latency SLOs Done Right (FOSDEM, 2019).pdf"
   video: "https://video.fosdem.org/2019/UB2.252A/latency_slos_done_right.mp4"
+
+- type: talk
+  tags: mon, talk
+  date: 2015-05-14
+  href: "https://www.usenix.org/conference/srecon15europe"
+  occasion: SRECon15Europe
+  location: Dublin
+  title: "Workshop: Statistics for Engineers"
+  notes: "https://github.com/HeinrichHartmann/Statistics-for-Engineers"
+
+- type: talk
+  tags: mon, talk
+  date: 2016-07-12
+  href: "https://srecon16europe.sched.org/event/7VkQ/statistics-for-engineers"
+  occasion: SRECon16Europe
+  location: Dublin
+  title: "Workshop: Statistics for Engineers"
+  notes: "https://github.com/HeinrichHartmann/Statistics-for-Engineers"
+
+- type: talk
+  occasion: SRECon17Europe
+  location: Duesseldorf
+  date: 2017-09-01
+  title: "Workshop: Statistics for Engineers"
+  href: "https://srecon17emea.sched.com/event/Bzv4/statistics-for-engineers"
+  notes: "https://github.com/HeinrichHartmann/Statistics-for-Engineers"
+
+- type: talk
+  occasion: SRECon18Europe
+  location: Duesseldorf
+  date: 2018-01-01
+  title: 'Circonus: Design (Failures) Case Study'
+  comment: Keynote
+  href: "https://www.usenix.org/conference/srecon18europe/presentation/schlossnagle"
+  video: "https://www.youtube.com/watch?v=6utuaw0zCp8"
+
+- type: talk
+  occasion: SRECon18Europe
+  location: Duesseldorf
+  date: 2018-01-01
+  title: "Statistics for Engineers"
+  href: "https://www.usenix.org/conference/srecon18europe/presentation/schlossnagle"
+  notes: "https://github.com/HeinrichHartmann/Statistics-for-Engineers"
+
+- type: talk
+  occasion: SRECon19Europe
+  location: Dublin
+  date: 2019-10-02
+  title: 'Latency SLOs done right'
+  href: "https://www.usenix.org/conference/srecon19emea/presentation/hartmann-latency"
+
+
+- type: talk
+  occasion: SRECon18Europe
+  location: Duesseldorf
+  date: 2019-10-03
+  title: "Statistics for Engineers"
+  href: "https://www.usenix.org/conference/srecon19emea/presentation/hartmann-statistics"
+  notes: "https://github.com/HeinrichHartmann/Statistics-for-Engineers"
 
 ---
