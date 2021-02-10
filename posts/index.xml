@@ -9,13 +9,22 @@
     <lastBuildDate>Tue, 09 Feb 2021 00:00:00 +0000</lastBuildDate><atom:link href="/posts/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Blog Reboot</title>
-      <link>/posts/blog/</link>
+      <link>/posts/blog-reboot/</link>
       <pubDate>Tue, 09 Feb 2021 00:00:00 +0000</pubDate>
       
-      <guid>/posts/blog/</guid>
-      <description>This blog has gotten a new look, recently. For the last ~5 years this blog has been build with Jekyll, now it has been migrated to Hugo. With this migration I implemented a few changes, that were longer in the making.
-Articles as stand-alone HTML pages Anticipating future migrations of the content, we treat posts as documents that should be as stand-alone as possible. This means:
-  No header/footer content, just a link to the Home at the top.</description>
+      <guid>/posts/blog-reboot/</guid>
+      <description>This blog has been rebooted!
+For the last 6 years this blog has been build with Jekyll. Now it has been migrated to Hugo. With this migration I implemented a few conceptual changes, that were longer in the making, that I want to quickly go over.
+      Old New   Articles as stand-alone HTML pages Anticipating future migrations of the content, we treat posts as documents that should be as stand-alone as possible.</description>
+    </item>
+    
+    <item>
+      <title>Natural Operators in Linear Algebra</title>
+      <link>/posts/2021-02-01-natural-operators/</link>
+      <pubDate>Tue, 09 Feb 2021 00:00:00 +0000</pubDate>
+      
+      <guid>/posts/2021-02-01-natural-operators/</guid>
+      <description></description>
     </item>
     
     <item>
