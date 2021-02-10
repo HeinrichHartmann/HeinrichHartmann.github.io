@@ -1,0 +1,33 @@
+# This is a basic workflow that is manually triggered
+
+name: Deploy
+
+on:
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout source branch
+        uses: actions/checkout@v2
+        with:
+          ref: source
+      - name: Checkout published HTML to public
+        uses: actions/checkout@v2
+        with:
+          ref: master
+          path: public
+      - name: build website
+        uses: jakejarvis/hugo-build-action@v0.80.0
+      - name: Push update
+        run: |
+          cd public
+          date > last-update.txt
+          git config user.name github-actions
+          git config user.email github-actions@github.com
+          git add .
+          git commit -m "GH Deploy"
+          git push origin master
+ 
+
