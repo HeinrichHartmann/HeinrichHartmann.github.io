@@ -1,9 +1,9 @@
-# This is a basic workflow that is manually triggered
-
 name: Deploy
 
 on:
-  workflow_dispatch:
+  push:
+    branches:
+      - source
 
 jobs:
   build:
@@ -30,4 +30,3 @@ jobs:
           git commit -m "GH Deploy"
           git push origin master
  
-
