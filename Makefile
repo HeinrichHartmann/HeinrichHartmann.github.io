@@ -37,13 +37,10 @@ OLD_BLOGS=\
 
 .PHONY: build
 build:
-	docker run --rm -p 1313:1313 -v $$PWD:/srv/hugo yanqd0/hugo hugo
-
-docker-hugo-server:
-	docker run --rm -p 1313:1313 -v $$PWD:/srv/hugo yanqd0/hugo hugo server --bind 0.0.0.0
+	docker run --rm -v $$PWD:/srv/hugo yanqd0/hugo hugo
 
 serve:
-	hugo server -D
+	docker run --rm -p 1313:1313 -v $$PWD:/srv/hugo yanqd0/hugo hugo server --bind 0.0.0.0
 
 .PHONY: import
 import:
@@ -62,8 +59,7 @@ prepare-publish:
 	  git reset origin/master
 
 .PHONY: publish
-publish:
-	git checkout hugo-export _site
+publish: _site
 	cp -r _site/* public/
 	make build
 	cd public && \
@@ -72,3 +68,4 @@ publish:
 		git add . && \
 		git commit -m "update" && \
 	  git push origin master
+

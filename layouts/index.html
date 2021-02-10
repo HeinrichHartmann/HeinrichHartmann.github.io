@@ -89,7 +89,7 @@
   <ul class="posts" id="posts">
     {{ range  (where site.RegularPages "Type" "in" site.Params.mainSections) }}
     <li><span>{{ .Date.Format "2006-01-02" }} </span> &raquo;&nbsp;
-      <a href="{{ .Permalink }}">{{ .Title }}</a>
+      <a href="{{ .Params.href | default .Permalink }}">{{ .Title }}</a>
       <small>
       {{- if isset .Params "comment" -}} {{ .Params.comment }}{{end}}
       </small>
@@ -110,8 +110,8 @@
       <span style="float:right">{{ .tags | default "paper" }}</span></li>
     {{ else if and ( isset . "type" ) ( eq .type "talk" ) }}
     <li><span>{{.date}} </span> &raquo;&nbsp;
-      <a href="{{.href}}">{{.occasion}}</a> -- <em>{{.title}}</em><small>
-      {{- if isset . "comment" -}} {{ .comment }}{{end}}
+      <a href="{{.href}}">{{.occasion}}</a> &mdash; {{.title}}<small>
+      {{- if isset . "comment" -}}&nbsp;{{ .comment }}{{end}}
       {{- if isset . "notes" -}}, <a href="{{.notes}}">[notes]</a>{{ end }}
       {{- if isset . "slides" -}}, <a href="{{.slides}}">[slides]</a>{{ end }}
       {{- if isset . "video" -}}, <a href="{{.video}}">[video]</a>{{ end }}
@@ -119,7 +119,7 @@
       <span style="float:right">{{ .tags | default "talk" }}</span></li>
     {{ else }}
     <li><span>{{.date}} </span> &raquo;&nbsp;
-      {{ if isset . "href" }}<a href="{{.href}}">{{.title}}</a>{{- else -}} {{.title}}{{ end }}
+      {{ if isset . "href" }}<a href="{{.href}}">{{.title}}</a>{{- else -}}{{.title}}{{ end }}
       <small>
       {{- if isset . "comment" -}}&nbsp;{{ .comment }}{{ end }}
       {{- if isset . "hn" -}}, <a href="{{.hn}}">[hn]</a>{{ end }}
