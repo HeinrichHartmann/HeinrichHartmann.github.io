@@ -1,5 +1,5 @@
 .markdown-container {
-  width: 48em;
+  width: 60em;
   margin-right: auto;
   margin-left: auto;
   box-sizing: border-box;
@@ -10,7 +10,7 @@
 /**
  * Responsive
  **/
-@media only screen and (max-width: 48em) {
+@media only screen and (max-width: 60em) {
     .markdown-container {
         text-align: left;
         width: 100%;
