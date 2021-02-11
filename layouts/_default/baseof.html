@@ -12,9 +12,6 @@
 	{{- end }}
   {{ with .Params.canonical }} <link rel="canonical" href="{{ .url }}"/>   {{ end }}
   <link rel="icon" type="image/png" href="/favicon.png">
-  
-  <link rel="stylesheet" href="{{ "/v2/css/base.css" | relURL }}">
-  <link rel="stylesheet" href="{{ "/v2/css/syntax.css" | relURL }}">
   <style>
    /* base.css */
    {{ readFile "/static/v2/css/base.css" | safeCSS }}

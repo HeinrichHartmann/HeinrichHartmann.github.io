@@ -67,6 +67,12 @@ I will not make an effort to come up with sections or url schemes to organize co
 posts get a set of tags associated to them. The [index page](/) contains a big list that shows those
 tags and provides an instant-filter search bar, that can be used to navigate to topics easily.
 
+Try it out using these links:
+
+- Filter for [posts](/#post)
+- Filter for [talks](/#talk)
+- Filter for [SRECon](/#SRECon)
+
 I have used this pattern for several private project now
 ([pile](https://github.com/HeinrichHartmann/pile),
 [ytdl](https://github.com/HeinrichHartmann/youtube-dl-nas)), and I have been generally very happy
