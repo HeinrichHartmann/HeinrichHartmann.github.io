@@ -121,10 +121,140 @@ This list of applications should convince the reader that such a decomposition i
 ## Numeric Rank Decomposition
 
 In this chapter we are going to discuss a variety of ways of computing the rank decomposition of a
-given matrix $A$. These methods differ with respect to computational complexity and numeric stability.
+given matrix $A$. These methods differ with respect to computational complexity, numeric stability,
+and properties of the transformation matrices $X$, $Y$.
 All of them are in practical use, and have interesting geometric ideas behind them.
 
+The most basic way that is readily performed by hand is the Gauss Elimination method that we desribe
+first.
+The strongest conceptual result, that is readily available in numerical computing packages is the
+Singular Value Decomposition, which we discuss last.
+
+
 ### Rank Decomposition via Gauss Elimination
+
+The [Gauss Elimination Algorithm](https://en.wikipedia.org/wiki/Gaussian_elimination) can be used to
+construct transformations $X$ and $Y$ as described above. 
+
+{{% env %}}
+**Theorem (LDU factorization)**
+For every matrix $A \in M(m,n)$, we will construct
+
+1. a (row) permutation matrix $P \in M(m)$
+1. a (column) permutation matrix $Q \in M(n)$
+2. an invertible lower-triangular matrix $L \in M(m)$ with unit diagonal
+3. an invertible upper-triangular matrix $U \in M(n)$ with unit diagonal
+4. an invertible diagonal matrix $D_r \in M(r,r)$
+
+so that:
+
+$$
+P A Q = L \begin{bmatrix}
+    D_r & 0   \\\\
+    0 & \oo\_{m-r,n-r} \\\\
+    \end{bmatrix} U = L D U
+$$
+
+where $D = D_r \vsum \oo\_{m-r,n-r}$.
+{{% /env %}}
+
+**Corollary**
+Given $P,Q,L,D_r,U$ as above, a rank decomposition is given by:
+$$
+(P^{-1} L)^{-1} \\; A \\; (QU^{-1}(D_r\vsum \id_{m-r,n-r})^{-1}) = \id^r_{m-r,n-r}.
+$$
+so $Y = P^{-1} L$, $X = Q U^{-1} (D_r \vsum \id)^{-1}$.
+
+**Remark**
+
+- This algorithm corresponds to Gauss Elimination with total pivot search (i.e. row- and column permutations).
+- In order to derive a rank decomposition we need $U$ to be invertible, or at least be row-reduced
+  $U[i,\*] = 0$, for $i > r$. This is not the case for the $LU$ decomposition that is commonly found
+  in text books and software libraries.
+
+**Elimination Matrix.** Gauss Elimination makes use of eleminiation matrices, that are constructed
+as follows. For vectors $a,b$ with $(a,a)=1$ and $(a,b) = 0$, we consider the shear transformation
+$f_{a,b}: x \mapsto x + (a,x) b$. This is map defines a linear isomorphism with inverse $f_{a,-b}$.
+
+In case $a = e_r$ and $b[1]=\dots=b[r]=0$ we call $f_{a,b}$ the elimination matrix $E^r_b$.
+This is a lower-triangular matrix with unit diagonal, and off-diagonal entries: $E^r_b[i,r] = b[i]$ for $i > r$.
+It's inverse is given by $E^r_{-b}$.
+
+**Example**
+$$
+E^3_b = \begin{bmatrix}
+1 & 0 & 0    & 0 & 0 & 0 \\\\
+0 & 1 & 0    & 0 & 0 & 0 \\\\
+0 & 0 & 1    & 0 & 0 & 0 \\\\
+0 & 0 & b[4] & 1 & 0 & 0 \\\\
+0 & 0 & b[5] & 0 & 1 & 0 \\\\
+0 & 0 & b[6] & 0 & 0 & 1 \\\\
+\end{bmatrix}
+$$
+
+{{% env "Algorithm -- Gauss Elimination" %}}
+**Input:** Matrix $A \in M(m,n)$  
+**Output:** Matrices $P,Q,L,D,U$ as in the above theorem, so that $A = P L D U Q$.  
+
+1. Termination Conditions.
+   - If $m=0$ or $n=0$ we are done. In the following assume that $m>0, n>0$.
+   - If $A = 0$ we are done. So we assume that $A \neq 0$.
+
+3. Pivot Selection. Since $A \neq 0$ there is an $A[i,j] \neq 0$. We call $(i,j)$ the pivot point
+   and denote the pivot element by $d:= A[i,j] \neq 0$.
+
+2. Permute pivot element to A[1,1].
+   - Let $P_1$ be the permutation matrix that swaps $1 \leftrightarrow i$.
+   - Let $Q_1$ be the permutation matrix that swaps $1 \leftrightarrow j$.
+   
+   Set $A_1 := P_1 A Q_1$. Then $A_1[1,1] = d$. 
+   Note, that $P_1^{-1} = P$ and $Q_1^{-1} = Q_1$.
+
+4. Eliminate first column.
+   Consider the vector $b = -[0,A_1[2,1],\dots,A_1[m,1]]^t/d$, and set $A_2 = E^1_{b} A_1$.  
+   We have $A_2[1,1] = d$ and $A_2[i,1] = 0$ for $i>1$.
+
+5. Eliminate first row.
+   Consider the vector $c = - [0,A_2[1,2],\dots,A_2[1,n]]^t/d$, and set $A_3 = A_2 (E^1_{c})^t$
+   - We still have $A_3[1,1] = 1$ and $A_2[1,i] = 0$ for $i>1$ since $E^1_{-c} e_1 = e_1$.
+   - Moreover, $A_3[1,i] = 0$ for $i > 1$.
+   
+   Hence $$
+   A_3 = \begin{bmatrix}
+   d & 0 \\\\
+   0 & B \\\\
+   \end{bmatrix} = d \vsum B
+   $$
+   for some $B \in M(m-1,n-1)$.
+
+6. Recursion.
+   Summarizing the above steps we find:
+   $$
+   (p \vsum B) = E^1_{b} P_1 \\; A \\; Q_1 E^{1t}\_{c}
+   \quad\iff\quad
+   A  = P_1 E^1_{-b} \\; (d \vsum B) \\; E^{1t}\_{-c} Q_1
+   $$
+   By induction we can have a decomposition $ B = P_2 L_2 D_2 U_2 Q_2 $. 
+   So:
+   $$
+   A
+   % = P_1 E^1_{-b} * (d \vsum (P_2 L_2 D_2 U_2 Q_2)) * E^{1t}\_{-c} Q_1
+   = P_1 E^1_{-b} \\; (1 \vsum P_2) (1 \vsum L_2) \\; (d \vsum D_2) \\; (1 \vsum U_2) (1 \vsum Q_2) \\; E^{1t}\_{-c} Q_1
+   $$
+   We note, that:
+   - The central matrix $(d \vsum D_2)$ is a diagonal matrix of the required form ($D_r \vsum \oo$).
+   - The elimination matrices can be commuted past the permutation matrices as follows:
+     - $E^1_{-b} (1 \vsum P') = (1 \vsum P') E^1_{-b'}$, where $b' = (1 \vsum P')^{-1} b$
+     - $(1 \vsum Q_2) E^{1t}\_{-c} = E^{1t}_{-c'} (1 \vsum Q_2)$ where $c' = (1 \vsum Q')^{-1} c$.
+   - The products $P:=P_1 (1 \vsum P_2)$ and $Q:=Q_1 (1 \vsum Q)$ are again permutation matrices.
+   - The product $L := E^1_{-b'} (1 \vsum L_2)$ is a lower-triangular matrix with unit diagonal
+   - The product $U :=  (1 \vsum U_2) E^{1t}\_{-c'}$ is a upper-triangular matrix with unit diagonal.
+
+   Hence we have $A = P\\, L\\, D\\, U\\, Q$ as required.
+7. Return $(P, Q, L, D, U)$. Done.
+
+
+{{% /env %}}
 
 ### Rank Decomposition via (Householder) Reflections
 
