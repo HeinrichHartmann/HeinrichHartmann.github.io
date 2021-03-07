@@ -432,12 +432,12 @@ Implementations of all three Rank Decomposition algorithms in the Python/NumPy e
 are provided as part of the new [libla](https://github.com/HeinrichHartmann/libla/) library.
 Pointers:
 
-* [Rank Decomposition via LU Decomposition](https://github.com/HeinrichHartmann/libla/blob/0.0.1/main.py#L299), using a manual
+* [Rank Decomposition via LU Decomposition](https://github.com/HeinrichHartmann/libla/blob/v0.0.2/libla/rank_decomposition.py#L8), using a manual
   implementation of Gauss Elimination.
 
-* [Rank Decomposition via QR Decomposition](https://github.com/HeinrichHartmann/libla/blob/0.0.1/main.py#L374), based on `scipy.linalg.qr`.
+* [Rank Decomposition via QR Decomposition](https://github.com/HeinrichHartmann/libla/blob/v0.0.2/libla/rank_decomposition.py#L95), based on `scipy.linalg.qr`.
 
-* [Rank Decomposition via SVD](https://github.com/HeinrichHartmann/libla/blob/0.0.1/main.py#L406), based on `scipy.linalg.svd`.
+* [Rank Decomposition via SVD](https://github.com/HeinrichHartmann/libla/blob/v0.0.2/libla/rank_decomposition.py#L133), based on `scipy.linalg.svd`.
 
 
 **Numeric Example**
