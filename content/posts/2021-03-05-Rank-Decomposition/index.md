@@ -20,7 +20,10 @@ mathjax: true
         padding: 0.1em;
     }
 }
-
+.center {
+    display: block;
+    margin:auto
+}
 </style>
 
 <div style="display:none">
@@ -430,7 +433,7 @@ are provided as part of the new [libla](https://github.com/HeinrichHartmann/libl
 Pointers:
 
 * [Rank Decomposition via LU Decomposition](https://github.com/HeinrichHartmann/libla/blob/0.0.1/main.py#L299), using a manual
-  implementation of Gauss Elimination (SLOW).
+  implementation of Gauss Elimination.
 
 * [Rank Decomposition via QR Decomposition](https://github.com/HeinrichHartmann/libla/blob/0.0.1/main.py#L374), based on `scipy.linalg.qr`.
 
@@ -438,10 +441,9 @@ Pointers:
 
 
 **Numeric Example**
-The following illustration shows plots (python/matplotlib/imshow) of the rank decomposition
-of a random $20 \times 50$ matrix of rank 10.
+The following illustration shows plots of the rank decomposition of a random $20 \times 50$ matrix of rank 10.
 
-<img src="./rd.png" style="width: 80%"/>
+<img src="./rd.png" style="width: 80%" class="center"/>
 
 In all three cases we see that $X$ has large diagonal components, reminding us that $X$ was
 constructed as modification of the identity matrix. In case (1) we can see that $X,Y$ are products
@@ -449,29 +451,30 @@ of permutation matrices and triangular matrices. The same holds true for $Y$ in 
 
 ### Performance
 
-The performance of QR- and SVD-based Rank Decomposition are compared in this graph.
-Our implementation Rank Decomposition with LU Factorization is an order of magnitude slower.
+The performance of the three Rank Decomposition methods are compared in this graph.
 
-{{< figure src="./bench.png" title="Performance Comparison: Rank Decomposition" >}}
+<img src="./bench.png" class="center">
 
-In this experiment we computed the Rank Decomposition of randomized $n \times n$ matrices of rank $n/2$.
+The code for this benchmark can be found [here](https://github.com/HeinrichHartmann/libla/blob/master/examples/Benchmark.ipynb).
+We ran each method 5 times for each selected n and report the fastest run.
 
-From this example it can be seen, that the implemented SVD and QR methods perform nearly identical.
-The raw QR factorization is a factor of 2-3 faster than SVD on my machine, so there is a
-considerable amount of overhead caused by post-processing steps necessary for in the QR variant,
-that leave potential for optimization.
+- The run-time of Rank Decomposition via LU Factorization explodes right away. We stopped measuring
+  at n=150 since it already took over a second to complete. The reason for this is, that we had
+  to roll our own Gauss Elimination algorithm in Python. A C/Fotran implementation would be much faster.
+
+- The QR method is about twice as fast as SVD in our implementation. We checked with a profiler,
+  that >90% of the run-time is spent inside the QR/SVD calls. Based on the theoretical complexity
+  estimations, we would have expected the run-time advantage of QR to be more pronounced.
 
 ## Summary
 
-**Comparison**
+|#| Method | Complexity* | Perf. (n=1000) | Stability | Implementation |
+|-|--------|------------:|------------------:|-----------|---------------:|
+|1| RD via LU | $0.66 n^3$ |    ?  | stable in practice  | not available in LAPAC |
+|2| RD via QR | $1.16 n^3$ | ~2.0s  | stable in practice  | available |
+|3| RD via SVD | $23 n^3$                | ~3.3s  | stable | available|
 
-|#| Method | Complexity* | Stability | Implementation |
-|-|-|-:|-|-|
-|1| RD via LU Factorization | $0.66 n^3$  | stable in practice  | not available in LAPAC |
-|2| RD via QR Factorization | $1.16 n^3$ | stable in practice  | available |
-|3| RD via SVD | $23 n^3$ | stable | available|
-
-*) Formulas simplified to the case $n = m$ with $rk(A) = n/2$.
+*) For the case $n = m$ with $rk(A) = n/2$.
 
 It turns out that determining the most fundamental invariant of a matrix, it's rank, is actually a
 numerically challenging problem, that can not be directly derived from the basic matrix
@@ -479,14 +482,16 @@ factorization algorithms (LU, QR) in their common form. Instead we have to eithe
 strengthened variants, which still have theoretical deficits, or to the much more advanced Singular
 Value Decomposition.
 
-Of the three studied methods QR and SVD give practical ways to calculate a rank decomposition in the
-Python/numpy/LAPACK ecosystem. As the performance difference is minimal, and the SVD variant is more
-powerful and convenient to use, the SVD variant is to be recommended for practical purposes at this
-point in time.
+Of the three studied methods QR (with column pivoting) and SVD give practical ways to calculate a
+rank decomposition in the Python/numpy ecosystem. The performance of the QR method is better by a
+factor of two, than SVD variant.  The latter has the advantage, of yielding a more powerful
+decomposition, and has usability advantages since the vanilla scipy/SVD can be used, without
+configuration or post-processing steps.
 
-From the theoretical perspective, LDU factorization would be better fit, since it is much faster
-simple and should be well suited for practical applications. However, since the numpy/LAPAC does not
-come with a suitable LU implementation we don't have a competitive implementation at hand.
+From the theoretical perspective, LU factorization with total pivoting would be better fit, since it
+is much faster simple and should be well suited for practical applications. However, since the
+numpy/LAPACK does not come with a suitable LU implementation we don't have a competitive
+implementation at hand.
 
 ## Literature
 
