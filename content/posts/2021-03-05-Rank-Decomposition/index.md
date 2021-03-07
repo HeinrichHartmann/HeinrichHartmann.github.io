@@ -1,6 +1,6 @@
 ---
 title: Effective Rank Decomposition of Linear Maps
-date: 2021-02-23
+date: 2021-03-08
 author: Heinrich Hartmann
 location: Stemwede
 style: markdown
@@ -56,7 +56,7 @@ We continue to explain how to derive a rank decomposition using three different 
 
 It turns out, that computing the rank of a matrix in a correct, stable and efficient way is a quite
 subtle problem, that has a whole body of literature behind it. We provide implementations of all
-three methods in the Python/numpy ecosystem as part of a small library
+three methods in the Python/NumPy ecosystem as part of a small library
 [libla](https://github.com/HeinrichHartmann/libla) that is available on GitHub, and compare their
 performance.
 
@@ -201,7 +201,7 @@ $$
 **Corollary.**
 Given $P,Q,L,D_r,U$ as above, a rank decomposition is given by $Y = (P L)^{-1}$, $X = Q U^{-1} (D_r \vsum \id)^{-1}$.
 
-**Elimination Matrix.** Gauss Elimination makes use of eleminiation matrices, that geometrically
+**Elimination Matrix.** Gauss Elimination makes use of elimination matrices, that geometrically
 correspond to [shear transformations](https://en.wikipedia.org/wiki/Shear_mapping):  For vectors
 $a,b$ with $(a,a)=1$ and $(a,b) = 0$, we consider the $E_{a,b}: x \mapsto x + (a,x) b$. This is map
 defines a linear isomorphism with inverse $E_{a,-b}$.  In case $a = e_r$ and $b[r]=1$ we call
@@ -241,16 +241,16 @@ A pivoting strategy that is numerically stable was first constructed by [Chan198
 On the positive side it looks like the numeric instabilities of LDU with total pivot search are 
 do only very rarely occur in practice:
 
-> These conditions also showthat matrices which are nearly singular but which the commonly used
-> pivotingstrategies do not produce a small un „ all have a very special pattern to their
+> These conditions also show that matrices which are nearly singular but which the commonly used
+> pivoting strategies do not produce a small [residual matrix] all have a very special pattern to their
 > inversesand their smallest singular vectors. Moreover, simple permutations of these matrices will
 > produce small pivots with the usual pivoting strategies. Therefore, they are insome sense rare and
 > relatively harmless. -- [Chan1984]
 
 **Implementation.**
-Unfortunately LU decomposition with total pivoting is not implemented in LAPAC, and hence not
-available in python/numpy.  Similarly, I am not aware of an implementation of Rank-Revealing LU
-decomposition that can be effectively used from python.
+Unfortunately LU decomposition with total pivoting is not implemented in LAPACK, and hence not
+available in Python/NumPy.  Similarly, I am not aware of an implementation of Rank-Revealing LU
+decomposition that can be effectively used from Python.
 
 **References**
 
@@ -348,17 +348,17 @@ numeric instabilities, and give a true "rank revealing QR decomposition".
 
 On the positive side it looks like the numeric instabilities do only very rarely occur in practice:
 
-> Nevertheless, in practice, small trailing R-suhmatrices almost always emerge that correlate well
+> Nevertheless, in practice, small trailing R-submatrices almost always emerge that correlate well
 > with the underlying rank. In other words, it is almost always the case that R_k is small if A has
 > rank k. [Golub1983, p.279]
 
-**Implementation.**  QR factorization with column pivoting is implemented in LAPAC, and available in
-python/numpy.  I am not aware of an implementation of Rank-Revealing QR factorization [Chan1987]
+**Implementation.**  QR factorization with column pivoting is implemented in LAPACK, and available in
+Python/NumPy.  I am not aware of an implementation of Rank-Revealing QR factorization [Chan1987]
 that can be effectively used from python. Is it also not clear that such an implementation would be
 desirable to use in practice, since it is much more expensive to compute and has little practical
 advantage.
 
-* LAPAC - xGEQP3 Implementation  
+* LAPACK - xGEQP3 Implementation  
   [http://www.netlib.org/lapack/explore-html/dd/d9a/group__double_g_ecomputational_...](http://www.netlib.org/lapack/explore-html/dd/d9a/group__double_g_ecomputational_ga1b0500f49e03d2771b797c6e88adabbb.html#ga1b0500f49e03d2771b797c6e88adabbb)
 
 * SciPy Documentation - scipy.linalg.qr  
@@ -406,11 +406,11 @@ rank decomposition, the SVD also calculates the eigenvalues of $A A^t$ and $A^t 
 The "Golub-Reinsch" SVD algorithm presented in [Golub1983, p.492], has complexity $4m^2n + 8mn^2 + 9n^3$,
 which in the case of a square matrix reduces to $21 n^3$.
 
-**Implementation** SVD is implemented in LAPAC, and available in numpy/scipy.  Scipy's linalg.svd
+**Implementation** SVD is implemented in LAPACK, and available in NumPy/SciPy.  SciPy's linalg.svd
 makes use of the LAPACK DGSDD function by default. It is not clear to me which abstract SVD
 algorithm is implemented by this function.
 
-* Scipy -- scipy.linalg.svd  
+* SciPy -- scipy.linalg.svd  
   https://docs.scipy.org/doc/scipy/reference/generated/scipy.linalg.svd.html#scipy.linalg.svd
 
 * LAPACK DGESDD Implementation  
@@ -428,7 +428,7 @@ complicated algorithm (that I personally do not understand) that is less perform
 
 ## Rank Decomposition Implementations for Python
 
-Implementations of all three Rank Decomposition algorithms in the Python/numpy environment
+Implementations of all three Rank Decomposition algorithms in the Python/NumPy environment
 are provided as part of the new [libla](https://github.com/HeinrichHartmann/libla/) library.
 Pointers:
 
@@ -470,7 +470,7 @@ We ran each method 5 times for each selected n and report the fastest run.
 
 |#| Method | Complexity* | Perf. (n=1000) | Stability | Implementation |
 |-|--------|------------:|------------------:|-----------|---------------:|
-|1| RD via LU | $0.66 n^3$ |    ?  | stable in practice  | not available in LAPAC |
+|1| RD via LU | $0.66 n^3$ |    ?  | stable in practice  | not available in LAPACK |
 |2| RD via QR | $1.16 n^3$ | ~2.0s  | stable in practice  | available |
 |3| RD via SVD | $23 n^3$                | ~3.3s  | stable | available|
 
@@ -483,14 +483,14 @@ strengthened variants, which still have theoretical deficits, or to the much mor
 Value Decomposition.
 
 Of the three studied methods QR (with column pivoting) and SVD give practical ways to calculate a
-rank decomposition in the Python/numpy ecosystem. The performance of the QR method is better by a
-factor of two, than SVD variant.  The latter has the advantage, of yielding a more powerful
-decomposition, and has usability advantages since the vanilla scipy/SVD can be used, without
+rank decomposition in the Python/NumPy ecosystem. The performance of the QR method is better by a
+factor of two, compared to the SVD variant.  The latter has the advantage of yielding a more
+powerful decomposition, and more convenience since the vanilla SciPy/SVD can be used, without
 configuration or post-processing steps.
 
 From the theoretical perspective, LU factorization with total pivoting would be better fit, since it
 is much faster simple and should be well suited for practical applications. However, since the
-numpy/LAPACK does not come with a suitable LU implementation we don't have a competitive
+NumPy/LAPACK does not come with a suitable LU implementation we don't have a competitive
 implementation at hand.
 
 ## Literature
