@@ -37,22 +37,25 @@ $$
 The rank decomposition of a $m \times n$ matrix $A$ is an fundamental result in Linear Algebra, that
 tells us that "up to choice of bases $A$ is equivalent to a diagonal matrix with $rk(A)$ ones on the
 diagonal". This result is of great value for both theoretical development and practical computations
-in linear algebra. When performing calculations by hand, the rank decomposition is commonly derived
-using Gauss Elimination.  Curiously, introductory treatments of Numerical Linear Algebra do not use
-or mention this result, but focus on Matrix Factorizations (LU, QR, Cholesky, etc.) instead,
-which use the same methods, look very similar but do not quite yield a rank decomposition.
+in linear algebra. When performing calculations by hand, the rank decomposition is easily derived
+using Gauss Elimination.  Curiously, introductory treatments of Numerical Linear Algebra that I am
+aware of do not use or mention this result early on, but focus instead on Matrix Decompositions (LU,
+QR, Cholesky, etc.), which use the same methods, look very similar but do not quite yield a rank
+decomposition.
 
 In this note we are going to study the rank decomposition from the theoretical and practical
-perspective.  We give a short proof of the abstract result, and sketch a number of applications. We
-continue to explain how to derive a rank decomposition using three different numeric methods:
+perspective.  We give a short proof of the abstract result, and sketch a number of applications. 
+We continue to explain how to derive a rank decomposition using three different numeric methods:
 
-1. Gauss Elimination in the form of LDU Factorization with total pivoting
-2. QR-Factorization with column pivoting
+1. LU-Decomposition with total pivoting (Gauss Elimination)
+2. QR-Decomposition with column pivoting
 3. Singular Value Decomposition (SVD)
 
-We provide implementations of all three methods in the Python/numpy ecosystem as part of a small
-library [libla](https://github.com/HeinrichHartmann/libla) that is available on GitHub,
-and compare their performance.
+It turns out, that computing the rank of a matrix in a correct, stable and efficient way is a quite
+subtle problem, that has a whole body of literature behind it. We provide implementations of all
+three methods in the Python/numpy ecosystem as part of a small library
+[libla](https://github.com/HeinrichHartmann/libla) that is available on GitHub, and compare their
+performance.
 
 ## Abstract Rank Decomposition
 
@@ -74,8 +77,8 @@ So $D$ is the $m \times n$ matrix with $r$-diagonal entries $1$ and remaining en
 The number $r$ is uniquely determined by $A$ and is called the **rank** of $A$.
 {{% /env %}}
 
-I was not able to find a proof of this well known classification result on Wikipddia, so we give a
-short (non-constructive) proof here.
+This result can be found in various forms in the literature, e.g. [Matrix
+Equivalence](https://en.wikipedia.org/wiki/Matrix_equivalence), [Smith Normal Form](https://en.wikipedia.org/wiki/Smith_normal_form) on Wikipedia, [Gantmacher1961, Chapter 5]. I personally learned this from [Kowalsky1972, Theorem 16.1].
 
 **Proof.**
 Let $c_1,\dots,c_r$ be a basis of $Im(A)$.
@@ -90,7 +93,7 @@ Let $Y$ be the inverse of the matrix with columns $b_i$, and $X$ the matrix with
 Then $X D Y b_i = X D e_i = X e_i = c_i$ for $i \leq r$ and $X D Y b_i = 0$ otherwise.
 QED.
 
-**Applications**
+**Applications.**
 Once such a representation is established, many linear algebra constructions become trivial.
 Using the transformations $X,X^{-1},Y,Y^{-1}$ we can translate problems between $A$ and 
 $D$
@@ -114,32 +117,19 @@ back and forth. Since $D$ is a diagonal matrix, most questions are readily solva
 
 This list of applications should convince the reader that such a decomposition is of high practical value.
 
+**References**
+
+* [Kowalsky1972] H.‐J. Kowalsky, Lineare Algebra. Walter de Gruyter (1972)  
+  [https://www.amazon.com/Lineare-Algebra-H-J-Kowalsky/dp/3110179636/ref=sr_1_1?dch...](https://www.amazon.com/Lineare-Algebra-H-J-Kowalsky/dp/3110179636/ref=sr_1_1?dchild=1&keywords=Kowalsky+Lineare+Algebra&qid=1615119813&s=books&sr=1-1)
+
+* [Gantmacher1961] Gantmacher et.al -- The Theory of Matrices (1961)  
+  https://api.semanticscholar.org/126123922 https://dx.doi.org/10.2307/3612823
+
 ## Rank Decomposition Algorithms
 
-The principal difficulty that we face when numerically computing a rank decomposition is numeric
-stability. As a small perturbation of any matrix has full rank, we must be careful not to
-mis-interpret "accidental" linear independence, and allow for some "slack" when deriving the rank.
-
-It turns out, that there is a significant amount of literature that is devoted to stable numeric
-algorithms to determine the rank of a matrix. Keywords to search are "rank revealing" matrix
-factorization, "rank deficit problems". Here are some pointers to the print literature:
-
-* [Hansen1987] P. Hansen -- Rank-Deficient and Discrete Ill-Posed Problems (1987)  
-  https://api.semanticscholar.org/CorpusID:122731599 https://dx.doi.org/10.1137/1.9780898719697
-
-* [Golub1983] G. Golub -- Matrix computations (1983) / Chapter 5.4.2  
-  https://api.semanticscholar.org/CorpusID:126299280 https://dx.doi.org/10.2307/3621013
-
-In this note, we will visit the following three approaches that overcome these difficulties:
-
-1. Gauss Elimination in the form of "Rank Revealing" LDU Factorization with total pivoting
-2. Rank-Revealing QR-Factorization with column pivoting
-3. Singular Value Decomposition (SVD)
-
-### A counter example
-
-In order to see, that the usual LU, QR, etc. algorithms are not sufficient to derive
-a rank decomposition consider a block-matrix $A \in M(2n,2n)$ of the form
+In order to see that the popular [LU-](https://en.wikipedia.org/wiki/LU_decomposition) and
+[QR-Decomposition](https://en.wikipedia.org/wiki/QR_decomposition) methods are not sufficient to
+derive a rank decomposition consider a block-matrix $A \in M(2n,2n)$ of the form
 
 $$
 A = \begin{bmatrix}
@@ -147,22 +137,44 @@ A = \begin{bmatrix}
 0 & 0 \\\\
 \end{bmatrix}.
 $$
-with $B \in M(n)$. This is a already upper triangular matrix, so the LU and QR factorizations are trivial.
+
+with $B \in M(n)$. This is a already upper triangular matrix, so the LU and QR decompositions are trivial.
 Also note that the diagonal of $A$ has only zero entries, so we might be tempted to conclude that $rk(A) = 0$.
 However, we clearly have $rk(A) = rk(B)$. So depending on $R$ this matrix may have any rank between in $0$ and $n$.
 
 This example shows, that:
 
-* LU and QR factorization can not be used directly to compute a rank decomposition
+* The vanilla LU and QR decomposition methods can not be used directly to compute a rank decomposition
 * The rank of a triangular matrix is *NOT* determined by it's diagonal entries
 
-Instead, we need to consider "rank revealing" variants of those algorithms, that further reduce a matrix
-that is already triangular.
+Instead, we need to consider "rank revealing" variants of those algorithms, that further reduce a
+matrix that is already triangular. In this note, we will visit the following three approaches that
+follow this approach:
 
-### 1. Rank Decomposition via Gauss Elimination (LDU)
+1. LU-Decomposition with total pivoting (Gauss Elimination)
+2. QR-Decomposition with column pivoting
+3. Singular Value Decomposition (SVD)
+
+### Numeric Instabilities
+
+The principal difficulty that we face when numerically computing a rank decomposition are numeric
+instabilities. As a small perturbation of any matrix has full rank, we must be careful not to
+misinterpret "accidental" linear independence, and allow for some "slack" when deriving the rank.
+
+It turns out, that there is a significant amount of literature that is devoted to stable numeric
+algorithms to determine the rank of a matrix. Keywords to search are "rank revealing" matrix
+decomposition, "rank deficit problems". Here are some pointers to the literature:
+
+* [Hansen1987] P. Hansen -- Rank-Deficient and Discrete Ill-Posed Problems (1987)  
+  https://api.semanticscholar.org/CorpusID:122731599 https://dx.doi.org/10.1137/1.9780898719697
+
+* [Golub1983] G. Golub -- Matrix computations (1983) / Chapter 5.4.2  
+  https://api.semanticscholar.org/CorpusID:126299280 https://dx.doi.org/10.2307/3621013
+
+### 1. Rank Decomposition via LU Decomposition (Gauss Elimination)
 
 {{% env %}}
-**Theorem (LDU factorization with total pivoting)**
+**Theorem (LDU decomposition with total pivoting)**
 For every matrix $A \in M(m,n)$, we will construct
 
 1. a (row) permutation matrix $P \in M(m)$
@@ -183,7 +195,7 @@ D_r & 0   \\\\
 $$
 {{% /env %}}
 
-**Corollary**
+**Corollary.**
 Given $P,Q,L,D_r,U$ as above, a rank decomposition is given by $Y = (P L)^{-1}$, $X = Q U^{-1} (D_r \vsum \id)^{-1}$.
 
 **Elimination Matrix.** Gauss Elimination makes use of eleminiation matrices, that geometrically
@@ -192,8 +204,8 @@ $a,b$ with $(a,a)=1$ and $(a,b) = 0$, we consider the $E_{a,b}: x \mapsto x + (a
 defines a linear isomorphism with inverse $E_{a,-b}$.  In case $a = e_r$ and $b[r]=1$ we call
 $E_{a,b}$ the elimination matrix $E^r_b$.
 
-**Algorithm** We only give a sketch of the Algorithm here since the ideas are well known. More
-details can be found e.g. in [Trefethen1997, Lecture 20]
+**Algorithm.** We only give a sketch of the Algorithm here since the ideas are well known. More
+details can be found e.g. in [Trefethen1997, Lecture 20], [Golub1983, p.132],
 
 1. We proceed recursively. If either $m = 0$ or $n = 0$ we are done.
 2. Select the element $p = A[i,j]$ with largest absolute value as pivot element, and apply
@@ -202,14 +214,19 @@ details can be found e.g. in [Trefethen1997, Lecture 20]
 3. Eliminate the first column using an elimination matrix $E^1_b$ acting on the left.
 4. Eliminate the first row using a transposed elimination matrix $E^{1t}_c$ acting on the right.
 5. The reduced matrix has block-diagonal form $A = p \vsum B$.  Recursively we can assume that we have
-   a factorization for $B$ that can be easily be extended to a factorization of the reduced $A$. 
-6. To arrive at a factorization of the original matrix from here, we exploit the fact that that for an
+   a decomposition for $B$ that can be easily be extended to a decomposition of the reduced $A$. 
+6. To arrive at a decomposition of the original matrix from here, we exploit the fact that that for an
    elimination matrix $E$ and a permutation matrix $P$, we have $E P = P' E'$ for another elimination
    matrix $E'$ and permutation matrix $P'$.
 
 FIN.
 
-**Discussion** The described algorithm computes a rank decomposition under exact arithmetic and
+**Complexity.** For a square matrix the presented algorithm requires $2/3 n^3 = 0.66 n^3$ floating
+point operations [Golub1983, p.132].  The global search for a pivot element involves a significant
+overhead of $O(n^3)$ comparisons.
+
+
+**Discussion.** The described algorithm computes a rank decomposition under exact arithmetic and
 straight forward and allows efficient implementation.
 
 By choosing the largest element in the matrix as pivot, obvious error amplifications are avoided.
@@ -227,33 +244,30 @@ do only very rarely occur in practice:
 > produce small pivots with the usual pivoting strategies. Therefore, they are insome sense rare and
 > relatively harmless. -- [Chan1984]
 
-**Implementation**
-
-Unfortunately LU factorization with total pivoting is not implemented in LAPAC, and hence not
+**Implementation.**
+Unfortunately LU decomposition with total pivoting is not implemented in LAPAC, and hence not
 available in python/numpy.  Similarly, I am not aware of an implementation of Rank-Revealing LU
-factorization that can be effectively used from python.
+decomposition that can be effectively used from python.
 
 **References**
 
-* [Trefethen1997] L. Trefethen, David Bau -- Numerical Linear Algebra (1997)  
-  https://api.semanticscholar.org/CorpusID:221907318 https://dx.doi.org/10.1201/9781315273693-7
-
-* [Peters1970] G. Peters,  Wilkinson - The least-squares  problem  and  pseudo-inverses
+* [Peters1970] G. Peters,  Wilkinson - The least-squares  problem  and  pseudo-inverses (1970)  
   https://api.semanticscholar.org/CorpusID:44974854
 
-* [Pan2000] Pan. On the existence and computation of rank-revealing LU factorizations
-  https://api.semanticscholar.org/CorpusID:121188547
-
-* [Hwang1992] Hwang, T., Lin, W., & Yang, E.K. (1992). Rank revealing LU factorizations.
-  https://api.semanticscholar.org/CorpusID:122859959
-
-* [Chan1984] Chan, T. (1984). On the existence and computation of $LU$-factorizations with small pivots
+* [Chan1984] Chan, T. (1984). On the existence and computation of $LU$-factorizations with small pivots (1984)  
   https://api.semanticscholar.org/CorpusID:121539458
 
-### 2. Rank Decomposition via QR-Factorization (QR)
+* [Hwang1992] Hwang, T., Lin, W., & Yang, E.K. (1992). Rank revealing LU factorizations (1992)  
+  https://api.semanticscholar.org/CorpusID:122859959
+
+* [Pan2000] Pan. On the existence and computation of rank-revealing LU factorizations (2000)  
+  https://api.semanticscholar.org/CorpusID:121188547
+
+
+### 2. Rank Decomposition via QR-Decomposition (QR)
 
 {{% env %}}
-**Theorem (QR factorization with Column Pivoting, [Golub83,5.4.2])**
+**Theorem (QR decomposition with Column Pivoting, [Golub83,5.4.2])**
 For every matrix $A \in M(m,n)$ there is
 
 1. a (column) permutation matrix $P \in M(n)$
@@ -275,14 +289,14 @@ $$
 
 
 **Corollary:**
-Get rank decomposition via $X = Q^t$, $Y = P^t * R = 
+Get rank decomposition via $X = Q^t$, $Y = P^t * 
 \begin{bmatrix}
   R_{11}^{-1} & -R_{11}^{-1} R_{12}   \\\\
             0 & \id_{n-r} \\\\
-\end{bmatrix}
-$.
+\end{bmatrix}$.
+As $R_{11}$ is an upper-triangular matrix, the inverse can be computed with $O(n^2)$ operations using backward substitution.
 
-**Householder Reflections** Similar to the "shear" transformations used in Gauss Elimination, QR
+**Householder Reflections.** Similar to the "shear" transformations used in Gauss Elimination, QR
 Decomposition can be constructed using simple rank-1 modifications to the identity matrix.  For a
 vector $a \in \IR^n$ with $(a,a) = 1$ the map $R_a(x) = x - 2(x,a)a$ reflects a vector $x$ at the
 hyperplane $a^{\perp}$. Householders [Householder1958] observation was, that for any given vector
@@ -291,10 +305,8 @@ corresponding reflection matrix is called Householder matrix $H^1_v$, and has th
 $H^1_v(v) = |v| e_1$.
 
 
-**Algorithm**
-
-The construction is similar to the Gauss Elimination process described above.
-We again give a sketch of the construction, for more details see [Golub1983, Chapter 5].
+**Algorithm.** The construction is similar to the Gauss Elimination process described above.  We
+again give a sketch of the construction, for more details see [Golub1983, Chapter 5].
 
 1. We proceed recursively. If $n=0$ or $m=0$ we are done.
 2. Identify a column $v = A[:,i]$ with maximal norm $|v|^2 = (v, v)$.
@@ -304,22 +316,21 @@ We again give a sketch of the construction, for more details see [Golub1983, Cha
    The matrix $H_v^1$ is orthogonal, and the transformed column vector $w = H_v^1AP[:,1]$ has
    only a single entry $w[1] = |v|$.
 5. The reduced matrix has block-diagonal form $p \vsum B$.  Recursively we can assume that we have
-   a factorization for $B = Q' R' P'$. This factorization can be easily extended to $p \vsum B$.
-6. The factorization of the original matrix is obtained by composition $A = H^t Q' R' P' P^t$.
+   a decomposition for $B = Q' R' P'$. This decomposition can be easily extended to $p \vsum B$.
+6. The decomposition of the original matrix is obtained by composition $A = H^t Q' R' P' P^t$.
 
 FIN.
 
-**Remark:**
-The geometry behind the QR decomposition is quite beautiful. There are three different
-constructions, which are all numerically effective and geometrically interesting:
 
-1. Householder Reflections (described above)
-2. Givens Rotations
-3. Gram Schmidt Orthogonalization Process
+**Complexity.**
+The presented algorithm requires $4mnr-2r^2(m+n)+4r^3/3$ floating point operations (flops) [Golub1983, p.278],
+where $r = rk(A)$. For the case of a square matrix of rank $n/2$, we get $7/6 n^3 = 1.16 n^3$ flops.
 
-While 1,2 pursue the strategy of "orthogonal triangularization", method 3 proceeds in the reverse
-direction of "triangular orthogonalization". I only learned while writing this blog, that the
-straight forward Gram-Schmidt orthogonalization process is indeed a "reverse-gear QR factorization".
+**Remark:** The geometry behind the QR decomposition is quite beautiful. There are three different
+constructions, which are all numerically effective and geometrically interesting: (1) Householder
+Reflections (described above) (2) Givens Rotations (3) Gram Schmidt Orthogonalization Process.
+While methods 1,2 pursue the strategy of "orthogonal triangularization", method 3 proceeds in the
+reverse direction of "triangular orthogonalization".
 
 **Discussion** The described algorithm computes a rank decomposition under exact arithmetic and
 straight forward and allows efficient implementation.
@@ -338,18 +349,23 @@ On the positive side it looks like the numeric instabilities do only very rarely
 > with the underlying rank. In other words, it is almost always the case that R_k is small if A has
 > rank k. [Golub1983, p.279]
 
-**Implementation**
+**Implementation.**  QR factorization with column pivoting is implemented in LAPAC, and available in
+python/numpy.  I am not aware of an implementation of Rank-Revealing QR factorization [Chan1987]
+that can be effectively used from python. Is it also not clear that such an implementation would be
+desirable to use in practice, since it is much more expensive to compute and has little practical
+advantage.
 
-Unfortunately QR factorization with column pivoting is implemented in LAPAC, and available in python/numpy.
-I am not aware of an implementation of Rank-Revealing QR factorization that can be effectively used from python.
+* LAPAC - xGEQP3 Implementation  
+  [http://www.netlib.org/lapack/explore-html/dd/d9a/group__double_g_ecomputational_...](http://www.netlib.org/lapack/explore-html/dd/d9a/group__double_g_ecomputational_ga1b0500f49e03d2771b797c6e88adabbb.html#ga1b0500f49e03d2771b797c6e88adabbb)
 
-**References**
+* SciPy Documentation - scipy.linalg.qr  
+  https://docs.scipy.org/doc/scipy/reference/generated/scipy.linalg.qr.html
+
+**References.**
 
 * [Householder1958] A. Householder -- Unitary Triangularization of a Nonsymmetric Matrix (1958)  
-  https://api.semanticscholar.org/CorpusID:9858625 https://dx.doi.org/10.1145/320941.320947
-
-* [Golub1983] G. Golub -- Matrix computations (1983)  
-  https://api.semanticscholar.org/CorpusID:126299280 https://dx.doi.org/10.2307/3621013
+  https://api.semanticscholar.org/CorpusID:9858625 https://dx.doi.org/10.1145/320941.320947  
+  Comment: Short classic (3p). Worth checking out.
 
 * [Lawson1995] C. Lawson, R. Hanson -- Solving least squares problems (1995)  
   https://api.semanticscholar.org/CorpusID:122862057 https://dx.doi.org/10.1137/1.9781611971217
@@ -371,47 +387,65 @@ Where $\Sigma \in M(m,n)$ is a matrix with diagonal entries $\sigma_1 \geq \sigm
 and $\sigma_i = 0$ for $i > r$, $r = rk(A)$ and entries $0$ outside of the diagonal.
 {{% /env %}}
 
-This result is proved by studying the images of the $n$-dimensional unit-sphere under the linear
-defined by $A$, and applying the real-analytical [Lagrange Multiplier
-Criterion](https://en.wikipedia.org/wiki/Lagrange_multiplier) criterion. See
-[wikipedia](https://en.wikipedia.org/wiki/Singular_value_decomposition).
+**Proof.** A quick proof of this result can be obtained by studying the images of the
+$n$-dimensional unit-sphere under the linear defined by $A$, and applying the real-analytical
+[Lagrange Multiplier Criterion](https://en.wikipedia.org/wiki/Lagrange_multiplier) criterion. See
+[wikipedia](https://en.wikipedia.org/wiki/Singular_value_decomposition) for more details.
 
-**Corollary** Given matrices $U,\Sigma,V$ as above, we obtain a rank-decomposition as $X = U^t, Y = V^t D$, 
+**Corollary.** Given matrices $U,\Sigma,V$ as above, we obtain a rank-decomposition as $X = U^t, Y = V^t D$, 
 where $D$ is a diagonal $m \times m$ matrix with diagonal entries $\sigma^{-1}_i, i<r$ and $1$ else.
 
-A numeric calculation of the SVD is rather involved and makes use of iterative methods and
-Eigenvalue calculations.  The necessity of these complications is plausible, since in addition to a
+**Algorithm.** A numeric calculation of the SVD is rather involved and makes use of iterative methods and
+eigenvalue calculations.  The necessity of these complications is plausible, since in addition to a
 rank decomposition, the SVD also calculates the eigenvalues of $A A^t$ and $A^t A$.
 
-**Implementation** SVD is implemented in LAPAC, and available in numpy/scipy.
+**Complexity.**
+The "Golub-Reinsch" SVD algorithm presented in [Golub1983, p.492], has complexity $4m^2n + 8mn^2 + 9n^3$,
+which in the case of a square matrix reduces to $21 n^3$.
+
+**Implementation** SVD is implemented in LAPAC, and available in numpy/scipy.  Scipy's linalg.svd
+makes use of the LAPACK DGSDD function by default. It is not clear to me which abstract SVD
+algorithm is implemented by this function.
+
+* Scipy -- scipy.linalg.svd  
+  https://docs.scipy.org/doc/scipy/reference/generated/scipy.linalg.svd.html#scipy.linalg.svd
+
+* LAPACK DGESDD Implementation  
+  [http://www.netlib.org/lapack/explore-html/d1/d7e/group__double_g_esing_gad8e0f1c...](http://www.netlib.org/lapack/explore-html/d1/d7e/group__double_g_esing_gad8e0f1c83a78d3d4858eaaa88a1c5ab1.html#gad8e0f1c83a78d3d4858eaaa88a1c5ab1)
+
+* LAPACK Manual -- Singular Value Decomposition  
+  http://www.netlib.org/lapack/lug/node53.html
 
 **Discussion** The SVD of a matrix is a very powerful decomposition that yields a rank decomposition
-and much more (orthogonal bases, eigenvalues of $A*A$). SVD implementations are numerically stable
-readily available.
+and much more (orthogonal bases, eigenvalues of $A^*A$). SVD implementations are numerically stable
+readily available, and in the same complexity class as Gauss Elimination and QR factorization $O(n^3)$.
 
 The price we have to pay for additional nice properties and guaranteed numeric stability is more
 complicated algorithm (that I personally do not understand) that is less performant.
 
-## Implementing Rank Decomposition in Python
+## Rank Decomposition Implementations for Python
 
-Example implementations based on Python/numpy of all three variants are provided as part of the new
-[libla](https://github.com/HeinrichHartmann/libla/) library on GitHub:
+Implementations of all three Rank Decomposition algorithms in the Python/numpy environment
+are provided as part of the new [libla](https://github.com/HeinrichHartmann/libla/) library.
+Pointers:
 
-* via Gauss Elimination https://github.com/HeinrichHartmann/libla/blob/0.0.1/main.py#L299  
+* [Rank Decomposition via LU Decomposition](https://github.com/HeinrichHartmann/libla/blob/0.0.1/main.py#L299), using a manual
+  implementation of Gauss Elimination (SLOW).
 
-* via QR Decomposition https://github.com/HeinrichHartmann/libla/blob/0.0.1/main.py#L374
+* [Rank Decomposition via QR Decomposition](https://github.com/HeinrichHartmann/libla/blob/0.0.1/main.py#L374), based on `scipy.linalg.qr`.
 
-* via SVD https://github.com/HeinrichHartmann/libla/blob/0.0.1/main.py#L406
+* [Rank Decomposition via SVD](https://github.com/HeinrichHartmann/libla/blob/0.0.1/main.py#L406), based on `scipy.linalg.svd`.
 
-Since LDU factorization with total pivot search is not implemented in LAPACK/numpy, we roll our own
-Gauss Elimination algorithm in pure python (SLOW!).
 
-### Numeric Example
-
+**Numeric Example**
 The following illustration shows plots (python/matplotlib/imshow) of the rank decomposition
 of a random $20 \times 50$ matrix of rank 10.
 
-<img src="./rd.png"/>
+<img src="./rd.png" style="width: 80%"/>
+
+In all three cases we see that $X$ has large diagonal components, reminding us that $X$ was
+constructed as modification of the identity matrix. In case (1) we can see that $X,Y$ are products
+of permutation matrices and triangular matrices. The same holds true for $Y$ in case (2).
 
 ### Performance
 
@@ -427,34 +461,43 @@ The raw QR factorization is a factor of 2-3 faster than SVD on my machine, so th
 considerable amount of overhead caused by post-processing steps necessary for in the QR variant,
 that leave potential for optimization.
 
-# Conclusion
+## Summary
 
-| Method | Complexity | Stability | Implementation |
-|-|-|-|-|
-| RD via LU Decomposition | $2n^3/3$ [Golub1983p.132]  | stable in practice  | not available in LAPAC |
-| RD via QR Decomposition | $4mnr - 2 r^2 (m + n) + 4r^3/3$ [Golub1983, p.278] | stable in practice  | available |
-| RD via SVD | $4m^2n + 8mn^2 + 9n^3$ [Golub1983,p.439] | proven to be stable | available|
+**Comparison**
 
-It turns out that determining the most fundamental invariant of a matrix: it's rank, is a
+|#| Method | Complexity* | Stability | Implementation |
+|-|-|-:|-|-|
+|1| RD via LU Factorization | $0.66 n^3$  | stable in practice  | not available in LAPAC |
+|2| RD via QR Factorization | $1.16 n^3$ | stable in practice  | available |
+|3| RD via SVD | $23 n^3$ | stable | available|
+
+*) Formulas simplified to the case $n = m$ with $rk(A) = n/2$.
+
+It turns out that determining the most fundamental invariant of a matrix, it's rank, is actually a
 numerically challenging problem, that can not be directly derived from the basic matrix
 factorization algorithms (LU, QR) in their common form. Instead we have to either resort to
-strengthened variants or to the more advanced SVD decomposition.
+strengthened variants, which still have theoretical deficits, or to the much more advanced Singular
+Value Decomposition.
 
-Of the three studied methods RRQR and SVD give practical ways to calculate a rank decomposition in
-the Python/numpy/LAPACK ecosystem. As the performance difference is minimal, and the SVD variant is
-more powerful and convenient to use, the SVD variant is to be recommended for practical purposes at
-this point in time.
+Of the three studied methods QR and SVD give practical ways to calculate a rank decomposition in the
+Python/numpy/LAPACK ecosystem. As the performance difference is minimal, and the SVD variant is more
+powerful and convenient to use, the SVD variant is to be recommended for practical purposes at this
+point in time.
 
-From the theoretical perspective, RRLDU factorization would be an effective method, that is faster
-and simple and well suited for practical applications. Since the numpy/LAPAC does not come with a
-limited LU implementation that is not "rank revealing" we don't have a competitive implementation
-available.
+From the theoretical perspective, LDU factorization would be better fit, since it is much faster
+simple and should be well suited for practical applications. However, since the numpy/LAPAC does not
+come with a suitable LU implementation we don't have a competitive implementation at hand.
 
+## Literature
 
-# References
+* [Trefethen1997] L. Trefethen, David Bau -- Numerical Linear Algebra (1997)  
+  https://api.semanticscholar.org/CorpusID:221907318 https://dx.doi.org/10.1201/9781315273693-7  
+  Comment: Excellent introductory book!
 
 * [Golub1983] G. Golub -- Matrix computations (1983)  
-  https://api.semanticscholar.org/CorpusID:126299280 https://dx.doi.org/10.2307/3621013
+  https://api.semanticscholar.org/CorpusID:126299280 https://dx.doi.org/10.2307/3621013  
+  Comment: Advanced reference with lot's of pointers to the literature.
 
 * [Hansen1987] P. Hansen -- Rank-Deficient and Discrete Ill-Posed Problems (1987)  
-  https://api.semanticscholar.org/CorpusID:122731599 https://dx.doi.org/10.1137/1.9780898719697
+  https://api.semanticscholar.org/CorpusID:122731599 https://dx.doi.org/10.1137/1.9780898719697  
+  Comment: A whole text-book on the larger topic.
