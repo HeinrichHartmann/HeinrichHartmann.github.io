@@ -20,6 +20,8 @@ jobs:
           path: public
       - name: build website
         uses: jakejarvis/hugo-build-action@v0.80.0
+        with:
+          args: --buildFuture
       - name: Push update
         run: |
           cd public

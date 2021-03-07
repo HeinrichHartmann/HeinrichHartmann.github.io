@@ -37,10 +37,10 @@ OLD_BLOGS=\
 
 .PHONY: build
 build:
-	docker run --rm -v $$PWD:/srv/hugo yanqd0/hugo hugo
+	docker run --rm -v $$PWD:/srv/hugo yanqd0/hugo hugo --buildFuture
 
 serve:
-	docker run --rm -p 1313:1313 -v $$PWD:/srv/hugo yanqd0/hugo hugo server --bind 0.0.0.0
+	docker run --rm -p 1313:1313 -v $$PWD:/srv/hugo yanqd0/hugo hugo server --buildFuture --bind 0.0.0.0
 
 .PHONY: import
 import:
