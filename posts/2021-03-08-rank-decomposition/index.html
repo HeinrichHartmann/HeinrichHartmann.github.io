@@ -1360,7 +1360,7 @@ performance.</p>
 <p><strong>Proposition (Rank Decomposition).</strong> For every matrix $m \times n$ matrix $A \in M(m,n)$ over a field,
 there exists invertible matrices $X \in M(m), Y\in M(n)$ so that</p>
 <p>$$
-A = X * D_r * Y,
+A = X \cdot D \cdot Y,
 \qtext{where}
 D =
 \begin{bmatrix}
@@ -1475,7 +1475,7 @@ For every matrix $A \in M(m,n)$, we will construct</p>
 </ol>
 <p>so that:</p>
 <p>$$
-A = P * L * D * U * Q,
+A = P \cdot L \cdot D \cdot U \cdot Q,
 \qtext{where}
 D = \begin{bmatrix}
 D_r &amp; 0   \\<br>
@@ -1560,7 +1560,7 @@ For every matrix $A \in M(m,n)$ there is</p>
 </ol>
 <p>so that:</p>
 <p>$$
-A = Q * R * P,
+A = Q \cdot R \cdot P,
 \qtext{where}
 R = \begin{bmatrix}
 R_{11} &amp; R_{12}   \\<br>
@@ -1569,7 +1569,7 @@ R_{11} &amp; R_{12}   \\<br>
 $$</p>
 </div>
 <p><strong>Corollary:</strong>
-Get rank decomposition via $X = Q^t$, $Y = P^t *
+Get rank decomposition via $X = Q^t$, $Y = P^t \cdot
 \begin{bmatrix}
 R_{11}^{-1} &amp; -R_{11}^{-1} R_{12}   \\<br>
 0 &amp; \id_{n-r} \\<br>
@@ -1656,7 +1656,7 @@ Comment: Short classic (3p). Worth checking out.</p>
 For every matrix $X \in M(m,n)$ with entries in the real numbers $\IR$,
 there are orthogonal matrices $U \in M(n), V \in M(m)$ so that</p>
 <p>$$
-A = U * \Sigma * V
+A = U \cdot \Sigma \cdot V
 $$
 Where $\Sigma \in M(m,n)$ is a matrix with diagonal entries $\sigma_1 \geq \sigma_2, \dots, \sigma_r &gt; 0$
 and $\sigma_i = 0$ for $i &gt; r$, $r = rk(A)$ and entries $0$ outside of the diagonal.</p>
@@ -1726,7 +1726,7 @@ We ran each method 5 times for each selected n and report the fastest run.</p>
 <li>
 <p>The run-time of Rank Decomposition via LU Factorization explodes right away. We stopped measuring
 at n=150 since it already took over a second to complete. The reason for this is, that we had
-to roll our own Gauss Elimination algorithm in Python. A C/Fotran implementation would be much faster.</p>
+to roll our own Gauss Elimination algorithm in Python. A C/Fortran implementation would be much faster.</p>
 </li>
 <li>
 <p>The QR method is about twice as fast as SVD in our implementation. We checked with a profiler,
@@ -1806,6 +1806,15 @@ Comment: Advanced reference with lot&rsquo;s of pointers to the literature.</p>
 Comment: A whole text-book on the larger topic.</p>
 </li>
 </ul>
+<h2 id="comments">Comments</h2>
+<script src="https://utteranc.es/client.js"
+        repo="HeinrichHartmann/comments"
+        issue-term="title"
+        label="Comment"
+        theme="github-light"
+        crossorigin="anonymous"
+        async>
+</script>
 
       </div>
     </article>
