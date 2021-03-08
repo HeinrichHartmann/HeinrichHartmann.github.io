@@ -67,7 +67,7 @@ performance.
 there exists invertible matrices $X \in M(m), Y\in M(n)$ so that
 
 $$
-    A = X * D_r * Y,
+    A = X \cdot D \cdot Y,
    \qtext{where}
    D =
     \begin{bmatrix}
@@ -189,7 +189,7 @@ For every matrix $A \in M(m,n)$, we will construct
 so that:
 
 $$
-A = P * L * D * U * Q,
+A = P \cdot L \cdot D \cdot U \cdot Q,
 \qtext{where}
 D = \begin{bmatrix}
 D_r & 0   \\\\
@@ -281,7 +281,7 @@ For every matrix $A \in M(m,n)$ there is
 so that:
 
 $$
-A = Q * R * P,
+A = Q \cdot R \cdot P,
 \qtext{where}
 R = \begin{bmatrix}
 R_{11} & R_{12}   \\\\
@@ -292,7 +292,7 @@ $$
 
 
 **Corollary:**
-Get rank decomposition via $X = Q^t$, $Y = P^t * 
+Get rank decomposition via $X = Q^t$, $Y = P^t \cdot 
 \begin{bmatrix}
   R_{11}^{-1} & -R_{11}^{-1} R_{12}   \\\\
             0 & \id_{n-r} \\\\
@@ -384,7 +384,7 @@ For every matrix $X \in M(m,n)$ with entries in the real numbers $\IR$,
 there are orthogonal matrices $U \in M(n), V \in M(m)$ so that
 
 $$
-A = U * \Sigma * V
+A = U \cdot \Sigma \cdot V
 $$
 Where $\Sigma \in M(m,n)$ is a matrix with diagonal entries $\sigma_1 \geq \sigma_2, \dots, \sigma_r > 0$
 and $\sigma_i = 0$ for $i > r$, $r = rk(A)$ and entries $0$ outside of the diagonal.
@@ -460,7 +460,7 @@ We ran each method 5 times for each selected n and report the fastest run.
 
 - The run-time of Rank Decomposition via LU Factorization explodes right away. We stopped measuring
   at n=150 since it already took over a second to complete. The reason for this is, that we had
-  to roll our own Gauss Elimination algorithm in Python. A C/Fotran implementation would be much faster.
+  to roll our own Gauss Elimination algorithm in Python. A C/Fortran implementation would be much faster.
 
 - The QR method is about twice as fast as SVD in our implementation. We checked with a profiler,
   that >90% of the run-time is spent inside the QR/SVD calls. Based on the theoretical complexity
@@ -506,3 +506,13 @@ implementation at hand.
 * [Hansen1987] P. Hansen -- Rank-Deficient and Discrete Ill-Posed Problems (1987)  
   https://api.semanticscholar.org/CorpusID:122731599 https://dx.doi.org/10.1137/1.9780898719697  
   Comment: A whole text-book on the larger topic.
+
+## Comments
+<script src="https://utteranc.es/client.js"
+        repo="HeinrichHartmann/comments"
+        issue-term="title"
+        label="Comment"
+        theme="github-light"
+        crossorigin="anonymous"
+        async>
+</script>
