@@ -184,6 +184,10 @@ content:
   href: "/archive/Dissecting-Hello-World.html"
   title: "Dissecting Hello World"
 
+- tags: opinion, GER, post
+  date: 2016-11-17
+  href: "/archive/B-rgerversicherung-Bedroht-Arbeitspl-tze.html"
+  title: "Buergerversicherung bedroht Arbeitsplaetze"
 
 - type: paper
   tags: mon, paper
