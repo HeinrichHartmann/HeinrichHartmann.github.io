@@ -1247,18 +1247,16 @@ commits</a> behind master. We want
 to run something a little bit more recent, ideally with <a href="https://www.emacswiki.org/emacs/GccEmacs">native
 compilation</a> (<code>--with-native-compilation</code>) and native JSON
 support (<code>--with-json</code>) enabled.</p>
-<p>Here is a list of all available nix packages containing the string &ldquo;emacs&rdquo; from the nixpkgs-unstable channel:</p>
-<div class="highlight"><pre class="chroma"><code class="language-shell" data-lang="shell"><span class="p">;</span> nix-channel --list
-nixpkgs https://nixos.org/channels/nixpkgs-unstable
-
-<span class="p">;</span> nix-env -qa <span class="s1">&#39;.*emacs.*&#39;</span> <span class="p">|</span> cat <span class="c1"># this takes 12 seconds to complete!</span>
-emacs-27.2
-emacs-all-the-icons-fonts-5.0.0
-emacs-mac-27.2-8.2
-emacs-nox-27.2
-qemacs-0.3.3
-</code></pre></div><p>Sadly no emacs-head package seems to be available in the main channel.</p>
-<h1 id="variant-1----emacs-from-scratch">Variant 1 &ndash; Emacs From scratch</h1>
+<p>In the following sections we will create four different build variant that realize our goal following
+different approaches:</p>
+<ol>
+<li><a href="#v1">Emacs From Scratch</a></li>
+<li><a href="#v2">Refactoring nixpkgs' Emacs</a></li>
+<li><a href="#v3">Overriding nixpkgs' emacs</a></li>
+<li><a href="#v4">The emacs overlay</a></li>
+</ol>
+<p>If you are only interested in using the results, you can direcly skip to the <a href="https://github.com/HeinrichHartmann/emacs-head.nix">GitHub repository</a>.</p>
+<h1 id="v1">Variant 1 &ndash; Emacs From scratch</h1>
 <p>The first emacs package we are going to build is starting from scratch. I am using a .nix template
 that is derived from this <a href="https://nixos.org/guides/nix-pills/fundamentals-of-stdenv.html#idm140737319559808">nix
 pill</a>:</p>
@@ -1313,7 +1311,7 @@ autoconf (missing)
 The <a href="https://nixos.org/manual/nixpkgs/stable/#sec-stdenv-phases">build phases</a> can be manually
 executed with commands like <code>unpackPhase</code>. I used this to run <code>./configure --help</code> to get
 information about the available configure flags.</p>
-<h2 id="step-12----a-first-try-">Step 1.2 &ndash; A first try &hellip;</h2>
+<h2 id="step-12---a-first-try-">Step 1.2 - A first try &hellip;</h2>
 <p>After resolving a first set of dependecny errors, we arrive a the following file:</p>
 <div class="highlight"><pre class="chroma"><code class="language-nix" data-lang="nix"><span class="k">with</span> <span class="k">rec</span> <span class="p">{</span>
   <span class="n">pkgs</span> <span class="o">=</span> <span class="kn">import</span> <span class="sr">&lt;nixpkgs&gt;</span> <span class="p">{};</span>
@@ -1414,7 +1412,7 @@ patches</a>
 in the upstream repository that we did not apply yet.</p>
 <p>However, emacs compiles and starts-up fine:</p>
 <pre><code>$( nix-build emacs-from-scratch.nix )/bin/emacs 
-</code></pre><h1 id="version-2---refactoring-nixpkgs-emacs">Version 2 - Refactoring nixpkgs' Emacs</h1>
+</code></pre><h1 id="v2">Variant 2 - Refactoring nixpkgs' Emacs</h1>
 <p>To get a fully functional emacs version we want to leverage the community know-how, and avoid
 discovering all the pit-falls the hard way.</p>
 <p>The upstream emacs derivation available in nixpkgs is available here <a href="https://github.com/NixOS/nixpkgs/tree/2129356a6405cc342e860d87623d3823e8ee3b8c/pkgs/applications/editors/emacs">here</a>.
@@ -1461,7 +1459,7 @@ To be sure, we check this by printing the lisp variable <code>system-configurati
 --prefix=/nix/store/ ... --with-native-compilation --with-json
 </code></pre><p>The complete build definition can be found
 <a href="https://github.com/HeinrichHartmann/emacs-head.nix/blob/master/emacs-refactored.nix">here</a>.</p>
-<h1 id="variant-3----overriding-nixpkgs-emacs">Variant 3 &ndash; Overriding nixpkgs' emacs</h1>
+<h1 id="v3">Variant 3 &ndash; Overriding nixpkgs' emacs </h1>
 <p>In going through the above steps, one notes, that there were actually very few modifications to the
 stock emacs package necessary to build the latest <code>emacs@head</code> version: We changed <code>src</code>, added a
 <code>preConfigure</code> entry, and specified two more dependencies.</p>
@@ -1493,7 +1491,7 @@ derivation.</p>
 <p>This is the emacs version that I am currently using on my Linux machine. It allows me to leverage
 the upstream maintenance efforts and only maintain a minimal set of changes that is necessary to
 build the latest master, with my desired configuration.</p>
-<h1 id="variant-4----the-emacs-overlay">Variant 4 &ndash; The emacs overlay</h1>
+<h1 id="v4">Variant 4 &ndash; The emacs overlay </h1>
 <p>An even more powerful mechanism to &ldquo;override&rdquo; nixpkg&rsquo;s packages is the
 <a href="https://nixos.org/manual/nixpkgs/stable/#chap-overlays">Overlay</a> mechanism.</p>
 <p>There is a community maintained <a href="https://github.com/nix-community/emacs-overlay">emacs-overlay</a>
