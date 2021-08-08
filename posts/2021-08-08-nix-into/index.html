@@ -1231,6 +1231,16 @@ systems.</li>
 table quite a few times over the past week, and this is AFTER I printed the manual and read most of
 it :) In this note, I&rsquo;ll take you along for the journey of a first more serios expreiment: building
 the latest emacs, with a few extras enabled.</p>
+<p>In the following sections we will actually create <strong>four</strong> different build variant that realize our
+goal following slightly different approaches:</p>
+<ol>
+<li><a href="#v1">Emacs From Scratch</a></li>
+<li><a href="#v2">Refactoring nixpkgs' Emacs</a></li>
+<li><a href="#v3">Overriding nixpkgs' emacs</a></li>
+<li><a href="#v4">The emacs overlay</a></li>
+</ol>
+<p>If you are only interested in using the results, you can direcly skip to the <a href="https://github.com/HeinrichHartmann/emacs-head.nix">GitHub
+repository</a>.</p>
 <p>WARNING: This post assumes some basic familiarity with nix, to follow the examples in detail.
 Nevertheless, I hope that this post will allow you to get some idea about what is possible,
 and how things are done in the nix world.</p>
@@ -1247,15 +1257,6 @@ commits</a> behind master. We want
 to run something a little bit more recent, ideally with <a href="https://www.emacswiki.org/emacs/GccEmacs">native
 compilation</a> (<code>--with-native-compilation</code>) and native JSON
 support (<code>--with-json</code>) enabled.</p>
-<p>In the following sections we will create four different build variant that realize our goal following
-different approaches:</p>
-<ol>
-<li><a href="#v1">Emacs From Scratch</a></li>
-<li><a href="#v2">Refactoring nixpkgs' Emacs</a></li>
-<li><a href="#v3">Overriding nixpkgs' emacs</a></li>
-<li><a href="#v4">The emacs overlay</a></li>
-</ol>
-<p>If you are only interested in using the results, you can direcly skip to the <a href="https://github.com/HeinrichHartmann/emacs-head.nix">GitHub repository</a>.</p>
 <h1 id="v1">Variant 1 &ndash; Emacs From scratch</h1>
 <p>The first emacs package we are going to build is starting from scratch. I am using a .nix template
 that is derived from this <a href="https://nixos.org/guides/nix-pills/fundamentals-of-stdenv.html#idm140737319559808">nix
