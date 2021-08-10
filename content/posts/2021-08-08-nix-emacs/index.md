@@ -26,6 +26,8 @@ Draft: false
 }
 </style>
 
+<img src="./nix.png" style="float:left; width:180px; margin:10px;"/>
+
 [nix](https://nixos.org/) is a package manager that does things a little differently. I have
 fascinated by nix ever since [Christine Koppelt](https://twitter.com/ckoppelt) told me about it a
 few years back when we were working together in Munich.
@@ -446,7 +448,7 @@ If you are a beginner and want to dig deeper, I would recommend to:
 
 1. Watch some of the intro videos from [Burke Libbey's](https://twitter.com/burkelibbey) [YouTube Channel](https://www.youtube.com/channel/UCSW5DqTyfOI9sUvnFoCjBlQ/featured)
 2. Work through the first few [Nix pills](https://nixos.org/guides/nix-pills/)
-3. Print out [Nix manual](https://nixos.org/manual/nix/stable/) and the [NixPkgs manual](https://nixos.org/manual/nixpkgs/stable/) and spent 2h browsing through them.
+3. Spent some [quality time](https://www.heinrichhartmann.com/archive/quality-time.html) with the [Nix manual](https://nixos.org/manual/nix/stable/) and the [NixPkgs manual](https://nixos.org/manual/nixpkgs/stable/).
 
 Also don't hesitate to get in touch with community via chat!
 
