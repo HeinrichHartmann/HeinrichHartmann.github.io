@@ -47,7 +47,7 @@ Here are a few of the selling points, that I hope to realize with nix:
 
 Unfortunately, nix still has a rather steep learning curve. I have been banging my head against the
 table quite a few times over the past week, and this is AFTER I printed the manual and read most of
-it :) In this note, I'll take you along for the journey of a first more serios expreiment: building
+it :) In this note, I'll take you along for the journey of a first more serios experiment: building
 the latest emacs, with a few extras enabled.
 
 In the following sections we will actually create **four** different build variant that realize our
