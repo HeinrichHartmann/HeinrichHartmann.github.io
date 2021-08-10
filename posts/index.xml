@@ -6,7 +6,17 @@
     <description>Recent content in Posts on HeinrichHartmann.com</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Mon, 08 Mar 2021 00:00:00 +0000</lastBuildDate><atom:link href="/posts/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Sun, 08 Aug 2021 00:00:00 +0000</lastBuildDate><atom:link href="/posts/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>First Steps with Nix - Building emacs</title>
+      <link>/posts/2021-08-08-nix-emacs/</link>
+      <pubDate>Sun, 08 Aug 2021 00:00:00 +0000</pubDate>
+      
+      <guid>/posts/2021-08-08-nix-emacs/</guid>
+      <description>.markdown-container { width: 60em; } @media only screen and (max-width: 60em) { .markdown-container { text-align: left; width: 100%; margin: 0; margin-top: 3em; padding: 0.1em; } } .center { display: block; margin:auto }  nix is a package manager that does things a little differently. I have fascinated by nix ever since Christine Koppelt told me about it a few years back when we were working together in Munich.
+The basic idea behind nix, is that all sofware is kept in a content addressable* store, and only the exact dependencies needed are made available in a build, dev or runtime environment.</description>
+    </item>
+    
     <item>
       <title>Effective Rank Decomposition of Linear Maps</title>
       <link>/posts/2021-03-08-rank-decomposition/</link>

@@ -1,0 +1,1560 @@
+<!DOCTYPE html>
+<html lang="en-us">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title>First Steps with Nix - Building emacs</title>
+	
+	
+	
+  
+  <link rel="icon" type="image/png" href="/favicon.png">
+  <style>
+    
+   header a {
+  text-align: center;
+  width: 100%;
+  font-family: Helvetica, arial, sans-serif;
+  font-size: 20px;
+  color: #a00;
+  font-weight: bold;
+  margin-top: 2em;
+  text-decoration: none;
+  display: block;
+}
+
+header a {
+  color: #00a;
+}
+
+header a:hover {
+  color: black;
+}
+
+header a:visited {
+  color: #a00;
+}
+
+.sticker {
+  color:red;
+  display: block;
+  border-style:solid !important;
+  border-color:red !important;
+  border-radius:0.2em !important;
+  border-width: 3px !important;
+  padding: 0px !important;
+  text-align: center !important;
+  margin-top: 50px !important;
+  margin-bottom: 50px !important;
+}
+
+    
+   /* Background */ .chroma { background-color: #f8f8f8 }
+/* Other */ .chroma .x { color: #000000 }
+/* Error */ .chroma .err { color: #a40000 }
+/* LineTableTD */ .chroma .lntd { vertical-align: top; padding: 0; margin: 0; border: 0; }
+/* LineTable */ .chroma .lntable { border-spacing: 0; padding: 0; margin: 0; border: 0; width: auto; overflow: auto; display: block; }
+/* LineHighlight */ .chroma .hl { display: block; width: 100%;background-color: #ffffcc }
+/* LineNumbersTable */ .chroma .lnt { margin-right: 0.4em; padding: 0 0.4em 0 0.4em;color: #7f7f7f }
+/* LineNumbers */ .chroma .ln { margin-right: 0.4em; padding: 0 0.4em 0 0.4em;color: #7f7f7f }
+/* Keyword */ .chroma .k { color: #204a87; font-weight: bold }
+/* KeywordConstant */ .chroma .kc { color: #204a87; font-weight: bold }
+/* KeywordDeclaration */ .chroma .kd { color: #204a87; font-weight: bold }
+/* KeywordNamespace */ .chroma .kn { color: #204a87; font-weight: bold }
+/* KeywordPseudo */ .chroma .kp { color: #204a87; font-weight: bold }
+/* KeywordReserved */ .chroma .kr { color: #204a87; font-weight: bold }
+/* KeywordType */ .chroma .kt { color: #204a87; font-weight: bold }
+/* Name */ .chroma .n { color: #000000 }
+/* NameAttribute */ .chroma .na { color: #c4a000 }
+/* NameBuiltin */ .chroma .nb { color: #204a87 }
+/* NameBuiltinPseudo */ .chroma .bp { color: #3465a4 }
+/* NameClass */ .chroma .nc { color: #000000 }
+/* NameConstant */ .chroma .no { color: #000000 }
+/* NameDecorator */ .chroma .nd { color: #5c35cc; font-weight: bold }
+/* NameEntity */ .chroma .ni { color: #ce5c00 }
+/* NameException */ .chroma .ne { color: #cc0000; font-weight: bold }
+/* NameFunction */ .chroma .nf { color: #000000 }
+/* NameFunctionMagic */ .chroma .fm { color: #000000 }
+/* NameLabel */ .chroma .nl { color: #f57900 }
+/* NameNamespace */ .chroma .nn { color: #000000 }
+/* NameOther */ .chroma .nx { color: #000000 }
+/* NameProperty */ .chroma .py { color: #000000 }
+/* NameTag */ .chroma .nt { color: #204a87; font-weight: bold }
+/* NameVariable */ .chroma .nv { color: #000000 }
+/* NameVariableClass */ .chroma .vc { color: #000000 }
+/* NameVariableGlobal */ .chroma .vg { color: #000000 }
+/* NameVariableInstance */ .chroma .vi { color: #000000 }
+/* NameVariableMagic */ .chroma .vm { color: #000000 }
+/* Literal */ .chroma .l { color: #000000 }
+/* LiteralDate */ .chroma .ld { color: #000000 }
+/* LiteralString */ .chroma .s { color: #4e9a06 }
+/* LiteralStringAffix */ .chroma .sa { color: #4e9a06 }
+/* LiteralStringBacktick */ .chroma .sb { color: #4e9a06 }
+/* LiteralStringChar */ .chroma .sc { color: #4e9a06 }
+/* LiteralStringDelimiter */ .chroma .dl { color: #4e9a06 }
+/* LiteralStringDoc */ .chroma .sd { color: #8f5902; font-style: italic }
+/* LiteralStringDouble */ .chroma .s2 { color: #4e9a06 }
+/* LiteralStringEscape */ .chroma .se { color: #4e9a06 }
+/* LiteralStringHeredoc */ .chroma .sh { color: #4e9a06 }
+/* LiteralStringInterpol */ .chroma .si { color: #4e9a06 }
+/* LiteralStringOther */ .chroma .sx { color: #4e9a06 }
+/* LiteralStringRegex */ .chroma .sr { color: #4e9a06 }
+/* LiteralStringSingle */ .chroma .s1 { color: #4e9a06 }
+/* LiteralStringSymbol */ .chroma .ss { color: #4e9a06 }
+/* LiteralNumber */ .chroma .m { color: #0000cf; font-weight: bold }
+/* LiteralNumberBin */ .chroma .mb { color: #0000cf; font-weight: bold }
+/* LiteralNumberFloat */ .chroma .mf { color: #0000cf; font-weight: bold }
+/* LiteralNumberHex */ .chroma .mh { color: #0000cf; font-weight: bold }
+/* LiteralNumberInteger */ .chroma .mi { color: #0000cf; font-weight: bold }
+/* LiteralNumberIntegerLong */ .chroma .il { color: #0000cf; font-weight: bold }
+/* LiteralNumberOct */ .chroma .mo { color: #0000cf; font-weight: bold }
+/* Operator */ .chroma .o { color: #ce5c00; font-weight: bold }
+/* OperatorWord */ .chroma .ow { color: #204a87; font-weight: bold }
+/* Punctuation */ .chroma .p { color: #000000; font-weight: bold }
+/* Comment */ .chroma .c { color: #8f5902; font-style: italic }
+/* CommentHashbang */ .chroma .ch { color: #8f5902; font-style: italic }
+/* CommentMultiline */ .chroma .cm { color: #8f5902; font-style: italic }
+/* CommentSingle */ .chroma .c1 { color: #8f5902; font-style: italic }
+/* CommentSpecial */ .chroma .cs { color: #8f5902; font-style: italic }
+/* CommentPreproc */ .chroma .cp { color: #8f5902; font-style: italic }
+/* CommentPreprocFile */ .chroma .cpf { color: #8f5902; font-style: italic }
+/* Generic */ .chroma .g { color: #000000 }
+/* GenericDeleted */ .chroma .gd { color: #a40000 }
+/* GenericEmph */ .chroma .ge { color: #000000; font-style: italic }
+/* GenericError */ .chroma .gr { color: #ef2929 }
+/* GenericHeading */ .chroma .gh { color: #000080; font-weight: bold }
+/* GenericInserted */ .chroma .gi { color: #00a000 }
+/* GenericOutput */ .chroma .go { color: #000000; font-style: italic }
+/* GenericPrompt */ .chroma .gp { color: #8f5902 }
+/* GenericStrong */ .chroma .gs { color: #000000; font-weight: bold }
+/* GenericSubheading */ .chroma .gu { color: #800080; font-weight: bold }
+/* GenericTraceback */ .chroma .gt { color: #a40000; font-weight: bold }
+/* GenericUnderline */ .chroma .gl { color: #000000; text-decoration: underline }
+/* TextWhitespace */ .chroma .w { color: #f8f8f8; text-decoration: underline }
+
+   
+      
+     .markdown-container {
+  width: 48em;
+  margin-right: auto;
+  margin-left: auto;
+  box-sizing: border-box;
+  padding: 45px 45px 5px 45px;
+}
+
+
+/**
+ * Responsive
+ **/
+@media only screen and (max-width: 48em) {
+    .markdown-container {
+        text-align: left;
+        width: 100%;
+        margin: 0;
+        margin-top: 3em;
+        padding: 0.1em;
+    }
+}
+
+.markdown-container:after {
+  display:table;
+  clear:both;
+}
+.markdown-container:before {
+  display:table;
+  content:" ";
+}
+
+.markdown-body .octicon {
+  display: inline-block;
+  fill: currentColor;
+  vertical-align: text-bottom;
+}
+
+.markdown-body .anchor {
+  float: left;
+  line-height: 1;
+  margin-left: -20px;
+  padding-right: 4px;
+}
+
+.markdown-body .anchor:focus {
+  outline: none;
+}
+
+.markdown-body h1 .octicon-link,
+.markdown-body h2 .octicon-link,
+.markdown-body h3 .octicon-link,
+.markdown-body h4 .octicon-link,
+.markdown-body h5 .octicon-link,
+.markdown-body h6 .octicon-link {
+  color: #1b1f23;
+  vertical-align: middle;
+  visibility: hidden;
+}
+
+.markdown-body h1:hover .anchor,
+.markdown-body h2:hover .anchor,
+.markdown-body h3:hover .anchor,
+.markdown-body h4:hover .anchor,
+.markdown-body h5:hover .anchor,
+.markdown-body h6:hover .anchor {
+  text-decoration: none;
+}
+
+.markdown-body h1:hover .anchor .octicon-link,
+.markdown-body h2:hover .anchor .octicon-link,
+.markdown-body h3:hover .anchor .octicon-link,
+.markdown-body h4:hover .anchor .octicon-link,
+.markdown-body h5:hover .anchor .octicon-link,
+.markdown-body h6:hover .anchor .octicon-link {
+  visibility: visible;
+}
+
+.markdown-body h1:hover .anchor .octicon-link:before,
+.markdown-body h2:hover .anchor .octicon-link:before,
+.markdown-body h3:hover .anchor .octicon-link:before,
+.markdown-body h4:hover .anchor .octicon-link:before,
+.markdown-body h5:hover .anchor .octicon-link:before,
+.markdown-body h6:hover .anchor .octicon-link:before {
+  width: 16px;
+  height: 16px;
+  content: ' ';
+  display: inline-block;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' version='1.1' width='16' height='16' aria-hidden='true'%3E%3Cpath fill-rule='evenodd' d='M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z'%3E%3C/path%3E%3C/svg%3E");
+}.markdown-body {
+  -ms-text-size-adjust: 100%;
+  -webkit-text-size-adjust: 100%;
+  line-height: 1.5;
+  color: #24292e;
+  font-family: -apple-system,BlinkMacSystemFont,Segoe UI,Helvetica,Arial,sans-serif,Apple Color Emoji,Segoe UI Emoji;
+  font-size: 16px;
+  line-height: 1.5;
+  word-wrap: break-word;
+}
+
+.markdown-body details {
+  display: block;
+}
+
+.markdown-body summary {
+  display: list-item;
+}
+
+.markdown-body a {
+  background-color: initial;
+}
+
+.markdown-body a:active,
+.markdown-body a:hover {
+  outline-width: 0;
+}
+
+.markdown-body strong {
+  font-weight: inherit;
+  font-weight: bolder;
+}
+
+.markdown-body h1 {
+  font-size: 2em;
+  margin: .67em 0;
+}
+
+.markdown-body img {
+  border-style: none;
+}
+
+.markdown-body code,
+.markdown-body kbd,
+.markdown-body pre {
+  font-family: monospace,monospace;
+  font-size: 1em;
+}
+
+.markdown-body hr {
+  box-sizing: initial;
+  height: 0;
+  overflow: visible;
+}
+
+.markdown-body input {
+  font: inherit;
+  margin: 0;
+}
+
+.markdown-body input {
+  overflow: visible;
+}
+
+.markdown-body [type=checkbox] {
+  box-sizing: border-box;
+  padding: 0;
+}
+
+.markdown-body * {
+  box-sizing: border-box;
+}
+
+.markdown-body input {
+  font-family: inherit;
+  font-size: inherit;
+  line-height: inherit;
+}
+
+.markdown-body a {
+  color: #0366d6;
+  text-decoration: none;
+}
+
+.markdown-body a:hover {
+  text-decoration: underline;
+}
+
+.markdown-body strong {
+  font-weight: 600;
+}
+
+.markdown-body hr {
+  height: 0;
+  margin: 15px 0;
+  overflow: hidden;
+  background: transparent;
+  border: 0;
+  border-bottom: 1px solid #dfe2e5;
+}
+
+.markdown-body hr:after,
+.markdown-body hr:before {
+  display: table;
+  content: "";
+}
+
+.markdown-body hr:after {
+  clear: both;
+}
+
+.markdown-body table {
+  border-spacing: 0;
+  border-collapse: collapse;
+}
+
+.markdown-body td,
+.markdown-body th {
+  padding: 0;
+}
+
+.markdown-body details summary {
+  cursor: pointer;
+}
+
+.markdown-body kbd {
+  display: inline-block;
+  padding: 3px 5px;
+  font: 11px SFMono-Regular,Consolas,Liberation Mono,Menlo,monospace;
+  line-height: 10px;
+  color: #444d56;
+  vertical-align: middle;
+  background-color: #fafbfc;
+  border: 1px solid #d1d5da;
+  border-radius: 3px;
+  box-shadow: inset 0 -1px 0 #d1d5da;
+}
+
+.markdown-body h1,
+.markdown-body h2,
+.markdown-body h3,
+.markdown-body h4,
+.markdown-body h5,
+.markdown-body h6 {
+  margin-top: 0;
+  margin-bottom: 0;
+}
+
+.markdown-body h1 {
+  font-size: 32px;
+}
+
+.markdown-body h1,
+.markdown-body h2 {
+  font-weight: 600;
+}
+
+.markdown-body h2 {
+  font-size: 24px;
+}
+
+.markdown-body h3 {
+  font-size: 20px;
+}
+
+.markdown-body h3,
+.markdown-body h4 {
+  font-weight: 600;
+}
+
+.markdown-body h4 {
+  font-size: 16px;
+}
+
+.markdown-body h5 {
+  font-size: 14px;
+}
+
+.markdown-body h5,
+.markdown-body h6 {
+  font-weight: 600;
+}
+
+.markdown-body h6 {
+  font-size: 12px;
+}
+
+.markdown-body p {
+  margin-top: 0;
+  margin-bottom: 10px;
+}
+
+.markdown-body blockquote {
+  margin: 0;
+}
+
+.markdown-body ol,
+.markdown-body ul {
+  padding-left: 0;
+  margin-top: 0;
+  margin-bottom: 0;
+}
+
+.markdown-body ol ol,
+.markdown-body ul ol {
+  list-style-type: lower-roman;
+}
+
+.markdown-body ol ol ol,
+.markdown-body ol ul ol,
+.markdown-body ul ol ol,
+.markdown-body ul ul ol {
+  list-style-type: lower-alpha;
+}
+
+.markdown-body dd {
+  margin-left: 0;
+}
+
+.markdown-body code,
+.markdown-body pre {
+  font-family: SFMono-Regular,Consolas,Liberation Mono,Menlo,monospace;
+  font-size: 12px;
+}
+
+.markdown-body pre {
+  margin-top: 0;
+  margin-bottom: 0;
+}
+
+.markdown-body input::-webkit-inner-spin-button,
+.markdown-body input::-webkit-outer-spin-button {
+  margin: 0;
+  -webkit-appearance: none;
+  appearance: none;
+}
+
+.markdown-body :checked+.radio-label {
+  position: relative;
+  z-index: 1;
+  border-color: #0366d6;
+}
+
+.markdown-body .border {
+  border: 1px solid #e1e4e8!important;
+}
+
+.markdown-body .border-0 {
+  border: 0!important;
+}
+
+.markdown-body .border-bottom {
+  border-bottom: 1px solid #e1e4e8!important;
+}
+
+.markdown-body .rounded-1 {
+  border-radius: 3px!important;
+}
+
+.markdown-body .bg-white {
+  background-color: #fff!important;
+}
+
+.markdown-body .bg-gray-light {
+  background-color: #fafbfc!important;
+}
+
+.markdown-body .text-gray-light {
+  color: #6a737d!important;
+}
+
+.markdown-body .mb-0 {
+  margin-bottom: 0!important;
+}
+
+.markdown-body .my-2 {
+  margin-top: 8px!important;
+  margin-bottom: 8px!important;
+}
+
+.markdown-body .pl-0 {
+  padding-left: 0!important;
+}
+
+.markdown-body .py-0 {
+  padding-top: 0!important;
+  padding-bottom: 0!important;
+}
+
+.markdown-body .pl-1 {
+  padding-left: 4px!important;
+}
+
+.markdown-body .pl-2 {
+  padding-left: 8px!important;
+}
+
+.markdown-body .py-2 {
+  padding-top: 8px!important;
+  padding-bottom: 8px!important;
+}
+
+.markdown-body .pl-3,
+.markdown-body .px-3 {
+  padding-left: 16px!important;
+}
+
+.markdown-body .px-3 {
+  padding-right: 16px!important;
+}
+
+.markdown-body .pl-4 {
+  padding-left: 24px!important;
+}
+
+.markdown-body .pl-5 {
+  padding-left: 32px!important;
+}
+
+.markdown-body .pl-6 {
+  padding-left: 40px!important;
+}
+
+.markdown-body .f6 {
+  font-size: 12px!important;
+}
+
+.markdown-body .lh-condensed {
+  line-height: 1.25!important;
+}
+
+.markdown-body .text-bold {
+  font-weight: 600!important;
+}
+
+.markdown-body .pl-c {
+  color: #6a737d;
+}
+
+.markdown-body .pl-c1,
+.markdown-body .pl-s .pl-v {
+  color: #005cc5;
+}
+
+.markdown-body .pl-e,
+.markdown-body .pl-en {
+  color: #6f42c1;
+}
+
+.markdown-body .pl-s .pl-s1,
+.markdown-body .pl-smi {
+  color: #24292e;
+}
+
+.markdown-body .pl-ent {
+  color: #22863a;
+}
+
+.markdown-body .pl-k {
+  color: #d73a49;
+}
+
+.markdown-body .pl-pds,
+.markdown-body .pl-s,
+.markdown-body .pl-s .pl-pse .pl-s1,
+.markdown-body .pl-sr,
+.markdown-body .pl-sr .pl-cce,
+.markdown-body .pl-sr .pl-sra,
+.markdown-body .pl-sr .pl-sre {
+  color: #032f62;
+}
+
+.markdown-body .pl-smw,
+.markdown-body .pl-v {
+  color: #e36209;
+}
+
+.markdown-body .pl-bu {
+  color: #b31d28;
+}
+
+.markdown-body .pl-ii {
+  color: #fafbfc;
+  background-color: #b31d28;
+}
+
+.markdown-body .pl-c2 {
+  color: #fafbfc;
+  background-color: #d73a49;
+}
+
+.markdown-body .pl-c2:before {
+  content: "^M";
+}
+
+.markdown-body .pl-sr .pl-cce {
+  font-weight: 700;
+  color: #22863a;
+}
+
+.markdown-body .pl-ml {
+  color: #735c0f;
+}
+
+.markdown-body .pl-mh,
+.markdown-body .pl-mh .pl-en,
+.markdown-body .pl-ms {
+  font-weight: 700;
+  color: #005cc5;
+}
+
+.markdown-body .pl-mi {
+  font-style: italic;
+  color: #24292e;
+}
+
+.markdown-body .pl-mb {
+  font-weight: 700;
+  color: #24292e;
+}
+
+.markdown-body .pl-md {
+  color: #b31d28;
+  background-color: #ffeef0;
+}
+
+.markdown-body .pl-mi1 {
+  color: #22863a;
+  background-color: #f0fff4;
+}
+
+.markdown-body .pl-mc {
+  color: #e36209;
+  background-color: #ffebda;
+}
+
+.markdown-body .pl-mi2 {
+  color: #f6f8fa;
+  background-color: #005cc5;
+}
+
+.markdown-body .pl-mdr {
+  font-weight: 700;
+  color: #6f42c1;
+}
+
+.markdown-body .pl-ba {
+  color: #586069;
+}
+
+.markdown-body .pl-sg {
+  color: #959da5;
+}
+
+.markdown-body .pl-corl {
+  text-decoration: underline;
+  color: #032f62;
+}
+
+.markdown-body .mb-0 {
+  margin-bottom: 0!important;
+}
+
+.markdown-body .my-2 {
+  margin-bottom: 8px!important;
+}
+
+.markdown-body .my-2 {
+  margin-top: 8px!important;
+}
+
+.markdown-body .pl-0 {
+  padding-left: 0!important;
+}
+
+.markdown-body .py-0 {
+  padding-top: 0!important;
+  padding-bottom: 0!important;
+}
+
+.markdown-body .pl-1 {
+  padding-left: 4px!important;
+}
+
+.markdown-body .pl-2 {
+  padding-left: 8px!important;
+}
+
+.markdown-body .py-2 {
+  padding-top: 8px!important;
+  padding-bottom: 8px!important;
+}
+
+.markdown-body .pl-3 {
+  padding-left: 16px!important;
+}
+
+.markdown-body .pl-4 {
+  padding-left: 24px!important;
+}
+
+.markdown-body .pl-5 {
+  padding-left: 32px!important;
+}
+
+.markdown-body .pl-6 {
+  padding-left: 40px!important;
+}
+
+.markdown-body .pl-7 {
+  padding-left: 48px!important;
+}
+
+.markdown-body .pl-8 {
+  padding-left: 64px!important;
+}
+
+.markdown-body .pl-9 {
+  padding-left: 80px!important;
+}
+
+.markdown-body .pl-10 {
+  padding-left: 96px!important;
+}
+
+.markdown-body .pl-11 {
+  padding-left: 112px!important;
+}
+
+.markdown-body .pl-12 {
+  padding-left: 128px!important;
+}
+
+.markdown-body hr {
+  border-bottom-color: #eee;
+}
+
+.markdown-body kbd {
+  display: inline-block;
+  padding: 3px 5px;
+  font: 11px SFMono-Regular,Consolas,Liberation Mono,Menlo,monospace;
+  line-height: 10px;
+  color: #444d56;
+  vertical-align: middle;
+  background-color: #fafbfc;
+  border: 1px solid #d1d5da;
+  border-radius: 3px;
+  box-shadow: inset 0 -1px 0 #d1d5da;
+}
+
+.markdown-body:after,
+.markdown-body:before {
+  display: table;
+  content: "";
+}
+
+.markdown-body:after {
+  clear: both;
+}
+
+.markdown-body>:first-child {
+  margin-top: 0!important;
+}
+
+.markdown-body>:last-child {
+  margin-bottom: 0!important;
+}
+
+.markdown-body a:not([href]) {
+  color: inherit;
+  text-decoration: none;
+}
+
+.markdown-body blockquote,
+.markdown-body details,
+.markdown-body dl,
+.markdown-body ol,
+.markdown-body p,
+.markdown-body pre,
+.markdown-body table,
+.markdown-body ul {
+  margin-top: 0;
+  margin-bottom: 16px;
+}
+
+.markdown-body hr {
+  height: .25em;
+  padding: 0;
+  margin: 24px 0;
+  background-color: #e1e4e8;
+  border: 0;
+}
+
+.markdown-body blockquote {
+  padding: 0 1em;
+  color: #6a737d;
+  border-left: .25em solid #dfe2e5;
+}
+
+.markdown-body blockquote>:first-child {
+  margin-top: 0;
+}
+
+.markdown-body blockquote>:last-child {
+  margin-bottom: 0;
+}
+
+.markdown-body h1,
+.markdown-body h2,
+.markdown-body h3,
+.markdown-body h4,
+.markdown-body h5,
+.markdown-body h6 {
+  margin-top: 24px;
+  margin-bottom: 16px;
+  font-weight: 600;
+  line-height: 1.25;
+}
+
+.markdown-body h1 {
+  font-size: 2em;
+}
+
+.markdown-body h1,
+.markdown-body h2 {
+  padding-bottom: .3em;
+  border-bottom: 1px solid #eaecef;
+}
+
+.markdown-body h2 {
+  font-size: 1.5em;
+}
+
+.markdown-body h3 {
+  font-size: 1.25em;
+}
+
+.markdown-body h4 {
+  font-size: 1em;
+}
+
+.markdown-body h5 {
+  font-size: .875em;
+}
+
+.markdown-body h6 {
+  font-size: .85em;
+  color: #6a737d;
+}
+
+.markdown-body ol,
+.markdown-body ul {
+  padding-left: 2em;
+}
+
+.markdown-body ol ol,
+.markdown-body ol ul,
+.markdown-body ul ol,
+.markdown-body ul ul {
+  margin-top: 0;
+  margin-bottom: 0;
+}
+
+.markdown-body li {
+  word-wrap: break-all;
+}
+
+.markdown-body li>p {
+  margin-top: 16px;
+}
+
+.markdown-body li+li {
+  margin-top: .25em;
+}
+
+.markdown-body dl {
+  padding: 0;
+}
+
+.markdown-body dl dt {
+  padding: 0;
+  margin-top: 16px;
+  font-size: 1em;
+  font-style: italic;
+  font-weight: 600;
+}
+
+.markdown-body dl dd {
+  padding: 0 16px;
+  margin-bottom: 16px;
+}
+
+.markdown-body table {
+  display: block;
+  width: 100%;
+  overflow: auto;
+}
+
+.markdown-body table th {
+  font-weight: 600;
+}
+
+.markdown-body table td,
+.markdown-body table th {
+  padding: 6px 13px;
+  border: 1px solid #dfe2e5;
+}
+
+.markdown-body table tr {
+  background-color: #fff;
+  border-top: 1px solid #c6cbd1;
+}
+
+.markdown-body table tr:nth-child(2n) {
+  background-color: #f6f8fa;
+}
+
+.markdown-body img {
+  max-width: 100%;
+  box-sizing: initial;
+  background-color: #fff;
+}
+
+.markdown-body img[align=right] {
+  padding-left: 20px;
+}
+
+.markdown-body img[align=left] {
+  padding-right: 20px;
+}
+
+.markdown-body code {
+  padding: .2em .4em;
+  margin: 0;
+  font-size: 85%;
+  background-color: rgba(27,31,35,.05);
+  border-radius: 3px;
+}
+
+.markdown-body pre {
+  word-wrap: normal;
+}
+
+.markdown-body pre>code {
+  padding: 0;
+  margin: 0;
+  font-size: 100%;
+  word-break: normal;
+  white-space: pre;
+  background: transparent;
+  border: 0;
+}
+
+.markdown-body .highlight {
+  margin-bottom: 16px;
+}
+
+.markdown-body .highlight pre {
+  margin-bottom: 0;
+  word-break: normal;
+}
+
+.markdown-body .highlight pre,
+.markdown-body pre {
+  padding: 16px;
+  overflow: auto;
+  font-size: 85%;
+  line-height: 1.45;
+  background-color: #f6f8fa;
+  border-radius: 3px;
+}
+
+.markdown-body pre code {
+  display: inline;
+  max-width: auto;
+  padding: 0;
+  margin: 0;
+  overflow: visible;
+  line-height: inherit;
+  word-wrap: normal;
+  background-color: initial;
+  border: 0;
+}
+
+.markdown-body .commit-tease-sha {
+  display: inline-block;
+  font-family: SFMono-Regular,Consolas,Liberation Mono,Menlo,monospace;
+  font-size: 90%;
+  color: #444d56;
+}
+
+.markdown-body .full-commit .btn-outline:not(:disabled):hover {
+  color: #005cc5;
+  border-color: #005cc5;
+}
+
+.markdown-body .blob-wrapper {
+  overflow-x: auto;
+  overflow-y: hidden;
+}
+
+.markdown-body .blob-wrapper-embedded {
+  max-height: 240px;
+  overflow-y: auto;
+}
+
+.markdown-body .blob-num {
+  width: 1%;
+  min-width: 50px;
+  padding-right: 10px;
+  padding-left: 10px;
+  font-family: SFMono-Regular,Consolas,Liberation Mono,Menlo,monospace;
+  font-size: 12px;
+  line-height: 20px;
+  color: rgba(27,31,35,.3);
+  text-align: right;
+  white-space: nowrap;
+  vertical-align: top;
+  cursor: pointer;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+.markdown-body .blob-num:hover {
+  color: rgba(27,31,35,.6);
+}
+
+.markdown-body .blob-num:before {
+  content: attr(data-line-number);
+}
+
+.markdown-body .blob-code {
+  position: relative;
+  padding-right: 10px;
+  padding-left: 10px;
+  line-height: 20px;
+  vertical-align: top;
+}
+
+.markdown-body .blob-code-inner {
+  overflow: visible;
+  font-family: SFMono-Regular,Consolas,Liberation Mono,Menlo,monospace;
+  font-size: 12px;
+  color: #24292e;
+  word-wrap: normal;
+  white-space: pre;
+}
+
+.markdown-body .pl-token.active,
+.markdown-body .pl-token:hover {
+  cursor: pointer;
+  background: #ffea7f;
+}
+
+.markdown-body .tab-size[data-tab-size="1"] {
+  -moz-tab-size: 1;
+  tab-size: 1;
+}
+
+.markdown-body .tab-size[data-tab-size="2"] {
+  -moz-tab-size: 2;
+  tab-size: 2;
+}
+
+.markdown-body .tab-size[data-tab-size="3"] {
+  -moz-tab-size: 3;
+  tab-size: 3;
+}
+
+.markdown-body .tab-size[data-tab-size="4"] {
+  -moz-tab-size: 4;
+  tab-size: 4;
+}
+
+.markdown-body .tab-size[data-tab-size="5"] {
+  -moz-tab-size: 5;
+  tab-size: 5;
+}
+
+.markdown-body .tab-size[data-tab-size="6"] {
+  -moz-tab-size: 6;
+  tab-size: 6;
+}
+
+.markdown-body .tab-size[data-tab-size="7"] {
+  -moz-tab-size: 7;
+  tab-size: 7;
+}
+
+.markdown-body .tab-size[data-tab-size="8"] {
+  -moz-tab-size: 8;
+  tab-size: 8;
+}
+
+.markdown-body .tab-size[data-tab-size="9"] {
+  -moz-tab-size: 9;
+  tab-size: 9;
+}
+
+.markdown-body .tab-size[data-tab-size="10"] {
+  -moz-tab-size: 10;
+  tab-size: 10;
+}
+
+.markdown-body .tab-size[data-tab-size="11"] {
+  -moz-tab-size: 11;
+  tab-size: 11;
+}
+
+.markdown-body .tab-size[data-tab-size="12"] {
+  -moz-tab-size: 12;
+  tab-size: 12;
+}
+
+.markdown-body .task-list-item {
+  list-style-type: none;
+}
+
+.markdown-body .task-list-item+.task-list-item {
+  margin-top: 3px;
+}
+
+.markdown-body .task-list-item input {
+  margin: 0 .2em .25em -1.6em;
+  vertical-align: middle;
+}
+
+/* Center inline tweets */
+.twitter-tweet {
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.Box-header {
+  display: flex !important;
+  padding: 16px;
+  padding-top: 16px;
+  padding-bottom: 16px;
+  margin: -1px -1px 0;
+  background-color: #f6f8fa;
+  border: 1px solid #d1d5da;
+  border-top-left-radius: 3px;
+  border-top-right-radius: 3px;
+}
+
+.markdown-frame {
+  border: 1px solid #ddd;
+  border-radius: 3px;
+}
+
+   
+  </style>
+</head>
+<body>
+	<header>
+	<a href="/">HeinrichHartmann.com</a>
+</header>
+
+	
+  <main class="markdown-container">
+    <article class="markdown-body">
+      
+      <h1>First Steps with Nix - Building emacs</h1>
+      <p class="meta" style="color:#aaa; float:right">
+         Stemwede, 
+        2021-08-08
+        
+      </p>
+      <div style="clear:both">
+	<style>
+.markdown-container {
+ width: 60em;
+}
+@media only screen and (max-width: 60em) {
+    .markdown-container {
+        text-align: left;
+        width: 100%;
+        margin: 0;
+        margin-top: 3em;
+        padding: 0.1em;
+    }
+}
+.center {
+    display: block;
+    margin:auto
+}
+</style>
+<img src="./nix.png" style="float:left; width:180px; margin:10px;"/>
+<p><a href="https://nixos.org/">nix</a> is a package manager that does things a little differently. I have
+fascinated by nix ever since <a href="https://twitter.com/ckoppelt">Christine Koppelt</a> told me about it a
+few years back when we were working together in Munich.</p>
+<p>The basic idea behind nix, is that all sofware is kept in a content addressable* store, and only the
+exact dependencies needed are made available in a build, dev or runtime environment. The design has
+some similarity with git and aims to solve similar problems as docker. From an abstract
+perspective, nix presents the cleanest approach to building software that is currently available.</p>
+<p>Here are a few of the selling points, that I hope to realize with nix:</p>
+<ol>
+<li>100% conflict free dependency management</li>
+<li>(Almost) reproducible builds</li>
+<li>Declaratively defined &ldquo;cheap&rdquo; run-time environments for applications, development and whole
+systems.</li>
+<li>Create minimal VM or Docker images containing those environments</li>
+</ol>
+<p>Unfortunately, nix still has a rather steep learning curve. I have been banging my head against the
+table quite a few times over the past week, and this is AFTER I printed the manual and read most of
+it :) In this note, I&rsquo;ll take you along for the journey of a first more serios expreiment: building
+the latest emacs, with a few extras enabled.</p>
+<p>In the following sections we will actually create <strong>four</strong> different build variant that realize our
+goal following slightly different approaches:</p>
+<ol>
+<li><a href="#v1">Emacs From Scratch</a></li>
+<li><a href="#v2">Refactoring nixpkgs' Emacs</a></li>
+<li><a href="#v3">Overriding nixpkgs' emacs</a></li>
+<li><a href="#v4">The emacs overlay</a></li>
+</ol>
+<p>If you are only interested in using the results, you can direcly skip to the <a href="https://github.com/HeinrichHartmann/emacs-head.nix">GitHub
+repository</a>.</p>
+<p>WARNING: This post assumes some basic familiarity with nix, to follow the examples in detail.
+Nevertheless, I hope that this post will allow you to get some idea about what is possible,
+and how things are done in the nix world.</p>
+<p>*) The nix storage address is the hash of the reciept (&ldquo;derivation&rdquo;) that was used to build the
+artifact, and not the hash of the artifact itself. This is mainly since nix has to deal with builds
+that are non-reproducible. We may see a content addressable nix variant in the near future.</p>
+<h2 id="available-emacs-versions">Available emacs versions</h2>
+<p>The usual way to install emacs with nix is to use the command:</p>
+<div class="highlight"><pre class="chroma"><code class="language-shell" data-lang="shell"><span class="p">;</span> nix-env -iA nixpkgs.emacs
+</code></pre></div><p>At the time of this writing, this will install
+<a href="https://search.nixos.org/packages?channel=unstable&amp;from=0&amp;size=50&amp;sort=relevance&amp;query=emacs">emacs-27.2</a>.
+This is the latest released version, but 4 months old by now and <a href="https://github.com/emacs-mirror/emacs/compare/emacs-27.2...master">5000+
+commits</a> behind master. We want
+to run something a little bit more recent, ideally with <a href="https://www.emacswiki.org/emacs/GccEmacs">native
+compilation</a> (<code>--with-native-compilation</code>) and native JSON
+support (<code>--with-json</code>) enabled.</p>
+<h1 id="v1">Variant 1 &ndash; Emacs From scratch</h1>
+<p>The first emacs package we are going to build is starting from scratch. I am using a .nix template
+that is derived from this <a href="https://nixos.org/guides/nix-pills/fundamentals-of-stdenv.html#idm140737319559808">nix
+pill</a>:</p>
+<div class="highlight"><pre class="chroma"><code class="language-nix" data-lang="nix"><span class="p">;</span> <span class="n">cat</span> <span class="n">emacs-from-scratch</span><span class="o">.</span><span class="n">nix</span>
+<span class="k">with</span> <span class="p">{</span>
+  <span class="n">pkgs</span> <span class="o">=</span> <span class="kn">import</span> <span class="sr">&lt;nixpkgs&gt;</span> <span class="p">{};</span> <span class="c1"># make nixpkgs available </span>
+<span class="p">};</span>
+
+<span class="n">pkgs</span><span class="o">.</span><span class="n">stdenv</span><span class="o">.</span><span class="n">mkDerivation</span> <span class="p">{</span>
+  <span class="n">name</span> <span class="o">=</span> <span class="s2">&#34;emacs-head&#34;</span><span class="p">;</span>
+  <span class="c1"># ... here goes the receipt ...</span>
+<span class="p">}</span>
+</code></pre></div><p>This file already compiles, and gives us a (pretty useless) derivation, which we can view with:</p>
+<pre><code>nix show-derivation $( nix-instantiate -f emacs-from-scratch.nix )
+</code></pre><h2 id="step-11----pull-emacs-sources-from-github">Step 1.1 &ndash; Pull emacs sources from GitHub</h2>
+<p>To pull the sources from GitHub, we add the following statement to our .nix file:</p>
+<div class="highlight"><pre class="chroma"><code class="language-nix" data-lang="nix">  <span class="n">src</span> <span class="err">=</span> <span class="n">pkgs</span><span class="o">.</span><span class="n">fetchFromGitHub</span> <span class="p">{</span>
+      <span class="n">owner</span> <span class="o">=</span> <span class="s2">&#34;emacs-mirror&#34;</span><span class="p">;</span>
+      <span class="n">repo</span> <span class="o">=</span> <span class="s2">&#34;emacs&#34;</span><span class="p">;</span>
+      <span class="n">rev</span> <span class="o">=</span> <span class="s2">&#34;4d439744685b6b2492685124994120ebd1fa4abb&#34;</span><span class="p">;</span> <span class="c1"># git-SHA of curret master HEAD</span>
+      <span class="n">sha256</span> <span class="o">=</span> <span class="s2">&#34;00vxb83571r39r0dbzkr9agjfmqs929lhq9rwf8akvqghc412apf&#34;</span><span class="p">;</span>
+  <span class="p">};</span>
+</code></pre></div><p>The sha256 content is a nix-specific hash of the downloaded tar file. The easiest way to get it is
+to build the derivation without sha256 specified, and extract the expected sha from the error
+message.</p>
+<p>We build the package with</p>
+<pre><code>; nix-build emacs-from-scratch.nix
+...
+configuring
+no configure script, doing nothing
+building
+build flags: SHELL=/nix/store/x0dcb2rxlzf32g0ddfkqqz1sfcyx4yay-bash-4.4-p23/bin/bash
+There seems to be no &quot;configure&quot; file in this directory.
+Running ./autogen.sh ...
+./autogen.sh
+...
+Your system seems to be missing the following tool(s):
+autoconf (missing)
+</code></pre><p>and get an build-time (!) error that autoconf is missing.</p>
+<p>To resolve the situation we make the following changes:</p>
+<ol>
+<li>
+<p>Add <code>preConfigure = &quot;./autogen.sh&quot;</code>, to generate a suitable configure file.
+(The necessity of this step took me WAY TOO LONG to figure out 😅).</p>
+</li>
+<li>
+<p>Add <code>buildInputs = [ pkgs.autoconf ]</code> to make autoconf available in the build environment.</p>
+</li>
+</ol>
+<p>While at it we also add <code>configureFlags = [&quot;--without-all&quot;]</code> as to simplify our lives for the time being.</p>
+<p>Hint: Use <code>nix-shell --pure emacs-from-scratch.nix</code> to drop into an interactive build environment.
+The <a href="https://nixos.org/manual/nixpkgs/stable/#sec-stdenv-phases">build phases</a> can be manually
+executed with commands like <code>unpackPhase</code>. I used this to run <code>./configure --help</code> to get
+information about the available configure flags.</p>
+<h2 id="step-12---a-first-try-">Step 1.2 - A first try &hellip;</h2>
+<p>After resolving a first set of dependecny errors, we arrive a the following file:</p>
+<div class="highlight"><pre class="chroma"><code class="language-nix" data-lang="nix"><span class="k">with</span> <span class="k">rec</span> <span class="p">{</span>
+  <span class="n">pkgs</span> <span class="o">=</span> <span class="kn">import</span> <span class="sr">&lt;nixpkgs&gt;</span> <span class="p">{};</span>
+<span class="p">};</span>
+
+<span class="n">pkgs</span><span class="o">.</span><span class="n">stdenv</span><span class="o">.</span><span class="n">mkDerivation</span> <span class="p">{</span>
+   <span class="n">name</span> <span class="o">=</span> <span class="s2">&#34;emacs-head&#34;</span><span class="p">;</span>
+   <span class="n">src</span> <span class="o">=</span> <span class="n">pkgs</span><span class="o">.</span><span class="n">fetchFromGitHub</span> <span class="p">{</span>
+       <span class="n">owner</span> <span class="o">=</span> <span class="s2">&#34;emacs-mirror&#34;</span><span class="p">;</span>
+       <span class="n">repo</span> <span class="o">=</span> <span class="s2">&#34;emacs&#34;</span><span class="p">;</span>
+       <span class="n">rev</span> <span class="o">=</span> <span class="s2">&#34;4d439744685b6b2492685124994120ebd1fa4abb&#34;</span><span class="p">;</span>
+       <span class="n">sha256</span> <span class="o">=</span> <span class="s2">&#34;00vxb83571r39r0dbzkr9agjfmqs929lhq9rwf8akvqghc412apf&#34;</span><span class="p">;</span>
+  <span class="p">};</span>
+  <span class="n">preConfigure</span> <span class="o">=</span> <span class="s2">&#34;./autogen.sh&#34;</span><span class="p">;</span>
+  <span class="n">configureFlags</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&#34;--without-all&#34;</span><span class="p">];</span>
+  <span class="n">buildInputs</span> <span class="o">=</span> <span class="p">[</span> <span class="n">pkgs</span><span class="o">.</span><span class="n">autoconf</span> <span class="n">pkgs</span><span class="o">.</span><span class="n">texinfo</span> <span class="n">pkgs</span><span class="o">.</span><span class="n">ncurses</span> <span class="p">];</span>
+<span class="p">}</span>
+</code></pre></div><p>The build proceeds through the configure phase, and fails after a few minutes with the following error:</p>
+<pre><code>/nix/store/x0dcb2rxlzf32g0ddfkqqz1sfcyx4yay-bash-4.4-p23/bin/bash: /bin/pwd: No such file or directory
+</code></pre><p><code>pwd(1)</code> is part of the GNU coreutils, which is available in the nix build environment by default.
+It&rsquo;s however, not at its standard location <code>/bin/pwd</code> but in the nix store, in my case at:
+<code>/nix/store/937f5738d2frws07ixcpg5ip176pfss1-coreutils-8.32/bin/pwd</code></p>
+<h2 id="step-13----patching-the-makefiles">Step 1.3 &ndash; Patching the Makefiles</h2>
+<p>We have to patch the Makefiles in order to fix the issue. Taking some inspiration from the <a href="https://github.com/NixOS/nixpkgs/blob/master/pkgs/applications/editors/emacs/generic.nix">nikpgs
+emacs</a>
+derivation, we add the following patches to our .nix file:</p>
+<div class="highlight"><pre class="chroma"><code class="language-nix" data-lang="nix"><span class="n">postPatch</span> <span class="err">=</span> <span class="n">pkgs</span><span class="o">.</span><span class="n">lib</span><span class="o">.</span><span class="n">concatStringsSep</span> <span class="s2">&#34;</span><span class="se">\n</span><span class="s2">&#34;</span> <span class="p">[</span>
+  <span class="s1">&#39;&#39;
+</span><span class="s1">  for makefile_in in $(find . -name Makefile.in -print); do
+</span><span class="s1">    substituteInPlace $makefile_in --replace /bin/pwd pwd
+</span><span class="s1">  done
+</span><span class="s1">  substituteInPlace src/Makefile.in --replace &#39;RUN_TEMACS = ./temacs&#39; &#39;RUN_TEMACS = env -i ./temacs&#39;
+</span><span class="s1">  substituteInPlace lisp/international/mule-cmds.el --replace /usr/share/locale </span><span class="si">${</span><span class="n">pkgs</span><span class="o">.</span><span class="n">gettext</span><span class="si">}</span><span class="s1">/share/locale
+</span><span class="s1">  &#39;&#39;</span>
+<span class="p">];</span>
+</code></pre></div><p>With these patches the build succeeds and we have our first emacs.</p>
+<pre><code>; nix-build emacs-from-scrach.nix
+...
+/nix/store/qh9v8rnp8bjm18r7wz9cq7khhqf63wvw-emacs-head
+
+; /nix/store/qh9v8rnp8bjm18r7wz9cq7khhqf63wvw-emacs-head/bin/emacs --version
+GNU Emacs 28.0.50
+...
+</code></pre><h2 id="step-14----adding-configure-flags">Step 1.4 &ndash; Adding configure flags</h2>
+<p>We are now removing the <code>--without-all</code> configure flag, to arrive at a more featureful emacs variant.
+Looking at the build errors, we need to add <code>pkgs.gnutls</code> and <code>pkgs.pkg-config</code> to the buildInputs, and get
+a working version.</p>
+<ul>
+<li>For <code>--with-json</code> we need <code>pkgs.janson</code> as well.</li>
+<li>For <code>--with-native-compilation</code> we add <code>pkgs.libgccjit</code> and <code>pkgs.zlib</code>, and set the environment variables:
+<div class="highlight"><pre class="chroma"><code class="language-nix" data-lang="nix"><span class="n">NATIVE_FULL_AOT</span> <span class="err">=</span> <span class="s2">&#34;1&#34;</span><span class="p">;</span>
+<span class="n">LIBRARY_PATH</span> <span class="err">=</span> <span class="s2">&#34;</span><span class="si">${</span><span class="n">pkgs</span><span class="o">.</span><span class="n">stdenv</span><span class="o">.</span><span class="n">cc</span><span class="o">.</span><span class="n">libc</span><span class="si">}</span><span class="s2">/lib&#34;</span><span class="p">;</span>
+</code></pre></div></li>
+</ul>
+<p>In all those cases, adding the entry to <code>buildInputs</code> was sufficient for the build process to pick
+up the dependency. This means that <code>LD_FLAGS</code> and <code>CFLAGS</code> have been set accordingly without any
+need for additional configuration.</p>
+<p>The final emacs-from-scratch.nix file looks as follows:</p>
+<div class="highlight"><pre class="chroma"><code class="language-nix" data-lang="nix"><span class="k">with</span> <span class="k">rec</span> <span class="p">{</span>
+  <span class="n">pkgs</span> <span class="o">=</span> <span class="kn">import</span> <span class="sr">&lt;nixpkgs&gt;</span> <span class="p">{};</span>
+<span class="p">};</span>
+
+<span class="n">pkgs</span><span class="o">.</span><span class="n">stdenv</span><span class="o">.</span><span class="n">mkDerivation</span> <span class="p">{</span>
+  <span class="n">name</span> <span class="o">=</span> <span class="s2">&#34;emacs-head&#34;</span><span class="p">;</span>
+  <span class="n">src</span> <span class="o">=</span> <span class="n">pkgs</span><span class="o">.</span><span class="n">fetchFromGitHub</span> <span class="p">{</span>
+      <span class="n">owner</span> <span class="o">=</span> <span class="s2">&#34;emacs-mirror&#34;</span><span class="p">;</span>
+      <span class="n">repo</span> <span class="o">=</span> <span class="s2">&#34;emacs&#34;</span><span class="p">;</span>
+      <span class="n">rev</span> <span class="o">=</span> <span class="s2">&#34;4d439744685b6b2492685124994120ebd1fa4abb&#34;</span><span class="p">;</span>
+      <span class="n">sha256</span> <span class="o">=</span> <span class="s2">&#34;00vxb83571r39r0dbzkr9agjfmqs929lhq9rwf8akvqghc412apf&#34;</span><span class="p">;</span>
+  <span class="p">};</span>
+  <span class="c1"># Environtment for --native-compilation</span>
+  <span class="n">NATIVE_FULL_AOT</span> <span class="o">=</span> <span class="s2">&#34;1&#34;</span><span class="p">;</span>
+  <span class="n">LIBRARY_PATH</span> <span class="o">=</span> <span class="s2">&#34;</span><span class="si">${</span><span class="n">pkgs</span><span class="o">.</span><span class="n">stdenv</span><span class="o">.</span><span class="n">cc</span><span class="o">.</span><span class="n">libc</span><span class="si">}</span><span class="s2">/lib&#34;</span><span class="p">;</span>
+
+  <span class="c1"># Dependencies</span>
+  <span class="n">buildInputs</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="n">pkgs</span><span class="o">.</span><span class="n">autoconf</span> <span class="n">pkgs</span><span class="o">.</span><span class="n">texinfo</span> <span class="n">pkgs</span><span class="o">.</span><span class="n">ncurses</span> <span class="c1"># --without-all</span>
+    <span class="n">pkgs</span><span class="o">.</span><span class="n">gnutls</span> <span class="n">pkgs</span><span class="o">.</span><span class="n">pkg-config</span> <span class="c1"># normal build</span>
+    <span class="n">pkgs</span><span class="o">.</span><span class="n">jansson</span> <span class="c1"># --with-json</span>
+    <span class="n">pkgs</span><span class="o">.</span><span class="n">zlib</span> <span class="n">pkgs</span><span class="o">.</span><span class="n">libgccjit</span> <span class="c1"># --with-native-compilation</span>
+  <span class="p">];</span>
+
+  <span class="n">postPatch</span> <span class="o">=</span> <span class="n">pkgs</span><span class="o">.</span><span class="n">lib</span><span class="o">.</span><span class="n">concatStringsSep</span> <span class="s2">&#34;</span><span class="se">\n</span><span class="s2">&#34;</span> <span class="p">[</span>
+    <span class="s1">&#39;&#39;
+</span><span class="s1">    for makefile_in in $(find . -name Makefile.in -print); do
+</span><span class="s1">      substituteInPlace $makefile_in --replace /bin/pwd pwd
+</span><span class="s1">    done
+</span><span class="s1">    substituteInPlace src/Makefile.in --replace &#39;RUN_TEMACS = ./temacs&#39; &#39;RUN_TEMACS = env -i ./temacs&#39;
+</span><span class="s1">    substituteInPlace lisp/international/mule-cmds.el --replace /usr/share/locale </span><span class="si">${</span><span class="n">pkgs</span><span class="o">.</span><span class="n">gettext</span><span class="si">}</span><span class="s1">/share/locale
+</span><span class="s1">    &#39;&#39;</span>
+  <span class="p">];</span>
+  <span class="n">preConfigure</span> <span class="o">=</span> <span class="s2">&#34;./autogen.sh&#34;</span><span class="p">;</span>
+  <span class="n">configureFlags</span> <span class="o">=</span> <span class="p">[</span> <span class="s2">&#34;--with-json&#34;</span> <span class="s2">&#34;--with-native-compilation&#34;</span> <span class="p">];</span>
+<span class="p">}</span>
+</code></pre></div><p>To be fair, I don&rsquo;t expect <code>--with-native-compilation</code> to fully work at this point, since there are
+a few <a href="https://github.com/NixOS/nixpkgs/blob/master/pkgs/applications/editors/emacs/generic.nix#L81">suspicious lisp
+patches</a>
+in the upstream repository that we did not apply yet.</p>
+<p>However, emacs compiles and starts-up fine:</p>
+<pre><code>$( nix-build emacs-from-scratch.nix )/bin/emacs 
+</code></pre><h1 id="v2">Variant 2 - Refactoring nixpkgs' Emacs</h1>
+<p>To get a fully functional emacs version we want to leverage the community know-how, and avoid
+discovering all the pit-falls the hard way.</p>
+<p>The upstream emacs derivation available in nixpkgs is available here <a href="https://github.com/NixOS/nixpkgs/tree/2129356a6405cc342e860d87623d3823e8ee3b8c/pkgs/applications/editors/emacs">here</a>.
+The following 3 files are relevant for the emacs build:</p>
+<ul>
+<li><a href="https://github.com/NixOS/nixpkgs/blob/2129356a6405cc342e860d87623d3823e8ee3b8c/pkgs/applications/editors/emacs/27.nix">27.nix</a> calls generic.nix and specifies some patches</li>
+<li><a href="https://github.com/NixOS/nixpkgs/blob/2129356a6405cc342e860d87623d3823e8ee3b8c/pkgs/applications/editors/emacs/generic.nix">generic.nix</a> specifies the source tar-ball, dependency and configure options</li>
+<li><a href="https://github.com/NixOS/nixpkgs/blob/2129356a6405cc342e860d87623d3823e8ee3b8c/pkgs/top-level/all-packages.nix">all-packages.nix</a> calls generic.nix with some overrides and registers the derivation in the <code>&lt;nixpkgs&gt;</code> name-space</li>
+</ul>
+<p>This setup is quite complex, and involves a lot of indirection that is not needed for our purposes.
+In the next steps, we will refactor these three files, and produce a single-file version that is
+functionally identical to the above for the cases of graphical OSX builds and non-graphical Linux
+builds.</p>
+<h2 id="step-21---consolidate-nix-source-files">Step 2.1 - Consolidate nix source files</h2>
+<p>We will refrain from explaining the refactoring steps full detail. The interested reader
+can alwas refer to the <a href="https://github.com/HeinrichHartmann/emacs-head.nix/commits/master">commit log</a>.
+On a high level, we proceeded as follows:</p>
+<ol>
+<li>Remove the all-package.nix dependency by providing an independent entry point emacs-refactored.nix of the form:
+<div class="highlight"><pre class="chroma"><code class="language-nix" data-lang="nix"><span class="k">with</span> <span class="kn">import</span> <span class="sr">&lt;nipkgs&gt;</span> <span class="p">{};</span> <span class="n">callPackage</span> <span class="sr">./27.nix</span> <span class="p">{</span> <span class="o">...</span> <span class="p">}</span>
+</code></pre></div></li>
+<li>Merge 27.nix and generic.nix into emacs-refactored.nix by substituting file contents for the <code>import</code> calls.</li>
+<li>Cleanup by inlining calls and specializing to the OSX/Linux configuration described above.</li>
+</ol>
+<p>After each step we check the file defines an identical build by using <code>nix-instantiate -f &lt;filename&gt;</code>.
+If the retured hash value is identical, we have not changed the build.</p>
+<h2 id="step-22---pull-latest-sources">Step 2.2 - Pull latest sources</h2>
+<p>Next we change src to pull from the latest GitHub master, as we did above.
+We fix the build by:</p>
+<ul>
+<li>Remove the patches as they no-longer seem to apply</li>
+<li>Add <code>autoconf</code> and <code>texinfo</code> dependencies to buildInputs</li>
+<li>Run <code>./autogen.sh</code> from the pre-configure hook</li>
+</ul>
+<h2 id="step-23-enable-native-compilation-and-native-json">Step 2.3 Enable Native Compilation and native JSON</h2>
+<p>The upstream emacs package thankfully has already built-in nativeComp parameter!
+I am pretty sure we should be able to set this with a command-line switch (<code>--args</code>), but I could not get this to work.
+(What seems to work is to use the following nix expression: <code>nix-build -E 'with import &lt;nixpkgs&gt; {}; emacs.override { nativeComp = true; }'</code>)
+We set this parameter to <code>true</code> to enable nativeComp.</p>
+<p>Native JSON support is activated by adding &ldquo;&ndash;with-json&rdquo; as configure flag. The jansson dependency is already speficified.</p>
+<p>With this changes, <code>nix-build</code> goes right through an we should have a fully functional emacs <code>--with-json</code> and <code>--with--native-compilation</code> running!
+To be sure, we check this by printing the lisp variable <code>system-configuration-options</code> which contains a copy of the build flags:</p>
+<pre><code>; $( nix-build emacs-refactored.nix )/bin/emacs -nw -q --batch --eval '(message system-configuration-options)'
+--prefix=/nix/store/ ... --with-native-compilation --with-json
+</code></pre><p>The complete build definition can be found
+<a href="https://github.com/HeinrichHartmann/emacs-head.nix/blob/master/emacs-refactored.nix">here</a>.</p>
+<h1 id="v3">Variant 3 &ndash; Overriding nixpkgs' emacs </h1>
+<p>In going through the above steps, one notes, that there were actually very few modifications to the
+stock emacs package necessary to build the latest <code>emacs@head</code> version: We changed <code>src</code>, added a
+<code>preConfigure</code> entry, and specified two more dependencies.</p>
+<p>It is possible to apply those changes to upstream derivation, using the <a href="https://nixos.org/manual/nixpkgs/stable/#chap-overrides">package
+overrides</a> mechanism.
+The resulting file looks like this:</p>
+<div class="highlight"><pre class="chroma"><code class="language-nix" data-lang="nix"><span class="p">;</span> <span class="n">cat</span> <span class="n">emacs-override</span><span class="o">.</span><span class="n">nix</span>
+<span class="k">with</span> <span class="p">(</span><span class="kn">import</span> <span class="sr">&lt;nixpkgs&gt;</span> <span class="p">{});</span>
+
+<span class="p">(</span><span class="n">emacs-nox</span><span class="o">.</span><span class="n">override</span> <span class="p">{</span>
+     <span class="n">nativeComp</span> <span class="o">=</span> <span class="no">true</span><span class="p">;</span>
+<span class="p">})</span><span class="o">.</span><span class="n">overrideAttrs</span> <span class="p">(</span><span class="n">old</span> <span class="p">:</span> <span class="p">{</span>
+     <span class="n">pname</span> <span class="o">=</span> <span class="s2">&#34;emacs&#34;</span><span class="p">;</span>
+     <span class="n">version</span> <span class="o">=</span> <span class="s2">&#34;head&#34;</span><span class="p">;</span>
+     <span class="n">src</span> <span class="o">=</span> <span class="n">fetchFromGitHub</span> <span class="p">{</span>
+        <span class="n">owner</span> <span class="o">=</span> <span class="s2">&#34;emacs-mirror&#34;</span><span class="p">;</span>
+        <span class="n">repo</span> <span class="o">=</span> <span class="s2">&#34;emacs&#34;</span><span class="p">;</span>
+        <span class="n">rev</span> <span class="o">=</span> <span class="s2">&#34;4d439744685b6b2492685124994120ebd1fa4abb&#34;</span><span class="p">;</span>
+        <span class="n">sha256</span> <span class="o">=</span> <span class="s2">&#34;00vxb83571r39r0dbzkr9agjfmqs929lhq9rwf8akvqghc412apf&#34;</span><span class="p">;</span>
+     <span class="p">};</span>
+     <span class="n">patches</span> <span class="o">=</span> <span class="p">[];</span>
+     <span class="n">configureFlags</span> <span class="o">=</span> <span class="n">old</span><span class="o">.</span><span class="n">configureFlags</span> <span class="o">++</span> <span class="p">[</span><span class="s2">&#34;--with-json&#34;</span><span class="p">];</span>
+     <span class="n">preConfigure</span> <span class="o">=</span> <span class="s2">&#34;./autogen.sh&#34;</span><span class="p">;</span>
+     <span class="n">buildInputs</span> <span class="o">=</span> <span class="n">old</span><span class="o">.</span><span class="n">buildInputs</span> <span class="o">++</span> <span class="p">[</span> <span class="n">autoconf</span> <span class="n">texinfo</span> <span class="p">];</span>
+<span class="p">})</span>
+</code></pre></div><p>Most of the changes shoudl be self-explanatory. Note, that we use <code>.override</code> to override the
+nativeComp arguments to <code>callPackage</code>, and <code>.overrideAttrs</code> to manipulate the internal of the
+derivation.</p>
+<p>This is the emacs version that I am currently using on my Linux machine. It allows me to leverage
+the upstream maintenance efforts and only maintain a minimal set of changes that is necessary to
+build the latest master, with my desired configuration.</p>
+<h1 id="v4">Variant 4 &ndash; The emacs overlay </h1>
+<p>An even more powerful mechanism to &ldquo;override&rdquo; nixpkg&rsquo;s packages is the
+<a href="https://nixos.org/manual/nixpkgs/stable/#chap-overlays">Overlay</a> mechanism.</p>
+<p>There is a community maintained <a href="https://github.com/nix-community/emacs-overlay">emacs-overlay</a>
+repository available, which seems like it does the job of building the latest emacs with the desired
+configuration. Initially I discatded this overlay since it looked quite involved (requireing use of
+NixOs or Home Manager), and does a fair bit more than we need for our set-goal. After having
+worked through the above versions, I think I understand now how to navigate this complexity,
+and produce a stand-alone nix-file (<a href="https://github.com/HeinrichHartmann/emacs-head.nix/blob/16ee7df0cf2092ffeb117d79d8bd89f1716834c7/emacs-overlay.nix">GH</a>)
+that leverages this overlay:</p>
+<div class="highlight"><pre class="chroma"><code class="language-nix" data-lang="nix"><span class="p">;</span> <span class="n">cat</span> <span class="n">nix-overlay</span><span class="o">.</span><span class="n">nix</span>
+<span class="k">with</span> <span class="k">rec</span> <span class="p">{</span>
+  <span class="n">emacs-overlay</span> <span class="o">=</span> <span class="kn">import</span> <span class="p">(</span><span class="nb">builtins</span><span class="o">.</span><span class="nb">fetchTarball</span> <span class="p">{</span> <span class="n">url</span> <span class="o">=</span> <span class="sd">https://github.com/nix-community/emacs-overlay/archive/master.tar.gz</span><span class="p">;</span> <span class="p">});</span>
+  <span class="n">pkgs</span> <span class="o">=</span> <span class="kn">import</span> <span class="sr">&lt;nixpkgs&gt;</span> <span class="p">{</span> <span class="n">overlays</span> <span class="o">=</span> <span class="p">[</span> <span class="n">emacs-overlay</span> <span class="p">];</span> <span class="p">};</span>
+<span class="p">};</span>
+
+<span class="n">pkgs</span><span class="o">.</span><span class="n">emacsGcc</span>
+</code></pre></div><p>The following command will now build the community maintained emacsGcc:</p>
+<pre><code>nix-build nix-overlay.nix
+</code></pre><p>To install this emacs version, you could use:</p>
+<pre><code>nix-env -f nix-overlay.nix -i &quot;.*&quot;
+</code></pre><p>Note that this version does not include the &ldquo;&ndash;with-json&rdquo; configuration, we have used before. In order
+to add this, we would need to specify overrides as we did above.</p>
+<h1 id="conclusion">Conclusion</h1>
+<p>We have seen four different methods to install the latest-gratest emacs with a custom configuration.
+This exercise has been a good learning experience for me. I hope that this writeup is somewhat helpful
+for you as well in your journey to find yourself around with nix.</p>
+<p>While working on this project, I have asked the nix community multiple times for support over the following channels:</p>
+<ul>
+<li><a href="https://matrix.to/#/#community:nixos.org">Chat/Matrix</a></li>
+<li><a href="https://stackoverflow.com/search?q=user%3A1209380+%5Bnix%5D">StackOverflow</a></li>
+<li><a href="https://discourse.nixos.org/t/how-to-build-and-distribute-binary-packages-with-nix/14439">Forum/Discourse</a></li>
+</ul>
+<p>In all cases, I got very helpful replies within a few minutes. This has been an outstanding experience!</p>
+<p>What I took away from this exercise is that nix is a very powerful tool, that has the potential to
+change how we build sofware and manage runtime environments. A lot of heavy lifting has been taken
+place behind the scenes to make this possible. At this point in time, the user-facing APIs are still
+very complicated, and sometimes feel rough. To get productive you have to dig into the nix
+expression language, which is not all that complicated, but requires a certain time investment.</p>
+<p>If you are a beginner and want to dig deeper, I would recommend to:</p>
+<ol>
+<li>Watch some of the intro videos from <a href="https://twitter.com/burkelibbey">Burke Libbey&rsquo;s</a> <a href="https://www.youtube.com/channel/UCSW5DqTyfOI9sUvnFoCjBlQ/featured">YouTube Channel</a></li>
+<li>Work through the first few <a href="https://nixos.org/guides/nix-pills/">Nix pills</a></li>
+<li>Spent some <a href="https://www.heinrichhartmann.com/archive/quality-time.html">quality time</a> with the <a href="https://nixos.org/manual/nix/stable/">Nix manual</a> and the <a href="https://nixos.org/manual/nixpkgs/stable/">NixPkgs manual</a>.</li>
+</ol>
+<p>Also don&rsquo;t hesitate to get in touch with community via chat!</p>
+<hr/>
+<script src="https://utteranc.es/client.js"
+        repo="HeinrichHartmann/comments"
+        issue-term="title"
+        label="Comment"
+        theme="github-light"
+        crossorigin="anonymous"
+        async>
+</script>
+
+      </div>
+    </article>
+  </main>
+
+	<footer style="float:right; margin: 20px auto 20px auto; color:#AAA">&copy; 2021 Heinrich Hartmann. All rights reserved.</footer>
+
+</body>
+
+</html>
