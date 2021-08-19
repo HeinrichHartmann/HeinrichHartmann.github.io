@@ -6,6 +6,7 @@ location: Stemwede
 style: markdown
 Draft: false
 mathjax: true
+tags: post, math
 ---
 <style>
 .markdown-container {
