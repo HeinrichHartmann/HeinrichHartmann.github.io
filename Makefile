@@ -8,7 +8,7 @@ build:
 	cd hugo && make build
 
 publish: build
-	! git status -s
+	git status -s
 	git symbolic-ref HEAD refs/heads/master
 	git reset
 	git --work-tree ./public add .
