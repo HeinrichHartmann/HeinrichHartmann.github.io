@@ -4,6 +4,8 @@ with pkgs;
 
 mkShell {
   buildInputs = [
-    mkdocs hugo
+    bash git gnumake
+    hugo
+    python3 python3Packages.poetry
   ];
 }

@@ -5,6 +5,9 @@ RUN nix-channel --update
 
 RUN nix-env -iA nixpkgs.bash nixpkgs.gnumake nixpkgs.hugo
 
-RUN mkdir -p data
+WORKDIR /config
+COPY shell.nix ./
+RUN nix-shell --command true # just build the environment
+
 WORKDIR /data
 CMD make

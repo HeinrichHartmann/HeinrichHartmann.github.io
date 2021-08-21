@@ -7,6 +7,10 @@ build:
 	date > ./public/last-update.txt
 	cp ./CNAME public
 	cd hugo && make build
+	cd latency && make build
+
+serve: build
+	cd public; python3 -m http.server
 
 publish: build
 	git diff --quiet || exit 1 # Check if tree is ditry
