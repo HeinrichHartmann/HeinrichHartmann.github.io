@@ -4,12 +4,12 @@ title = "HeinrichHartmann.com"
 # relativeurls = true
 # uglyurls = true
 pygmentsUseClasses = true
+publishDir="../public"
 
 [markup]
   [markup.goldmark]
     [markup.goldmark.renderer]
       unsafe = true
-
 
 [params]
   # Only posts from mainSections appear in index

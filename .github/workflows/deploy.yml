@@ -20,6 +20,7 @@ jobs:
           path: public
       - name: build website
         uses: jakejarvis/hugo-build-action@v0.80.0
+        working-directory: ./hugo
         with:
           args: --buildFuture
       - name: Push update
@@ -31,4 +32,3 @@ jobs:
           git add .
           git commit -m "GH Deploy"
           git push origin master
- 
