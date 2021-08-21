@@ -8,11 +8,11 @@ build:
 	cd hugo && make build
 
 publish: build
-	git status -s
+	git diff --quiet || exit 1 # Check if tree is ditry
 	git symbolic-ref HEAD refs/heads/master
 	git reset
 	git --work-tree ./public add .
 	git --work-tree ./public commit -m "publish"
-	git --work-tree ./public push origin master
 	git symbolic-ref HEAD refs/heads/source
 	git reset
+	git push origin master
