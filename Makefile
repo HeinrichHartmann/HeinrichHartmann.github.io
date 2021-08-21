@@ -1,3 +1,4 @@
+SHELL = /bin/bash
 .PHONY: build publish
 
 build:
@@ -7,7 +8,7 @@ build:
 	cd hugo && make build
 
 publish: build
-	[[ -z $(git status -s) ]] || { "Unclean worktree";  exit 1 }
+	! git status -s
 	git symbolic-ref HEAD refs/heads/master
 	git reset
 	git --work-tree ./public add .
