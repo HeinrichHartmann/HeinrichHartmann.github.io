@@ -2,7 +2,8 @@ SHELL = /bin/bash
 .PHONY: build publish
 
 build:
-	mkdir -p public
+	# git checkout stages the checked-out files, we need undow this with git reset
+	git --work-tree ./public checkout master -- . && git reset
 	date > ./public/last-update.txt
 	cp ./CNAME public
 	cd hugo && make build
