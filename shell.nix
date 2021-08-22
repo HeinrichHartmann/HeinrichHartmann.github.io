@@ -6,6 +6,7 @@ mkShell {
   buildInputs = [
     bash git gnumake
     hugo
-    python3 python3Packages.poetry
+    # /latency with mkdocs
+    python3 python3Packages.poetry nodejs
   ];
 }
