@@ -14,7 +14,7 @@
     
     
       
-        <title>Request Time vs. Service Time - Heinrich Hartmann -- How to measure Latency? @ P99 CONF 2021</title>
+        <title>How to Store Latency Data? - HeinrichHartmann.com</title>
       
     
     
@@ -65,7 +65,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#request-time-vs-service-time" class="md-skip">
+        <a href="#how-to-store-latency-data" class="md-skip">
           Skip to content
         </a>
       
@@ -76,7 +76,7 @@
     
       <header class="md-header" data-md-component="header">
   <nav class="md-header__inner md-grid" aria-label="Header">
-    <a href=".." title="Heinrich Hartmann -- How to measure Latency? @ P99 CONF 2021" class="md-header__button md-logo" aria-label="Heinrich Hartmann -- How to measure Latency? @ P99 CONF 2021" data-md-component="logo">
+    <a href=".." title="HeinrichHartmann.com" class="md-header__button md-logo" aria-label="HeinrichHartmann.com" data-md-component="logo">
       
   
   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54z"/></svg>
@@ -89,13 +89,13 @@
       <div class="md-header__ellipsis">
         <div class="md-header__topic">
           <span class="md-ellipsis">
-            Heinrich Hartmann -- How to measure Latency? @ P99 CONF 2021
+            HeinrichHartmann.com
           </span>
         </div>
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Request Time vs. Service Time
+              How to Store Latency Data?
             
           </span>
         </div>
@@ -186,13 +186,13 @@
 
 <nav class="md-nav md-nav--primary md-nav--integrated" aria-label="Navigation" data-md-level="0">
   <label class="md-nav__title" for="__drawer">
-    <a href=".." title="Heinrich Hartmann -- How to measure Latency? @ P99 CONF 2021" class="md-nav__button md-logo" aria-label="Heinrich Hartmann -- How to measure Latency? @ P99 CONF 2021" data-md-component="logo">
+    <a href=".." title="HeinrichHartmann.com" class="md-nav__button md-logo" aria-label="HeinrichHartmann.com" data-md-component="logo">
       
   
   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54z"/></svg>
 
     </a>
-    Heinrich Hartmann -- How to measure Latency? @ P99 CONF 2021
+    HeinrichHartmann.com
   </label>
   
   <ul class="md-nav__list" data-md-scrollfix>
@@ -206,7 +206,37 @@
   
     <li class="md-nav__item">
       <a href=".." class="md-nav__link">
-        How to measure Latency?
+        Home
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../C0_P99/" class="md-nav__link">
+        P99 CONF
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../C1/" class="md-nav__link">
+        How to Measure Latency?
       </a>
     </li>
   
@@ -230,9 +260,39 @@
       
       
       <a href="./" class="md-nav__link md-nav__link--active">
-        Request Time vs. Service Time
+        How to Store Latency Data?
       </a>
       
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../C3/" class="md-nav__link">
+        How to Analyze Latency Data?
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../X1/" class="md-nav__link">
+        Study - Simulating Queing Systems
+      </a>
     </li>
   
 
@@ -250,16 +310,17 @@
               
                 
                 
-                <h1 id="request-time-vs-service-time">Request Time vs. Service Time</h1>
-<p>It's very easy to confuse request time with service time. In Queuing Systems,
-this can have drastic consequences.</p>
-<p>IMG: Server with Queue</p>
+                <h1 id="how-to-store-latency-data">How to Store Latency Data?</h1>
+<p>Requirements:</p>
 <ul>
-<li>If you are measing latency at the server, you are measuring service time.</li>
-<li>Serice Time looks like Request Time when there is little traffic</li>
-<li>Service Time can look completely FINE even if your clients have TERRIBLE experience.</li>
-<li>Cheating Twice: Catch-up after stall, and </li>
+<li>Can compute percentiles</li>
+<li>Can merge latency data over longer time periods</li>
 </ul>
+<p>Options:</p>
+<ol>
+<li>Raw Data (logs, events, traces)</li>
+<li>Histograms (i.e. Mergable Summaries, Quantile Digest, etc.) </li>
+</ol>
                 
               
               
@@ -279,7 +340,7 @@ this can have drastic consequences.</p>
     <nav class="md-footer__inner md-grid" aria-label="Footer">
       
         
-        <a href=".." class="md-footer__link md-footer__link--prev" aria-label="Previous: How to measure Latency?" rel="prev">
+        <a href="../C1/" class="md-footer__link md-footer__link--prev" aria-label="Previous: How to Measure Latency?" rel="prev">
           <div class="md-footer__button md-icon">
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
           </div>
@@ -288,11 +349,26 @@ this can have drastic consequences.</p>
               <span class="md-footer__direction">
                 Previous
               </span>
-              How to measure Latency?
+              How to Measure Latency?
             </div>
           </div>
         </a>
       
+      
+        
+        <a href="../C3/" class="md-footer__link md-footer__link--next" aria-label="Next: How to Analyze Latency Data?" rel="next">
+          <div class="md-footer__title">
+            <div class="md-ellipsis">
+              <span class="md-footer__direction">
+                Next
+              </span>
+              How to Analyze Latency Data?
+            </div>
+          </div>
+          <div class="md-footer__button md-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11H4z"/></svg>
+          </div>
+        </a>
       
     </nav>
   
