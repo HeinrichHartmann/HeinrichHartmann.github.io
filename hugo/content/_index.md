@@ -512,8 +512,6 @@ content:
   title: "The State of the Histogram"
   href: "https://www.sloconf.com/speakers/heinrichhartman"
   video: "https://www.youtube.com/watch?v=Z-5PNlv8eK0&feature=youtu.be"
-
-
-
+  slides: "/pdf/Heinrich Hartmann - The State of the Histogram (SLOConf, 2021).pdf"
 
 ---
