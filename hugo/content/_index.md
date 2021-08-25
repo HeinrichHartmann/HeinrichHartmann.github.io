@@ -497,4 +497,23 @@ content:
   href: "https://www.usenix.org/conference/srecon19emea/presentation/hartmann-statistics"
   notes: "https://github.com/HeinrichHartmann/Statistics-for-Engineers"
 
+- type: talk
+  occasion: DevOps Days
+  location: Zurich
+  date: 2018-05-03
+  title: "Advanced Linux Performance Monitoring With eBPF"
+  href: "https://devopsdays.org/events/2018-zurich/program/ignite-talk-by-heinrich-hartmann"
+  slides: "/pdf/Heinrich Hartmann - Linux System Monitoring with eBPF.pdf"
+  video: "https://vimeo.com/272537603"
+
+- type: talk
+  occasion: SLOConf 2021
+  date: 2021-05-17
+  title: "The State of the Histogram"
+  href: "https://www.sloconf.com/speakers/heinrichhartman"
+  video: "https://www.youtube.com/watch?v=Z-5PNlv8eK0&feature=youtu.be"
+
+
+
+
 ---
