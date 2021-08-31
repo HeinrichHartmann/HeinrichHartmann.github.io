@@ -26,8 +26,10 @@ typedef struct {
   - We call $N$ _complete_ if $\nxt$ is defined everywhere.
   - Elements of $N$ are called _nodes_. 
   - If $b = \nxt(a)$ then $b$ is said to be the  _parent_ of $a$, and $a$ is said to be a _child_ of $a$.
+  - Elements $a \in N$ with $\nxt(a) = \NULL$ are called _sinks_. 
+  - Elements in $N - \nxt(N)$ (i.e. elements that have no children) are called _leaves_.[^1]
 
-- Let $N,N'$ be linked structures, a morphism of linked structures is a map $f: N \ra N'$, so that
+- Let $N,N'$ be linked structures, a _morphism_ of linked structures is a map $f: N \ra N'$, so that
   $\nxt'(f(a)) = f( \nxt(a) )$ for all $a \in N$ with $\nxt(a)$ defined (i.e. $f(a) \neq \NULL$).
   
 Set theoretic composition of maps is clearly associative, and makes Linked Structures a
@@ -48,19 +50,28 @@ This observation gives us several new angles to study linked strucrtures.
 
 - The _linked-list_ of lenght $k$ is given by $L_k = \{ 0, \dots, k-1 \}$, with $\nxt(i) = i+1$ for
   $i < k-1$, $\nxt(k-1) = \NULL$.
-
+  
 - The _cyclic-linked-list_ of lenght $k$ is given by $C_k = \{ 0, \dots, k-1\}$, with $\nxt(i) = i +
   1 \mod k$.
 
 - The binary tree of size $k$ is defined as $B_k = \{ 0, \dots, k \}$, with map $\nxt(0) = \NULL,
   \nxt(i) = \floor{ i / 2 }, i > 0$.
 
+- Infinite Linked Lists:
+
+  - Let $L_{\infty}$ be the Linked Structure with nodes $k \in \IZ$ and $\nxt(k) = k + 1$.
+  - Let $L_{+}$ be the Linked Structure with nodes $k, k\geq 0$, and $\nxt(k) = k + 1$, $\nxt(0) = \NULL$.
+  - Let $L_{-}$ be the Linked Structure with nodes $-k, k\geq 0$, and $\nxt(k) = k + 1, k<0$, $\nxt(0) = \NULL$.
+
+
+
+
 **Definition.** Let $\lr$ be the equivalence relation on $N$ induced by $a \lr b$ if $\nxt(a) = b$.
 
 - $N$ is called connected, if all nodes in $N$ are equivalent under $\lr$.
 - The connected componenbts of $N$ are the elements in $N/\lr$.
 
-## Trajectories
+## Generators and Co-Generators
 
 **Definition.** 
 
@@ -80,18 +91,41 @@ This observation gives us several new angles to study linked strucrtures.
 
 - In $C_k$ every node is a generator and a co-generator.
 
+**Proposition.** If $s \neq t$ are two sinks in $N$, then $C(s) \cap C(t) = \emptyset$.
 
-## Trees and Forrests
+_Proof._ If $x \in C(s) = C(t)$, then there are $k,l \geq 0$ so that $s = \nxt^kx, t=\nxt^lx$. If $k<l$, then
+$\nxt^{k+1}(s) = \nxt(s) = \NULL$ hence $\nxt^l x$ is undefined, a contradiction. Similarly if $l<k$. qed. 
 
-**Definition.** A Linked Structure $N$ is called _cyclic_ if it admits a map $C_k \ra N$ of Linked
-Structures for some $k \geq 0$.
+## Cycles
 
-**Proposition.** Let $N$ be a finite linked structure with $\#N > 0$ and $\nxt$ defined everywhere,
-then $N$ is cyclic.
+**Definition.** 
 
-_Proof._ Let $a \in N$ be an element, and consider $a_k = \nxt^k(a), k \geq 0$. Since $N$ is
-finite, the elements $a_k$ can't be disjoint, hence we find $k < l$ so that $a_k = a_l$. Now set $n
-= l - k$, and define $f: C_n \ra N$ by $i \mapsto a_{k + i}$. qed.
+- A cycle $C \subset N$ is the image of a map $C_k \ra N, k \geq 0$.
+- We call $\# C$ the period of the cycle.
+- A Linked Structure $N$ is called _cyclic_ if it contains a cycle.
+- $N$ is _acyclic_ if it is not cyclic.
+
+**Proposition.** If $C_k \ra N$ is a map with image $C$, then $\#C|k$. $\blacksquare$
+
+_Proof._ Let $p = \# C$, then $C \isom C_p$, and we get a surjective map $C_k \ra C_p$.
+We have to show that $p|k$.
+
+## Trees
 
 **Definition.** A _forrest_ is a finite acyclic linked structure. A _tree_ is a connected forrest.
 
+**Proposition.** Let $T$ be a tree.
+
+- There is a unique sink $r \in T$ that co-generates $T$. We call $r$ the root of $T$.
+- The set of leaves $L = T - \nxt(T)$ generates $T$.
+
+**Lemma.** Let $N$ be a finite linked structure with $\#N > 0$ and $\nxt$ defined everywhere,
+then $N$ is cyclic.
+
+_Proof of Lemma._ Let $a \in N$ be an element, and consider $a_k = \nxt^k(a), k \geq 0$. Since $N$ is
+finite, the elements $a_k$ can't be disjoint, hence we find $k < l$ so that $a_k = a_l$. Now set $n
+= l - k$, and define $f: C_n \ra N$ by $i \mapsto a_{k + i}$. qed.
+
+
+
+[^1]: Maybe _singles_ would have been a better name, but we stick to the more traditional terminology established for trees here.
