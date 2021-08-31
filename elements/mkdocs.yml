@@ -1,0 +1,48 @@
+site_name: "Heinrich Hartmann / Elements"
+site_dir: ../public/elements
+
+theme:
+  name: material
+  language: en
+  palette:
+    primary: black
+    accent: gray
+  font:
+    text: source code pro
+    code: source code pro
+  features:
+    - search.suggest
+    - toc.integrate
+    - navigation.sections
+
+copyright: Copyright &copy; 2021 Heinrich Hartmann
+
+extra:
+  social:
+    - icon: fontawesome/brands/twitter
+      link: https://twitter.com/heinrichhartman
+
+plugins:
+  - bibtex:
+      bib_file: "refs.bib"
+      cite_style: "pandoc"
+  - search:
+      lang: en
+      prebuild_index: true
+  - include-markdown
+
+markdown_extensions:
+  - meta
+  - footnotes
+  - pymdownx.highlight
+  - pymdownx.superfences
+  - def_list
+  - mdx_truly_sane_lists # https://github.com/mkdocs/mkdocs/issues/545#issuecomment-522196661
+  - md_in_html
+  - pymdownx.arithmatex:
+      generic: true
+
+extra_javascript:
+  - javascripts/config.js
+  - https://polyfill.io/v3/polyfill.min.js?features=es6
+  - https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js
