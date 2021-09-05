@@ -169,6 +169,13 @@ contradicting the minimal choice of $j_0$. qed.
 - If $P(a) \isom L_k, k \geq 1$ we call $a$ _acyclic_ of _lenght_ of $k$. We call the last element
   $T(a) = \{ \nxt^{k-1}\ a \}$ the _terminal sink_ associated to $a$.
 
+**Corollary.** Let $N$ be a non-empty complete linked structures (i.e. $\nxt$ defined everywhere),
+then $N$ contains a cycle.
+
+_Proof._ If $a \in N$, then $P(A)$ can't be isomorphic to $L_k$ since $L_k$ is not complete. So
+$P(a) \isom R_{k,p}$, and the image of $C_p \subset R_{k,p}$ is a cycle.
+
+
 ## Connected Components
 
 **Definition.** Let $\lr$ be the equivalence relation on $N$ induced by $a \lr b$ if $\nxt(a) = b$.
@@ -184,109 +191,65 @@ $a,b \in N$ with $T(a) = T(b)$, we have $a \approx t$ for all $t \in T(a)$ since
 P(a)$. Since $T(a)=T(b)$ is non-empty we find $t \in T(a) = T(b)$, and $a \approx t \approx b$,
 hence $a \approx b$. qed.
 
-
-**Proposition.** For two elements $a,b \in N$ we have $a \lr b$ if and only if there are $k,l \geq
-0$ with $\nxt^k(a) = \nxt^l(b)$.
-
-_Proof._ Let's denote the condition as $a \sim b$. We have to show, that (a) $\sim$ is an
-equivalence relation, and (b) that every other equivalence relation $\approx$ that extends $a \ra b$
-contains $\sim$.
-
-Ad a: The relation $\sim$ is clearly reflexive and symmetric.
-In the situation that $a \sim b, b \sim c$, then there are $k,l,m,n$ so that $\nxt^k(a)=\nxt^l(b)$ and
-$\nxt^m(b)=\nxt^n(c)$. Wlog we assume that $l \leq m$ so that $o = m - l \geq 0$. then $\nxt^{k+o}(a) = \nxt^m(b) = \nxt^n(c)$.
-And hence $a \sim c$.
-
-Ad b: Assume that $\approx$ is an equivalence relation so that $a \ra b$ implies $a \approx b$.
-We have to show that $a \sim b$ implies $a \approx b$.
-Assume that $a \sim b$, then there are $k,l \geq 0$ with $\nxt(a)^k = \nxt^l(b) =: y$,
-since $\approx$ expands $\ra$, we have $a \approx y$ and $b \approx y$, since $\approx$ is transitive,
-we hav $a \approx b$. qed.
-
-
-
-
-
-
 ## Sub-Structures
 
 **Definition.** 
 
 - A _sub-structure_ of a Linked Structure $N$ is a subset $A \subset N$, so that $\nxt(a) \in A$ for
-all $a \in A$ with $\nxt(a) \neq \0$.
+  all $a \in A$ with $\nxt(a) \neq \0$.
 
-- A Linked Structure $N$ is _irreducible_ if $N$ is non-empty and the only sub-structures of $N$ are $\emptyset$ and $N$.
+- A Linked Structure $N$ is _irreducible_ if $N$ is non-empty and the only sub-structures of $N$ are
+  $\emptyset$ and $N$.
+
+**Proposition.** If $A,B \subset N$ are irreducible sub-structures of $N$ finite, then either $A = B$ or $A \cap B = \emptyset$.
+
+_Proof._ $C= A \cap B \subset A$ is a sub-structure, so either $C = \emptyset$ or $C = A$. In case $C =
+A$, $C \subset B$is a non-empty sub-structure of $B$, so $C = B$ as well.
 
 
-**Proposition.** All Irreducible Linked Structures $N$ are isomorphic to either:
+**Proposition.** All Irreducible Linked Structures a finite $N$ are isomorphic to either $L_1$ or $C_p$ for some $p \geq 1$.
 
-- $L_0$
-- $C_k$ for some $k \geq 1$.
+_Proof._  Clearly $L_1$ and $C_p$ are irreducible.
 
-_Proof._  Clearly $L_0$ and $C_k$ are irreducible.
+Assume $N$ is an irreducible. Take $a \in N$, then $P(a) \subset N$ is a non-empty sub-structure,
+hence $P(a) = N$. By the classfication result for $P(a)$ we either have $N \isom L_k, k \geq 1$, or
+$N \isom R_{k,p}, k\geq0, p > 1$. Now, $L_k$ is irreducible if and only if $k=1$. And $C_p \subset
+R_{k,p}$ is an irreducible non-empty sub-structure, hence $k=0$ and $C_p = R_{k,p}$. qed.
 
-Assume that $N$ is irreducible. Take $x \in N$. If $\nxt(x) = \0$ then $\{ x \} \subset N$ is a
-sub-structure, so $N = \{ x \} \isom L_0$.
+**Corollary.** Let $a \in N$, $N$ finite, then $T(a)$ is irreducible.
 
-If $\nxt(x) = y \in N$. Then $P(y) \subset N$ is a sub-structure, hence $P(y) = N$ so $x \in
-P(y)$ and we find $k \geq 0$ with $\nxt^k(y) = x$. Take $k$ minimal with this property, then $f: i
-\mapsto \nxt^i(x)$ defines an isomorphism $C_{k+1} \ra N$. Indeed, if $f(i) = f(j), i<j \leq k+1$
-then $\nxt^i(x) = \nxt^j(x)$ so $x = \nxt^{k+1}(x) = \nxt^{k+1+j-i}(x) = \nxt^{j-i}(x)$,
-contradicting the minimaility of $k$.
+**Theorem.** The connected components of a finite structure $N$ are given by $C(A)$, where
+$A$ runs throught all irreducible sub-structures:
 
-**Proposition.** If $s \neq t$ are two sinks in $N$, then $C_*(s) \cap C_*(t) = \emptyset$.
+- $A = \{ s \} \subset N$, where $s\in N$ is a sink, i.e. $\nxt\ s = \0$.
+- $A \isom C_p, p \geq 1$ is a cycle.
 
-_Proof._ If $x \in C_*(s) = C_*(t)$, then there are $k,l \geq 0$ so that $s = \nxt^kx, t=\nxt^lx$. If $k<l$, then
-$\nxt^{k+1}(s) = \nxt(s) = \0$ hence $\nxt^l x$ is undefined, a contradiction. Similarly if $l<k$. qed. 
+_Proof._ We have to show that $C(A)$ are connected, and each element is $\lr$-equivalent to an element in $C(A)$.
 
-## Cycles
-
-**Definition.** 
-
-- A cycle $C \subset N$ is the image of a map $C_k \ra N, k \geq 0$.
-- We call $\# C$ the period of the cycle.
-- A Linked Structure $N$ is called _cyclic_ if it contains a cycle.
-- $N$ is _acyclic_ if it is not cyclic.
-
-**Proposition.** If $C_k \ra N$ is a map with image $C$, then $\#C|k$.
-
-_Proof._ Let $p = \# C$, then $C \isom C_p$, and we get a surjective map $f:C_k \ra C_p$. Now $f(0) = f(\nxt^k(0)) = \nxt^k(f(0)) = f(0) + k \mod p$. Hence $k \mod p = 0$. qed.
-
-**Proposition.** If $C,D \subset N$ are two cycles, then $C = C'$ or $C \cap D = \emptyset$.
-
-_Proof._ If $x \in C \cap D$, then $C = P(x) = D$. qed.
-
-**Proposition.** If $C \neq D$ are two cycles in $N$, then $C_*(C) \cap C_*(D) = \emptyset$.
-
-_Proof._ If $x \in C_*(C) \cap C_*(D)$ then there are $k,l \geq 0$ with $\nxt^k(x) \in C$ and
-$\nxt^l(x) \in D$. If $k < l$, then $\nxt^l(x) = \nxt^{l-k}(\nxt^k(x)) \in C$, since $\nxt(C) = C$.
-So $C \cap D \neq 0$ and hence $C = D$, a contradiction. The same argument applies to $l < k$. qed.
-
-**Theorem.** If $N$ is a finite Linked Structure, then the connected components of $N$ are given by:
-
-- $C_*(s)$ for all sinks $s \in N$.
-- $C_*(C)$ for all cycles $C \subset N$.
-
-_Proof._ If $a$, and $a \in C_*(s)$, then $\nxt(a) = \0$ or $\nxt(a) \in C_*(s)*$.
-
-We have seen that $C_*(s), C_*(C)$ are connected components.
+$C(A)$ is connected since $A$ is connected. Let $a \in N$, then $T(a)$ is irreducible, so it is in
+the above list. Moreover $a \lr t$ for all $t \in T(a)$, since $T(a) \subset P(a)$. qed.
 
 ## Trees
 
-**Definition.** A _forrest_ is a finite acyclic linked structure. A _tree_ is a connected forrest.
+**Definition.** 
+
+- A _tree_ is a finite, non-empty, connected, acyclic linked structure.
+- A _forrest_ is a finite, acyclic, linked structure (not necessarily connected). 
 
 **Proposition.** Let $T$ be a tree.
 
-- There is a unique sink $r \in T$ that co-generates $T$. We call $r$ the root of $T$.
-- The set of leaves $L = T - \nxt(T)$ generates $T$.
+- a) There is a unique sink $r \in T$ that co-generates $T$: $C(r) = T$. We call $r$ the root of $T$.
+- b) The set of leaves $L = T - \nxt(T)$ is the smallest set that generates $T$: $P(L) = T$.
 
-**Lemma.** Let $N$ be a finite linked structure with $\#N > 0$ and $\nxt$ defined everywhere,
-then $N$ is cyclic.
+_Proof._  Ad a) Pick $a \in T$, then $T(a)$ is irreducible. Since $T$ is acyclic, $T(a) \isom L_1 = \{ 1
+\}$. Let $r \in T$ be the image of $1 \in L_1$. Let $b \in T$ be any other element then
+$T(b)=T(a)=\{ r \}$, since $T$ is connected, so $r \in P(b)$ which is equivalent to $b \in C(r)$.
 
-_Proof of Lemma._ Let $a \in N$ be an element, and consider $a_k = \nxt^k(a), k \geq 0$. Since $N$ is
-finite, the elements $a_k$ can't be disjoint, hence we find $k < l$ so that $a_k = a_l$. Now set $n
-= l - k$, and define $f: C_n \ra N$ by $i \mapsto a_{k + i}$. qed.
+Ad b) Pick $a_1 \in T$. We construct $a_i, i \geq 1$ recursively: If $a_i$ is a leave, we
+terminate. Otherwise we find a $a_{i+1} \in T$, so that $\nxt\ a_{i+1} = a_i$. By construction $a_1 \in P(a_i)$.
+In case we terminated, we have found a leave node that contains $a_1$ as a parent.
 
-
+In case we never terminated, we get an infiite sequence $a_i \in N$, hence $a_i = a_j$ for some
+$i<j$. And we found a cycle. Contradiction.
 
 [^1]: Maybe _singles_ would have been a better name, but we stick to the more traditional terminology established for trees here.

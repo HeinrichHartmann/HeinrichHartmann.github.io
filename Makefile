@@ -8,6 +8,7 @@ build:
 	cp ./CNAME public
 	cd hugo && make build
 	cd latency && make build
+	cd elements && make build
 
 serve: build
 	cd public; python3 -m http.server
