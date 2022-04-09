@@ -1,6 +1,11 @@
 ---
 content:
 
+- tags: post, math, elements
+  date: 2021-09-01
+  href: "/elements/linked-structures"
+  title: "Linked Structures"
+
 - tags: math, post
   date: 2019-10-04
   href: "/archive/quantiles.html"
@@ -278,6 +283,7 @@ content:
   location: Nürnberg
   title: Friends and foes in API Monitoring
   href: "https://www.netways.de/en/events_trainings/osmc/"
+  video: "https://www.youtube.com/watch?v=DdNYat2CLQ4"
 
 - type: talk
   tags: mon, talk

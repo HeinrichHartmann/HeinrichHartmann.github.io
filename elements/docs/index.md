@@ -13,6 +13,6 @@ as theoretical "element" for anyone to look at.
 
 Prior writings, which fall under this ambition include:
 
-- 2021-03-08 - [Effective Rank Decomposition of Linear Maps](https://www.heinrichhartmann.com/posts/2021-03-08-rank-decomposition/)
-- 2021-02-09 - [Natural Operators in Linear Algebra](https://www.heinrichhartmann.com/pdf/Hartmann%20-%20Natural%20Operators%20in%20Linear%20Alebgra%20%282021%29.pdf)
-- 2019-10-04 - [Quantiles](https://www.heinrichhartmann.com/archive/quantiles.html)
+- 2021-03-08 - [Effective Rank Decomposition of Linear Maps](/posts/2021-03-08-rank-decomposition/)
+- 2021-02-09 - [Natural Operators in Linear Algebra](/pdf/Hartmann%20-%20Natural%20Operators%20in%20Linear%20Alebgra%20%282021%29.pdf)
+- 2019-10-04 - [Quantiles](/archive/quantiles.html)

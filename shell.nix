@@ -1,12 +1,16 @@
-{ pkgs ? import <nixpkgs> {} }:
+{ pkgs ? import <nixpkgs> { } }:
 
 with pkgs;
 
 mkShell {
   buildInputs = [
-    bash git gnumake
+    bash
+    git
+    gnumake
     hugo
     # /latency with mkdocs
-    python3 python3Packages.poetry nodejs
+    python3
+    python3Packages.poetry
+    nodejs
   ];
 }
