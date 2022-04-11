@@ -1364,8 +1364,8 @@ A = X \cdot D \cdot Y,
 \qtext{where}
 D =
 \begin{bmatrix}
-\id_r &amp; 0   \\<br>
-0 &amp; 0 \\<br>
+\id_r &amp; 0   \\
+0 &amp; 0 \\
 \end{bmatrix}
 $$
 So $D$ is the $m \times n$ matrix with $r$-diagonal entries $1$ and remaining entries $0$.</p>
@@ -1395,7 +1395,7 @@ back and forth. Since $D$ is a diagonal matrix, most questions are readily solva
 $$
 A x = b \iff D x' = b' \iff
 \begin{Bmatrix}
-x'[i] = b'[i] &amp; i\leq r \\<br>
+x'[i] = b'[i] &amp; i\leq r \\
 0 = b'[i] &amp; i &gt; r
 \end{Bmatrix}
 $$
@@ -1425,8 +1425,8 @@ where $x'=Y x$ and $b'=X^{-1} b$.</li>
 derive a rank decomposition consider a block-matrix $A \in M(2n,2n)$ of the form</p>
 <p>$$
 A = \begin{bmatrix}
-0 &amp; B \\<br>
-0 &amp; 0 \\<br>
+0 &amp; B \\
+0 &amp; 0 \\
 \end{bmatrix}.
 $$</p>
 <p>with $B \in M(n)$. This is a already upper triangular matrix, so the LU and QR decompositions are trivial.
@@ -1478,8 +1478,8 @@ For every matrix $A \in M(m,n)$, we will construct</p>
 A = P \cdot L \cdot D \cdot U \cdot Q,
 \qtext{where}
 D = \begin{bmatrix}
-D_r &amp; 0   \\<br>
-0 &amp; \oo_{m-r,n-r} \\<br>
+D_r &amp; 0   \\
+0 &amp; \oo_{m-r,n-r} \\
 \end{bmatrix}.
 $$</p>
 </div>
@@ -1563,16 +1563,16 @@ For every matrix $A \in M(m,n)$ there is</p>
 A = Q \cdot R \cdot P,
 \qtext{where}
 R = \begin{bmatrix}
-R_{11} &amp; R_{12}   \\<br>
-0 &amp; 0 \\<br>
+R_{11} &amp; R_{12}   \\
+0 &amp; 0 \\
 \end{bmatrix}
 $$</p>
 </div>
 <p><strong>Corollary:</strong>
 Get rank decomposition via $X = Q^t$, $Y = P^t \cdot
 \begin{bmatrix}
-R_{11}^{-1} &amp; -R_{11}^{-1} R_{12}   \\<br>
-0 &amp; \id_{n-r} \\<br>
+R_{11}^{-1} &amp; -R_{11}^{-1} R_{12}   \\
+0 &amp; \id_{n-r} \\
 \end{bmatrix}$.
 As $R_{11}$ is an upper-triangular matrix, the inverse can be computed with $O(n^2)$ operations using backward substitution.</p>
 <p><strong>Householder Reflections.</strong> Similar to the &ldquo;shear&rdquo; transformations used in Gauss Elimination, QR
@@ -1820,7 +1820,7 @@ Comment: A whole text-book on the larger topic.</p>
     </article>
   </main>
 
-	<footer style="float:right; margin: 20px auto 20px auto; color:#AAA">&copy; 2021 Heinrich Hartmann. All rights reserved.</footer>
+	<footer style="float:right; margin: 20px auto 20px auto; color:#AAA">&copy; 2022 Heinrich Hartmann. All rights reserved.</footer>
 
 </body>
 

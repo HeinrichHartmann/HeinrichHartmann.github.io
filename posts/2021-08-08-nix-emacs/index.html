@@ -1272,7 +1272,7 @@ pill</a>:</p>
   <span class="c1"># ... here goes the receipt ...</span>
 <span class="p">}</span>
 </code></pre></div><p>This file already compiles, and gives us a (pretty useless) derivation, which we can view with:</p>
-<pre><code>nix show-derivation $( nix-instantiate -f emacs-from-scratch.nix )
+<pre tabindex="0"><code>nix show-derivation $( nix-instantiate -f emacs-from-scratch.nix )
 </code></pre><h2 id="step-11----pull-emacs-sources-from-github">Step 1.1 &ndash; Pull emacs sources from GitHub</h2>
 <p>To pull the sources from GitHub, we add the following statement to our .nix file:</p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-nix" data-lang="nix">  <span class="n">src</span> <span class="err">=</span> <span class="n">pkgs</span><span class="o">.</span><span class="n">fetchFromGitHub</span> <span class="p">{</span>
@@ -1285,7 +1285,7 @@ pill</a>:</p>
 to build the derivation without sha256 specified, and extract the expected sha from the error
 message.</p>
 <p>We build the package with</p>
-<pre><code>; nix-build emacs-from-scratch.nix
+<pre tabindex="0"><code>; nix-build emacs-from-scratch.nix
 ...
 configuring
 no configure script, doing nothing
@@ -1332,7 +1332,7 @@ information about the available configure flags.</p>
   <span class="n">buildInputs</span> <span class="o">=</span> <span class="p">[</span> <span class="n">pkgs</span><span class="o">.</span><span class="n">autoconf</span> <span class="n">pkgs</span><span class="o">.</span><span class="n">texinfo</span> <span class="n">pkgs</span><span class="o">.</span><span class="n">ncurses</span> <span class="p">];</span>
 <span class="p">}</span>
 </code></pre></div><p>The build proceeds through the configure phase, and fails after a few minutes with the following error:</p>
-<pre><code>/nix/store/x0dcb2rxlzf32g0ddfkqqz1sfcyx4yay-bash-4.4-p23/bin/bash: /bin/pwd: No such file or directory
+<pre tabindex="0"><code>/nix/store/x0dcb2rxlzf32g0ddfkqqz1sfcyx4yay-bash-4.4-p23/bin/bash: /bin/pwd: No such file or directory
 </code></pre><p><code>pwd(1)</code> is part of the GNU coreutils, which is available in the nix build environment by default.
 It&rsquo;s however, not at its standard location <code>/bin/pwd</code> but in the nix store, in my case at:
 <code>/nix/store/937f5738d2frws07ixcpg5ip176pfss1-coreutils-8.32/bin/pwd</code></p>
@@ -1350,7 +1350,7 @@ derivation, we add the following patches to our .nix file:</p>
 </span><span class="s1">  &#39;&#39;</span>
 <span class="p">];</span>
 </code></pre></div><p>With these patches the build succeeds and we have our first emacs.</p>
-<pre><code>; nix-build emacs-from-scrach.nix
+<pre tabindex="0"><code>; nix-build emacs-from-scrach.nix
 ...
 /nix/store/qh9v8rnp8bjm18r7wz9cq7khhqf63wvw-emacs-head
 
@@ -1413,7 +1413,7 @@ a few <a href="https://github.com/NixOS/nixpkgs/blob/master/pkgs/applications/ed
 patches</a>
 in the upstream repository that we did not apply yet.</p>
 <p>However, emacs compiles and starts-up fine:</p>
-<pre><code>$( nix-build emacs-from-scratch.nix )/bin/emacs 
+<pre tabindex="0"><code>$( nix-build emacs-from-scratch.nix )/bin/emacs 
 </code></pre><h1 id="v2">Variant 2 - Refactoring nixpkgs' Emacs</h1>
 <p>To get a fully functional emacs version we want to leverage the community know-how, and avoid
 discovering all the pit-falls the hard way.</p>
@@ -1457,7 +1457,7 @@ We set this parameter to <code>true</code> to enable nativeComp.</p>
 <p>Native JSON support is activated by adding &ldquo;&ndash;with-json&rdquo; as configure flag. The jansson dependency is already speficified.</p>
 <p>With this changes, <code>nix-build</code> goes right through an we should have a fully functional emacs <code>--with-json</code> and <code>--with--native-compilation</code> running!
 To be sure, we check this by printing the lisp variable <code>system-configuration-options</code> which contains a copy of the build flags:</p>
-<pre><code>; $( nix-build emacs-refactored.nix )/bin/emacs -nw -q --batch --eval '(message system-configuration-options)'
+<pre tabindex="0"><code>; $( nix-build emacs-refactored.nix )/bin/emacs -nw -q --batch --eval '(message system-configuration-options)'
 --prefix=/nix/store/ ... --with-native-compilation --with-json
 </code></pre><p>The complete build definition can be found
 <a href="https://github.com/HeinrichHartmann/emacs-head.nix/blob/master/emacs-refactored.nix">here</a>.</p>
@@ -1511,9 +1511,9 @@ that leverages this overlay:</p>
 
 <span class="n">pkgs</span><span class="o">.</span><span class="n">emacsGcc</span>
 </code></pre></div><p>The following command will now build the community maintained emacsGcc:</p>
-<pre><code>nix-build nix-overlay.nix
+<pre tabindex="0"><code>nix-build nix-overlay.nix
 </code></pre><p>To install this emacs version, you could use:</p>
-<pre><code>nix-env -f nix-overlay.nix -i &quot;.*&quot;
+<pre tabindex="0"><code>nix-env -f nix-overlay.nix -i &quot;.*&quot;
 </code></pre><p>Note that this version does not include the &ldquo;&ndash;with-json&rdquo; configuration, we have used before. In order
 to add this, we would need to specify overrides as we did above.</p>
 <h1 id="conclusion">Conclusion</h1>
@@ -1553,7 +1553,7 @@ expression language, which is not all that complicated, but requires a certain t
     </article>
   </main>
 
-	<footer style="float:right; margin: 20px auto 20px auto; color:#AAA">&copy; 2021 Heinrich Hartmann. All rights reserved.</footer>
+	<footer style="float:right; margin: 20px auto 20px auto; color:#AAA">&copy; 2022 Heinrich Hartmann. All rights reserved.</footer>
 
 </body>
 

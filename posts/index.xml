@@ -6,7 +6,17 @@
     <description>Recent content in Posts on HeinrichHartmann.com</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Sun, 08 Aug 2021 00:00:00 +0000</lastBuildDate><atom:link href="/posts/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Sat, 09 Apr 2022 00:00:00 +0000</lastBuildDate><atom:link href="/posts/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Writing for Engineers</title>
+      <link>/posts/writing/</link>
+      <pubDate>Sat, 09 Apr 2022 00:00:00 +0000</pubDate>
+      
+      <guid>/posts/writing/</guid>
+      <description>Writing is key to have impact in large organizations. As a senior software engineer chances are that writing is the most important skill you have to acquire in order to increase your reach and advance your career.
+Writing is hard. Many Software engineers struggle with writing. Personally I never had an intrinsic interest in literature, so writing did not naturally come to me either. I have spent days and weeks agonizing and procrastinating around larger writing tasks.</description>
+    </item>
+    
     <item>
       <title>First Steps with Nix - Building emacs</title>
       <link>/posts/2021-08-08-nix-emacs/</link>
@@ -24,6 +34,15 @@ The basic idea behind nix, is that all sofware is kept in a content addressable*
       
       <guid>/posts/2021-03-08-rank-decomposition/</guid>
       <description>.markdown-container { width: 60em; } @media only screen and (max-width: 60em) { .markdown-container { text-align: left; width: 100%; margin: 0; margin-top: 3em; padding: 0.1em; } } .center { display: block; margin:auto }  $$ \newcommand{\nl}{\\} \newcommand{\half}{\frac{1}{2}} \newcommand{\floor}[1]{\lfloor #1 \rfloor} \newcommand{\ceil}[1]{\lceil #1 \rceil} \newcommand{\Set}[2]{\left\{\, #1 \;\vert\; #2 \,\right\}} \newcommand{\C}{\,\#} \newcommand{\CSet}[2]{\#\{\, #1 \;\vert\; #2 \,\}} \newcommand{\qtext}[1]{\quad\text{#1}\quad} \newcommand{\stext}[1]{\;\text{#1}\;} \newcommand{\IFF}{\Leftrightarrow} \newcommand{\inf}{\infty} \newcommand{\Ind}{\mathbb{1}} \newcommand{\IR}{\mathbb{R}} \newcommand{\IA}{\mathbb{A}} \newcommand{\IB}{\mathbb{B}} \newcommand{\IC}{\mathbb{C}} \newcommand{\ID}{\mathbb{D}} \newcommand{\IF}{\mathbb{F}} \newcommand{\IH}{\mathbb{H}} \newcommand{\II}{\mathbb{I}} \newcommand{\IL}{\mathbb{L}} \newcommand{\IN}{\mathbb{N}} \newcommand{\IP}{\mathbb{P}} \newcommand{\IQ}{\mathbb{Q}} \newcommand{\IR}{\mathbb{R}} \newcommand{\IS}{\mathbb{S}} \newcommand{\IV}{\mathbb{V}} \newcommand{\IZ}{\mathbb{Z}} \newcommand{\KR}{\matcal{R}} \newcommand{\KA}{\matcal{A}} \newcommand{\KB}{\matcal{B}} \newcommand{\KC}{\matcal{C}} \newcommand{\KD}{\matcal{D}} \newcommand{\KF}{\matcal{F}} \newcommand{\KH}{\matcal{H}} \newcommand{\KI}{\matcal{I}} \newcommand{\KL}{\matcal{L}} \newcommand{\KN}{\matcal{N}} \newcommand{\KP}{\matcal{P}} \newcommand{\KQ}{\matcal{Q}} \newcommand{\KR}{\matcal{R}} \newcommand{\KS}{\matcal{S}} \newcommand{\KV}{\matcal{V}} \newcommand{\KZ}{\matcal{Z}} \newcommand{\gc}{\mathfrak{C}} \newcommand{\gd}{\mathfrak{D}} \newcommand{\gM}{\mathfrak{M}} \newcommand{\gm}{\mathfrak{m}} \newcommand{\gf}{\mathfrak{f}} \newcommand{\gu}{\mathfrak{U}} \newcommand{\fa}{\mathfrak{a}} \newcommand{\fg}{\mathfrak{g}} \newcommand{\fn}{\mathfrak{n}} \newcommand{\fk}{\mathfrak{k}} \newcommand{\fm}{\mathfrak{m}} \newcommand{\fp}{\mathfrak{p}} \newcommand{\curly}[1]{\mathcal{#1}} \newcommand{\op}[1]{\mathrm{#1}} \newcommand{\Cat}[1]{\mathfrak{#1}} \newcommand{\cat}[1]{\mathbf{#1}} \newcommand{\vphi}{\varphi} \newcommand{\sphi}{\phi} \newcommand{\eps}{\varepsilon} \newcommand{\tensor}{\otimes} \newcommand{\tensors}{\tensor\dots\tensor} \newcommand{\Tensor}{\bigotimes} \newcommand{\ra}{\rightarrow} \newcommand{\lra}{\longrightarrow} \newcommand{\la}{\leftarrow} \newcommand{\lla}{\longleftarrow} \newcommand{\isom}{\cong} \newcommand{\epi}{\twoheadrightarrow} \newcommand{\mono}{\hookrightarrow} \newcommand{\del}{\partial} \newcommand{\union}{\cup} \newcommand{\dotcup}{\ensuremath{\mathaccent\cdot\cup}} \newcommand{\dunion}{\dotcup} \newcommand{\&amp;lt;}{\langle} \renewcommand{\&amp;gt;}{\rangle} \newcommand{\inpart}[1]{\in\text{\part}(#1)} \newcommand{\Vsum}{\bigoplus} \newcommand{\vsum}{\oplus} \renewcommand{\S}{\mathfrak{S}} \newcommand{\id}{\mathrm{id}} \newcommand{\rk}{\mathrm{rk}} \newcommand{\Diff}{\mathrm{Diff}} \newcommand{\Hom}{\mathrm{Hom}} \newcommand{\Pic}{\mathrm{Pic}} \newcommand{\Spec}{\mathrm{Spec}} \newcommand{\End}{\mathrm{End}} \newcommand{\Ext}{\mathrm{Ext}} \DeclareMathOperator{\Supp}{\mathrm{Supp}} \DeclareMathOperator{\Sym}{Sym} \DeclareMathOperator{\Alt}{\Lambda} \DeclareMathOperator{\ad}{ad} \DeclareMathOperator{\ch}{ch} \DeclareMathOperator{\td}{td} \DeclareMathOperator{\pr}{pr} \newcommand{\id}{\mathbb{1}} \newcommand{\oo}{\mathbb{0}} \newcommand{\iff}{\;\Leftrightarrow\;} $$  The rank decomposition of a $m \times n$ matrix $A$ is an fundamental result in Linear Algebra, that tells us that &amp;ldquo;up to choice of bases $A$ is equivalent to a diagonal matrix with $rk(A)$ ones on the diagonal&amp;rdquo;.</description>
+    </item>
+    
+    <item>
+      <title>Better Crash Reporting</title>
+      <link>/posts/new/</link>
+      <pubDate>Tue, 09 Feb 2021 00:00:00 +0000</pubDate>
+      
+      <guid>/posts/new/</guid>
+      <description></description>
     </item>
     
     <item>
@@ -55,6 +74,15 @@ For the last 6 years this blog has been build with Jekyll. Now it has been migra
       <description>&lt;p&gt;Crash events are some of the more serious events that can happen when operating a service.  Usually
 it is crashing components that cause cascading failures and service outages.  It is critical to have
 good visibility into those events, since they can cause major damage and should be avoided.&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>Gauss Elimination</title>
+      <link>/posts/gauss/</link>
+      <pubDate>Wed, 27 May 2020 00:00:00 +0000</pubDate>
+      
+      <guid>/posts/gauss/</guid>
+      <description>In this note we are going to study the following question: Given a Matrix A, find an transformation X with inverse Y, so that XAY has a &amp;ldquo;simpler&amp;rdquo; form.</description>
     </item>
     
   </channel>

@@ -1327,7 +1327,7 @@ to trigger out-of-process crash reporting routines. Afterwards the child process
 free to perform in-process crash handling and cleanup work (write logs, capture stack traces) by
 itself.</p>
 <p>Here is a simplified interaction diagram from <a href="https://github.com/circonus-labs/libmtev/blob/master/src/utils/mtev_watchdog.c">src</a>:</p>
-<pre><code>  /-----------------/                                    /-----------------------/
+<pre tabindex="0"><code>  /-----------------/                                    /-----------------------/
   /  Child running  /                                    / parent (watchdog)     /
   /-----------------/                                    / waiting               /
          |                                               /-----------------------/
@@ -1365,7 +1365,7 @@ It&rsquo;s possible to generate stack traces from inside inside the process (via
 backtrace(3)/<a href="http://www.nongnu.org/libunwind/">libunwind</a>), but it can also be extracted from a
 stopped process or a coredump (via gdb(1)/pstack(1)).</p>
 <p>Here is an example of an in-process stack trace:</p>
-<pre><code>[ 00 ] ld-2.17.so              _dl_fixup
+<pre tabindex="0"><code>[ 00 ] ld-2.17.so              _dl_fixup
 [ 01 ] ld-2.17.so              _dl_runtime_resolve_xsave
 [ 02 ] libunwind.so.8.0.1      _ULx86_64_init
 [ 03 ] libunwind.so.8.0.1      unw_init_local_common
@@ -1420,7 +1420,7 @@ this writing.</p>
 in-process crash handling, and call <code>lua_getstack</code> from the signal handler
 (<a href="https://github.com/circonus-labs/libmtev/commit/b33a530964066bf7266b3ebdbf7f3115e9f01537">src</a>)
 and hope for the best: 🤞. When it works, it looks like this:</p>
-<pre><code>STACKTRACE(23835):
+<pre tabindex="0"><code>STACKTRACE(23835):
 &gt; /lib64/libc.so.6'gsignal+0x37[0x36387]
 &gt; /lib64/libc.so.6'abort+0x148[0x37a78]
 &gt; /opt/circonus/lib/libluajit-5.1.so.2'lj_vm_ffi_call+0x84[0xccb6]
@@ -1526,7 +1526,7 @@ like Python or Node.js.</p>
     </article>
   </main>
 
-	<footer style="float:right; margin: 20px auto 20px auto; color:#AAA">&copy; 2021 Heinrich Hartmann. All rights reserved.</footer>
+	<footer style="float:right; margin: 20px auto 20px auto; color:#AAA">&copy; 2022 Heinrich Hartmann. All rights reserved.</footer>
 
 </body>
 
