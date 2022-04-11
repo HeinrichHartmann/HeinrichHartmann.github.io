@@ -312,15 +312,40 @@ blog, as a reminder.
 ### Leverage small writing tasks as exercise
 
 Most of the rules that apply to writing long-form documents like Tech
-Narratives, Blog Posts or Papers hold up for writing short documents like E-Mails
-or issue tickets. Use this documents to practice your writing skills, by make
-them well structured, usable and polished.
+Narratives, Blog Posts or Papers hold up for writing short documents like
+E-Mails or issue tickets. Use this documents to practice your writing skills, by
+make them well structured, usable and polished.
 
-### Establish a feedback loop
+### Get early feedback on your outline
 
+Once you have constructed an outline and polished the story-line you are at a
+great place to get initial feedback on your document. This allows you to uncover
+flaws in your story-line early, and make sure you are on-target with the
+content. Also, reading an outline is a very quick thing to do, so it will not
+take a lot of effort for your reviewer to go through your text.
 
+This is most important for long documents, that you are producing on request of
+a stakeholder (manager).
 
-### Get feedback early
+### Circulate drafts of the text to the selected audience
 
+Once you fleshed out the content, and did a first editing pass removing the most
+glaring grammar and spelling mistakes, you are at a good point to sent the
+document to a few selected members of the target audience.
 
+This practice has three benefits:
+
+1. You will get a pair of fresh eyes on the text that will at the very least
+   catch a few grammar quirks that remained in the text.
+2. You take a break from working on the text yourself, until you received the
+   feedback, allowing yourself to take a fresh look at your writing.
+3. You have an excuse to reach out to old friends that you had neglected for far
+   too long.
+
+Hint: Don't forget to thank your reviewers in an "Acknowledgements" section.
+
+# Acknowledgements
+
+Thanks to my sister, Johanna Hartmann, for feedback on earlier versions of
+this text.
 
