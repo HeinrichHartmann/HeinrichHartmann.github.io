@@ -4,7 +4,7 @@ date: 2022-04-09
 author: Heinrich Hartmann
 location: Stemwede
 style: markdown
-Draft: false
+Draft: true
 ---
 
 Writing is key to have impact in large organizations. As a senior software
