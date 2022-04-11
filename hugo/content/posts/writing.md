@@ -7,7 +7,7 @@ style: markdown
 Draft: true
 ---
 
-Writing is key to have impact in large organizations. As a senior software
+Writing is the key to have impact in a large organization. As a senior software
 engineer chances are that writing is the most important skill you have to
 acquire in order to increase your reach and advance your career.
 
@@ -17,10 +17,10 @@ to me either. I have spent days and weeks agonizing and procrastinating around
 larger writing tasks. And to this day, having pressure to produce high-quality
 documents on a deadline gives me nightmares.
 
-This article contains some learnings that helped me (and others) to become
+This article contains some learnings that have helped me (and others) to become
 better and more productive as a writer over the past 15 years. I am sharing them
 in the hope, that you find them useful. However, don't think that I am always
-able to follow this advice myself 😅. I have still have a lot to learn.
+able to follow this advice myself 😅. I still have a lot to learn.
 
 **Outline**
 
@@ -30,13 +30,14 @@ able to follow this advice myself 😅. I have still have a lot to learn.
 
 ### Have something to say
 
-This statement seems obvious, but is a problem surprisingly often. **The goal of
-writing is to deliver a message to an audience in an effective way.** If you don't
-have a good message, will struggle to write something useful.
+This statement seems obvious, but turns out to be a problem surprisingly often.
+**The goal of writing is to deliver a message to an audience in an effective
+way.** If you don't have a good message, you will struggle to write something 
+useful.
 
 > During my time at University, I was tasked multiple times with writing long
 reporting documents for EU projects. This was terrible experience, because the
-main goal was to look good and fill pages. I had generally a good idea of the
+main goal was to look good and fill pages. Generally, I had a good idea of the
 domain, but did not have a clear message or sufficient depth. For me, this made
 it incredibly hard to write anything. Thinking about this now, I think
 [GPT-3](https://en.wikipedia.org/wiki/GPT-3) would be amazing at writing EU
@@ -63,8 +64,8 @@ not material you would directly use in the final document.
 The realization that you don't have the complete message in your head, will
 often only become apparent while writing. This surfaces as inability to find a
 good punch-line or to express yourself clearly. In fact, writing is a great test
-to see if you have understand a topic, and have a firm grasp on the vocabulary
-of the domain. There is a saying that:
+to see if you have a good understanding of a topic, and have a firm grasp on the
+vocabulary of the domain. There is a saying that:
 
 > Writing is god's way to show you how imperfect your thoughts are.
 
@@ -100,22 +101,22 @@ impact with those. They are documenting things that I wanted to learn myself.
 
 ### Respect your state-of-mind
 
-Writing requires intense focus over long time periods. Ideally you want to get
-into a flow state where you are zoned in and working on the text for hours
+Writing requires intense focus over long periods of time. Ideally you want to
+get into a flow state where you are zoned in and working on the text for hours
 on-end. This is by far the most efficient way to write a narrative or a
 blog-post -- at least for me.
 
 **Prepare for a writing task, like you would for a hike. You are in for a grind.**
 Find a comfortable space to sit. Grab a beverage of your preference. Most
 importantly make sure that you are rested and able to focus. Don't start a
-writing task when you are already tried. There is no way you will get anything
+writing task when you are already tired. There is no way you will get anything
 useful written.
 
 Also, avoid distractions as much as you can. Most importantly: Mute the Chat.
 Block at least 3h in your calendar for a writing session. If I am writing longer
-documents for work, I will try to block a full afternoon. Most effective for me
-are writing sessions weekends or vacations where I don't have any meetings at
-all.
+documents for work, I will try to block a full afternoon. For me, the most
+effective writing sessions happen on weekends or vacations where I don't have
+any meetings at all.
 
 ### Work the iron while it's hot
 
@@ -127,8 +128,8 @@ distractions or context switching.
 
 If you have loaded a lot of useful context in your brain at any given point in
 time, use this context to do something useful with it. Try to milk that moment,
-and make space when you realize you are in a position to write effectively on a
-given topic.
+and make space when you realize you are in a position to write effectively on
+your topic.
 
 ### Heat the iron before working it 
 
@@ -146,7 +147,7 @@ Good ways to load some context are:
 2. Discuss the topic with a coworker / random stranger / family member.
 3. Read some books / blogs / papers on the topic.
 
-Bad ways to load the context are surfing HackerNews our YouTube. 
+Bad ways to load the context are surfing HackerNews or YouTube. 
 
 ## While writing
 
@@ -162,7 +163,7 @@ to paper, when writing the original Star Wars trilogy?
 
 For documents that are more than a page long you must take a top-down approach
 and start with an **outline**. An outline is a list of sections together with
-rought notes, often in the form of bullet points. For this document the [first
+rough notes, often in the form of bullet points. For this document the [first
 outline](https://github.com/HeinrichHartmann/HeinrichHartmann.github.io/commit/46be4c95faeda16996baf6799eca8a551b282565) looked something like this:
 
 ```
@@ -208,7 +209,7 @@ through your argument.
 senior colleagues spending a lot of time polishing and iterating the structure
 of their slide decks before working on the details. They would print the deck on
 paper, pin the slides to a wall, and keep re-arranging them until they were
-happy with the story line. The slides would remain on the wall and subject to
+happy with the story-line. The slides would remain on the wall and subject to
 re-arrangement until the deck was finalized.
 
 Fixing the story-line of a document becomes MUCH more expensive once you have
@@ -219,25 +220,25 @@ the document back up again.
 ### Finish the content before starting to polish
 
 A trap I have found myself in way too many times, is to get distracted by
-adjacent tasks that are not needed to producing the narrative. Those tasks
+adjacent tasks that are not needed to produce the narrative. Those tasks
 include:
 
 1. **Editing**. Fixing spelling, wording or restructuring paragraphs.
-1. **Publishing**. Fiddling with git/Markdown/Wordpress.
+1. **Publishing**. Fiddling with formatting, tuning WordPress, automating your
+     git+hugo+heroku deployments.
 1. **Producing Figures**. Sketching figures on paper or browsing the web for
    images that you can use in your presentation.
 
-Remember: The first milestone for your document is an outline. Everything that
-is not directly contributing to this goal is a distraction.
+Remember: **The first milestone for your document is an outline. Everything that
+is not directly contributing to this goal is a distraction.**
 
-The second deliverable is a fully fleshed out text, that is content complete.
-This means, that the outline has been converted to a structured sequence of
-paragraphs. The text should cover the intended content but does not need to be
-polished or well written. It should contain place-holders for figures. It
-may have a few "TODO" markers where you need to do further reasearch.
+When you are happy with the outline, **the second milestone is a fully fleshed
+out text, where all notes have been converted to paragraphs.** The text should
+cover the intended content but does not need to be polished or well written.
 
-Only when you are in this state, you should start thinking about any of
-the activities listed above.
+Once you are at this point, you start worrying about polish: Remove typos,
+improve wording, restructure paragraphs. Also work on figures and publishing can
+be delayed to this point without any problems.
 
 ### Make your text skimable
 
@@ -246,7 +247,7 @@ internet](https://www.towermarketing.net/blog/winning-the-fight-against-a-websit
 
 > Eight seconds. A website user’s attention span lies somewhere around eight seconds.
 
-In this eight seconds, your document has to reveal enough value to the user,
+In these eight seconds, your document has to reveal enough value to the user,
 that he/she is willing to invest more time into actually reading the document.
 
 If you want your voice to be heard (and also improve the
