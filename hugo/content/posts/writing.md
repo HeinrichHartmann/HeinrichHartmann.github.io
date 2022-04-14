@@ -350,3 +350,14 @@ Hint: Don't forget to thank your reviewers in an "Acknowledgements" section.
 Thanks to my sister, Johanna Hartmann, and [Andrew
 Howden](https://twitter.com/andrewhowdencom) for feedback on earlier versions of
 this document.
+
+# Comments
+
+<script src="https://utteranc.es/client.js"
+        repo="HeinrichHartmann/comments"
+        issue-term="title"
+        label="Comment"
+        theme="github-light"
+        crossorigin="anonymous"
+        async>
+</script>
