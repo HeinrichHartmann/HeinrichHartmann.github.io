@@ -7,9 +7,13 @@ style: markdown
 Draft: true
 ---
 
-Writing is the key to have impact in a large organization. As a senior software
-engineer chances are that writing is the most important skill you have to
-acquire in order to increase your reach and advance your career.
+
+Writing is key to have impact in large organizations. You ability to have impact
+beyond the scope of your team crucially depends on your ability to express your
+thoughts on paper in a way that is structured and comprehensible by your target
+audience. As a senior software engineer chances are that writing is the most
+important skill you have to acquire in order to increase your reach and advance
+your career.
 
 Writing is hard. Many Software engineers struggle with writing. Personally I
 never had an intrinsic interest in literature, so writing did not naturally come
@@ -107,7 +111,7 @@ on-end. This is by far the most efficient way to write a narrative or a
 blog-post -- at least for me.
 
 **Prepare for a writing task, like you would for a hike. You are in for a grind.**
-Find a comfortable space to sit. Grab a beverage of your preference. Most
+Find a comfortable space to sit. Grab a beverage/snack of your preference. Most
 importantly make sure that you are rested and able to focus. Don't start a
 writing task when you are already tired. There is no way you will get anything
 useful written.
@@ -215,7 +219,7 @@ re-arrangement until the deck was finalized.
 Fixing the story-line of a document becomes MUCH more expensive once you have
 already fleshed out the paragraphs. In some cases, the best thing you can do
 is to stash away the whole content and go back to an outline before building
-the document back up again.
+the document up again.
 
 ### Finish the content before starting to polish
 
@@ -346,6 +350,6 @@ Hint: Don't forget to thank your reviewers in an "Acknowledgements" section.
 
 # Acknowledgements
 
-Thanks to my sister, Johanna Hartmann, for feedback on earlier versions of
-this text.
-
+Thanks to my sister, Johanna Hartmann, and [Andrew
+Howden](https://twitter.com/andrewhowdencom) for feedback on earlier versions of
+this document.
