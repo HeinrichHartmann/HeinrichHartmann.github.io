@@ -1,10 +1,10 @@
 ---
 title: Writing for Engineers
-date: 2022-04-09
+date: 2022-04-15
 author: Heinrich Hartmann
 location: Stemwede
 style: markdown
-Draft: true
+Draft: false
 ---
 
 
