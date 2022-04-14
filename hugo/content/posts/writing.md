@@ -74,7 +74,7 @@ And similarly:
 > An argument is only half as good once you are uttering it.
 
 If you run into this problem, it means that you are learning things. Writing is
-generally a great way to lear, but one has to realize that you are doing it.
+generally a great way to learn, but one has to realize that you are doing it.
 Learning is a slow process and requires patience. It is not helped much by
 agonizing in front of a screen, trying to squeeze out another sentence. Doing
 more research on the topic by reading a book, blog or paper and taking notes may
