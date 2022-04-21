@@ -104,6 +104,7 @@
     <input type="search" id="filter" placeholder="Filter" autofocus="autofocus">
   <ul class="posts" id="posts">
     {{ range  (where site.RegularPages "Type" "in" site.Params.mainSections) }}
+    {{ if not .Draft }}
     <li><span>{{ .Date.Format "2006-01-02" }} </span> &raquo;&nbsp;
       <a href="{{ .Params.href | default .Permalink }}">{{ .Title }}</a>
       <small>
@@ -111,6 +112,7 @@
       </small>
       <span style="float:right">{{ .Params.tags | default "post" }}</span>
     </li>
+    {{ end }}
     {{ end }}
     {{ range sort .Params.content "date" "desc" }}
     {{ if and ( isset . "type" ) ( eq .type "paper" ) }}
