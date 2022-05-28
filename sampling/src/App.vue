@@ -1,4 +1,6 @@
 <script setup>
+  import { VueMathjax } from 'vue-mathjax'
+  
   import { ref, watchEffect } from 'vue'
   const srate = ref(50)
   const rps = ref(10)
@@ -13,6 +15,7 @@
   const count_err = ref()
   const epct_err = ref()
 
+    
   function sampling_error(r) {
     var s = srate.value/100;
     return Math.sqrt(r * (1 - s) / s);
@@ -35,6 +38,7 @@
     ecount.value = count.value * epct.value / 100;
     count_err.value = sampling_error(count.value) / count.value * 100;
   })
+
 </script>
 
 <template>
@@ -103,10 +107,31 @@ Calculate effects of sampling to accuracy of request-rate and error-rate calcula
 </tbody>
 </table>
 
-<h2>Explaination</h2>
+<!-- START_MDCONTENT -->
+<h2 id="explaination">Explaination</h2>
+<h3 id="sampling-method">Sampling Method</h3>
+<p>We model the error introduce by <a href="https://en.wikipedia.org/wiki/Bernoulli_sampling">Bernuoulli
+sampling</a> with a given rate to
+a number of statistics.</p>
+<p>In the model, we start with the full dataset (the &quot;population&quot;) that we assume to be available to us.
+We produce a sampled dataset (the &quot;sample&quot;).</p>
+<p>For each point in the population we make independent sampling decisions with
+probability given by the sampling rate.</p>
+<ul>
+<li>With sampling rate 100% all the elements in the population are retained.</li>
+<li>With sampling rate 50%, there is a 50% chance that any given point will be retained.</li>
+<li>With sampling rate 0% the sample is empty.</li>
+</ul>
+<p>It&#39;s my understanding, that OpenTelemetry is effectively using Bernoulli
+Sampling on trace-level, although <a href="https://github.com/open-telemetry/oteps/blob/main/text/trace/0170-sampling-probability.md#traceidratio-sampler">the
+spec</a>
+is not 100% clear on this.</p>
+<h3 id="count-estimation">Count Estimation</h3>
+<p>In the Bernoulli model, the sample size follows a binomial distribution with $p$ sampling rate, and $N$ population size.</p>
+
+<!-- END_MDCONTENT -->
 
 </template>
-
 
 <style>
 
