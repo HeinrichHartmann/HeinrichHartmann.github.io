@@ -1,7 +1,6 @@
-<!-- -*- eval: (add-hook 'after-save-hook '(lambda () (shell-command "make"))); -*- -->
+<!-- -*- eval: (add-hook 'after-save-hook '(lambda () (shell-command "make") nil 'local)); -*- -->
 
 ## Explanation
-
 
 ### Sampling Method
 
@@ -18,11 +17,11 @@ probability given by the sampling rate.
 - With sampling rate 50%, there is a 50% chance that any given point will be retained.
 - With sampling rate 0% the sample is empty.
 
-### Error Estimates
+### Estimation
 
-The error e
+For some statistics, we have theoretical models that allow us to estimate the expected values and variances.
 
-### Count Estimation
+#### Count Estimation
 
 In the Bernoulli model, the sample size $n=\\# S$ follows a [Binomial distribution](https://en.wikipedia.org/wiki/Binomial_distribution#Statistical_inference) 
 $$n \sim B(N,p)$$
@@ -33,4 +32,19 @@ These formulas are used to calculate the _Request Count_ and _Request Rate_ stat
 For the error rate calculation, we assume that $X_e \subset X$ is a subset of "error" requests.
 Applying Bernoulli sampling, we get $S_e = X_s \cap S \subset S$, the set of errors in the sample.
 
-The estimated count is $\\# S_e$
+The error count $n_e = \\# S_e$ follows a binomial distribution $n_e \sim B(N_e,p)$, where $N_e = \\# X_e$.
+
+Unfortunately, the distribution of the error rate $r_e = \\# S_e / \\# S$ is not easily derived.
+It can be roughly approximated by $\\# S_e / (N_e \cdot p)$, which is what we use in the table above.
+Simulation shows, that this estimate breaks down for larger error rates e.g. $X_e = X$.
+
+### Simulation
+
+We simulate multiple iterations of sampling decisions is straight forward.
+
+* We repeatedly select a subset $S \subset X$ by running bernoulli experiments for each sample $x \in X$.
+* We compute the estimator on the sample $S$, and record the results.
+* In the above tables we report mean, and standard-deviation of the computed estimations.
+* Note that mean and standard-deviation are sensible measure here, since the distribution of the estimators across different samples is well behaved (very close to normal), in all cases.
+
+
