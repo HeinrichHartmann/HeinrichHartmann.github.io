@@ -1,6 +1,7 @@
 <script setup>
-import { ref, watchEffect } from 'vue'
+import { ref, watchEffect, onMounted } from 'vue'
 import jstat from 'jstat';
+import Plotly from 'plotly.js-dist'
 
 const jStat = jstat.jStat;
 
@@ -117,12 +118,28 @@ function stat_lat_mean(X) {
 function lat_filter(X) {
   const L = [];
   for (let i=0;i<X.length;i++) {
-    if(X[i]>0) L.push(X[i])
+    if(X[i]>=0) { L.push(X[i]) }
+    else { L.push(-X[i]) }
+  }
+  return L;
+}
+function lat_filter_ok(X) {
+  const L = [];
+  for (let i=0;i<X.length;i++) {
+    if(X[i]>=0) L.push(X[i])
+  }
+  return L;
+}
+function lat_filter_err(X) {
+  const L = [];
+  for (let i=0;i<X.length;i++) {
+    if(X[i]<0) L.push(-X[i])
   }
   return L;
 }
 
 var sim_generation = 0;
+var DS = {};
 
 function do_simulate() {
   sim_generation += 1;
@@ -164,6 +181,39 @@ function do_simulate() {
   }
   iter();
   show();
+  DS = {
+    count : stat_cnt(X),
+    error : stat_err(X),
+    latency : lat_filter(X),
+    latency_ok : lat_filter_ok(X),
+    latency_err : lat_filter_err(X),
+  }
+}
+
+var mounted = false;
+function show_plot() {
+  if (!mounted) return;
+  var trace = {
+    x: DS.latency,
+    name: "requests",
+    type: 'histogram',
+    opacity: 0.6,
+    marker: {
+      color: 'blue',
+    },
+  };
+  var trace_err = {
+    x: DS.latency_err,
+    name: "errors",
+    type: 'histogram',
+    opacity: 0.6,
+    marker: {
+      color: 'red',
+    },
+  };
+  var data = [trace, trace_err];
+  var layout = {barmode: "overlay"};
+  Plotly.newPlot('myDiv', data, layout);
 }
 
 watchEffect(() => {
@@ -177,10 +227,18 @@ watchEffect(() => {
 
   do_estimate();
   do_simulate();
+  show_plot();
 })
+
+onMounted(() => {
+  mounted = true;
+  show_plot();
+})
+
 </script>
 
 <template>
+
 <h1>Sampling Error Calculator</h1>
 
 Calculate effects of sampling to accuracy of request-rate and error-rate calculations.
@@ -195,11 +253,6 @@ Calculate effects of sampling to accuracy of request-rate and error-rate calcula
   </thead>
   <tbody>
     <tr>
-      <td>Sampling Rate</td>
-      <td><input type="text" v-model="sampling_rate"> %</td>
-      <td><input type="range" min="0" max="100" v-model="sampling_rate" class="slider"></td>
-    </tr>
-    <tr>
       <td>Request Rate</td>
       <td><input type="text" v-model="request_rate"> rps</td>
       <td><input type="range" min="0" max="1000" v-model="request_rate" class="slider"></td>
@@ -213,7 +266,6 @@ Calculate effects of sampling to accuracy of request-rate and error-rate calcula
       <td>Latency Distribution</td>
       <td colspan="2">
         <select v-model="lat_text"><option>LogNormal</option><option>Exponential</option><option>Erlang</option><option>Normal</option></select>
-        p<input type="text" v-model="percentile" style="margin-left:3px">
       </td>
     </tr>
     <tr>
@@ -223,6 +275,15 @@ Calculate effects of sampling to accuracy of request-rate and error-rate calcula
         <select v-model="time_window_unit"><option>sec</option><option>min</option><option>hour</option><option>day</option></select>
         ({{ twindow }} sec)
       </td>
+    </tr>
+    <tr>
+      <td>Population</td>
+      <td colspan="2">Total {{ request_rate * twindow }} requests containing {{ error_rate * twindow }} errors.</td>
+    </tr>
+    <tr style="background-color:#EEEEEE">
+      <td>Sampling Rate</td>
+      <td><input type="text" v-model="sampling_rate"> %</td>
+      <td><input type="range" min="0" max="100" v-model="sampling_rate" class="slider"></td>
     </tr>
 </tbody>
 </table>
@@ -294,13 +355,17 @@ Calculate effects of sampling to accuracy of request-rate and error-rate calcula
       <td class="cell">{{ Number(sim_err_rate_err / sim_err_rate * 100).toFixed(2) }}%</td>
     </tr>
     <tr>
-      <td>Latency p{{ percentile }}</td>
+      <td>Latency pp<input type="text" v-model="percentile" style="text-align:left; width:50px; margin-left:3px"></td>
       <td class="cell">{{ Number(sim_lat).toFixed(2) }} ms</td>
       <td class="cell">± {{ Number(sim_lat_err).toFixed(2) }} ms</td>
       <td class="cell">{{ Number(sim_lat_err / sim_lat * 100).toFixed(2) }}%</td>
     </tr>
 </tbody>
 </table>
+
+<div id='myDiv' style="height:300px;width:100%"></div>
+
+
 </template>
 
 <style>

@@ -1,5 +1,9 @@
 ---
 content:
+- tags: tool, monitoring, calc
+  date: 2022-05-29
+  href: "/sampling"
+  title: "Sampling Calculator"
 
 - tags: post, math, elements
   date: 2021-09-01
