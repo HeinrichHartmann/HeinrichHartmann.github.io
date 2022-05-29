@@ -1,11 +1,16 @@
 <script setup>
 import { ref, watchEffect } from 'vue'
+import jstat from 'jstat';
+
+const jStat = jstat.jStat;
 
 const sampling_rate = ref(50)
 const request_rate = ref(10)
 const error_rate = ref(3)
 const time_window_text = ref("1")
 const time_window_unit = ref("min")
+const lat_text = ref("LogNormal")
+const percentile = ref("99.0")
 
 const sim_iteration = ref(0)
 const sim_count = ref()
@@ -14,6 +19,8 @@ const sim_err_count = ref()
 const sim_err_count_err = ref()
 const sim_err_rate = ref()
 const sim_err_rate_err = ref()
+const sim_lat = ref()
+const sim_lat_err = ref()
 
 const est_count = ref()
 const est_count_err = ref()
@@ -46,10 +53,19 @@ function sample(X,p) {
   return out;
 }
 
-function new_set(n,k) {
+function new_set(N, errors) {
+  const t = lat_text.value;
+  var f = () => 1;
+  if (t == "LogNormal")   f = () => jStat.lognormal.sample(0,1);
+  if (t == "Normal")      f = () => jStat.normal.sample(100,1);
+  if (t == "Exponential") f = () => jStat.exponential.sample(1/100);
+  if (t == "Erlang")      f = () => jStat.gamma.sample(2,100);
   const out = [];
-  for (let i=0;i<k;i++){ out.push(1) } // error
-  for (let i=k;i<n;i++){ out.push(0) } // ok
+  try {
+      for (let i=0;i<errors;i++) out.push(-f()); // errors
+      for (let i=errors;i<N;i++) out.push(f());
+  }
+  catch(err) { console.log(err) }
   return out;
 }
 function stat_cnt(X) {
@@ -77,21 +93,33 @@ function stat_var(X) {
 function stat_std(X) {
   return Math.sqrt(stat_var(X));
 }
-const stat_err = stat_sum; // error count
-
+function stat_err(X) {
+  var s = 0;
+  for (let i=0;i<X.length;i++) {
+    if (X[i] <= 0) s += 1;
+  }
+  return s;
+}
 function stat_err_rate(X) {
   let n = stat_cnt(X);
   if (n == 0) { return 0; }
   return stat_err(X) / n;
 }
-
-function simulate(X, stat, runs, p) {
-  const out = [];
-  for (let i=0; i<runs; i++) {
-    const S = sample(X, p);
-    out.push(stat(S));
+function stat_lat_mean(X) {
+  let n = stat_cnt(X);
+  var s = 0;
+  for (let i=0;i<X.length;i++) {
+    s += Math.abs(X[i]);
   }
-  return out;
+  return s / n;
+}
+
+function lat_filter(X) {
+  const L = [];
+  for (let i=0;i<X.length;i++) {
+    if(X[i]>0) L.push(X[i])
+  }
+  return L;
 }
 
 var sim_generation = 0;
@@ -102,21 +130,23 @@ function do_simulate() {
   const N = twindow.value * request_rate.value;
   const K = N * error_rate.value / 100;
   const p = sampling_rate.value/100;
+  const q = percentile.value / 100;
   const X = new_set(N, K);
-  // const D = simulate(X, stat_len, 50, 0.5);
   const X_CNT = [];
   const X_ERR = [];
   const X_ERR_RATE = [];
+  const X_LAT = [];
   var cnt = 0;
   const cnt_max = 1000;
   function iter() {
     if (sim_generation != my_generation) { return; }
     cnt += 1;
-    console.log("iter!");
     const S = sample(X, p);
+    const L = lat_filter(S);
     X_CNT.push(stat_cnt(S) / p);
     X_ERR.push(stat_err(S) / p);
     X_ERR_RATE.push(stat_err_rate(S) * 100);
+    X_LAT.push(jStat.percentile(L, q));
     if (cnt < cnt_max) setTimeout(iter,0);
   }
   function show() {
@@ -128,6 +158,8 @@ function do_simulate() {
     sim_err_count_err.value = stat_std(X_ERR);
     sim_err_rate.value = stat_mean(X_ERR_RATE);
     sim_err_rate_err.value = stat_std(X_ERR_RATE);
+    sim_lat.value = stat_mean(X_LAT);
+    sim_lat_err.value = stat_std(X_LAT);
     sim_iteration.value = cnt;
   }
   iter();
@@ -176,6 +208,13 @@ Calculate effects of sampling to accuracy of request-rate and error-rate calcula
       <td>Error Rate</td>
       <td><input type="text" v-model="error_rate"> %</td>
       <td><input type="range" min="0" max="100" v-model="error_rate" class="slider"></td>
+    </tr>
+    <tr>
+      <td>Latency Distribution</td>
+      <td colspan="2">
+        <select v-model="lat_text"><option>LogNormal</option><option>Exponential</option><option>Erlang</option><option>Normal</option></select>
+        p<input type="text" v-model="percentile" style="margin-left:3px">
+      </td>
     </tr>
     <tr>
       <td>Time window</td>
@@ -253,6 +292,12 @@ Calculate effects of sampling to accuracy of request-rate and error-rate calcula
       <td class="cell">{{ Number(sim_err_rate).toFixed(2) }} %</td>
       <td class="cell">± {{ Number(sim_err_rate_err).toFixed(2) }} ppt</td>
       <td class="cell">{{ Number(sim_err_rate_err / sim_err_rate * 100).toFixed(2) }}%</td>
+    </tr>
+    <tr>
+      <td>Latency p{{ percentile }}</td>
+      <td class="cell">{{ Number(sim_lat).toFixed(2) }} ms</td>
+      <td class="cell">± {{ Number(sim_lat_err).toFixed(2) }} ms</td>
+      <td class="cell">{{ Number(sim_lat_err / sim_lat * 100).toFixed(2) }}%</td>
     </tr>
 </tbody>
 </table>
