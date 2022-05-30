@@ -258,9 +258,12 @@ onMounted(() => {
 <template>
 
 <h1>Sampling Error Calculator</h1>
+<p class="meta" style="color:#aaa; float:right">Stemwede, 2022-05-29</p>
 
-Calculate effects of sampling to accuracy of request-rate and error-rate calculations.
-<br><br>
+<p>Status: Draft</p>
+
+<p>Calculate effects of sampling to accuracy of request-rate, error-rate and latency percentiles.</p>
+
 <table>
   <tbody>
 
@@ -307,22 +310,10 @@ Calculate effects of sampling to accuracy of request-rate and error-rate calcula
       <td colspan="3">We expect to retrain {{ Number(request_rate * twindow * sampling_rate / 100 ) }} requests, after sampling with {{ sampling_rate }}% probability.</td>
     </tr>
     <tr>
-      <td>Estimate Req. Count</td>
-      <td class="cell"> {{ Number(est_count).toFixed(1) }} req</td>
-      <td class="cell"> ± {{ Number(est_count_err).toFixed(2) }} req</td>
-      <td class="cell"> {{ Number(est_count_err/est_count * 100).toFixed(2) }}%</td>
-    </tr>
-    <tr>
       <td>Estimate Req. Rate</td>
       <td class="cell">{{ Number(est_count / twindow).toFixed(1) }} rps</td>
       <td class="cell">± {{ Number(est_count_err / twindow).toFixed(2) }} rps</td>
       <td class="cell">{{ (Number(est_count_err)/est_count * 100).toFixed(2) }}%</td>
-    </tr>
-    <tr>
-      <td>Simulate Req. Count</td>
-      <td class="cell">{{ Number(sim_count).toFixed(1) }} req</td>
-      <td class="cell"> ± {{ Number(sim_count_err).toFixed(2) }} req</td>
-      <td class="cell"> {{ Number(sim_count_err/sim_count * 100).toFixed(2) }}%</td>
     </tr>
     <tr>
       <td>Simulate Req. Rate</td>
@@ -412,13 +403,13 @@ Calculate effects of sampling to accuracy of request-rate and error-rate calcula
     </td></tr>
     <tr>
       <td>Sample</td>
-  <td colspan="3">We expect to retain {{ Number(request_rate * twindow * sampling_rate / 100 ) }} requests following the same distribution.</td>
+      <td colspan="3">We expect to retain {{ Number(request_rate * twindow * sampling_rate / 100 ) }} requests.</td>
     </tr>
     <tr>
      <td>Estimate Percentile p{{ percentile }}</td>
-      <td class="cell">{{ Number(sim_lat).toFixed(2) }} ms</td>
-      <td class="cell">± {{ Number(sim_lat_err).toFixed(2) }} ms</td>
-      <td class="cell">{{ Number(sim_lat_err / sim_lat * 100).toFixed(2) }}%</td>
+      <td class="cell" width="150px">{{ Number(sim_lat).toFixed(2) }} ms</td>
+      <td class="cell" width="150px">± {{ Number(sim_lat_err).toFixed(2) }} ms</td>
+      <td class="cell" width="150px">{{ Number(sim_lat_err / sim_lat * 100).toFixed(2) }}%</td>
     </tr>
     <tr>
       <td colspan="4">
@@ -427,6 +418,7 @@ Calculate effects of sampling to accuracy of request-rate and error-rate calcula
     </tr>
 </tbody>
 </table>
+
 </template>
 <style>
 
