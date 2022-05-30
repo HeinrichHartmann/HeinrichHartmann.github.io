@@ -1,7 +1,7 @@
 /******/ (function() { // webpackBootstrap
 /******/ 	var __webpack_modules__ = ({
 
-/***/ 185:
+/***/ 960:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -63,9 +63,12 @@ ___CSS_LOADER_EXPORT___.push([module.id, "header a{text-align:center;width:100%;
 
 
 const _hoisted_1 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__/* .createElementVNode */ ._)("h1", null, "Sampling Error Calculator", -1)
-const _hoisted_2 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__/* .createTextVNode */ .Uk)(" Calculate effects of sampling to accuracy of request-rate and error-rate calculations. ")
-const _hoisted_3 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__/* .createElementVNode */ ._)("br", null, null, -1)
-const _hoisted_4 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__/* .createElementVNode */ ._)("br", null, null, -1)
+const _hoisted_2 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__/* .createElementVNode */ ._)("p", {
+  class: "meta",
+  style: {"color":"#aaa","float":"right"}
+}, "Stemwede, 2022-05-29", -1)
+const _hoisted_3 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__/* .createElementVNode */ ._)("p", null, "Status: Draft", -1)
+const _hoisted_4 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__/* .createElementVNode */ ._)("p", null, "Calculate effects of sampling to accuracy of request-rate, error-rate and latency percentiles.", -1)
 const _hoisted_5 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__/* .createElementVNode */ ._)("tr", { style: {"background-color":"#EEE"} }, [
   /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__/* .createElementVNode */ ._)("td", {
     colspan: "4",
@@ -107,93 +110,94 @@ const _hoisted_24 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__/* .createTe
 const _hoisted_25 = { style: {"float":"right","font-weight":"normal"} }
 const _hoisted_26 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__/* .createElementVNode */ ._)("td", null, "Sample", -1)
 const _hoisted_27 = { colspan: "3" }
-const _hoisted_28 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__/* .createElementVNode */ ._)("td", null, "Estimate Req. Count", -1)
+const _hoisted_28 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__/* .createElementVNode */ ._)("td", null, "Estimate Req. Rate", -1)
 const _hoisted_29 = { class: "cell" }
 const _hoisted_30 = { class: "cell" }
 const _hoisted_31 = { class: "cell" }
-const _hoisted_32 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__/* .createElementVNode */ ._)("td", null, "Estimate Req. Rate", -1)
+const _hoisted_32 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__/* .createElementVNode */ ._)("td", null, "Simulate Req. Rate", -1)
 const _hoisted_33 = { class: "cell" }
 const _hoisted_34 = { class: "cell" }
 const _hoisted_35 = { class: "cell" }
-const _hoisted_36 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__/* .createElementVNode */ ._)("td", null, "Simulate Req. Count", -1)
-const _hoisted_37 = { class: "cell" }
-const _hoisted_38 = { class: "cell" }
-const _hoisted_39 = { class: "cell" }
-const _hoisted_40 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__/* .createElementVNode */ ._)("td", null, "Simulate Req. Rate", -1)
-const _hoisted_41 = { class: "cell" }
-const _hoisted_42 = { class: "cell" }
-const _hoisted_43 = { class: "cell" }
-const _hoisted_44 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__/* .createElementVNode */ ._)("tr", { style: {"height":"30px","background-color":"#EEE"} }, [
+const _hoisted_36 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__/* .createElementVNode */ ._)("tr", { style: {"height":"30px","background-color":"#EEE"} }, [
   /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__/* .createElementVNode */ ._)("td", {
     colspan: "4",
     style: {"text-align":"left","font-weight":"bold"}
   }, " # Error Rates ")
 ], -1)
-const _hoisted_45 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__/* .createElementVNode */ ._)("td", null, "Error Rate", -1)
-const _hoisted_46 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__/* .createTextVNode */ .Uk)(" %")
-const _hoisted_47 = { colspan: "2" }
-const _hoisted_48 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__/* .createElementVNode */ ._)("td", null, "Population", -1)
-const _hoisted_49 = { colspan: "3" }
-const _hoisted_50 = { style: {"height":"30px","background-color":"#FAFAFA"} }
-const _hoisted_51 = {
+const _hoisted_37 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__/* .createElementVNode */ ._)("td", null, "Error Rate", -1)
+const _hoisted_38 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__/* .createTextVNode */ .Uk)(" %")
+const _hoisted_39 = { colspan: "2" }
+const _hoisted_40 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__/* .createElementVNode */ ._)("td", null, "Population", -1)
+const _hoisted_41 = { colspan: "3" }
+const _hoisted_42 = { style: {"height":"30px","background-color":"#FAFAFA"} }
+const _hoisted_43 = {
   colspan: "4",
   style: {"text-align":"left","font-weight":"bold"}
 }
-const _hoisted_52 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__/* .createTextVNode */ .Uk)(" ## Samping Effects on Error Rate Estimates ")
-const _hoisted_53 = { style: {"float":"right","font-weight":"normal"} }
-const _hoisted_54 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__/* .createElementVNode */ ._)("td", null, "Sample", -1)
-const _hoisted_55 = { colspan: "3" }
-const _hoisted_56 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__/* .createElementVNode */ ._)("td", null, null, -1)
-const _hoisted_57 = { colspan: "3" }
-const _hoisted_58 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__/* .createElementVNode */ ._)("td", null, "Estimate Err Count", -1)
+const _hoisted_44 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__/* .createTextVNode */ .Uk)(" ## Samping Effects on Error Rate Estimates ")
+const _hoisted_45 = { style: {"float":"right","font-weight":"normal"} }
+const _hoisted_46 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__/* .createElementVNode */ ._)("td", null, "Sample", -1)
+const _hoisted_47 = { colspan: "3" }
+const _hoisted_48 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__/* .createElementVNode */ ._)("td", null, null, -1)
+const _hoisted_49 = { colspan: "3" }
+const _hoisted_50 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__/* .createElementVNode */ ._)("td", null, "Estimate Err Count", -1)
+const _hoisted_51 = { class: "cell" }
+const _hoisted_52 = { class: "cell" }
+const _hoisted_53 = { class: "cell" }
+const _hoisted_54 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__/* .createElementVNode */ ._)("td", null, "Simulate Err. Count", -1)
+const _hoisted_55 = { class: "cell" }
+const _hoisted_56 = { class: "cell" }
+const _hoisted_57 = { class: "cell" }
+const _hoisted_58 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__/* .createElementVNode */ ._)("td", null, "Simulate Err. Rate", -1)
 const _hoisted_59 = { class: "cell" }
 const _hoisted_60 = { class: "cell" }
 const _hoisted_61 = { class: "cell" }
-const _hoisted_62 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__/* .createElementVNode */ ._)("td", null, "Simulate Err. Count", -1)
-const _hoisted_63 = { class: "cell" }
-const _hoisted_64 = { class: "cell" }
-const _hoisted_65 = { class: "cell" }
-const _hoisted_66 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__/* .createElementVNode */ ._)("td", null, "Simulate Err. Rate", -1)
-const _hoisted_67 = { class: "cell" }
-const _hoisted_68 = { class: "cell" }
-const _hoisted_69 = { class: "cell" }
-const _hoisted_70 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__/* .createElementVNode */ ._)("tr", { style: {"height":"30px","background-color":"#EEE"} }, [
+const _hoisted_62 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__/* .createElementVNode */ ._)("tr", { style: {"height":"30px","background-color":"#EEE"} }, [
   /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__/* .createElementVNode */ ._)("td", {
     colspan: "4",
     style: {"text-align":"left","font-weight":"bold"}
   }, " # Latency ")
 ], -1)
-const _hoisted_71 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__/* .createElementVNode */ ._)("td", { style: {"width":"250px"} }, "Latency Distribution", -1)
-const _hoisted_72 = { colspan: "3" }
-const _hoisted_73 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__/* .createElementVNode */ ._)("option", null, "LogNormal", -1)
-const _hoisted_74 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__/* .createElementVNode */ ._)("option", null, "Exponential", -1)
-const _hoisted_75 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__/* .createElementVNode */ ._)("option", null, "Erlang", -1)
-const _hoisted_76 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__/* .createElementVNode */ ._)("option", null, "Normal", -1)
-const _hoisted_77 = [
-  _hoisted_73,
-  _hoisted_74,
-  _hoisted_75,
-  _hoisted_76
+const _hoisted_63 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__/* .createElementVNode */ ._)("td", { style: {"width":"250px"} }, "Latency Distribution", -1)
+const _hoisted_64 = { colspan: "3" }
+const _hoisted_65 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__/* .createElementVNode */ ._)("option", null, "LogNormal", -1)
+const _hoisted_66 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__/* .createElementVNode */ ._)("option", null, "Exponential", -1)
+const _hoisted_67 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__/* .createElementVNode */ ._)("option", null, "Erlang", -1)
+const _hoisted_68 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__/* .createElementVNode */ ._)("option", null, "Normal", -1)
+const _hoisted_69 = [
+  _hoisted_65,
+  _hoisted_66,
+  _hoisted_67,
+  _hoisted_68
 ]
-const _hoisted_78 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__/* .createTextVNode */ .Uk)("Percentile p")
-const _hoisted_79 = { colspan: "3" }
-const _hoisted_80 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__/* .createElementVNode */ ._)("td", null, "Population", -1)
-const _hoisted_81 = { colspan: "3" }
-const _hoisted_82 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__/* .createElementVNode */ ._)("td", null, null, -1)
-const _hoisted_83 = { colspan: "3" }
-const _hoisted_84 = { style: {"height":"30px","background-color":"#FAFAFA"} }
-const _hoisted_85 = {
+const _hoisted_70 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__/* .createTextVNode */ .Uk)("Percentile p")
+const _hoisted_71 = { colspan: "3" }
+const _hoisted_72 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__/* .createElementVNode */ ._)("td", null, "Population", -1)
+const _hoisted_73 = { colspan: "3" }
+const _hoisted_74 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__/* .createElementVNode */ ._)("td", null, null, -1)
+const _hoisted_75 = { colspan: "3" }
+const _hoisted_76 = { style: {"height":"30px","background-color":"#FAFAFA"} }
+const _hoisted_77 = {
   colspan: "4",
   style: {"text-align":"left","font-weight":"bold"}
 }
-const _hoisted_86 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__/* .createTextVNode */ .Uk)(" ## Samping Effects on Latency ")
-const _hoisted_87 = { style: {"float":"right","font-weight":"normal"} }
-const _hoisted_88 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__/* .createElementVNode */ ._)("td", null, "Sample", -1)
-const _hoisted_89 = { colspan: "3" }
-const _hoisted_90 = { class: "cell" }
-const _hoisted_91 = { class: "cell" }
-const _hoisted_92 = { class: "cell" }
-const _hoisted_93 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__/* .createElementVNode */ ._)("tr", null, [
+const _hoisted_78 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__/* .createTextVNode */ .Uk)(" ## Samping Effects on Latency ")
+const _hoisted_79 = { style: {"float":"right","font-weight":"normal"} }
+const _hoisted_80 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__/* .createElementVNode */ ._)("td", null, "Sample", -1)
+const _hoisted_81 = { colspan: "3" }
+const _hoisted_82 = {
+  class: "cell",
+  width: "150px"
+}
+const _hoisted_83 = {
+  class: "cell",
+  width: "150px"
+}
+const _hoisted_84 = {
+  class: "cell",
+  width: "150px"
+}
+const _hoisted_85 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__/* .createElementVNode */ ._)("tr", null, [
   /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__/* .createElementVNode */ ._)("td", { colspan: "4" }, [
     /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__/* .createElementVNode */ ._)("div", {
       id: "myDiv",
@@ -556,35 +560,23 @@ return (_ctx, _cache) => {
         ]),
         (0,vue__WEBPACK_IMPORTED_MODULE_0__/* .createElementVNode */ ._)("tr", null, [
           _hoisted_28,
-          (0,vue__WEBPACK_IMPORTED_MODULE_0__/* .createElementVNode */ ._)("td", _hoisted_29, (0,vue__WEBPACK_IMPORTED_MODULE_5__/* .toDisplayString */ .zw)(Number(est_count.value).toFixed(1)) + " req", 1),
-          (0,vue__WEBPACK_IMPORTED_MODULE_0__/* .createElementVNode */ ._)("td", _hoisted_30, " ± " + (0,vue__WEBPACK_IMPORTED_MODULE_5__/* .toDisplayString */ .zw)(Number(est_count_err.value).toFixed(2)) + " req", 1),
-          (0,vue__WEBPACK_IMPORTED_MODULE_0__/* .createElementVNode */ ._)("td", _hoisted_31, (0,vue__WEBPACK_IMPORTED_MODULE_5__/* .toDisplayString */ .zw)(Number(est_count_err.value/est_count.value * 100).toFixed(2)) + "%", 1)
+          (0,vue__WEBPACK_IMPORTED_MODULE_0__/* .createElementVNode */ ._)("td", _hoisted_29, (0,vue__WEBPACK_IMPORTED_MODULE_5__/* .toDisplayString */ .zw)(Number(est_count.value / twindow.value).toFixed(1)) + " rps", 1),
+          (0,vue__WEBPACK_IMPORTED_MODULE_0__/* .createElementVNode */ ._)("td", _hoisted_30, "± " + (0,vue__WEBPACK_IMPORTED_MODULE_5__/* .toDisplayString */ .zw)(Number(est_count_err.value / twindow.value).toFixed(2)) + " rps", 1),
+          (0,vue__WEBPACK_IMPORTED_MODULE_0__/* .createElementVNode */ ._)("td", _hoisted_31, (0,vue__WEBPACK_IMPORTED_MODULE_5__/* .toDisplayString */ .zw)((Number(est_count_err.value)/est_count.value * 100).toFixed(2)) + "%", 1)
         ]),
         (0,vue__WEBPACK_IMPORTED_MODULE_0__/* .createElementVNode */ ._)("tr", null, [
           _hoisted_32,
-          (0,vue__WEBPACK_IMPORTED_MODULE_0__/* .createElementVNode */ ._)("td", _hoisted_33, (0,vue__WEBPACK_IMPORTED_MODULE_5__/* .toDisplayString */ .zw)(Number(est_count.value / twindow.value).toFixed(1)) + " rps", 1),
-          (0,vue__WEBPACK_IMPORTED_MODULE_0__/* .createElementVNode */ ._)("td", _hoisted_34, "± " + (0,vue__WEBPACK_IMPORTED_MODULE_5__/* .toDisplayString */ .zw)(Number(est_count_err.value / twindow.value).toFixed(2)) + " rps", 1),
-          (0,vue__WEBPACK_IMPORTED_MODULE_0__/* .createElementVNode */ ._)("td", _hoisted_35, (0,vue__WEBPACK_IMPORTED_MODULE_5__/* .toDisplayString */ .zw)((Number(est_count_err.value)/est_count.value * 100).toFixed(2)) + "%", 1)
-        ]),
-        (0,vue__WEBPACK_IMPORTED_MODULE_0__/* .createElementVNode */ ._)("tr", null, [
-          _hoisted_36,
-          (0,vue__WEBPACK_IMPORTED_MODULE_0__/* .createElementVNode */ ._)("td", _hoisted_37, (0,vue__WEBPACK_IMPORTED_MODULE_5__/* .toDisplayString */ .zw)(Number(sim_count.value).toFixed(1)) + " req", 1),
-          (0,vue__WEBPACK_IMPORTED_MODULE_0__/* .createElementVNode */ ._)("td", _hoisted_38, " ± " + (0,vue__WEBPACK_IMPORTED_MODULE_5__/* .toDisplayString */ .zw)(Number(sim_count_err.value).toFixed(2)) + " req", 1),
-          (0,vue__WEBPACK_IMPORTED_MODULE_0__/* .createElementVNode */ ._)("td", _hoisted_39, (0,vue__WEBPACK_IMPORTED_MODULE_5__/* .toDisplayString */ .zw)(Number(sim_count_err.value/sim_count.value * 100).toFixed(2)) + "%", 1)
-        ]),
-        (0,vue__WEBPACK_IMPORTED_MODULE_0__/* .createElementVNode */ ._)("tr", null, [
-          _hoisted_40,
-          (0,vue__WEBPACK_IMPORTED_MODULE_0__/* .createElementVNode */ ._)("td", _hoisted_41, (0,vue__WEBPACK_IMPORTED_MODULE_5__/* .toDisplayString */ .zw)(Number(sim_count.value / twindow.value).toFixed(1)) + " rps", 1),
-          (0,vue__WEBPACK_IMPORTED_MODULE_0__/* .createElementVNode */ ._)("td", _hoisted_42, "± " + (0,vue__WEBPACK_IMPORTED_MODULE_5__/* .toDisplayString */ .zw)(Number(sim_count_err.value / twindow.value).toFixed(2)) + " rps", 1),
-          (0,vue__WEBPACK_IMPORTED_MODULE_0__/* .createElementVNode */ ._)("td", _hoisted_43, (0,vue__WEBPACK_IMPORTED_MODULE_5__/* .toDisplayString */ .zw)((Number(sim_count_err.value)/sim_count.value * 100).toFixed(2)) + "%", 1)
+          (0,vue__WEBPACK_IMPORTED_MODULE_0__/* .createElementVNode */ ._)("td", _hoisted_33, (0,vue__WEBPACK_IMPORTED_MODULE_5__/* .toDisplayString */ .zw)(Number(sim_count.value / twindow.value).toFixed(1)) + " rps", 1),
+          (0,vue__WEBPACK_IMPORTED_MODULE_0__/* .createElementVNode */ ._)("td", _hoisted_34, "± " + (0,vue__WEBPACK_IMPORTED_MODULE_5__/* .toDisplayString */ .zw)(Number(sim_count_err.value / twindow.value).toFixed(2)) + " rps", 1),
+          (0,vue__WEBPACK_IMPORTED_MODULE_0__/* .createElementVNode */ ._)("td", _hoisted_35, (0,vue__WEBPACK_IMPORTED_MODULE_5__/* .toDisplayString */ .zw)((Number(sim_count_err.value)/sim_count.value * 100).toFixed(2)) + "%", 1)
         ])
       ])
     ]),
     (0,vue__WEBPACK_IMPORTED_MODULE_0__/* .createElementVNode */ ._)("table", null, [
       (0,vue__WEBPACK_IMPORTED_MODULE_0__/* .createElementVNode */ ._)("tbody", null, [
-        _hoisted_44,
+        _hoisted_36,
         (0,vue__WEBPACK_IMPORTED_MODULE_0__/* .createElementVNode */ ._)("tr", null, [
-          _hoisted_45,
+          _hoisted_37,
           (0,vue__WEBPACK_IMPORTED_MODULE_0__/* .createElementVNode */ ._)("td", null, [
             (0,vue__WEBPACK_IMPORTED_MODULE_0__/* .withDirectives */ .wy)((0,vue__WEBPACK_IMPORTED_MODULE_0__/* .createElementVNode */ ._)("input", {
               type: "text",
@@ -592,9 +584,9 @@ return (_ctx, _cache) => {
             }, null, 512), [
               [vue__WEBPACK_IMPORTED_MODULE_4__/* .vModelText */ .nr, error_rate.value]
             ]),
-            _hoisted_46
+            _hoisted_38
           ]),
-          (0,vue__WEBPACK_IMPORTED_MODULE_0__/* .createElementVNode */ ._)("td", _hoisted_47, [
+          (0,vue__WEBPACK_IMPORTED_MODULE_0__/* .createElementVNode */ ._)("td", _hoisted_39, [
             (0,vue__WEBPACK_IMPORTED_MODULE_0__/* .withDirectives */ .wy)((0,vue__WEBPACK_IMPORTED_MODULE_0__/* .createElementVNode */ ._)("input", {
               type: "range",
               min: "0",
@@ -607,59 +599,59 @@ return (_ctx, _cache) => {
           ])
         ]),
         (0,vue__WEBPACK_IMPORTED_MODULE_0__/* .createElementVNode */ ._)("tr", null, [
-          _hoisted_48,
-          (0,vue__WEBPACK_IMPORTED_MODULE_0__/* .createElementVNode */ ._)("td", _hoisted_49, " From the " + (0,vue__WEBPACK_IMPORTED_MODULE_5__/* .toDisplayString */ .zw)(request_rate.value * twindow.value) + " requests " + (0,vue__WEBPACK_IMPORTED_MODULE_5__/* .toDisplayString */ .zw)(Number(request_rate.value * twindow.value * error_rate.value / 100)) + " are marked as error. ", 1)
+          _hoisted_40,
+          (0,vue__WEBPACK_IMPORTED_MODULE_0__/* .createElementVNode */ ._)("td", _hoisted_41, " From the " + (0,vue__WEBPACK_IMPORTED_MODULE_5__/* .toDisplayString */ .zw)(request_rate.value * twindow.value) + " requests " + (0,vue__WEBPACK_IMPORTED_MODULE_5__/* .toDisplayString */ .zw)(Number(request_rate.value * twindow.value * error_rate.value / 100)) + " are marked as error. ", 1)
         ]),
-        (0,vue__WEBPACK_IMPORTED_MODULE_0__/* .createElementVNode */ ._)("tr", _hoisted_50, [
-          (0,vue__WEBPACK_IMPORTED_MODULE_0__/* .createElementVNode */ ._)("td", _hoisted_51, [
-            _hoisted_52,
-            (0,vue__WEBPACK_IMPORTED_MODULE_0__/* .createElementVNode */ ._)("span", _hoisted_53, (0,vue__WEBPACK_IMPORTED_MODULE_5__/* .toDisplayString */ .zw)(sim_iteration.value) + " iterations", 1)
+        (0,vue__WEBPACK_IMPORTED_MODULE_0__/* .createElementVNode */ ._)("tr", _hoisted_42, [
+          (0,vue__WEBPACK_IMPORTED_MODULE_0__/* .createElementVNode */ ._)("td", _hoisted_43, [
+            _hoisted_44,
+            (0,vue__WEBPACK_IMPORTED_MODULE_0__/* .createElementVNode */ ._)("span", _hoisted_45, (0,vue__WEBPACK_IMPORTED_MODULE_5__/* .toDisplayString */ .zw)(sim_iteration.value) + " iterations", 1)
           ])
         ]),
         (0,vue__WEBPACK_IMPORTED_MODULE_0__/* .createElementVNode */ ._)("tr", null, [
-          _hoisted_54,
-          (0,vue__WEBPACK_IMPORTED_MODULE_0__/* .createElementVNode */ ._)("td", _hoisted_55, "We expect to retrain " + (0,vue__WEBPACK_IMPORTED_MODULE_5__/* .toDisplayString */ .zw)(Number(request_rate.value * twindow.value * sampling_rate.value / 100 * error_rate.value / 100 )) + " errors in the sample of size " + (0,vue__WEBPACK_IMPORTED_MODULE_5__/* .toDisplayString */ .zw)(Number(request_rate.value * twindow.value * sampling_rate.value / 100 )) + ".", 1)
+          _hoisted_46,
+          (0,vue__WEBPACK_IMPORTED_MODULE_0__/* .createElementVNode */ ._)("td", _hoisted_47, "We expect to retrain " + (0,vue__WEBPACK_IMPORTED_MODULE_5__/* .toDisplayString */ .zw)(Number(request_rate.value * twindow.value * sampling_rate.value / 100 * error_rate.value / 100 )) + " errors in the sample of size " + (0,vue__WEBPACK_IMPORTED_MODULE_5__/* .toDisplayString */ .zw)(Number(request_rate.value * twindow.value * sampling_rate.value / 100 )) + ".", 1)
         ]),
         (0,vue__WEBPACK_IMPORTED_MODULE_0__/* .createElementVNode */ ._)("tr", null, [
-          _hoisted_56,
-          (0,vue__WEBPACK_IMPORTED_MODULE_0__/* .createElementVNode */ ._)("td", _hoisted_57, "The probability that no error will be retained is " + (0,vue__WEBPACK_IMPORTED_MODULE_5__/* .toDisplayString */ .zw)(Number( 100 * (1 - sampling_rate.value / 100)**Number(request_rate.value * twindow.value * error_rate.value / 100) ).toFixed(9)) + "%", 1)
+          _hoisted_48,
+          (0,vue__WEBPACK_IMPORTED_MODULE_0__/* .createElementVNode */ ._)("td", _hoisted_49, "The probability that no error will be retained is " + (0,vue__WEBPACK_IMPORTED_MODULE_5__/* .toDisplayString */ .zw)(Number( 100 * (1 - sampling_rate.value / 100)**Number(request_rate.value * twindow.value * error_rate.value / 100) ).toFixed(9)) + "%", 1)
+        ]),
+        (0,vue__WEBPACK_IMPORTED_MODULE_0__/* .createElementVNode */ ._)("tr", null, [
+          _hoisted_50,
+          (0,vue__WEBPACK_IMPORTED_MODULE_0__/* .createElementVNode */ ._)("td", _hoisted_51, (0,vue__WEBPACK_IMPORTED_MODULE_5__/* .toDisplayString */ .zw)(Number(est_err_count.value).toFixed(1)) + " err", 1),
+          (0,vue__WEBPACK_IMPORTED_MODULE_0__/* .createElementVNode */ ._)("td", _hoisted_52, "± " + (0,vue__WEBPACK_IMPORTED_MODULE_5__/* .toDisplayString */ .zw)(Number(est_err_count_err.value).toFixed(2)) + " err", 1),
+          (0,vue__WEBPACK_IMPORTED_MODULE_0__/* .createElementVNode */ ._)("td", _hoisted_53, (0,vue__WEBPACK_IMPORTED_MODULE_5__/* .toDisplayString */ .zw)(Number(est_err_count_err.value / est_err_count.value * 100).toFixed(2)) + "%", 1)
+        ]),
+        (0,vue__WEBPACK_IMPORTED_MODULE_0__/* .createElementVNode */ ._)("tr", null, [
+          _hoisted_54,
+          (0,vue__WEBPACK_IMPORTED_MODULE_0__/* .createElementVNode */ ._)("td", _hoisted_55, (0,vue__WEBPACK_IMPORTED_MODULE_5__/* .toDisplayString */ .zw)(Number(sim_err_count.value).toFixed(1)) + " err", 1),
+          (0,vue__WEBPACK_IMPORTED_MODULE_0__/* .createElementVNode */ ._)("td", _hoisted_56, "± " + (0,vue__WEBPACK_IMPORTED_MODULE_5__/* .toDisplayString */ .zw)(Number(sim_err_count_err.value).toFixed(2)) + " err", 1),
+          (0,vue__WEBPACK_IMPORTED_MODULE_0__/* .createElementVNode */ ._)("td", _hoisted_57, (0,vue__WEBPACK_IMPORTED_MODULE_5__/* .toDisplayString */ .zw)(Number(sim_err_count_err.value / sim_err_count.value * 100).toFixed(2)) + "%", 1)
         ]),
         (0,vue__WEBPACK_IMPORTED_MODULE_0__/* .createElementVNode */ ._)("tr", null, [
           _hoisted_58,
-          (0,vue__WEBPACK_IMPORTED_MODULE_0__/* .createElementVNode */ ._)("td", _hoisted_59, (0,vue__WEBPACK_IMPORTED_MODULE_5__/* .toDisplayString */ .zw)(Number(est_err_count.value).toFixed(1)) + " err", 1),
-          (0,vue__WEBPACK_IMPORTED_MODULE_0__/* .createElementVNode */ ._)("td", _hoisted_60, "± " + (0,vue__WEBPACK_IMPORTED_MODULE_5__/* .toDisplayString */ .zw)(Number(est_err_count_err.value).toFixed(2)) + " err", 1),
-          (0,vue__WEBPACK_IMPORTED_MODULE_0__/* .createElementVNode */ ._)("td", _hoisted_61, (0,vue__WEBPACK_IMPORTED_MODULE_5__/* .toDisplayString */ .zw)(Number(est_err_count_err.value / est_err_count.value * 100).toFixed(2)) + "%", 1)
-        ]),
-        (0,vue__WEBPACK_IMPORTED_MODULE_0__/* .createElementVNode */ ._)("tr", null, [
-          _hoisted_62,
-          (0,vue__WEBPACK_IMPORTED_MODULE_0__/* .createElementVNode */ ._)("td", _hoisted_63, (0,vue__WEBPACK_IMPORTED_MODULE_5__/* .toDisplayString */ .zw)(Number(sim_err_count.value).toFixed(1)) + " err", 1),
-          (0,vue__WEBPACK_IMPORTED_MODULE_0__/* .createElementVNode */ ._)("td", _hoisted_64, "± " + (0,vue__WEBPACK_IMPORTED_MODULE_5__/* .toDisplayString */ .zw)(Number(sim_err_count_err.value).toFixed(2)) + " err", 1),
-          (0,vue__WEBPACK_IMPORTED_MODULE_0__/* .createElementVNode */ ._)("td", _hoisted_65, (0,vue__WEBPACK_IMPORTED_MODULE_5__/* .toDisplayString */ .zw)(Number(sim_err_count_err.value / sim_err_count.value * 100).toFixed(2)) + "%", 1)
-        ]),
-        (0,vue__WEBPACK_IMPORTED_MODULE_0__/* .createElementVNode */ ._)("tr", null, [
-          _hoisted_66,
-          (0,vue__WEBPACK_IMPORTED_MODULE_0__/* .createElementVNode */ ._)("td", _hoisted_67, (0,vue__WEBPACK_IMPORTED_MODULE_5__/* .toDisplayString */ .zw)(Number(sim_err_rate.value).toFixed(2)) + " %", 1),
-          (0,vue__WEBPACK_IMPORTED_MODULE_0__/* .createElementVNode */ ._)("td", _hoisted_68, "± " + (0,vue__WEBPACK_IMPORTED_MODULE_5__/* .toDisplayString */ .zw)(Number(sim_err_rate_err.value).toFixed(2)) + " ppt", 1),
-          (0,vue__WEBPACK_IMPORTED_MODULE_0__/* .createElementVNode */ ._)("td", _hoisted_69, (0,vue__WEBPACK_IMPORTED_MODULE_5__/* .toDisplayString */ .zw)(Number(sim_err_rate_err.value / sim_err_rate.value * 100).toFixed(2)) + "%", 1)
+          (0,vue__WEBPACK_IMPORTED_MODULE_0__/* .createElementVNode */ ._)("td", _hoisted_59, (0,vue__WEBPACK_IMPORTED_MODULE_5__/* .toDisplayString */ .zw)(Number(sim_err_rate.value).toFixed(2)) + " %", 1),
+          (0,vue__WEBPACK_IMPORTED_MODULE_0__/* .createElementVNode */ ._)("td", _hoisted_60, "± " + (0,vue__WEBPACK_IMPORTED_MODULE_5__/* .toDisplayString */ .zw)(Number(sim_err_rate_err.value).toFixed(2)) + " ppt", 1),
+          (0,vue__WEBPACK_IMPORTED_MODULE_0__/* .createElementVNode */ ._)("td", _hoisted_61, (0,vue__WEBPACK_IMPORTED_MODULE_5__/* .toDisplayString */ .zw)(Number(sim_err_rate_err.value / sim_err_rate.value * 100).toFixed(2)) + "%", 1)
         ])
       ])
     ]),
     (0,vue__WEBPACK_IMPORTED_MODULE_0__/* .createElementVNode */ ._)("table", null, [
       (0,vue__WEBPACK_IMPORTED_MODULE_0__/* .createElementVNode */ ._)("tbody", null, [
-        _hoisted_70,
+        _hoisted_62,
         (0,vue__WEBPACK_IMPORTED_MODULE_0__/* .createElementVNode */ ._)("tr", null, [
-          _hoisted_71,
-          (0,vue__WEBPACK_IMPORTED_MODULE_0__/* .createElementVNode */ ._)("td", _hoisted_72, [
+          _hoisted_63,
+          (0,vue__WEBPACK_IMPORTED_MODULE_0__/* .createElementVNode */ ._)("td", _hoisted_64, [
             (0,vue__WEBPACK_IMPORTED_MODULE_0__/* .withDirectives */ .wy)((0,vue__WEBPACK_IMPORTED_MODULE_0__/* .createElementVNode */ ._)("select", {
               "onUpdate:modelValue": _cache[8] || (_cache[8] = $event => ((lat_text).value = $event))
-            }, _hoisted_77, 512), [
+            }, _hoisted_69, 512), [
               [vue__WEBPACK_IMPORTED_MODULE_4__/* .vModelSelect */ .bM, lat_text.value]
             ])
           ])
         ]),
         (0,vue__WEBPACK_IMPORTED_MODULE_0__/* .createElementVNode */ ._)("tr", null, [
           (0,vue__WEBPACK_IMPORTED_MODULE_0__/* .createElementVNode */ ._)("td", null, [
-            _hoisted_78,
+            _hoisted_70,
             (0,vue__WEBPACK_IMPORTED_MODULE_0__/* .withDirectives */ .wy)((0,vue__WEBPACK_IMPORTED_MODULE_0__/* .createElementVNode */ ._)("input", {
               type: "text",
               "onUpdate:modelValue": _cache[9] || (_cache[9] = $event => ((percentile).value = $event)),
@@ -668,33 +660,33 @@ return (_ctx, _cache) => {
               [vue__WEBPACK_IMPORTED_MODULE_4__/* .vModelText */ .nr, percentile.value]
             ])
           ]),
-          (0,vue__WEBPACK_IMPORTED_MODULE_0__/* .createElementVNode */ ._)("td", _hoisted_79, (0,vue__WEBPACK_IMPORTED_MODULE_5__/* .toDisplayString */ .zw)(Number(percentile_value.value).toFixed(1)) + " ms", 1)
+          (0,vue__WEBPACK_IMPORTED_MODULE_0__/* .createElementVNode */ ._)("td", _hoisted_71, (0,vue__WEBPACK_IMPORTED_MODULE_5__/* .toDisplayString */ .zw)(Number(percentile_value.value).toFixed(1)) + " ms", 1)
         ]),
         (0,vue__WEBPACK_IMPORTED_MODULE_0__/* .createElementVNode */ ._)("tr", null, [
-          _hoisted_80,
-          (0,vue__WEBPACK_IMPORTED_MODULE_0__/* .createElementVNode */ ._)("td", _hoisted_81, "Total " + (0,vue__WEBPACK_IMPORTED_MODULE_5__/* .toDisplayString */ .zw)(request_rate.value * twindow.value) + " requests following " + (0,vue__WEBPACK_IMPORTED_MODULE_5__/* .toDisplayString */ .zw)(lat_text.value) + " distribution.", 1)
+          _hoisted_72,
+          (0,vue__WEBPACK_IMPORTED_MODULE_0__/* .createElementVNode */ ._)("td", _hoisted_73, "Total " + (0,vue__WEBPACK_IMPORTED_MODULE_5__/* .toDisplayString */ .zw)(request_rate.value * twindow.value) + " requests following " + (0,vue__WEBPACK_IMPORTED_MODULE_5__/* .toDisplayString */ .zw)(lat_text.value) + " distribution.", 1)
         ]),
         (0,vue__WEBPACK_IMPORTED_MODULE_0__/* .createElementVNode */ ._)("tr", null, [
-          _hoisted_82,
-          (0,vue__WEBPACK_IMPORTED_MODULE_0__/* .createElementVNode */ ._)("td", _hoisted_83, "The true p" + (0,vue__WEBPACK_IMPORTED_MODULE_5__/* .toDisplayString */ .zw)(percentile.value) + " is at " + (0,vue__WEBPACK_IMPORTED_MODULE_5__/* .toDisplayString */ .zw)(Number(percentile_value.value).toFixed(1)) + "ms.", 1)
+          _hoisted_74,
+          (0,vue__WEBPACK_IMPORTED_MODULE_0__/* .createElementVNode */ ._)("td", _hoisted_75, "The true p" + (0,vue__WEBPACK_IMPORTED_MODULE_5__/* .toDisplayString */ .zw)(percentile.value) + " is at " + (0,vue__WEBPACK_IMPORTED_MODULE_5__/* .toDisplayString */ .zw)(Number(percentile_value.value).toFixed(1)) + "ms.", 1)
         ]),
-        (0,vue__WEBPACK_IMPORTED_MODULE_0__/* .createElementVNode */ ._)("tr", _hoisted_84, [
-          (0,vue__WEBPACK_IMPORTED_MODULE_0__/* .createElementVNode */ ._)("td", _hoisted_85, [
-            _hoisted_86,
-            (0,vue__WEBPACK_IMPORTED_MODULE_0__/* .createElementVNode */ ._)("span", _hoisted_87, (0,vue__WEBPACK_IMPORTED_MODULE_5__/* .toDisplayString */ .zw)(sim_iteration.value) + " iterations", 1)
+        (0,vue__WEBPACK_IMPORTED_MODULE_0__/* .createElementVNode */ ._)("tr", _hoisted_76, [
+          (0,vue__WEBPACK_IMPORTED_MODULE_0__/* .createElementVNode */ ._)("td", _hoisted_77, [
+            _hoisted_78,
+            (0,vue__WEBPACK_IMPORTED_MODULE_0__/* .createElementVNode */ ._)("span", _hoisted_79, (0,vue__WEBPACK_IMPORTED_MODULE_5__/* .toDisplayString */ .zw)(sim_iteration.value) + " iterations", 1)
           ])
         ]),
         (0,vue__WEBPACK_IMPORTED_MODULE_0__/* .createElementVNode */ ._)("tr", null, [
-          _hoisted_88,
-          (0,vue__WEBPACK_IMPORTED_MODULE_0__/* .createElementVNode */ ._)("td", _hoisted_89, "We expect to retain " + (0,vue__WEBPACK_IMPORTED_MODULE_5__/* .toDisplayString */ .zw)(Number(request_rate.value * twindow.value * sampling_rate.value / 100 )) + " requests following the same distribution.", 1)
+          _hoisted_80,
+          (0,vue__WEBPACK_IMPORTED_MODULE_0__/* .createElementVNode */ ._)("td", _hoisted_81, "We expect to retain " + (0,vue__WEBPACK_IMPORTED_MODULE_5__/* .toDisplayString */ .zw)(Number(request_rate.value * twindow.value * sampling_rate.value / 100 )) + " requests.", 1)
         ]),
         (0,vue__WEBPACK_IMPORTED_MODULE_0__/* .createElementVNode */ ._)("tr", null, [
           (0,vue__WEBPACK_IMPORTED_MODULE_0__/* .createElementVNode */ ._)("td", null, "Estimate Percentile p" + (0,vue__WEBPACK_IMPORTED_MODULE_5__/* .toDisplayString */ .zw)(percentile.value), 1),
-          (0,vue__WEBPACK_IMPORTED_MODULE_0__/* .createElementVNode */ ._)("td", _hoisted_90, (0,vue__WEBPACK_IMPORTED_MODULE_5__/* .toDisplayString */ .zw)(Number(sim_lat.value).toFixed(2)) + " ms", 1),
-          (0,vue__WEBPACK_IMPORTED_MODULE_0__/* .createElementVNode */ ._)("td", _hoisted_91, "± " + (0,vue__WEBPACK_IMPORTED_MODULE_5__/* .toDisplayString */ .zw)(Number(sim_lat_err.value).toFixed(2)) + " ms", 1),
-          (0,vue__WEBPACK_IMPORTED_MODULE_0__/* .createElementVNode */ ._)("td", _hoisted_92, (0,vue__WEBPACK_IMPORTED_MODULE_5__/* .toDisplayString */ .zw)(Number(sim_lat_err.value / sim_lat.value * 100).toFixed(2)) + "%", 1)
+          (0,vue__WEBPACK_IMPORTED_MODULE_0__/* .createElementVNode */ ._)("td", _hoisted_82, (0,vue__WEBPACK_IMPORTED_MODULE_5__/* .toDisplayString */ .zw)(Number(sim_lat.value).toFixed(2)) + " ms", 1),
+          (0,vue__WEBPACK_IMPORTED_MODULE_0__/* .createElementVNode */ ._)("td", _hoisted_83, "± " + (0,vue__WEBPACK_IMPORTED_MODULE_5__/* .toDisplayString */ .zw)(Number(sim_lat_err.value).toFixed(2)) + " ms", 1),
+          (0,vue__WEBPACK_IMPORTED_MODULE_0__/* .createElementVNode */ ._)("td", _hoisted_84, (0,vue__WEBPACK_IMPORTED_MODULE_5__/* .toDisplayString */ .zw)(Number(sim_lat_err.value / sim_lat.value * 100).toFixed(2)) + "%", 1)
         ]),
-        _hoisted_93
+        _hoisted_85
       ])
     ])
   ], 64))
@@ -705,19 +697,19 @@ return (_ctx, _cache) => {
 
 /***/ }),
 
-/***/ 699:
+/***/ 172:
 /***/ (function(module, __unused_webpack_exports, __webpack_require__) {
 
 // style-loader: Adds some css to the DOM by adding a <style> tag
 
 // load the styles
-var content = __webpack_require__(185);
+var content = __webpack_require__(960);
 if(content.__esModule) content = content.default;
 if(typeof content === 'string') content = [[module.id, content, '']];
 if(content.locals) module.exports = content.locals;
 // add the styles to the DOM
 var add = (__webpack_require__(402)/* ["default"] */ .Z)
-var update = add("93c414d8", content, true, {"sourceMap":false,"shadowMode":false});
+var update = add("292b47e1", content, true, {"sourceMap":false,"shadowMode":false});
 
 /***/ }),
 
@@ -737,7 +729,7 @@ var update = add("266e90d8", content, true, {"sourceMap":false,"shadowMode":fals
 
 /***/ }),
 
-/***/ 515:
+/***/ 934:
 /***/ (function(__unused_webpack_module, __unused_webpack___webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -748,9 +740,9 @@ var runtime_dom_esm_bundler = __webpack_require__(963);
 var Appvue_type_script_setup_true_lang_js = __webpack_require__(112);
 ;// CONCATENATED MODULE: ./src/App.vue?vue&type=script&setup=true&lang=js
  
-// EXTERNAL MODULE: ./node_modules/vue-style-loader/index.js??clonedRuleSet-12.use[0]!./node_modules/css-loader/dist/cjs.js??clonedRuleSet-12.use[1]!./node_modules/vue-loader/dist/stylePostLoader.js!./node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-12.use[2]!./node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-12.use[3]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./src/App.vue?vue&type=style&index=0&id=3bd0696b&lang=css
-var Appvue_type_style_index_0_id_3bd0696b_lang_css = __webpack_require__(699);
-;// CONCATENATED MODULE: ./src/App.vue?vue&type=style&index=0&id=3bd0696b&lang=css
+// EXTERNAL MODULE: ./node_modules/vue-style-loader/index.js??clonedRuleSet-12.use[0]!./node_modules/css-loader/dist/cjs.js??clonedRuleSet-12.use[1]!./node_modules/vue-loader/dist/stylePostLoader.js!./node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-12.use[2]!./node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-12.use[3]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./src/App.vue?vue&type=style&index=0&id=5a962ebc&lang=css
+var Appvue_type_style_index_0_id_5a962ebc_lang_css = __webpack_require__(172);
+;// CONCATENATED MODULE: ./src/App.vue?vue&type=style&index=0&id=5a962ebc&lang=css
 
 ;// CONCATENATED MODULE: ./src/App.vue
 
@@ -958,7 +950,7 @@ module.exports = "data:image/svg+xml;charset=utf-8,%3Csvg xmlns=%27http://www.w3
 /******/ 	// startup
 /******/ 	// Load entry module and return exports
 /******/ 	// This entry module depends on other loaded chunks and execution need to be delayed
-/******/ 	var __webpack_exports__ = __webpack_require__.O(undefined, [998], function() { return __webpack_require__(515); })
+/******/ 	var __webpack_exports__ = __webpack_require__.O(undefined, [998], function() { return __webpack_require__(934); })
 /******/ 	__webpack_exports__ = __webpack_require__.O(__webpack_exports__);
 /******/ 	
 /******/ })()
