@@ -369,12 +369,6 @@ Calculate effects of sampling to accuracy of request-rate and error-rate calcula
       <td class="cell">{{ Number(est_err_count_err / est_err_count * 100).toFixed(2) }}%</td>
     </tr>
     <tr>
-      <td>Estimate* Err Rate</td>
-      <td class="cell">{{ Number(est_err_count / est_count * 100).toFixed(1) }} %</td>
-      <td class="cell">± {{ Number(est_err_count_err / est_count * 100).toFixed(2) }} ppt.</td>
-      <td class="cell">{{ Number(est_err_count_err / est_err_count * 100).toFixed(2) }}%</td>
-    </tr>
-    <tr>
       <td>Simulate Err. Count</td>
       <td class="cell">{{ Number(sim_err_count).toFixed(1) }} err</td>
       <td class="cell">± {{ Number(sim_err_count_err).toFixed(2) }} err</td>
@@ -388,7 +382,6 @@ Calculate effects of sampling to accuracy of request-rate and error-rate calcula
     </tr>
 </tbody>
 </table>
-* Only valid for small error rates
 
 <table>
   <tbody>
@@ -411,7 +404,7 @@ Calculate effects of sampling to accuracy of request-rate and error-rate calcula
     </tr>
     <tr>
      <td></td>
-     <td colspan="3">The true p{{ percentile }} is at {{ percentile_value.toFixed(1) }}ms.</td>
+     <td colspan="3">The true p{{ percentile }} is at {{ Number(percentile_value).toFixed(1) }}ms.</td>
     </tr>
     <tr style="height:30px;background-color:#FAFAFA"><td colspan="4" style="text-align:left;font-weight:bold">
       ## Samping Effects on Latency

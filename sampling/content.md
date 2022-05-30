@@ -34,9 +34,9 @@ Applying Bernoulli sampling, we get $S_e = X_s \cap S \subset S$, the set of err
 
 The error count $n_e = \\# S_e$ follows a binomial distribution $n_e \sim B(N_e,p)$, where $N_e = \\# X_e$.
 
-Unfortunately, the distribution of the error rate $r_e = \\# S_e / \\# S$ is not easily derived.
-It can be roughly approximated by $\\# S_e / (N_e \cdot p)$, which is what we use in the table above.
-Simulation shows, that this estimate breaks down for larger error rates e.g. $X_e = X$.
+Unfortunately, the distribution of the error rate $r_e = \\# S_e / \\# S$ is not
+easily derived. It can be roughly approximated by $\\# S_e / (N_e \cdot p)$.
+This estimate breaks down for larger error rates e.g. $X_e = X$.
 
 ### Simulation
 
