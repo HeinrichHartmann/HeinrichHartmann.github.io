@@ -4,6 +4,11 @@ module.exports = {
   productionSourceMap: false,
   parallel: false,
   css: {
-    extract: false
+    extract: false,
+  },
+  configureWebpack: {
+    optimization: {
+      minimize: false,
+    },
   }
 }
