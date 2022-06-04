@@ -1,7 +1,8 @@
 <script setup>
 import { ref, watch, watchEffect, onMounted } from 'vue'
-import jstat from 'jstat';
+import { normal, lognormal, exponential, gamma }  from 'jstat';
 import Plotly from 'plotly.js-dist'
+import jstat  from 'jstat';
 const jStat = jstat.jStat;
 import { combinations }  from 'mathjs';
 
@@ -9,7 +10,7 @@ const sampling_rate = ref(50)
 const request_rate = ref(10)
 const error_rate = ref(3)
 const time_window_text = ref("1")
-const time_window_unit = ref("hour")
+const time_window_unit = ref("min")
 const lat_text = ref("LogNormal")
 const percentile = ref("95.0")
 const percentile_value = ref(0)
@@ -41,7 +42,7 @@ function binomial(N,p,n) {
  // Normal Approximation
  const mean = N*p;
  const sdev = Math.sqrt( N*p*(1-p) );
- return jStat.normal.pdf(n, mean, sdev);
+ return normal.pdf(n, mean, sdev);
 }
 
 function sampling_error(N, p) {
@@ -83,10 +84,10 @@ function sample(X,p) {
 function new_set(N, errors) {
   const t = lat_text.value;
   var f = () => 1;
-  if (t == "LogNormal")   f = () => jStat.lognormal.sample(0,1);
-  if (t == "Normal")      f = () => jStat.normal.sample(100,10);
-  if (t == "Exponential") f = () => jStat.exponential.sample(1/100);
-  if (t == "Erlang")      f = () => jStat.gamma.sample(2,100);
+  if (t == "LogNormal")   f = () => lognormal.sample(0,1);
+  if (t == "Normal")      f = () => normal.sample(100,10);
+  if (t == "Exponential") f = () => exponential.sample(1/100);
+  if (t == "Erlang")      f = () => gamma.sample(2,100);
   const out = [];
   try {
       for (let i=0;i<errors;i++) out.push(-f()); // errors
@@ -220,7 +221,6 @@ function update_latency() {
   const S = sample(X, p);
   const pv = jStat.percentile(lat_filter(X), percentile.value/100);
   percentile_value.value = pv;
-
   if (!mounted) return;
   var trace = {
     x: lat_filter(X),
@@ -283,10 +283,6 @@ onMounted(() => {
 
 <h1>Sampling Error Calculator</h1>
 <p class="meta" style="color:#aaa; float:right">Stemwede, 2022-05-29</p>
-
-<p>Status: Draft</p>
-
-<p>Calculate effects of sampling to accuracy of request-rate, error-rate and latency percentiles.</p>
 
 <table>
   <tbody>
