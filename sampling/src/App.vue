@@ -2,14 +2,14 @@
 import { ref, watch, watchEffect, onMounted } from 'vue'
 import jstat from 'jstat';
 import Plotly from 'plotly.js-dist'
-
 const jStat = jstat.jStat;
+import { combinations }  from 'mathjs';
 
 const sampling_rate = ref(50)
 const request_rate = ref(10)
 const error_rate = ref(3)
 const time_window_text = ref("1")
-const time_window_unit = ref("min")
+const time_window_unit = ref("hour")
 const lat_text = ref("LogNormal")
 const percentile = ref("95.0")
 const percentile_value = ref(0)
@@ -28,11 +28,32 @@ const est_count = ref()
 const est_count_err = ref()
 const est_err_count = ref()
 const est_err_count_err = ref()
+const est_err_rate = ref()
+const est_err_rate_err = ref()
 
 const twindow = ref()
 
-function sampling_error(c, p) {
-  return Math.sqrt(c * (1 - p) / p);
+function binomial(N,p,n) {
+ if (n > 0.5*N) return binomial(N, p, N-n);
+ if (N < 100) return combinations(N,n) * (p**n) * (1-p)**(N-n)
+ if (n < 30) return combinations(N,n) * (p**n) * (1-p)**(N-n)
+
+ // Normal Approximation
+ const mean = N*p;
+ const sdev = Math.sqrt( N*p*(1-p) );
+ return jStat.normal.pdf(n, mean, sdev);
+}
+
+function sampling_error(N, p) {
+  return Math.sqrt(N * (1 - p) / p);
+}
+function sampling_rate_error(N,K,p) {
+  console.log(N,K,p);
+  var s = 0;
+  for(let n=1;n < N;n++){
+    s += binomial(N,p,n) * (N-n) / n;
+  }
+  return Math.sqrt( K/N * (N-K)/N * 1/(N-1) * s);
 }
 function calc_window_text() {
   try { return Number(eval(time_window_text.value)); }
@@ -41,10 +62,14 @@ function calc_window_text() {
 
 function do_estimate() {
   const p = sampling_rate.value/100;
-  est_count.value = twindow.value * request_rate.value;
-  est_count_err.value = sampling_error(est_count.value, p);
-  est_err_count.value = est_count.value * error_rate.value / 100;
-  est_err_count_err.value = sampling_error(est_err_count.value, p);
+  const N = twindow.value * request_rate.value;
+  const K = N * error_rate.value / 100;
+  est_count.value = N;
+  est_count_err.value = sampling_error(N, p);
+  est_err_count.value = K;
+  est_err_count_err.value = sampling_error(K,p);
+  est_err_rate.value = K / N;
+  est_err_rate_err.value = sampling_rate_error(N,K,p);
 }
 
 function sample(X,p) {
@@ -252,7 +277,6 @@ onMounted(() => {
   mounted = true;
   update_latency();
 })
-
 </script>
 
 <template>
@@ -354,20 +378,14 @@ onMounted(() => {
     <td colspan="3">The probability that no error will be retained is {{ Number( 100 * (1 - sampling_rate / 100)**Number(request_rate * twindow * error_rate / 100) ).toFixed(9) }}%</td>
     </tr>
     <tr>
-      <td>Estimate Err Count</td>
-      <td class="cell">{{ Number(est_err_count).toFixed(1) }} err</td>
-      <td class="cell">± {{ Number(est_err_count_err).toFixed(2) }} err</td>
-      <td class="cell">{{ Number(est_err_count_err / est_err_count * 100).toFixed(2) }}%</td>
-    </tr>
-    <tr>
-      <td>Simulate Err. Count</td>
-      <td class="cell">{{ Number(sim_err_count).toFixed(1) }} err</td>
-      <td class="cell">± {{ Number(sim_err_count_err).toFixed(2) }} err</td>
-      <td class="cell">{{ Number(sim_err_count_err / sim_err_count * 100).toFixed(2) }}%</td>
+      <td>Estimate Err. Rate</td>
+      <td class="cell">{{ Number(est_err_rate * 100).toFixed(1) }} %</td>
+      <td class="cell">± {{ Number(est_err_rate_err * 100).toFixed(2) }} ppt</td>
+      <td class="cell">{{ Number(est_err_rate_err / est_err_rate * 100).toFixed(2) }}%</td>
     </tr>
     <tr>
       <td>Simulate Err. Rate</td>
-      <td class="cell">{{ Number(sim_err_rate).toFixed(2) }} %</td>
+      <td class="cell">{{ Number(sim_err_rate).toFixed(1) }} %</td>
       <td class="cell">± {{ Number(sim_err_rate_err).toFixed(2) }} ppt</td>
       <td class="cell">{{ Number(sim_err_rate_err / sim_err_rate * 100).toFixed(2) }}%</td>
     </tr>

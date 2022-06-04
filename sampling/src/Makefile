@@ -1,4 +1,3 @@
-content:
-	#	marked content.md > content.html
-	sed -i -n '1,/START_MDCONTENT/p;/END_MDCONTENT/,$$p' App.vue
-	marked content.md | sed -i -e '/START_MDCONTENT/r /dev/stdin' App.vue 
+App.vue: app.js
+	sed -i -n '1,/<script setup>/p;/<\/script>/,$$p' App.vue
+	cat app.js | sed -i -e '/<script setup>/r /dev/stdin' App.vue
