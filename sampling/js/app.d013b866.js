@@ -1,7 +1,7 @@
 /******/ (function() { // webpackBootstrap
 /******/ 	var __webpack_modules__ = ({
 
-/***/ 221:
+/***/ 705:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -58,9 +58,9 @@ ___CSS_LOADER_EXPORT___.push([module.id, "header a{text-align:center;width:100%;
 /* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(262);
 /* harmony import */ var jstat__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(162);
 /* harmony import */ var jstat__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(jstat__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var mathjs__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(55);
 /* harmony import */ var plotly_js_dist__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(138);
 /* harmony import */ var plotly_js_dist__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(plotly_js_dist__WEBPACK_IMPORTED_MODULE_2__);
-/* harmony import */ var mathjs__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(55);
 
 
 const _hoisted_1 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__/* .createElementVNode */ ._)("h1", null, "Sampling Error Calculator", -1)
@@ -212,14 +212,13 @@ const _hoisted_79 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__/* .createEl
   name: 'App',
   setup(__props) {
 
-const jStat = (jstat__WEBPACK_IMPORTED_MODULE_1___default().jStat);
 const sampling_rate = (0,vue__WEBPACK_IMPORTED_MODULE_3__/* .ref */ .iH)(50)
 const request_rate = (0,vue__WEBPACK_IMPORTED_MODULE_3__/* .ref */ .iH)(10)
 const error_rate = (0,vue__WEBPACK_IMPORTED_MODULE_3__/* .ref */ .iH)(3)
 const time_window_text = (0,vue__WEBPACK_IMPORTED_MODULE_3__/* .ref */ .iH)("1")
 const time_window_unit = (0,vue__WEBPACK_IMPORTED_MODULE_3__/* .ref */ .iH)("min")
 const lat_text = (0,vue__WEBPACK_IMPORTED_MODULE_3__/* .ref */ .iH)("LogNormal")
-const percentile = (0,vue__WEBPACK_IMPORTED_MODULE_3__/* .ref */ .iH)("95.0")
+const percentile_var = (0,vue__WEBPACK_IMPORTED_MODULE_3__/* .ref */ .iH)("95.0")
 const percentile_value = (0,vue__WEBPACK_IMPORTED_MODULE_3__/* .ref */ .iH)(0)
 
 const sim_iteration = (0,vue__WEBPACK_IMPORTED_MODULE_3__/* .ref */ .iH)(0)
@@ -382,7 +381,7 @@ function do_simulate() {
   const N = twindow.value * request_rate.value;
   const K = N * error_rate.value / 100;
   const p = sampling_rate.value/100;
-  const q = percentile.value / 100;
+  const q = percentile_var.value / 100;
   const X = new_set(N, K);
   const S = sample(X, p);
   const X_CNT = [];
@@ -399,7 +398,7 @@ function do_simulate() {
     X_CNT.push(stat_cnt(S) / p);
     X_ERR.push(stat_err(S) / p);
     X_ERR_RATE.push(stat_err_rate(S) * 100);
-    X_LAT.push(jStat.percentile(L, q));
+    X_LAT.push((0,jstat__WEBPACK_IMPORTED_MODULE_1__.percentile)(L, q));
     if (cnt < cnt_max) setTimeout(iter,0);
   }
   function show() {
@@ -423,10 +422,10 @@ var mounted = false;
 function update_latency() {
   const N = twindow.value * request_rate.value;
   const p = sampling_rate.value/100;
-  const q = percentile.value / 100;
+  const q = percentile_var.value / 100;
   const X = new_set(N, 0);
   const S = sample(X, p);
-  const pv = jStat.percentile(lat_filter(X), percentile.value/100);
+  const pv = (0,jstat__WEBPACK_IMPORTED_MODULE_1__.percentile)(lat_filter(X), percentile_var.value/100);
   percentile_value.value = pv;
   if (!mounted) return;
   var trace = {
@@ -465,7 +464,7 @@ function update_latency() {
 
 (0,vue__WEBPACK_IMPORTED_MODULE_0__/* .watch */ .YP)(est_count, update_latency);
 (0,vue__WEBPACK_IMPORTED_MODULE_0__/* .watch */ .YP)(lat_text, update_latency);
-(0,vue__WEBPACK_IMPORTED_MODULE_0__/* .watch */ .YP)(percentile, update_latency);
+(0,vue__WEBPACK_IMPORTED_MODULE_0__/* .watch */ .YP)(percentile_var, update_latency);
 
 (0,vue__WEBPACK_IMPORTED_MODULE_0__/* .watchEffect */ .m0)(() => {
   const u = time_window_unit.value;
@@ -665,10 +664,10 @@ return (_ctx, _cache) => {
             _hoisted_64,
             (0,vue__WEBPACK_IMPORTED_MODULE_0__/* .withDirectives */ .wy)((0,vue__WEBPACK_IMPORTED_MODULE_0__/* .createElementVNode */ ._)("input", {
               type: "text",
-              "onUpdate:modelValue": _cache[9] || (_cache[9] = $event => ((percentile).value = $event)),
+              "onUpdate:modelValue": _cache[9] || (_cache[9] = $event => ((percentile_var).value = $event)),
               style: {"text-align":"left","width":"120px","margin-left":"3px"}
             }, null, 512), [
-              [vue__WEBPACK_IMPORTED_MODULE_5__/* .vModelText */ .nr, percentile.value]
+              [vue__WEBPACK_IMPORTED_MODULE_5__/* .vModelText */ .nr, percentile_var.value]
             ])
           ]),
           (0,vue__WEBPACK_IMPORTED_MODULE_0__/* .createElementVNode */ ._)("td", _hoisted_65, (0,vue__WEBPACK_IMPORTED_MODULE_6__/* .toDisplayString */ .zw)(Number(percentile_value.value).toFixed(1)) + " ms", 1)
@@ -679,7 +678,7 @@ return (_ctx, _cache) => {
         ]),
         (0,vue__WEBPACK_IMPORTED_MODULE_0__/* .createElementVNode */ ._)("tr", null, [
           _hoisted_68,
-          (0,vue__WEBPACK_IMPORTED_MODULE_0__/* .createElementVNode */ ._)("td", _hoisted_69, "The true p" + (0,vue__WEBPACK_IMPORTED_MODULE_6__/* .toDisplayString */ .zw)(percentile.value) + " is at " + (0,vue__WEBPACK_IMPORTED_MODULE_6__/* .toDisplayString */ .zw)(Number(percentile_value.value).toFixed(1)) + "ms.", 1)
+          (0,vue__WEBPACK_IMPORTED_MODULE_0__/* .createElementVNode */ ._)("td", _hoisted_69, "The true p" + (0,vue__WEBPACK_IMPORTED_MODULE_6__/* .toDisplayString */ .zw)(percentile_var.value) + " is at " + (0,vue__WEBPACK_IMPORTED_MODULE_6__/* .toDisplayString */ .zw)(Number(percentile_value.value).toFixed(1)) + "ms.", 1)
         ]),
         (0,vue__WEBPACK_IMPORTED_MODULE_0__/* .createElementVNode */ ._)("tr", _hoisted_70, [
           (0,vue__WEBPACK_IMPORTED_MODULE_0__/* .createElementVNode */ ._)("td", _hoisted_71, [
@@ -692,7 +691,7 @@ return (_ctx, _cache) => {
           (0,vue__WEBPACK_IMPORTED_MODULE_0__/* .createElementVNode */ ._)("td", _hoisted_75, "We expect to retain " + (0,vue__WEBPACK_IMPORTED_MODULE_6__/* .toDisplayString */ .zw)(Number(request_rate.value * twindow.value * sampling_rate.value / 100 )) + " requests.", 1)
         ]),
         (0,vue__WEBPACK_IMPORTED_MODULE_0__/* .createElementVNode */ ._)("tr", null, [
-          (0,vue__WEBPACK_IMPORTED_MODULE_0__/* .createElementVNode */ ._)("td", null, "Estimate Percentile p" + (0,vue__WEBPACK_IMPORTED_MODULE_6__/* .toDisplayString */ .zw)(percentile.value), 1),
+          (0,vue__WEBPACK_IMPORTED_MODULE_0__/* .createElementVNode */ ._)("td", null, "Estimate Percentile p" + (0,vue__WEBPACK_IMPORTED_MODULE_6__/* .toDisplayString */ .zw)(percentile_var.value), 1),
           (0,vue__WEBPACK_IMPORTED_MODULE_0__/* .createElementVNode */ ._)("td", _hoisted_76, (0,vue__WEBPACK_IMPORTED_MODULE_6__/* .toDisplayString */ .zw)(Number(sim_lat.value).toFixed(2)) + " ms", 1),
           (0,vue__WEBPACK_IMPORTED_MODULE_0__/* .createElementVNode */ ._)("td", _hoisted_77, "± " + (0,vue__WEBPACK_IMPORTED_MODULE_6__/* .toDisplayString */ .zw)(Number(sim_lat_err.value).toFixed(2)) + " ms", 1),
           (0,vue__WEBPACK_IMPORTED_MODULE_0__/* .createElementVNode */ ._)("td", _hoisted_78, (0,vue__WEBPACK_IMPORTED_MODULE_6__/* .toDisplayString */ .zw)(Number(sim_lat_err.value / sim_lat.value * 100).toFixed(2)) + "%", 1)
@@ -708,19 +707,19 @@ return (_ctx, _cache) => {
 
 /***/ }),
 
-/***/ 547:
+/***/ 621:
 /***/ (function(module, __unused_webpack_exports, __webpack_require__) {
 
 // style-loader: Adds some css to the DOM by adding a <style> tag
 
 // load the styles
-var content = __webpack_require__(221);
+var content = __webpack_require__(705);
 if(content.__esModule) content = content.default;
 if(typeof content === 'string') content = [[module.id, content, '']];
 if(content.locals) module.exports = content.locals;
 // add the styles to the DOM
 var add = (__webpack_require__(402)/* ["default"] */ .Z)
-var update = add("3f913bf4", content, true, {"sourceMap":false,"shadowMode":false});
+var update = add("64f3a490", content, true, {"sourceMap":false,"shadowMode":false});
 
 /***/ }),
 
@@ -740,7 +739,7 @@ var update = add("266e90d8", content, true, {"sourceMap":false,"shadowMode":fals
 
 /***/ }),
 
-/***/ 604:
+/***/ 0:
 /***/ (function(__unused_webpack_module, __unused_webpack___webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -751,9 +750,9 @@ var runtime_dom_esm_bundler = __webpack_require__(963);
 var Appvue_type_script_setup_true_lang_js = __webpack_require__(112);
 ;// CONCATENATED MODULE: ./src/App.vue?vue&type=script&setup=true&lang=js
  
-// EXTERNAL MODULE: ./node_modules/vue-style-loader/index.js??clonedRuleSet-12.use[0]!./node_modules/css-loader/dist/cjs.js??clonedRuleSet-12.use[1]!./node_modules/vue-loader/dist/stylePostLoader.js!./node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-12.use[2]!./node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-12.use[3]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./src/App.vue?vue&type=style&index=0&id=2638985e&lang=css
-var Appvue_type_style_index_0_id_2638985e_lang_css = __webpack_require__(547);
-;// CONCATENATED MODULE: ./src/App.vue?vue&type=style&index=0&id=2638985e&lang=css
+// EXTERNAL MODULE: ./node_modules/vue-style-loader/index.js??clonedRuleSet-12.use[0]!./node_modules/css-loader/dist/cjs.js??clonedRuleSet-12.use[1]!./node_modules/vue-loader/dist/stylePostLoader.js!./node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-12.use[2]!./node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-12.use[3]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./src/App.vue?vue&type=style&index=0&id=e1854562&lang=css
+var Appvue_type_style_index_0_id_e1854562_lang_css = __webpack_require__(621);
+;// CONCATENATED MODULE: ./src/App.vue?vue&type=style&index=0&id=e1854562&lang=css
 
 ;// CONCATENATED MODULE: ./src/App.vue
 
@@ -992,7 +991,7 @@ module.exports = "data:image/svg+xml;charset=utf-8,%3Csvg xmlns=%27http://www.w3
 /******/ 	// startup
 /******/ 	// Load entry module and return exports
 /******/ 	// This entry module depends on other loaded chunks and execution need to be delayed
-/******/ 	var __webpack_exports__ = __webpack_require__.O(undefined, [998], function() { return __webpack_require__(604); })
+/******/ 	var __webpack_exports__ = __webpack_require__.O(undefined, [998], function() { return __webpack_require__(0); })
 /******/ 	__webpack_exports__ = __webpack_require__.O(__webpack_exports__);
 /******/ 	
 /******/ })()
