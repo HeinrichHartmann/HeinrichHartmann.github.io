@@ -1,10 +1,9 @@
 <script setup>
 import { ref, watch, watchEffect, onMounted } from 'vue'
-import { normal, lognormal, exponential, gamma }  from 'jstat';
-import Plotly from 'plotly.js-dist'
-import jstat  from 'jstat';
-const jStat = jstat.jStat;
+import { normal, lognormal, exponential, gamma, percentile }  from 'jstat';
 import { combinations }  from 'mathjs';
+
+import Plotly from 'plotly.js-dist'
 
 const sampling_rate = ref(50)
 const request_rate = ref(10)
@@ -12,7 +11,7 @@ const error_rate = ref(3)
 const time_window_text = ref("1")
 const time_window_unit = ref("min")
 const lat_text = ref("LogNormal")
-const percentile = ref("95.0")
+const percentile_var = ref("95.0")
 const percentile_value = ref(0)
 
 const sim_iteration = ref(0)
@@ -175,7 +174,7 @@ function do_simulate() {
   const N = twindow.value * request_rate.value;
   const K = N * error_rate.value / 100;
   const p = sampling_rate.value/100;
-  const q = percentile.value / 100;
+  const q = percentile_var.value / 100;
   const X = new_set(N, K);
   const S = sample(X, p);
   const X_CNT = [];
@@ -192,7 +191,7 @@ function do_simulate() {
     X_CNT.push(stat_cnt(S) / p);
     X_ERR.push(stat_err(S) / p);
     X_ERR_RATE.push(stat_err_rate(S) * 100);
-    X_LAT.push(jStat.percentile(L, q));
+    X_LAT.push(percentile(L, q));
     if (cnt < cnt_max) setTimeout(iter,0);
   }
   function show() {
@@ -216,10 +215,10 @@ var mounted = false;
 function update_latency() {
   const N = twindow.value * request_rate.value;
   const p = sampling_rate.value/100;
-  const q = percentile.value / 100;
+  const q = percentile_var.value / 100;
   const X = new_set(N, 0);
   const S = sample(X, p);
-  const pv = jStat.percentile(lat_filter(X), percentile.value/100);
+  const pv = percentile(lat_filter(X), percentile_var.value/100);
   percentile_value.value = pv;
   if (!mounted) return;
   var trace = {
@@ -258,7 +257,7 @@ function update_latency() {
 
 watch(est_count, update_latency);
 watch(lat_text, update_latency);
-watch(percentile, update_latency);
+watch(percentile_var, update_latency);
 
 watchEffect(() => {
   const u = time_window_unit.value;
@@ -400,7 +399,7 @@ onMounted(() => {
       </td>
     </tr>
     <tr>
-      <td>Percentile p<input type="text" v-model="percentile" style="text-align:left; width:120px; margin-left:3px"></td>
+      <td>Percentile p<input type="text" v-model="percentile_var" style="text-align:left; width:120px; margin-left:3px"></td>
       <td colspan="3">{{ Number(percentile_value).toFixed(1) }} ms</td>
     </tr>
     <tr>
@@ -409,7 +408,7 @@ onMounted(() => {
     </tr>
     <tr>
      <td></td>
-     <td colspan="3">The true p{{ percentile }} is at {{ Number(percentile_value).toFixed(1) }}ms.</td>
+     <td colspan="3">The true p{{ percentile_var }} is at {{ Number(percentile_value).toFixed(1) }}ms.</td>
     </tr>
     <tr style="height:30px;background-color:#FAFAFA"><td colspan="4" style="text-align:left;font-weight:bold">
       ## Samping Effects on Latency
@@ -420,7 +419,7 @@ onMounted(() => {
       <td colspan="3">We expect to retain {{ Number(request_rate * twindow * sampling_rate / 100 ) }} requests.</td>
     </tr>
     <tr>
-     <td>Estimate Percentile p{{ percentile }}</td>
+     <td>Estimate Percentile p{{ percentile_var }}</td>
       <td class="cell" width="150px">{{ Number(sim_lat).toFixed(2) }} ms</td>
       <td class="cell" width="150px">± {{ Number(sim_lat_err).toFixed(2) }} ms</td>
       <td class="cell" width="150px">{{ Number(sim_lat_err / sim_lat * 100).toFixed(2) }}%</td>
