@@ -3,7 +3,8 @@ import { ref, watch, watchEffect, onMounted } from 'vue'
 import { normal, lognormal, exponential, gamma, percentile }  from 'jstat';
 
 const sampling_rate = ref(50)
-const request_rate = ref(10)
+const req_rate_raw = ref(10)
+const req_rate_unit = ref("rps")
 const error_rate = ref(3)
 const time_window_text = ref("1")
 const time_window_unit = ref("min")
@@ -28,6 +29,7 @@ const est_err_count_err = ref()
 const est_err_rate = ref()
 const est_err_rate_err = ref()
 
+const req_rate = ref(10)
 const twindow = ref()
 
 function combinations(n,k) {
@@ -71,7 +73,7 @@ function calc_window_text() {
 
 function do_estimate() {
   const p = sampling_rate.value/100;
-  const N = twindow.value * request_rate.value;
+  const N = twindow.value * req_rate.value;
   const K = N * error_rate.value / 100;
   est_count.value = N;
   est_count_err.value = sampling_error(N, p);
@@ -180,7 +182,7 @@ var S = [];
 function do_simulate() {
   sim_generation += 1;
   var my_generation = sim_generation;
-  const N = twindow.value * request_rate.value;
+  const N = twindow.value * req_rate.value;
   const K = N * error_rate.value / 100;
   const p = sampling_rate.value/100;
   const q = percentile_var.value / 100;
@@ -222,7 +224,7 @@ function do_simulate() {
 
 var mounted = false;
 function update_latency() {
-  const N = twindow.value * request_rate.value;
+  const N = twindow.value * req_rate.value;
   const p = sampling_rate.value/100;
   const q = percentile_var.value / 100;
   const X = new_set(N, 0);
@@ -268,15 +270,20 @@ function update_latency() {
 watch(est_count, update_latency);
 watch(lat_text, update_latency);
 watch(percentile_var, update_latency);
+watch([req_rate_raw, req_rate_unit], () => {
+              const u = req_rate_unit.value;
+              const r = req_rate_raw.value;
+              if (u == "rps")  { req_rate.value = r }
+              if (u == "rpm")  { req_rate.value = r / 60 }
+});
 
 watchEffect(() => {
   const u = time_window_unit.value;
   const v = calc_window_text();
-  const s = sampling_rate.value/100;
   if (u == "sec")  { twindow.value = v }
   if (u == "min")  { twindow.value = v * 60 }
   if (u == "hour") { twindow.value = v * 60 * 60 }
-  if (u == "day") { twindow.value = v * 60 * 60 * 24 }
+  if (u == "day")  { twindow.value = v * 60 * 60 * 24 }
 
   do_estimate();
   do_simulate();
@@ -307,16 +314,17 @@ onMounted(() => {
 </tbody>
 </table>
 
-<table>
+<table id="rates-table">
   <tbody>
-
   <tr style="height:30px;background-color:#EEE"><td colspan="4" style="text-align:left;font-weight:bold">
       # Request Rates
     </td></tr>
     <tr>
       <td>Request Rate</td>
-      <td><input type="text" v-model="request_rate"> rps</td>
-      <td colspan="2"><input type="range" min="0" max="1000" v-model="request_rate" class="slider"></td>
+      <td><input type="text" v-model="req_rate_raw" style="margin-right:3px">
+        <select v-model="req_rate_unit"><option>rps</option><option>rpm</option></select>
+      </td>
+      <td colspan="2"><input type="range" min="0" max="1000" v-model="req_rate_raw" class="slider"></td>
     </tr>
     <tr>
       <td>Time window</td>
@@ -328,7 +336,7 @@ onMounted(() => {
     </tr>
     <tr>
      <td>Population</td>
-     <td colspan="3">Total {{ request_rate * twindow }} requests contained in {{  twindow }} sec time-window.</td>
+     <td colspan="3">Total {{ req_rate * twindow }} requests contained in {{  twindow }} sec time-window.</td>
     </tr>
     <tr style="height:30px;background-color:#FAFAFA"><td colspan="4" style="text-align:left;font-weight:bold">
       ## Samping Effects on Request Rate Estimates
@@ -336,7 +344,7 @@ onMounted(() => {
     </td></tr>
     <tr>
       <td>Sample</td>
-      <td colspan="3">We expect to retrain {{ Number(request_rate * twindow * sampling_rate / 100 ) }} requests, after sampling with {{ sampling_rate }}% probability.</td>
+      <td colspan="3">We expect to retrain {{ Number(req_rate * twindow * sampling_rate / 100 ).toFixed(0) }} requests, after sampling with {{ sampling_rate }}% probability.</td>
     </tr>
     <tr>
       <td></td>
@@ -385,7 +393,7 @@ onMounted(() => {
     <tr>
       <td>Population</td>
       <td colspan="3">
-      From the {{ request_rate * twindow }} requests  {{ Number(request_rate * twindow * error_rate / 100) }} are marked as error.
+      From the {{ req_rate * twindow }} requests  {{ Number(req_rate * twindow * error_rate / 100) }} are marked as error.
       </td>
     </tr>
     <tr style="height:30px;background-color:#FAFAFA"><td colspan="4" style="text-align:left;font-weight:bold">
@@ -394,11 +402,11 @@ onMounted(() => {
     </td></tr>
     <tr>
       <td>Sample</td>
-      <td colspan="3">We expect to retrain {{ Number(request_rate * twindow * sampling_rate / 100 * error_rate / 100 ) }} errors in the sample of size  {{ Number(request_rate * twindow * sampling_rate / 100 ) }}.</td>
+      <td colspan="3">We expect to retrain {{ Number(req_rate * twindow * sampling_rate / 100 * error_rate / 100 ) }} errors in the sample of size  {{ Number(req_rate * twindow * sampling_rate / 100 ) }}.</td>
     </tr>
     <tr>
     <td></td>
-    <td colspan="3">The probability that no error will be retained is {{ Number( 100 * (1 - sampling_rate / 100)**Number(request_rate * twindow * error_rate / 100) ).toFixed(9) }}%</td>
+    <td colspan="3">The probability that no error will be retained is {{ Number( 100 * (1 - sampling_rate / 100)**Number(req_rate * twindow * error_rate / 100) ).toFixed(9) }}%</td>
     </tr>
     <tr>
       <td>Estimate Err. Rate</td>
@@ -432,7 +440,7 @@ onMounted(() => {
     </tr>
     <tr>
      <td>Population</td>
-     <td colspan="3">Total {{ request_rate * twindow }} requests following {{ lat_text }} distribution.</td>
+     <td colspan="3">Total {{ req_rate * twindow }} requests following {{ lat_text }} distribution.</td>
     </tr>
     <tr>
      <td></td>
@@ -444,7 +452,7 @@ onMounted(() => {
     </td></tr>
     <tr>
       <td>Sample</td>
-      <td colspan="3">We expect to retain {{ Number(request_rate * twindow * sampling_rate / 100 ) }} requests.</td>
+      <td colspan="3">We expect to retain {{ Number(req_rate * twindow * sampling_rate / 100 ) }} requests.</td>
     </tr>
     <tr>
      <td>Estimate Percentile p{{ percentile_var }}</td>
@@ -462,6 +470,10 @@ onMounted(() => {
 
 </template>
 <style>
+
+#rates-table input {
+    width: 200px;
+}
 
 input[type=text] {
   text-align : right;
