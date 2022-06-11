@@ -330,7 +330,7 @@ function update_latency() {
 watch(est_count, update_latency);
 watch(lat_text, update_latency);
 watch(percentile_var, update_latency);
-watch([req_rate_raw, req_rate_unit], () => {
+watch([req_rate_raw, req_rate_unit, sampling_rate], () => {
               const u = req_rate_unit.value;
               const r = req_rate_raw.value;
               if (u == "rps")  { req_rate.value = r }
