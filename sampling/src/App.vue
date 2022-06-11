@@ -1,4 +1,97 @@
 <script setup>
+
+function setup_histogram() {
+    // set the dimensions and margins of the graph
+    const margin = {top: 10, right: 30, bottom: 30, left: 40},
+        width = 721 - margin.left - margin.right,
+        height = 250 - margin.top - margin.bottom;
+
+    // append the svg object to the body of the page
+    const svg = d3.select("#my_dataviz")
+      .append("svg")
+        .attr("width", width + margin.left + margin.right)
+        .attr("height", height + margin.top + margin.bottom)
+      .append("g")
+        .attr("transform",
+              `translate(${margin.left},${margin.top})`);
+}
+
+function plot_histogram(data1, data2, percentile_value) {
+    if (!mounted) {
+      // try again later
+      setTimeout(() => {plot_histogram(data1, data2, percentile_value)}, 100);
+      return;
+    }
+    const margin = {top: 10, right: 30, bottom: 20, left: 30},
+        width = 721 - margin.left - margin.right,
+        height = 250 - margin.top - margin.bottom;
+      const svg = d3.select("#my_dataviz svg g")
+
+      svg.selectAll("*").remove();
+
+      // X axis: scale and draw:
+      const x = d3.scaleLinear()
+          .domain([0, d3.max(data1)])
+          .range([0, width]);
+      svg.append("g")
+          .attr("transform", `translate(0, ${height})`)
+          .call(d3.axisBottom(x));
+
+      // set the parameters for the histogram
+      const histogram = d3.histogram()
+          .domain(x.domain())
+          .thresholds(x.ticks(100));
+
+      // And apply twice this function to data to get the bins.
+      var bins1 = histogram(data1);
+      var bins2 = histogram(data2);
+
+      // Y axis: scale and draw:
+      var y = d3.scaleLinear()
+          .range([height, 0]);
+      y.domain([0, d3.max(bins1, function(d) { return d.length; })]);
+      svg.append("g")
+          .call(d3.axisLeft(y));
+
+      // append the bars for series 1
+      svg.selectAll("rect")
+          .data(bins1)
+          .enter()
+          .append("rect")
+            .attr("x", 1)
+            .attr("transform", function(d) { return "translate(" + x(d.x0) + "," + y(d.length) + ")"; })
+            .attr("width", function(d) { return x(d.x1) - x(d.x0) -1 ; })
+            .attr("height", function(d) { return height - y(d.length); })
+            .style("fill", "#69b3a2")
+            .style("opacity", 0.6)
+
+      // append the bars for series 2
+      svg.selectAll("rect2")
+          .data(bins2)
+          .enter()
+          .append("rect")
+            .attr("x", 1)
+            .attr("transform", function(d) { return "translate(" + x(d.x0) + "," + y(d.length) + ")"; })
+            .attr("width", function(d) { return x(d.x1) - x(d.x0) -1 ; })
+            .attr("height", function(d) { return height - y(d.length); })
+            .style("fill", "#A34080")
+            .style("opacity", 0.6)
+
+     svg.append('line')
+       .attr('x1', x(percentile_value))
+       .attr('y1', 0)
+       .attr('x2', x(percentile_value))
+       .attr('y2', height)
+       .style("stroke-width", 2)
+       .style("stroke", "#AAA")
+       .style("fill", "none");
+    svg.append("text")
+        .style("dominant-baseline","hanging")
+        .attr("x", x(percentile_value) + 3)
+        .attr("y", 3)
+        .text("Percentile")
+};
+
 import { ref, watch, watchEffect, onMounted } from 'vue'
 import { normal, lognormal, exponential, gamma, percentile }  from 'jstat';
 
@@ -231,40 +324,7 @@ function update_latency() {
   const S = sample(X, p);
   const pv = percentile(lat_filter(X), percentile_var.value/100);
   percentile_value.value = pv;
-  if (!mounted) return;
-  var trace = {
-    x: lat_filter(X),
-    name: "all requests",
-    type: 'histogram',
-    histnorm : 'density',
-    marker: { color: 'blue', },
-  };
-  var trace_err = {
-    x: lat_filter(S),
-    name: "sampled requests",
-    type: 'histogram',
-    histnorm : 'density',
-    marker: { color: 'red', },
-  };
-  var data = [trace, trace_err];
-  var layout = {
-    barmode: "overlay",
-    annotations: [
-      {
-        x: pv,
-        y: 0,
-        xref: 'x',
-        yref: 'y',
-        text: 'Percentile Value',
-        showarrow: true,
-        arrowhead: 7,
-        ax: 0,
-        ay: -100,
-      }
-    ],
-  };
-  /* Plotly is loaded via CDN */
-  if (Plotly) Plotly.newPlot('myDiv', data, layout);
+  plot_histogram(lat_filter(X), lat_filter(S), pv);
 }
 
 watch(est_count, update_latency);
@@ -292,6 +352,7 @@ watchEffect(() => {
 onMounted(() => {
   mounted = true;
   update_latency();
+  setup_histogram();
 })
 </script>
 
@@ -462,7 +523,7 @@ onMounted(() => {
     </tr>
     <tr>
       <td colspan="4">
-        <div id='myDiv' style="height:300px;width:100%"></div>
+        <div id="my_dataviz"></div>
       </td>
     </tr>
 </tbody>
