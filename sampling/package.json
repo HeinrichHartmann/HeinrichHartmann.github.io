@@ -8,8 +8,6 @@
   },
   "dependencies": {
     "jstat": "^1.9.5",
-    "mathjs": "^10.6.1",
-    "plotly.js-dist": "^2.12.1",
     "vue": "^3.2.13"
   },
   "devDependencies": {

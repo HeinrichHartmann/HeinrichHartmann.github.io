@@ -514,7 +514,7 @@ onMounted(() => {
     </td></tr>
     <tr>
       <td>Sample</td>
-      <td colspan="3">We expect to retain {{ Number(req_rate * twindow * sampling_rate / 100 ) }} requests.</td>
+      <td colspan="3">We expect to retain {{ Number(req_rate * twindow * sampling_rate / 100 ).toFixed(1) }} requests.</td>
     </tr>
     <tr>
      <td>Estimate Percentile p{{ percentile_var }}</td>
