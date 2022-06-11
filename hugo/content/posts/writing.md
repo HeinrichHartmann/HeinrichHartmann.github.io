@@ -7,6 +7,7 @@ style: markdown
 Draft: false
 ---
 
+_This article is available as [Korean-](https://gist.github.com/longfin/a54f29d866b2deff2e872aeafd4c0f56) (thanks to [longfin](https://github.com/longfin)) and [Chineese-](https://www.yuque.com/serviceup/misc/cn-writing-for-engineers) (thanks to [webup](https://github.com/webup)) translation._
 
 Writing is key to have impact in large organizations. As a senior software
 engineer chances are that writing is the most important skill you have to
