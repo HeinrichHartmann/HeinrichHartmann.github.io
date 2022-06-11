@@ -360,6 +360,7 @@ onMounted(() => {
 
 <h1>Sampling Error Calculator</h1>
 <p class="meta" style="color:#aaa; float:right">Stemwede, 2022-05-29</p>
+<p class="meta" style="color:#aaa; float:left"><a href="https://github.com/HeinrichHartmann/HeinrichHartmann.github.io/tree/source/sampling">View Source</a></p>
 
 <table>
   <tbody>
