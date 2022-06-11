@@ -1,9 +1,6 @@
 <script setup>
 import { ref, watch, watchEffect, onMounted } from 'vue'
 import { normal, lognormal, exponential, gamma, percentile }  from 'jstat';
-import { combinations }  from 'mathjs';
-
-import Plotly from 'plotly.js-dist'
 
 const sampling_rate = ref(50)
 const request_rate = ref(10)
@@ -33,6 +30,19 @@ const est_err_rate_err = ref()
 
 const twindow = ref()
 
+function combinations(n,k) {
+  if (n < 0) return 0;
+  if (k < 0) return 0;
+  if (k > n) return 0;
+  if (k == 0) return 1;
+  if (k > n/2) return combinations(n, n-k);
+  var c = 1.0;
+  for (let i=0; i<k; i++) {
+     c = c * ((n-i) / (k-i))
+  }
+  return c;
+}
+
 function binomial(N,p,n) {
  if (n > 0.5*N) return binomial(N, p, N-n);
  if (N < 100) return combinations(N,n) * (p**n) * (1-p)**(N-n)
@@ -48,7 +58,6 @@ function sampling_error(N, p) {
   return Math.sqrt(N * (1 - p) / p);
 }
 function sampling_rate_error(N,K,p) {
-  console.log(N,K,p);
   var s = 0;
   for(let n=1;n < N;n++){
     s += binomial(N,p,n) * (N-n) / n;
@@ -252,7 +261,8 @@ function update_latency() {
       }
     ],
   };
-  Plotly.newPlot('myDiv', data, layout);
+  /* Plotly is loaded via CDN */
+  if (Plotly) Plotly.newPlot('myDiv', data, layout);
 }
 
 watch(est_count, update_latency);
@@ -327,6 +337,24 @@ onMounted(() => {
     <tr>
       <td>Sample</td>
       <td colspan="3">We expect to retrain {{ Number(request_rate * twindow * sampling_rate / 100 ) }} requests, after sampling with {{ sampling_rate }}% probability.</td>
+    </tr>
+    <tr>
+      <td></td>
+      <td>Value</td>
+      <td>Standard Error</td>
+      <td>Realtive Error</td>
+    </tr>
+    <tr>
+      <td>Estimate Req. Count</td>
+      <td class="cell">{{ Number(est_count).toFixed(1) }} req</td>
+      <td class="cell">± {{ Number(est_count_err).toFixed(2) }} req</td>
+      <td class="cell">{{ (Number(est_count_err)/est_count * 100).toFixed(2) }}%</td>
+    </tr>
+    <tr>
+      <td>Simulate Req. Count</td>
+      <td class="cell">{{ Number(sim_count).toFixed(1) }} req</td>
+      <td class="cell">± {{ Number(sim_count_err).toFixed(2) }} req</td>
+      <td class="cell">{{ (Number(sim_count_err)/sim_count * 100).toFixed(2) }}%</td>
     </tr>
     <tr>
       <td>Estimate Req. Rate</td>

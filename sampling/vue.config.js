@@ -7,8 +7,10 @@ module.exports = {
     extract: false,
   },
   configureWebpack: {
+    mode: 'production',
     optimization: {
-      minimize: false,
+      minimize: true,
+      usedExports: true,
     },
   }
 }
