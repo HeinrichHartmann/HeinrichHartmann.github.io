@@ -32,9 +32,9 @@ var svg_ax = null;
 var svg_line_g = null;
 var svg_bar_g = null;
 var svg_hist_ax = null;
-var svg_margin = { top: 20, left: 80, right: 60, bottom: 50}
-,   width = 910 - svg_margin.left - svg_margin.right
-,   height = 400 - svg_margin.top - svg_margin.bottom;
+var svg_margin = { top: 20, left: 80, right: 60, bottom: 50 }
+  , width = 910 - svg_margin.left - svg_margin.right
+  , height = 400 - svg_margin.top - svg_margin.bottom;
 
 var sample_generator = () => normal.sample(0, 1);
 
@@ -72,7 +72,7 @@ function data_reset() {
 }
 function data_cdf(x) {
   var c = 0;
-  for(let i=0; i< data.length; i++) {
+  for (let i = 0; i < data.length; i++) {
     if (data[i] <= x) c++;
   }
   return c / data.length;
@@ -96,8 +96,8 @@ function data_iqr_sorted(X) {
  */
 
 const ref_bar = ref({
-  transform : "",
-  text_top : "p50",
+  transform: "",
+  text_top: "p50",
   text_bot: "0",
 })
 
@@ -108,7 +108,7 @@ function bar_setup() {
 function bar_update() {
   let svg = d3.select("#x-bar");
   const pct = ref_percentile.value;
-  const pctv = data_quantile_sorted(data,  pct / 100);
+  const pctv = data_quantile_sorted(data, pct / 100);
   const pctx = svg_hist_ax(pctv);
   ref_bar.value["transform"] = `translate(${pctx}, 0)`;
   ref_bar.value["text_top"] = `p${pct}`;
@@ -120,9 +120,9 @@ function bar_update() {
  */
 
 const ref_pct_sel = ref({
-  transform : "",
-  text_left : "",
-  text_right : "",
+  transform: "",
+  text_left: "",
+  text_right: "",
 });
 
 function pct_setup() {
@@ -133,12 +133,12 @@ function pct_plot(svg_coords) {
   if (!svg_line_g) return;
   var x = svg_coords[0];
   if (x < 0) x = 0;
-  if (x > width) x = width; 
+  if (x > width) x = width;
   const v = svg_hist_ax.invert(x);
   const p = 100 * data_cdf(v);
   ref_pct_sel.value["transform"] = `translate(${x},0)`;
   ref_pct_sel.value["text_left"] = `${p.toFixed(3)}% ←`;
-  ref_pct_sel.value["text_right"] = `→ ${(100 - p).toFixed(3)}%`;  
+  ref_pct_sel.value["text_right"] = `→ ${(100 - p).toFixed(3)}%`;
 }
 
 /*
@@ -168,7 +168,7 @@ function plot_histogram() {
   var histogram = d3.histogram()
     .domain(x.domain())
     .thresholds(x.ticks(ref_bin_count.value));
-  
+
   var bins = histogram(data);
 
   svg.append("g")
@@ -176,7 +176,7 @@ function plot_histogram() {
     .attr("transform", "translate(0," + height + ")")
     .call(d3.axisBottom(x));
 
-  y.domain([0, d3.max(bins, function (d) { return d.length; }) * 1.1 ]);
+  y.domain([0, d3.max(bins, function (d) { return d.length; }) * 1.1]);
 
   // append the bar rectangles to the svg element
   var sel = svg.selectAll("rect")
@@ -186,10 +186,10 @@ function plot_histogram() {
       update => update,
       exit => exit.remove()
     ).attr("x", 1)
-     .attr("transform", function (d) { return "translate(" + x(d.x0) + "," + y(d.length) + ")"; })
-     .attr("width", function (d) { return x(d.x1) - x(d.x0) + 0.1; })
-     .attr("height", function (d) { return height - y(d.length); })
-     .style("fill", "#69b3a2");
+    .attr("transform", function (d) { return "translate(" + x(d.x0) + "," + y(d.length) + ")"; })
+    .attr("width", function (d) { return x(d.x1) - x(d.x0) + 0.1; })
+    .attr("height", function (d) { return height - y(d.length); })
+    .style("fill", "#69b3a2");
 
   move_to_front(svg_bar_g.node());
 
@@ -310,22 +310,24 @@ onMounted(() => {
 <template>
   <h1>Stats Calculator {{ }}</h1>
   <div id="x-d3">
-    <svg id="x-svg" 
-      :width="`${ width + svg_margin.left + svg_margin.right }`" 
-      :height="`${ height + svg_margin.top + svg_margin.bottom }`">
+    <svg id="x-svg" :width="`${width + svg_margin.left + svg_margin.right}`"
+      :height="`${height + svg_margin.top + svg_margin.bottom}`">
       <g id="x-ax" :transform="`translate(${svg_margin.left},${svg_margin.top})`">
-        <text :x="`${ width }`" :y="`${ height + 25 }`" text-anchor="end" style="dominant-baseline:hanging" >Iteration {{ sim_count }}</text>
+        <text :x="`${width}`" :y="`${height + 25}`" text-anchor="end" style="dominant-baseline:hanging">Iteration {{
+            sim_count
+        }}</text>
         <g id="x-hist"></g>
         <g id="x-pct" v-bind:transform="ref_pct_sel.transform">
-          <line x1="0" x2="0" y1="0" :y2="`${ height }`" class="bar"></line>
+          <line x1="0" x2="0" y1="0" :y2="`${height}`" class="bar"></line>
           <text x="-3" y="20" text-anchor="end">{{ ref_pct_sel.text_left }}</text>
           <text x="3" y="20">{{ ref_pct_sel.text_right }}</text>
-          <text x="0" :y="`${ height + 20}`" text-anchor="end" style="dominant-baseline:hanging"></text>
+          <text x="0" :y="`${height + 20}`" text-anchor="end" style="dominant-baseline:hanging"></text>
         </g>
         <g id="x-bar" v-bind:transform="ref_bar.transform">
-          <line x1="0" x2="0" y1="0" :y2="`${ height }`" class="bar"></line>
+          <line x1="0" x2="0" y1="0" :y2="`${height}`" class="bar"></line>
           <text x="3" y="20">{{ ref_bar.text_top }}</text>
-          <text x="0" :y="`${ height + 20}`" text-anchor="middle" style="dominant-baseline:hanging">{{ ref_bar.text_bot }}</text>
+          <text x="0" :y="`${height + 20}`" text-anchor="middle" style="dominant-baseline:hanging">{{ ref_bar.text_bot
+          }}</text>
         </g>
       </g>
     </svg>
@@ -339,17 +341,24 @@ onMounted(() => {
         <td>Distribution</td>
         <td colspan="3">
           <input type="text" v-model="ref_distribution" style="width:calc(100% - 200px)">
-          <select v-model="ref_dist_select" style="width:200px"><option>Normal</option><option>Exponential</option><option>Binomial</option></select>
+          <select v-model="ref_dist_select" style="width:200px">
+            <option>Normal</option>
+            <option>Exponential</option>
+            <option>Binomial</option>
+          </select>
         </td>
       </tr>
       <tr>
         <td></td>
-        <td colspan="3" style="font-family: monospace; color: rgb(36, 41, 47); background-color: rgba(175, 184, 193, 0.2); font-size: 10pt;"> {{ ref_error }}</td>
+        <td colspan="3"
+          style="font-family: monospace; color: rgb(36, 41, 47); background-color: rgba(175, 184, 193, 0.2); font-size: 10pt;">
+          {{ ref_error }}</td>
       </tr>
-        <tr>
+      <tr>
         <td>Percentile</td>
         <td><input type="text" v-model="ref_percentile" style="width:100%"></td>
-        <td colspan="2"><input type="range" min="0" max="100" v-model="ref_percentile" class="slider" style="width:100%"></td>
+        <td colspan="2"><input type="range" min="0" max="100" v-model="ref_percentile" class="slider"
+            style="width:100%"></td>
       </tr>
     </tbody>
   </table>
@@ -396,7 +405,7 @@ onMounted(() => {
         <td><input type="text" v-model="ref_bin_count" style="text-align:right; width:100%"></td>
       </tr>
     </tbody>
- </table>
+  </table>
 
 </template>
 
@@ -425,15 +434,14 @@ svg {
 }
 
 .maxy {
-  width:100% !important;
-  height:100% !important;
+  width: 100% !important;
+  height: 100% !important;
   padding: 0 !important;
   margin: 0 !important;
 }
 
 .bar {
-  stroke:rgb(0,0,0);
-  stroke-width:.5
+  stroke: rgb(0, 0, 0);
+  stroke-width: .5
 }
-
 </style>
