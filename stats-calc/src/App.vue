@@ -15,7 +15,7 @@ const MAX_SIMULATION_STEPS = 100_000;
 const SIMULATION_STEPS = 20_000;
 const MAX_MOMENTS = 11;
 const HIST_BINS_START = 50
-const HIST_BINS_REFINED = 350;
+const HIST_BINS_REFINED = 100;
 var HIST_BINS = HIST_BINS_START;
 
 const sim_count = ref(0);
@@ -28,11 +28,11 @@ const ref_iqr = ref(1);
 const ref_moments = ref("");
 const ref_error = ref("OK");
 const ref_percentiles = ref("");
-const ref_percentile = ref(0);
+const ref_percentile = ref(50);
 
 var svg_ax = null;
 var svg_line_g = null;
-var svg_pct_g = null;
+var svg_bar_g = null;
 var svg_hist_ax = null;
 var svg_margin = { top: 20, left: 80, right: 60, bottom: 50}
 ,   width = 910 - svg_margin.left - svg_margin.right
@@ -94,44 +94,39 @@ function data_iqr_sorted(X) {
 }
 
 /*
- * Percentile Selector Logic
+ * Percentile bar
  */
 
-function setup_pct() {
-  svg_pct_g = d3.select("#x-pct")
-  svg_pct_g.append("line")
-    .attr("x1",0)
-    .attr("y1",0)
-    .attr("x2",0)
-    .attr("y2",height)
-    .attr("style","stroke:rgb(0,0,0);stroke-width:.5")
-  svg_pct_g.append("text")
-     .attr("x", 3) 
-     .attr("y", 20)
-  svg_pct_g.append("text")
-     .attr("x", 0)
-     .attr("y", height + 20)
-     .attr("text-anchor", "middle")
-     .style("dominant-baseline","hanging")
+const ref_bar = ref({
+  transform : "",
+  text_top : "p50",
+  text_bot: "0",
+})
 
+function bar_setup() {
+  svg_bar_g = d3.select("#x-bar")
 }
 
-function plot_percentile(svg_coords) {
-  if (!svg_line_g) return;
-  if (!svg_hist_ax) return;
-  var x = svg_coords[0];
-  if (x < 0) x = 0;
-  if (x > width) x = width; 
-  svg_line_g.attr("transform", `translate(${x},0)`);
-  move_to_front(svg_line_g.node());
-  const v = svg_hist_ax.invert(x);
-  const p = 100 * data_cdf(v);
-  svg_line_g.selectAll("text").data([`→ ${(100 - p).toFixed(3)}%`, `${p.toFixed(3)}% ←`, `${v.toFixed(3)}`])
-    .html((d) => d);
+function bar_update() {
+  let svg = d3.select("#x-bar");
+  const pct = ref_percentile.value;
+  const pctv = data_quantile_sorted(data,  pct / 100);
+  const pctx = svg_hist_ax(pctv);
+  ref_bar.value["transform"] = `translate(${pctx}, 0)`;
+  ref_bar.value["text_top"] = `p${pct}`;
+  ref_bar.value["text_bot"] = `${Number(pctv).toFixed(2)}`
+}
+
+/*
+ * Percentile selector
+ */
+function pct_setup() {
+  d3.select("#x-svg").on("mousemove", (ev) => pct_plot(d3.pointer(ev, svg_ax.node())));
+  d3.select("#x-svg").on("click", pct_new);
 }
 
 var line_cnt = 0;
-function new_line() {
+function pct_new(event) {
   svg_line_g = svg_ax.append("g")
   svg_line_g.append("line")
     .attr("x1",0)
@@ -152,30 +147,38 @@ function new_line() {
      .attr("text-anchor", "middle")
      .style("dominant-baseline","hanging")
   line_cnt += 1;
+  pct_plot(d3.pointer(event, svg_ax.node()));
 }
 
-function update_percentile() {
-  if (!svg_pct_g) return;
-  const pct = ref_percentile.value;
-  const pctv = data_quantile_sorted(data,  pct / 100);
-  const pctx = svg_hist_ax(pctv);
-  svg_pct_g.attr("transform", `translate(${pctx}, 0)`);
-  svg_pct_g.selectAll("text").data([`p${Number(pct).toFixed(2)}`,`${Number(pctv).toFixed(2)}`]).html((d) => d);
+function pct_plot(svg_coords) {
+  if (!svg_line_g) return;
+  var x = svg_coords[0];
+  if (x < 0) x = 0;
+  if (x > width) x = width; 
+  svg_line_g.attr("transform", `translate(${x},0)`);
+  move_to_front(svg_line_g.node());
+  const v = svg_hist_ax.invert(x);
+  const p = 100 * data_cdf(v);
+  svg_line_g.selectAll("text").data([`→ ${(100 - p).toFixed(3)}%`, `${p.toFixed(3)}% ←`, `${v.toFixed(3)}`])
+    .html((d) => d);
 }
+
 
 /*
  * Histogram Logic
  */
 
 function histogram_setup() {
-  svg_ax = d3.select("#x-ax").attr("transform", `translate(${svg_margin.left},${svg_margin.top})`);
-  d3.select("#x-svg").on("mousemove", (ev) => plot_percentile(d3.pointer(ev, svg_ax.node())));
-  d3.select("#x-svg").on("click", new_line);
+  svg_ax = d3.select("#x-ax");
+  d3.select("#x-svg").on("mousemove", (ev) => pct_plot(d3.pointer(ev, svg_ax.node())));
+  d3.select("#x-svg").on("click", pct_new);
 }
 
 function plot_histogram() {
   if (!svg_ax) { return }
-  svg_ax.selectAll(".toclear").remove() // remove axes
+  // var svg_ax = d3.select("x-hist");
+  let svg = d3.select("#x-hist");
+  svg.selectAll(".toclear").remove() // remove axes
 
   var dmin = d3.min(data),
     dmax = d3.max(data),
@@ -186,7 +189,6 @@ function plot_histogram() {
     .range([0, width]);
   svg_hist_ax = x;
   var y = d3.scaleLinear().range([height, 0]);
-  var z = d3.scaleLinear().domain([0,100]).range([height, 0]);
 
   var histogram = d3.histogram()
     .domain(x.domain())
@@ -194,24 +196,15 @@ function plot_histogram() {
   
   var bins = histogram(data);
 
-  svg_ax.append("g")
+  svg.append("g")
     .classed("toclear", true)
     .attr("transform", "translate(0," + height + ")")
     .call(d3.axisBottom(x));
 
   y.domain([0, d3.max(bins, function (d) { return d.length; }) * 1.1 ]);
 
-  svg_ax.append("g")
-    .classed("toclear", true)
-    .call(d3.axisLeft(y));
-
-  svg_ax.append("g")
-    .classed("toclear", true)
-    .attr("transform", "translate(" + width + ",0)")
-    .call(d3.axisRight(z));
-
   // append the bar rectangles to the svg element
-  var sel = svg_ax.selectAll("rect")
+  var sel = svg.selectAll("rect")
     .data(bins)
     .join(
       enter => enter.append("rect"),
@@ -223,7 +216,7 @@ function plot_histogram() {
      .attr("height", function (d) { return height - y(d.length); })
      .style("fill", "#69b3a2");
 
-  move_to_front(svg_pct_g.node());
+  move_to_front(svg_bar_g.node());
 
 }
 
@@ -289,7 +282,6 @@ function simulate_restart() {
 }
 
 function update_stats() {
-  plot_histogram();
   var cnt = moments[0],
     sum = moments[1],
     sum2 = moments[2];
@@ -298,6 +290,9 @@ function update_stats() {
   data.sort((a, b) => a - b)
   ref_med.value = data_quantile_sorted(data, 0.5)
   ref_iqr.value = data_iqr_sorted(data)
+
+  plot_histogram();
+  bar_update();
 
   // Generate Moment String
   // For unknown reason, direct assignment to ref_moments.value does not work.
@@ -309,7 +304,7 @@ function update_stats() {
   m += "</tr></table></div>";
   ref_moments.value = m;
 
-  // Generate Percentiles
+  // Generate Percentile Table
   var m = '<table style="width:100%; height:100%; padding: 0; margin:0"><tr>'
   for (let i = 0; i < percentiles.length; i++) {
     m += `<tr><td> p${percentiles[i]} </td><td> ${Number(data_quantile_sorted(data, percentiles[i] / 100)).toFixed(2)} </td></tr>`
@@ -322,13 +317,14 @@ function update_stats() {
  * Reactive Bindings
  */
 
-watch(ref_percentile, update_percentile);
+watch(ref_percentile, bar_update);
 watch(sim_count, update_stats);
 watch(ref_distribution, update_generator);
 
 onMounted(() => {
   histogram_setup();
-  setup_pct();
+  bar_setup();
+  pct_setup();
   data_reset();
 
   plot_histogram();
@@ -342,10 +338,14 @@ onMounted(() => {
     <svg id="x-svg" 
       :width="`${ width + svg_margin.left + svg_margin.right }`" 
       :height="`${ height + svg_margin.top + svg_margin.bottom }`">
-      <g id="x-ax">
+      <g id="x-ax" :transform="`translate(${svg_margin.left},${svg_margin.top})`">
         <g id="x-hist"></g>
-        <g id="x-sel"></g>
         <g id="x-pct"></g>
+        <g id="x-bar" v-bind:transform="ref_bar.transform">
+          <line x1="0" x2="0" y1="0" :y2="`${ height }`" class="bar"></line>
+          <text x="3" y="20">{{ ref_bar.text_top }}</text>
+          <text x="0" :y="`${ height + 20}`" text-anchor="middle" style="dominant-baseline:hanging">{{ ref_bar.text_bot }}</text>
+        </g>
       </g>
     </svg>
   </div>
@@ -432,4 +432,10 @@ svg {
 .cosy tr {
   border: 0px !important;
 }
+
+.bar {
+  stroke:rgb(0,0,0);
+  stroke-width:.5
+}
+
 </style>
