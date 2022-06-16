@@ -5,11 +5,13 @@ import jstat, { normal, exponential, gamma, beta, percentile, uniform } from 'js
 import * as _ from 'lodash';
 import * as d3 from "d3";
 import { enumStringMember } from '@babel/types';
-
-
 var binomial = require('@stdlib/random-base-binomial');
 
-const MAX_SIMULATION_STEPS = 1_000_000;
+/*
+ * GLOBALS
+ */
+
+const MAX_SIMULATION_STEPS = 100_000;
 const SIMULATION_STEPS = 20_000;
 const MAX_MOMENTS = 11;
 const HIST_BINS_START = 50
@@ -28,8 +30,7 @@ const ref_error = ref("OK");
 const ref_percentiles = ref("");
 const ref_percentile = ref(0);
 
-var svg = null;
-var svg_target = null;
+var svg_ax = null;
 var svg_line_g = null;
 var svg_pct_g = null;
 var svg_hist_ax = null;
@@ -37,9 +38,26 @@ var svg_margin = { top: 20, left: 80, right: 60, bottom: 50}
 ,   width = 910 - svg_margin.left - svg_margin.right
 ,   height = 400 - svg_margin.top - svg_margin.bottom;
 
+var sample_generator = () => normal.sample(0, 1);
+
 const data = [];
 const moments = [];
 const percentiles = [0.001, 0.01, .1, 1, 5, 50, 95, 99, 99.9, 99.99, 99.999];
+
+
+/* 
+ * HELPER
+ */
+
+function move_to_front(node) {
+  let p = node.parentNode;
+  p.removeChild(node);
+  p.appendChild(node);
+}
+
+/*
+ * Data Routines
+ */
 
 function data_insert(x) {
   data.push(x);
@@ -62,10 +80,40 @@ function data_cdf(x) {
   return c / data.length;
 }
 
-function move_to_front(node) {
-  let p = node.parentNode;
-  p.removeChild(node);
-  p.appendChild(node);
+function data_quantile_sorted(X, q) {
+  // https://www.heinrichhartmann.com/archive/quantiles.html
+  // central empirical quantile
+  const n = X.length;
+  const idx_min = Math.min(n - 1, Math.max(0, Math.ceil(q * n) - 1));
+  const idx_max = Math.min(n - 1, Math.max(0, Math.floor(q * (n + 1))));
+  const x = 0.5 * (X[idx_min] + X[idx_max]);
+  return x;
+}
+function data_iqr_sorted(X) {
+  return data_quantile_sorted(X, 0.75) - data_quantile_sorted(X, 0.25);
+}
+
+/*
+ * Percentile Selector Logic
+ */
+
+function setup_pct() {
+  svg_pct_g = d3.select("#x-pct")
+  svg_pct_g.append("line")
+    .attr("x1",0)
+    .attr("y1",0)
+    .attr("x2",0)
+    .attr("y2",height)
+    .attr("style","stroke:rgb(0,0,0);stroke-width:.5")
+  svg_pct_g.append("text")
+     .attr("x", 3) 
+     .attr("y", 20)
+  svg_pct_g.append("text")
+     .attr("x", 0)
+     .attr("y", height + 20)
+     .attr("text-anchor", "middle")
+     .style("dominant-baseline","hanging")
+
 }
 
 function plot_percentile(svg_coords) {
@@ -84,7 +132,7 @@ function plot_percentile(svg_coords) {
 
 var line_cnt = 0;
 function new_line() {
-  svg_line_g = svg.append("g")
+  svg_line_g = svg_ax.append("g")
   svg_line_g.append("line")
     .attr("x1",0)
     .attr("y1",0)
@@ -106,37 +154,28 @@ function new_line() {
   line_cnt += 1;
 }
 
-function setup_histogram() {
-  svg = d3.select("#x-d3")
-.select("svg")
-    .attr("width", width + svg_margin.left + svg_margin.right)
-    .attr("height", height + svg_margin.top + svg_margin.bottom)
-    .select("g")
-    .attr("transform", "translate(" + svg_margin.left + "," + svg_margin.top + ")");
-  svg_target = d3.select("#x-d3 svg g").node();
-  d3.select("#x-d3 svg").on("mousemove", (ev) => plot_percentile(d3.pointer(ev, svg_target)));
-  d3.select("#x-d3 svg").on("click", new_line);
+function update_percentile() {
+  if (!svg_pct_g) return;
+  const pct = ref_percentile.value;
+  const pctv = data_quantile_sorted(data,  pct / 100);
+  const pctx = svg_hist_ax(pctv);
+  svg_pct_g.attr("transform", `translate(${pctx}, 0)`);
+  svg_pct_g.selectAll("text").data([`p${Number(pct).toFixed(2)}`,`${Number(pctv).toFixed(2)}`]).html((d) => d);
+}
 
-  svg_pct_g = svg.append("g")
-  svg_pct_g.append("line")
-    .attr("x1",0)
-    .attr("y1",0)
-    .attr("x2",0)
-    .attr("y2",height)
-    .attr("style","stroke:rgb(0,0,0);stroke-width:.5")
-  svg_pct_g.append("text")
-     .attr("x", 3) 
-     .attr("y", 20)
-  svg_pct_g.append("text")
-     .attr("x", 0)
-     .attr("y", height + 20)
-     .attr("text-anchor", "middle")
-     .style("dominant-baseline","hanging")
+/*
+ * Histogram Logic
+ */
+
+function histogram_setup() {
+  svg_ax = d3.select("#x-ax").attr("transform", `translate(${svg_margin.left},${svg_margin.top})`);
+  d3.select("#x-svg").on("mousemove", (ev) => plot_percentile(d3.pointer(ev, svg_ax.node())));
+  d3.select("#x-svg").on("click", new_line);
 }
 
 function plot_histogram() {
-  if (!svg) { return }
-  svg.selectAll(".toclear").remove() // remove axes
+  if (!svg_ax) { return }
+  svg_ax.selectAll(".toclear").remove() // remove axes
 
   var dmin = d3.min(data),
     dmax = d3.max(data),
@@ -155,24 +194,24 @@ function plot_histogram() {
   
   var bins = histogram(data);
 
-  svg.append("g")
+  svg_ax.append("g")
     .classed("toclear", true)
     .attr("transform", "translate(0," + height + ")")
     .call(d3.axisBottom(x));
 
   y.domain([0, d3.max(bins, function (d) { return d.length; }) * 1.1 ]);
 
-  svg.append("g")
+  svg_ax.append("g")
     .classed("toclear", true)
     .call(d3.axisLeft(y));
 
-  svg.append("g")
+  svg_ax.append("g")
     .classed("toclear", true)
     .attr("transform", "translate(" + width + ",0)")
     .call(d3.axisRight(z));
 
   // append the bar rectangles to the svg element
-  var sel = svg.selectAll("rect")
+  var sel = svg_ax.selectAll("rect")
     .data(bins)
     .join(
       enter => enter.append("rect"),
@@ -186,100 +225,13 @@ function plot_histogram() {
 
   move_to_front(svg_pct_g.node());
 
-  // CDF
-  // var y_cumsum = 0;
-  // svg.select("path").remove();
-  // svg.append("path")
-  //     .datum(bins)
-  //     .attr("fill", "none")
-  //     .attr("stroke", "#00000055")
-  //     .attr("stroke-width", 1.5)
-  //     .attr("stroke-linejoin", "round")
-  //     .attr("d",  d3.line()
-  //         .curve(d3.curveStep)
-  //         .x(function(d) { return x((d.x1 + d.x0) / 2); })
-  //         .y(function(d) { y_cumsum += d.length; return z(y_cumsum / data.length * 100); }));
 }
 
-var generator = () => normal.sample(0, 1);
-var sim_gen = 0;
+/*
+ * Simluation
+ */
 
-function simulate_restart() {
-  data_reset();
-  sim_count.value = 0;
-  sim_gen += 1;
-  var my_sim_gen = sim_gen;
-  HIST_BINS = HIST_BINS_START;
-  function simulate() {
-    if (my_sim_gen != sim_gen) return;
-    if (!generator) return;
-    if (sim_count.value >= MAX_SIMULATION_STEPS) {
-      HIST_BINS = HIST_BINS_REFINED;
-      update_stats();
-      return;
-    };
-    for (let i = 0; i < SIMULATION_STEPS; i++) {
-      data_insert(generator());
-    }
-    sim_count.value = data.length;
-    setTimeout(simulate, 1);
-  }
-  simulate();
-}
-
-function quantile_sorted(X, q) {
-  // https://www.heinrichhartmann.com/archive/quantiles.html
-  // central empirical quantile
-  const n = X.length;
-  const idx_min = Math.min(n - 1, Math.max(0, Math.ceil(q * n) - 1));
-  const idx_max = Math.min(n - 1, Math.max(0, Math.floor(q * (n + 1))));
-  const x = 0.5 * (X[idx_min] + X[idx_max]);
-  return x;
-}
-function iqr_sorted(X) {
-  return quantile_sorted(X, 0.75) - quantile_sorted(X, 0.25);
-}
-
-function update_stats() {
-  plot_histogram();
-  var cnt = moments[0],
-    sum = moments[1],
-    sum2 = moments[2];
-  ref_mean.value = sum / cnt;
-  ref_std.value = Math.sqrt((sum2 - sum ^ 2) / (cnt));
-  data.sort((a, b) => a - b)
-  ref_med.value = quantile_sorted(data, 0.5)
-  ref_iqr.value = iqr_sorted(data)
-
-  // Generate Moment String
-  // For unknown reason, direct assignment to ref_moments.value does not work.
-  // Need to keep the _.map iterations in separate expressions
-  var m = '<table style="width:100%; height:100%; padding: 0; margin:0">'
-  for (let i = 0; i < moments.length; i++) {
-    m += `<tr><td> M[${i}] </td><td> ${Number(moments[i] / data.length).toFixed(2)} </td></tr>`;
-  }
-  m += "</tr></table></div>";
-  ref_moments.value = m;
-
-  // Generate Percentiles
-  var m = '<table style="width:100%; height:100%; padding: 0; margin:0"><tr>'
-  for (let i = 0; i < percentiles.length; i++) {
-    m += `<tr><td> p${percentiles[i]} </td><td> ${Number(quantile_sorted(data, percentiles[i] / 100)).toFixed(2)} </td></tr>`
-  }
-  m += "</tr></table></div>";
-  ref_percentiles.value = m;
-}
-
-watch(ref_percentile, () => {
-  if (!svg_pct_g) return;
-  const pct = ref_percentile.value;
-  const pctv = quantile_sorted(data,  pct / 100);
-  const pctx = svg_hist_ax(pctv);
-  svg_pct_g.attr("transform", `translate(${pctx}, 0)`);
-  svg_pct_g.selectAll("text").data([`p${Number(pct).toFixed(2)}`,`${Number(pctv).toFixed(2)}`]).html((d) => d);
-})
-watch(sim_count, update_stats);
-watch(ref_distribution, () => {
+function update_generator() {
   data.length = 0;
   let txt = ref_distribution.value;
   let ev = "() => (" + txt.replace(/\$/g, "this.") + ")";
@@ -297,7 +249,7 @@ watch(ref_distribution, () => {
     let g = function () { return eval(ev) }.call(scope);
     if (typeof g() == "number") {
       console.log("New Generator:", ev);
-      generator = g;
+      sample_generator = g;
       simulate_restart();
       ref_error.value = "OK";
     }
@@ -308,24 +260,92 @@ watch(ref_distribution, () => {
   catch (err) {
     console.log(ev, err);
     ref_error.value = err;
-    generator = null;
+    sample_generator = null;
   }
-})
+}
+
+var sim_gen = 0;
+function simulate_restart() {
+  data_reset();
+  sim_count.value = 0;
+  sim_gen += 1;
+  var my_sim_gen = sim_gen;
+  HIST_BINS = HIST_BINS_START;
+  function simulate() {
+    if (my_sim_gen != sim_gen) return;
+    if (!sample_generator) return;
+    if (sim_count.value >= MAX_SIMULATION_STEPS) {
+      HIST_BINS = HIST_BINS_REFINED;
+      update_stats();
+      return;
+    };
+    for (let i = 0; i < SIMULATION_STEPS; i++) {
+      data_insert(sample_generator());
+    }
+    sim_count.value = data.length;
+    setTimeout(simulate, 1);
+  }
+  simulate();
+}
+
+function update_stats() {
+  plot_histogram();
+  var cnt = moments[0],
+    sum = moments[1],
+    sum2 = moments[2];
+  ref_mean.value = sum / cnt;
+  ref_std.value = Math.sqrt((sum2 - sum ^ 2) / (cnt));
+  data.sort((a, b) => a - b)
+  ref_med.value = data_quantile_sorted(data, 0.5)
+  ref_iqr.value = data_iqr_sorted(data)
+
+  // Generate Moment String
+  // For unknown reason, direct assignment to ref_moments.value does not work.
+  // Need to keep the _.map iterations in separate expressions
+  var m = '<table style="width:100%; height:100%; padding: 0; margin:0">'
+  for (let i = 0; i < moments.length; i++) {
+    m += `<tr><td> M[${i}] </td><td> ${Number(moments[i] / data.length).toFixed(2)} </td></tr>`;
+  }
+  m += "</tr></table></div>";
+  ref_moments.value = m;
+
+  // Generate Percentiles
+  var m = '<table style="width:100%; height:100%; padding: 0; margin:0"><tr>'
+  for (let i = 0; i < percentiles.length; i++) {
+    m += `<tr><td> p${percentiles[i]} </td><td> ${Number(data_quantile_sorted(data, percentiles[i] / 100)).toFixed(2)} </td></tr>`
+  }
+  m += "</tr></table></div>";
+  ref_percentiles.value = m;
+}
+
+/*
+ * Reactive Bindings
+ */
+
+watch(ref_percentile, update_percentile);
+watch(sim_count, update_stats);
+watch(ref_distribution, update_generator);
 
 onMounted(() => {
+  histogram_setup();
+  setup_pct();
   data_reset();
-  setup_histogram();
+
   plot_histogram();
   simulate_restart();
 });
-
 </script>
 
 <template>
-  <h1>Stats Calculator </h1>
+  <h1>Stats Calculator {{ }}</h1>
   <div id="x-d3">
-    <svg id="x-svg">
+    <svg id="x-svg" 
+      :width="`${ width + svg_margin.left + svg_margin.right }`" 
+      :height="`${ height + svg_margin.top + svg_margin.bottom }`">
       <g id="x-ax">
+        <g id="x-hist"></g>
+        <g id="x-sel"></g>
+        <g id="x-pct"></g>
       </g>
     </svg>
   </div>
