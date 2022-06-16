@@ -27,10 +27,9 @@ const ref_moments = ref("");
 const ref_error = ref("OK");
 const ref_percentiles = ref("");
 const ref_percentile = ref(50);
+const ref_percentile_2 = ref(50);
 
 var svg_ax = null;
-var svg_line_g = null;
-var svg_bar_g = null;
 var svg_hist_ax = null;
 var svg_margin = { top: 20, left: 80, right: 60, bottom: 50 }
   , width = 910 - svg_margin.left - svg_margin.right
@@ -67,78 +66,112 @@ function data_cdf(x) {
   return c / data.length;
 }
 
-function data_quantile_sorted(X, q) {
+function data_quantile_sorted(q) {
   // https://www.heinrichhartmann.com/archive/quantiles.html
   // central empirical quantile
-  const n = X.length;
+  const n = data.length;
   const idx_min = Math.min(n - 1, Math.max(0, Math.ceil(q * n) - 1));
   const idx_max = Math.min(n - 1, Math.max(0, Math.floor(q * (n + 1))));
-  const x = 0.5 * (X[idx_min] + X[idx_max]);
+  const x = 0.5 * (data[idx_min] + data[idx_max]);
   return x;
 }
-function data_iqr_sorted(X) {
-  return data_quantile_sorted(X, 0.75) - data_quantile_sorted(X, 0.25);
+function data_iqr_sorted() {
+  return data_quantile_sorted(0.75) - data_quantile_sorted(0.25);
 }
-
 
 /*
  * Percentile selector
  */
 
-var pct_mode = 1;
-var x_left = 0;
+
+var pct_mode = 1; // 1 : update left+right boudaries; 2: update only right boulday; 0 : update nothing
+var pct_shift = false;
+var pct_tmp = {};
 const ref_pct_sel = ref({
-  transform_l: "",
-  transform_r: "",
+  left :  { x : 0, v : 0, p : 0 },
+  right : { x : 0, v : 0, p : 0 },
   width: 0,
-  text_left: "",
-  text_right: "",
-  text_left_bot: "",
-  text_right_bot: "",
 });
 
-function pct_setup() {
-  d3.select("#x-svg").on("mousemove", (ev) => pct_plot(d3.pointer(ev, svg_ax.node())[0]));
-  d3.select("#x-svg").on("click", (ev) => { 
+function pct_mode_adv(ev) {
     pct_mode = (pct_mode + 1) % 3;
     if (pct_mode == 1) {
       ref_pct_sel.value["width"] = 0;
-      pct_plot(d3.pointer(ev, svg_ax.node())[0])
+      let x = d3.pointer(ev, svg_ax.node())[0];
+      pct_update(x);
     }
-  });
+    if (pct_mode == 2) {
+      pct_shift = ev.shiftKey;
+    }
 }
 
-function bar_update() {
-  if (pct_mode == 1) {
-    const pct = ref_percentile.value;
-    const pctv = data_quantile_sorted(data, pct / 100);
-    const x = svg_hist_ax(pctv);
-    pct_plot(x);
-  }
+function pct_setup() {
+  d3.select("#x-svg").on("mousemove", (ev) => pct_update(d3.pointer(ev, svg_ax.node())[0]));
+  d3.select("#x-svg").on("click", pct_mode_adv)
 }
 
-function pct_plot(x) {
+function pct_update(x) {
   if (x < 0) x = 0;
   if (x > width) x = width;
+  ref_pct_sel.value["x"] = x;
   const v = svg_hist_ax.invert(x);
   const p = 100 * data_cdf(v);
   if (pct_mode % 3 == 1) {
-    ref_percentile.value = p.toFixed(3);
-    x_left = x;
-    ref_pct_sel.value["transform_l"] = `translate(${x},0)`;
-    ref_pct_sel.value["transform_r"] = `translate(${x},0)`;
-    ref_pct_sel.value["text_left"] = `${p.toFixed(1)}% ←`;
-    ref_pct_sel.value["text_right"] = `→ ${(100 - p).toFixed(1)}%`;
-    ref_pct_sel.value["text_left_bot"] = v.toFixed(3);
-    ref_pct_sel.value["text_right_bot"] = "";
+    pct_tmp = Object.assign({}, ref_pct_sel.value["left"]);
+    //ref_percentile.value = p.toFixed(3); // slider
+    //ref_percentile_2.value = p.toFixed(3); // slider
+    ref_pct_sel.value["left"]["x"] = x;
+    ref_pct_sel.value["left"]["v"] = v;
+    ref_pct_sel.value["left"]["p"] = p;
+    ref_pct_sel.value["right"]["x"] = x;
+    ref_pct_sel.value["right"]["v"] = v;
+    ref_pct_sel.value["right"]["p"] = p;
   } 
   else if (pct_mode % 3 == 2) {
-    ref_pct_sel.value["transform_r"] = `translate(${x},0)`;
-    ref_pct_sel.value["text_left"] = `${p.toFixed(1)}% ←`;
-    ref_pct_sel.value["text_right"] = `→ ${(100 - p).toFixed(1)}%`;
-    ref_pct_sel.value["text_right_bot"] = v.toFixed(3);
-    ref_pct_sel.value["width"] = x - x_left;
+    // ref_percentile_2.value = p.toFixed(3); // slider
+    ref_pct_sel.value["right"]["x"] = x;
+    ref_pct_sel.value["right"]["v"] = v;
+    ref_pct_sel.value["right"]["p"] = p;
+    ref_pct_sel.value["width"] = x - pct_tmp["x"];
+    if (pct_shift) {
+      let w = x - pct_tmp["x"];
+      let wv = v - pct_tmp["v"];
+      ref_pct_sel.value["left"]["x"] = pct_tmp["x"] - w;
+      ref_pct_sel.value["left"]["v"] = pct_tmp["v"] - wv;
+      ref_pct_sel.value["left"]["p"] = data_cdf(ref_pct_sel.value["left"]["v"]) * 100;
+      ref_pct_sel.value["width"] = 2*w;
+    }
   }
+}
+
+function pct_data_update() {
+  function update(d) {
+    let p = d["p"];
+    d["v"] = data_quantile_sorted(p / 100);
+    d["x"] = svg_hist_ax(d["v"]);
+  }
+  update(ref_pct_sel.value["left"]);
+  update(ref_pct_sel.value["right"]);
+}
+
+function update_percentile() { // slider
+  const p = Number(ref_percentile.value);
+  const v = data_quantile_sorted(p / 100);
+  const x = svg_hist_ax(v);
+  ref_pct_sel.value["left"]["x"] = x;
+  ref_pct_sel.value["left"]["v"] = v;
+  ref_pct_sel.value["left"]["p"] = p;
+  ref_pct_sel.value["width"] = ref_pct_sel.value["right"]["x"] - x;
+}
+
+function update_percentile_2() { // slider
+  const p = Number(ref_percentile_2.value);
+  const v = data_quantile_sorted(p / 100);
+  const x = svg_hist_ax(v);
+  ref_pct_sel.value["right"]["x"] = x;
+  ref_pct_sel.value["right"]["v"] = v;
+  ref_pct_sel.value["right"]["p"] = p;
+  ref_pct_sel.value["width"] =  x- ref_pct_sel.value["left"]["x"];
 }
 
 /*
@@ -259,11 +292,11 @@ function update_stats() {
   ref_mean.value = sum / cnt;
   ref_std.value = Math.sqrt((sum2 - sum ^ 2) / (cnt));
   data.sort((a, b) => a - b)
-  ref_med.value = data_quantile_sorted(data, 0.5)
-  ref_iqr.value = data_iqr_sorted(data)
+  ref_med.value = data_quantile_sorted(0.5)
+  ref_iqr.value = data_iqr_sorted()
 
   plot_histogram();
-  bar_update();
+  pct_data_update();
 
   // Generate Moment String
   // For unknown reason, direct assignment to ref_moments.value does not work.
@@ -278,7 +311,7 @@ function update_stats() {
   // Generate Percentile Table
   var m = '<table class="maxy"><tr>'
   for (let i = 0; i < percentiles.length; i++) {
-    m += `<tr><td> p${percentiles[i]} </td><td> ${Number(data_quantile_sorted(data, percentiles[i] / 100)).toFixed(2)} </td></tr>`
+    m += `<tr><td> p${percentiles[i]} </td><td> ${Number(data_quantile_sorted(percentiles[i] / 100)).toFixed(2)} </td></tr>`
   }
   m += "</tr></table></div>";
   ref_percentiles.value = m;
@@ -288,7 +321,8 @@ function update_stats() {
  * Reactive Bindings
  */
 
-watch(ref_percentile, bar_update);
+watch(ref_percentile, update_percentile);
+watch(ref_percentile_2, update_percentile_2);
 watch(sim_count, update_stats);
 watch(ref_distribution, update_generator);
 watch(ref_bin_count, plot_histogram);
@@ -314,16 +348,16 @@ onMounted(() => {
             sim_count
         }}</text>
         <g id="x-hist"></g>
-        <g id="x-pct" v-bind:transform="ref_pct_sel.transform_l">
+        <g :transform="`translate(${ref_pct_sel.left.x},0)`">
           <line x1="0" x2="0" y1="0" :y2="`${height}`" class="bar"></line>
-          <text x="-3" y="20" text-anchor="end">{{ ref_pct_sel.text_left }}</text>
-          <text x="0" :y="`${height + 20}`" text-anchor="middle" style="dominant-baseline:hanging">{{ ref_pct_sel.text_left_bot }}</text>
-          <rect x="0" y="0" v-bind:width="ref_pct_sel.width" :height="`${height}`" fill="#3332"></rect>
-        </g>
-        <g id="x-pct" v-bind:transform="ref_pct_sel.transform_r">
-          <line x1="0" x2="0" y1="0" :y2="`${height}`" class="bar"></line>
-          <text x="3" y="20">{{ ref_pct_sel.text_right }}</text>
-          <text x="0" :y="`${height + 20}`" text-anchor="middle" style="dominant-baseline:hanging">{{ ref_pct_sel.text_right_bot }}</text>
+          <text x="-3" y="20" text-anchor="end">{{ `${ref_pct_sel.left.p.toFixed(1)}% ←` }}</text>
+          <text x="0" :y="`${height + 20}`" text-anchor="middle" style="dominant-baseline:hanging">{{ `${ref_pct_sel.left.v.toFixed(3)}` }}</text>
+          <rect x="0" y="0" :width="`${ref_pct_sel.width}`" :height="`${height}`" fill="#3332"></rect>
+          <line :x1="`${ref_pct_sel.width}`" :x2="`${ref_pct_sel.width}`" y1="0" :y2="`${height}`" class="bar"></line>
+          <text :x="`${ref_pct_sel.width + 3}`" y="20">{{ `→ ${(100 - ref_pct_sel.right.p).toFixed(1)}%` }}</text>
+          <text :x="`${ref_pct_sel.width}`" :y="`${height + 20}`" text-anchor="middle" style="dominant-baseline:hanging">{{ ref_pct_sel.right.v.toFixed(3) }}</text>
+          <text :x="`${ref_pct_sel.width / 2}`" y="20" text-anchor="middle" :display="ref_pct_sel.width < 50 ? 'none' : 'block'" >{{ `← ${( ref_pct_sel.right.p ).toFixed(1)}% →` }}</text>
+          <text :x="`${ref_pct_sel.width / 2}`" :y="`${height + 20}`" text-anchor="middle" style="dominant-baseline:hanging" :display="ref_pct_sel.width < 50 ? 'none' : 'block'">{{ `← ${ Math.abs(ref_pct_sel.left.v.toFixed(3) - ref_pct_sel.right.v.toFixed(3)).toFixed(3)} →` }}</text>
         </g>
       </g>
     </svg>
@@ -352,15 +386,15 @@ onMounted(() => {
       </tr>
       <tr>
         <td>Percentile</td>
-        <td><input type="text" v-model="ref_percentile" style="width:100%"></td>
-        <td colspan="2"><input type="range" min="0" max="100" v-model="ref_percentile" class="slider"
-            style="width:100%"></td>
+        <td>p<input type="text" v-model="ref_percentile" style="width:calc(100% - 1em)" @focus="pct_var = 'pct'"></td>
+        <td><input type="range" min="0" max="100" v-model="ref_percentile" class="slider" style="width:100%"></td>
+        <td style="width:10em; text-aign:right">x={{ data_quantile_sorted(ref_percentile/100).toFixed(3) }}</td>
       </tr>
       <tr>
-        <td>Spread</td>
-        <td><input type="text" v-model="ref_percentile" style="width:100%"></td>
-        <td colspan="2"><input type="range" min="0" max="100" v-model="ref_percentile" class="slider"
-            style="width:100%"></td>
+        <td></td>
+        <td>p<input type="text" v-model="ref_percentile_2" style="width:calc(100% - 1em)" @focus="pct_var = 'pct'"></td>
+        <td><input type="range" min="0" max="100" v-model="ref_percentile_2" class="slider" style="width:100%"></td>
+        <td style="width:10em; text-aign:right">x={{ data_quantile_sorted(ref_percentile_2/100).toFixed(3) }}</td>
       </tr>
     </tbody>
   </table>
