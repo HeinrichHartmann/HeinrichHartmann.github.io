@@ -42,17 +42,6 @@ const data = [];
 const moments = [];
 const percentiles = [0.001, 0.01, .1, 1, 5, 50, 95, 99, 99.9, 99.99, 99.999];
 
-
-/* 
- * HELPER
- */
-
-function move_to_front(node) {
-  let p = node.parentNode;
-  p.removeChild(node);
-  p.appendChild(node);
-}
-
 /*
  * Data Routines
  */
@@ -64,7 +53,7 @@ function data_insert(x) {
   }
 }
 function data_reset() {
-  data.lenght = 0;
+  data.length = 0;
   moments.length = 0;
   for (let i = 0; i < MAX_MOMENTS; i++) {
     moments[i] = 0;
@@ -91,54 +80,65 @@ function data_iqr_sorted(X) {
   return data_quantile_sorted(X, 0.75) - data_quantile_sorted(X, 0.25);
 }
 
-/*
- * Percentile bar
- */
-
-const ref_bar = ref({
-  transform: "",
-  text_top: "p50",
-  text_bot: "0",
-})
-
-function bar_setup() {
-  svg_bar_g = d3.select("#x-bar")
-}
-
-function bar_update() {
-  let svg = d3.select("#x-bar");
-  const pct = ref_percentile.value;
-  const pctv = data_quantile_sorted(data, pct / 100);
-  const pctx = svg_hist_ax(pctv);
-  ref_bar.value["transform"] = `translate(${pctx}, 0)`;
-  ref_bar.value["text_top"] = `p${pct}`;
-  ref_bar.value["text_bot"] = `${Number(pctv).toFixed(2)}`
-}
 
 /*
  * Percentile selector
  */
 
+var pct_mode = 1;
+var x_left = 0;
 const ref_pct_sel = ref({
-  transform: "",
+  transform_l: "",
+  transform_r: "",
+  width: 0,
   text_left: "",
   text_right: "",
+  text_left_bot: "",
+  text_right_bot: "",
 });
 
 function pct_setup() {
-  d3.select("#x-svg").on("mousemove", (ev) => pct_plot(d3.pointer(ev, svg_ax.node())));
+  d3.select("#x-svg").on("mousemove", (ev) => pct_plot(d3.pointer(ev, svg_ax.node())[0]));
+  d3.select("#x-svg").on("click", (ev) => { 
+    pct_mode = (pct_mode + 1) % 3;
+    if (pct_mode == 1) {
+      ref_pct_sel.value["width"] = 0;
+      pct_plot(d3.pointer(ev, svg_ax.node())[0])
+    }
+  });
 }
 
-function pct_plot(svg_coords) {
-  if (!svg_line_g) return;
-  var x = svg_coords[0];
+function bar_update() {
+  if (pct_mode == 1) {
+    const pct = ref_percentile.value;
+    const pctv = data_quantile_sorted(data, pct / 100);
+    const x = svg_hist_ax(pctv);
+    pct_plot(x);
+  }
+}
+
+function pct_plot(x) {
   if (x < 0) x = 0;
   if (x > width) x = width;
   const v = svg_hist_ax.invert(x);
   const p = 100 * data_cdf(v);
-  ref_pct_sel.value["transform"] = `translate(${x},0)`;
-  ref_pct_sel.value["text_left"] = `${p.toFixed(3)}% ←`;
-  ref_pct_sel.value["text_right"] = `→ ${(100 - p).toFixed(3)}%`;
+  if (pct_mode % 3 == 1) {
+    ref_percentile.value = p.toFixed(3);
+    x_left = x;
+    ref_pct_sel.value["transform_l"] = `translate(${x},0)`;
+    ref_pct_sel.value["transform_r"] = `translate(${x},0)`;
+    ref_pct_sel.value["text_left"] = `${p.toFixed(1)}% ←`;
+    ref_pct_sel.value["text_right"] = `→ ${(100 - p).toFixed(1)}%`;
+    ref_pct_sel.value["text_left_bot"] = v.toFixed(3);
+    ref_pct_sel.value["text_right_bot"] = "";
+  } 
+  else if (pct_mode % 3 == 2) {
+    ref_pct_sel.value["transform_r"] = `translate(${x},0)`;
+    ref_pct_sel.value["text_left"] = `${p.toFixed(1)}% ←`;
+    ref_pct_sel.value["text_right"] = `→ ${(100 - p).toFixed(1)}%`;
+    ref_pct_sel.value["text_right_bot"] = v.toFixed(3);
+    ref_pct_sel.value["width"] = x - x_left;
+  }
 }
 
 /*
@@ -191,8 +191,6 @@ function plot_histogram() {
     .attr("height", function (d) { return height - y(d.length); })
     .style("fill", "#69b3a2");
 
-  move_to_front(svg_bar_g.node());
-
 }
 
 /*
@@ -200,7 +198,7 @@ function plot_histogram() {
  */
 
 function update_generator() {
-  data.length = 0;
+  data_reset();
   let txt = ref_distribution.value;
   let ev = "() => (" + txt.replace(/\$/g, "this.") + ")";
   let scope = {
@@ -298,7 +296,6 @@ watch(ref_sim_steps, simulate_restart);
 
 onMounted(() => {
   histogram_setup();
-  bar_setup();
   pct_setup();
   data_reset();
 
@@ -308,7 +305,7 @@ onMounted(() => {
 </script>
 
 <template>
-  <h1>Stats Calculator {{ }}</h1>
+  <h1>Percentile Explorer</h1>
   <div id="x-d3">
     <svg id="x-svg" :width="`${width + svg_margin.left + svg_margin.right}`"
       :height="`${height + svg_margin.top + svg_margin.bottom}`">
@@ -317,17 +314,16 @@ onMounted(() => {
             sim_count
         }}</text>
         <g id="x-hist"></g>
-        <g id="x-pct" v-bind:transform="ref_pct_sel.transform">
+        <g id="x-pct" v-bind:transform="ref_pct_sel.transform_l">
           <line x1="0" x2="0" y1="0" :y2="`${height}`" class="bar"></line>
           <text x="-3" y="20" text-anchor="end">{{ ref_pct_sel.text_left }}</text>
-          <text x="3" y="20">{{ ref_pct_sel.text_right }}</text>
-          <text x="0" :y="`${height + 20}`" text-anchor="end" style="dominant-baseline:hanging"></text>
+          <text x="0" :y="`${height + 20}`" text-anchor="middle" style="dominant-baseline:hanging">{{ ref_pct_sel.text_left_bot }}</text>
+          <rect x="0" y="0" v-bind:width="ref_pct_sel.width" :height="`${height}`" fill="#3332"></rect>
         </g>
-        <g id="x-bar" v-bind:transform="ref_bar.transform">
+        <g id="x-pct" v-bind:transform="ref_pct_sel.transform_r">
           <line x1="0" x2="0" y1="0" :y2="`${height}`" class="bar"></line>
-          <text x="3" y="20">{{ ref_bar.text_top }}</text>
-          <text x="0" :y="`${height + 20}`" text-anchor="middle" style="dominant-baseline:hanging">{{ ref_bar.text_bot
-          }}</text>
+          <text x="3" y="20">{{ ref_pct_sel.text_right }}</text>
+          <text x="0" :y="`${height + 20}`" text-anchor="middle" style="dominant-baseline:hanging">{{ ref_pct_sel.text_right_bot }}</text>
         </g>
       </g>
     </svg>
@@ -356,6 +352,12 @@ onMounted(() => {
       </tr>
       <tr>
         <td>Percentile</td>
+        <td><input type="text" v-model="ref_percentile" style="width:100%"></td>
+        <td colspan="2"><input type="range" min="0" max="100" v-model="ref_percentile" class="slider"
+            style="width:100%"></td>
+      </tr>
+      <tr>
+        <td>Spread</td>
         <td><input type="text" v-model="ref_percentile" style="width:100%"></td>
         <td colspan="2"><input type="range" min="0" max="100" v-model="ref_percentile" class="slider"
             style="width:100%"></td>
