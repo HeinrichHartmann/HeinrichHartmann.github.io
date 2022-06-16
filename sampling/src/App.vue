@@ -1,5 +1,10 @@
 <script setup>
 
+
+import { ref, watch, watchEffect, onMounted } from 'vue'
+import { normal, lognormal, exponential, gamma, percentile }  from 'jstat';
+
+
 function setup_histogram() {
     // set the dimensions and margins of the graph
     const margin = {top: 10, right: 30, bottom: 30, left: 40},
@@ -91,9 +96,6 @@ function plot_histogram(data1, data2, percentile_value) {
         .attr("y", 3)
         .text("Percentile")
 };
-
-import { ref, watch, watchEffect, onMounted } from 'vue'
-import { normal, lognormal, exponential, gamma, percentile }  from 'jstat';
 
 const sampling_rate = ref(50)
 const req_rate_raw = ref(10)
