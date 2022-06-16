@@ -11,14 +11,12 @@ var binomial = require('@stdlib/random-base-binomial');
  * GLOBALS
  */
 
-const MAX_SIMULATION_STEPS = 100_000;
 const SIMULATION_STEPS = 20_000;
 const MAX_MOMENTS = 11;
-const HIST_BINS_START = 50
-const HIST_BINS_REFINED = 100;
-var HIST_BINS = HIST_BINS_START;
 
 const sim_count = ref(0);
+const ref_sim_steps = ref(100_000);
+const ref_bin_count = ref(300);
 const ref_distribution = ref("$N(0,1)");
 const ref_dist_select = ref("Normal")
 const ref_mean = ref(0);
@@ -120,34 +118,15 @@ function bar_update() {
 /*
  * Percentile selector
  */
+
+const ref_pct_sel = ref({
+  transform : "",
+  text_left : "",
+  text_right : "",
+});
+
 function pct_setup() {
   d3.select("#x-svg").on("mousemove", (ev) => pct_plot(d3.pointer(ev, svg_ax.node())));
-  d3.select("#x-svg").on("click", pct_new);
-}
-
-var line_cnt = 0;
-function pct_new(event) {
-  svg_line_g = svg_ax.append("g")
-  svg_line_g.append("line")
-    .attr("x1",0)
-    .attr("y1",0)
-    .attr("x2",0)
-    .attr("y2",height)
-    .attr("style","stroke:rgb(0,0,0);stroke-width:.5")
-  svg_line_g.append("text")
-     .attr("x", 3) 
-     .attr("y", 20 + line_cnt * 20)
-  svg_line_g.append("text")
-     .attr("x", -3)
-     .attr("y", 20 + line_cnt * 20)
-     .attr("text-anchor", "end")
-  svg_line_g.append("text")
-     .attr("x", 0)
-     .attr("y", height + 20)
-     .attr("text-anchor", "middle")
-     .style("dominant-baseline","hanging")
-  line_cnt += 1;
-  pct_plot(d3.pointer(event, svg_ax.node()));
 }
 
 function pct_plot(svg_coords) {
@@ -155,14 +134,12 @@ function pct_plot(svg_coords) {
   var x = svg_coords[0];
   if (x < 0) x = 0;
   if (x > width) x = width; 
-  svg_line_g.attr("transform", `translate(${x},0)`);
-  move_to_front(svg_line_g.node());
   const v = svg_hist_ax.invert(x);
   const p = 100 * data_cdf(v);
-  svg_line_g.selectAll("text").data([`→ ${(100 - p).toFixed(3)}%`, `${p.toFixed(3)}% ←`, `${v.toFixed(3)}`])
-    .html((d) => d);
+  ref_pct_sel.value["transform"] = `translate(${x},0)`;
+  ref_pct_sel.value["text_left"] = `${p.toFixed(3)}% ←`;
+  ref_pct_sel.value["text_right"] = `→ ${(100 - p).toFixed(3)}%`;  
 }
-
 
 /*
  * Histogram Logic
@@ -170,8 +147,6 @@ function pct_plot(svg_coords) {
 
 function histogram_setup() {
   svg_ax = d3.select("#x-ax");
-  d3.select("#x-svg").on("mousemove", (ev) => pct_plot(d3.pointer(ev, svg_ax.node())));
-  d3.select("#x-svg").on("click", pct_new);
 }
 
 function plot_histogram() {
@@ -192,7 +167,7 @@ function plot_histogram() {
 
   var histogram = d3.histogram()
     .domain(x.domain())
-    .thresholds(x.ticks(HIST_BINS));
+    .thresholds(x.ticks(ref_bin_count.value));
   
   var bins = histogram(data);
 
@@ -263,16 +238,14 @@ function simulate_restart() {
   sim_count.value = 0;
   sim_gen += 1;
   var my_sim_gen = sim_gen;
-  HIST_BINS = HIST_BINS_START;
   function simulate() {
     if (my_sim_gen != sim_gen) return;
     if (!sample_generator) return;
-    if (sim_count.value >= MAX_SIMULATION_STEPS) {
-      HIST_BINS = HIST_BINS_REFINED;
+    if (sim_count.value >= ref_sim_steps.value) {
       update_stats();
       return;
     };
-    for (let i = 0; i < SIMULATION_STEPS; i++) {
+    for (let i = 0; i < Math.min(ref_sim_steps.value, SIMULATION_STEPS); i++) {
       data_insert(sample_generator());
     }
     sim_count.value = data.length;
@@ -297,7 +270,7 @@ function update_stats() {
   // Generate Moment String
   // For unknown reason, direct assignment to ref_moments.value does not work.
   // Need to keep the _.map iterations in separate expressions
-  var m = '<table style="width:100%; height:100%; padding: 0; margin:0">'
+  var m = '<table class="maxy">'
   for (let i = 0; i < moments.length; i++) {
     m += `<tr><td> M[${i}] </td><td> ${Number(moments[i] / data.length).toFixed(2)} </td></tr>`;
   }
@@ -305,7 +278,7 @@ function update_stats() {
   ref_moments.value = m;
 
   // Generate Percentile Table
-  var m = '<table style="width:100%; height:100%; padding: 0; margin:0"><tr>'
+  var m = '<table class="maxy"><tr>'
   for (let i = 0; i < percentiles.length; i++) {
     m += `<tr><td> p${percentiles[i]} </td><td> ${Number(data_quantile_sorted(data, percentiles[i] / 100)).toFixed(2)} </td></tr>`
   }
@@ -320,6 +293,8 @@ function update_stats() {
 watch(ref_percentile, bar_update);
 watch(sim_count, update_stats);
 watch(ref_distribution, update_generator);
+watch(ref_bin_count, plot_histogram);
+watch(ref_sim_steps, simulate_restart);
 
 onMounted(() => {
   histogram_setup();
@@ -339,8 +314,14 @@ onMounted(() => {
       :width="`${ width + svg_margin.left + svg_margin.right }`" 
       :height="`${ height + svg_margin.top + svg_margin.bottom }`">
       <g id="x-ax" :transform="`translate(${svg_margin.left},${svg_margin.top})`">
+        <text :x="`${ width }`" :y="`${ height + 25 }`" text-anchor="end" style="dominant-baseline:hanging" >Iteration {{ sim_count }}</text>
         <g id="x-hist"></g>
-        <g id="x-pct"></g>
+        <g id="x-pct" v-bind:transform="ref_pct_sel.transform">
+          <line x1="0" x2="0" y1="0" :y2="`${ height }`" class="bar"></line>
+          <text x="-3" y="20" text-anchor="end">{{ ref_pct_sel.text_left }}</text>
+          <text x="3" y="20">{{ ref_pct_sel.text_right }}</text>
+          <text x="0" :y="`${ height + 20}`" text-anchor="end" style="dominant-baseline:hanging"></text>
+        </g>
         <g id="x-bar" v-bind:transform="ref_bar.transform">
           <line x1="0" x2="0" y1="0" :y2="`${ height }`" class="bar"></line>
           <text x="3" y="20">{{ ref_bar.text_top }}</text>
@@ -356,18 +337,14 @@ onMounted(() => {
       </tr>
       <tr>
         <td>Distribution</td>
-        <td width="100px"><select v-model="ref_dist_select">
-            <option>Normal</option>
-            <option>Exponential</option>
-            <option>Binomial</option>
-          </select></td>
-        <td><input type="text" v-model="ref_distribution" style="width:100%"></td>
+        <td colspan="3">
+          <input type="text" v-model="ref_distribution" style="width:calc(100% - 200px)">
+          <select v-model="ref_dist_select" style="width:200px"><option>Normal</option><option>Exponential</option><option>Binomial</option></select>
+        </td>
       </tr>
       <tr>
         <td></td>
-        <td colspan="3"
-          style="font-family: monospace; color: rgb(36, 41, 47); background-color: rgba(175, 184, 193, 0.2); font-size: 10pt;">
-          {{ ref_error }}</td>
+        <td colspan="3" style="font-family: monospace; color: rgb(36, 41, 47); background-color: rgba(175, 184, 193, 0.2); font-size: 10pt;"> {{ ref_error }}</td>
       </tr>
         <tr>
         <td>Percentile</td>
@@ -407,6 +384,20 @@ onMounted(() => {
     </tbody>
   </table>
 
+  <table>
+    <tbody>
+      <tr style="background-color:#EEE">
+        <td colspan="4" style="text-align:left;font-weight:bold"># Internals</td>
+      </tr>
+      <tr>
+        <td>Simulation Steps</td>
+        <td><input type="text" v-model="ref_sim_steps" style="text-align:right; width:100%"></td>
+        <td>Bin Count</td>
+        <td><input type="text" v-model="ref_bin_count" style="text-align:right; width:100%"></td>
+      </tr>
+    </tbody>
+ </table>
+
 </template>
 
 <style>
@@ -431,6 +422,13 @@ svg {
 
 .cosy tr {
   border: 0px !important;
+}
+
+.maxy {
+  width:100% !important;
+  height:100% !important;
+  padding: 0 !important;
+  margin: 0 !important;
 }
 
 .bar {
