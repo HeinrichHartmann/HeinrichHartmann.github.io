@@ -26,10 +26,12 @@ const ref_iqr = ref(1);
 const ref_moments = ref("");
 const ref_error = ref("OK");
 const ref_percentiles = ref("");
+const ref_percentile = ref(0);
 
 var svg = null;
 var svg_target = null;
 var svg_line_g = null;
+var svg_pct_g = null;
 var svg_hist_ax = null;
 var svg_margin = { top: 20, left: 80, right: 60, bottom: 50}
 ,   width = 910 - svg_margin.left - svg_margin.right
@@ -52,6 +54,13 @@ function data_reset() {
     moments[i] = 0;
   }
 }
+function data_cdf(x) {
+  var c = 0;
+  for(let i=0; i< data.length; i++) {
+    if (data[i] <= x) c++;
+  }
+  return c / data.length;
+}
 
 function move_to_front(node) {
   let p = node.parentNode;
@@ -66,26 +75,63 @@ function plot_percentile(svg_coords) {
   if (x < 0) x = 0;
   if (x > width) x = width; 
   svg_line_g.attr("transform", `translate(${x},0)`);
-  var pv = svg_hist_ax.invert();
   move_to_front(svg_line_g.node());
+  const v = svg_hist_ax.invert(x);
+  const p = 100 * data_cdf(v);
+  svg_line_g.selectAll("text").data([`→ ${(100 - p).toFixed(3)}%`, `${p.toFixed(3)}% ←`, `${v.toFixed(3)}`])
+    .html((d) => d);
 }
 
-function setup_histogram() {
-  svg = d3.select("#d3")
-    .select("svg")
-    .attr("width", width + svg_margin.left + svg_margin.right)
-    .attr("height", height + svg_margin.top + svg_margin.bottom)
-    .select("g")
-    .attr("transform", "translate(" + svg_margin.left + "," + svg_margin.top + ")");
-  svg_target = d3.select("#d3 svg g").node();
-   d3.select("#d3 svg").on("mousemove", (ev) => plot_percentile(d3.pointer(ev, svg_target)));
+var line_cnt = 0;
+function new_line() {
   svg_line_g = svg.append("g")
   svg_line_g.append("line")
     .attr("x1",0)
     .attr("y1",0)
     .attr("x2",0)
     .attr("y2",height)
-    .attr("style","stroke:rgb(255,0,0);stroke-width:2")
+    .attr("style","stroke:rgb(0,0,0);stroke-width:.5")
+  svg_line_g.append("text")
+     .attr("x", 3) 
+     .attr("y", 20 + line_cnt * 20)
+  svg_line_g.append("text")
+     .attr("x", -3)
+     .attr("y", 20 + line_cnt * 20)
+     .attr("text-anchor", "end")
+  svg_line_g.append("text")
+     .attr("x", 0)
+     .attr("y", height + 20)
+     .attr("text-anchor", "middle")
+     .style("dominant-baseline","hanging")
+  line_cnt += 1;
+}
+
+function setup_histogram() {
+  svg = d3.select("#x-d3")
+.select("svg")
+    .attr("width", width + svg_margin.left + svg_margin.right)
+    .attr("height", height + svg_margin.top + svg_margin.bottom)
+    .select("g")
+    .attr("transform", "translate(" + svg_margin.left + "," + svg_margin.top + ")");
+  svg_target = d3.select("#x-d3 svg g").node();
+  d3.select("#x-d3 svg").on("mousemove", (ev) => plot_percentile(d3.pointer(ev, svg_target)));
+  d3.select("#x-d3 svg").on("click", new_line);
+
+  svg_pct_g = svg.append("g")
+  svg_pct_g.append("line")
+    .attr("x1",0)
+    .attr("y1",0)
+    .attr("x2",0)
+    .attr("y2",height)
+    .attr("style","stroke:rgb(0,0,0);stroke-width:.5")
+  svg_pct_g.append("text")
+     .attr("x", 3) 
+     .attr("y", 20)
+  svg_pct_g.append("text")
+     .attr("x", 0)
+     .attr("y", height + 20)
+     .attr("text-anchor", "middle")
+     .style("dominant-baseline","hanging")
 }
 
 function plot_histogram() {
@@ -101,7 +147,7 @@ function plot_histogram() {
     .range([0, width]);
   svg_hist_ax = x;
   var y = d3.scaleLinear().range([height, 0]);
-  var z = d3.scaleLinear().domain([0,1]).range([height, 0]);
+  var z = d3.scaleLinear().domain([0,100]).range([height, 0]);
 
   var histogram = d3.histogram()
     .domain(x.domain())
@@ -114,7 +160,8 @@ function plot_histogram() {
     .attr("transform", "translate(0," + height + ")")
     .call(d3.axisBottom(x));
 
-  y.domain([0, d3.max(bins, function (d) { return d.length; }) ]);
+  y.domain([0, d3.max(bins, function (d) { return d.length; }) * 1.1 ]);
+
   svg.append("g")
     .classed("toclear", true)
     .call(d3.axisLeft(y));
@@ -137,18 +184,21 @@ function plot_histogram() {
      .attr("height", function (d) { return height - y(d.length); })
      .style("fill", "#69b3a2");
 
-  var y_cumsum = 0;
-  svg.select("path").remove();
-  svg.append("path")
-      .datum(bins)
-      .attr("fill", "none")
-      .attr("stroke", "#00000055")
-      .attr("stroke-width", 1.5)
-      .attr("stroke-linejoin", "round")
-      .attr("d",  d3.line()
-          .curve(d3.curveStep)
-          .x(function(d) { return x((d.x1 + d.x0) / 2); })
-          .y(function(d) { y_cumsum += d.length; return z(y_cumsum / data.length); }));
+  move_to_front(svg_pct_g.node());
+
+  // CDF
+  // var y_cumsum = 0;
+  // svg.select("path").remove();
+  // svg.append("path")
+  //     .datum(bins)
+  //     .attr("fill", "none")
+  //     .attr("stroke", "#00000055")
+  //     .attr("stroke-width", 1.5)
+  //     .attr("stroke-linejoin", "round")
+  //     .attr("d",  d3.line()
+  //         .curve(d3.curveStep)
+  //         .x(function(d) { return x((d.x1 + d.x0) / 2); })
+  //         .y(function(d) { y_cumsum += d.length; return z(y_cumsum / data.length * 100); }));
 }
 
 var generator = () => normal.sample(0, 1);
@@ -220,6 +270,14 @@ function update_stats() {
   ref_percentiles.value = m;
 }
 
+watch(ref_percentile, () => {
+  if (!svg_pct_g) return;
+  const pct = ref_percentile.value;
+  const pctv = quantile_sorted(data,  pct / 100);
+  const pctx = svg_hist_ax(pctv);
+  svg_pct_g.attr("transform", `translate(${pctx}, 0)`);
+  svg_pct_g.selectAll("text").data([`p${Number(pct).toFixed(2)}`,`${Number(pctv).toFixed(2)}`]).html((d) => d);
+})
 watch(sim_count, update_stats);
 watch(ref_distribution, () => {
   data.length = 0;
@@ -265,9 +323,10 @@ onMounted(() => {
 
 <template>
   <h1>Stats Calculator </h1>
-  <div id="d3">
-    <svg>
-      <g></g>
+  <div id="x-d3">
+    <svg id="x-svg">
+      <g id="x-ax">
+      </g>
     </svg>
   </div>
   <table>
@@ -289,6 +348,11 @@ onMounted(() => {
         <td colspan="3"
           style="font-family: monospace; color: rgb(36, 41, 47); background-color: rgba(175, 184, 193, 0.2); font-size: 10pt;">
           {{ ref_error }}</td>
+      </tr>
+        <tr>
+        <td>Percentile</td>
+        <td><input type="text" v-model="ref_percentile" style="width:100%"></td>
+        <td colspan="2"><input type="range" min="0" max="100" v-model="ref_percentile" class="slider" style="width:100%"></td>
       </tr>
     </tbody>
   </table>
