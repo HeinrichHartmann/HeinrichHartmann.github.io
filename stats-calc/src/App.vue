@@ -1,3 +1,8 @@
+<!-- 
+  IDEAS/TODO:
+  * Add support for NaN value -> ignored samples
+  * Link percentile sliders to selection
+ -->
 <script setup>
 /* eslint-disable */
 import { ref, watch, watchEffect, onMounted, reactive } from 'vue'
@@ -31,9 +36,9 @@ const ref_percentile_2 = ref(50);
 
 var svg_ax = null;
 var svg_hist_ax = null;
-var svg_margin = { top: 20, left: 80, right: 60, bottom: 50 }
+var svg_margin = { top: 50, left: 80, right: 60, bottom: 100 }
   , width = 910 - svg_margin.left - svg_margin.right
-  , height = 400 - svg_margin.top - svg_margin.bottom;
+  , height = 500 - svg_margin.top - svg_margin.bottom;
 
 var sample_generator = () => normal.sample(0, 1);
 
@@ -152,6 +157,7 @@ function pct_data_update() {
   }
   update(ref_pct_sel.value["left"]);
   update(ref_pct_sel.value["right"]);
+  ref_pct_sel.value["width"] = ref_pct_sel.value["right"]["x"] - ref_pct_sel.value["left"]["x"];
 }
 
 function update_percentile() { // slider
@@ -171,7 +177,7 @@ function update_percentile_2() { // slider
   ref_pct_sel.value["right"]["x"] = x;
   ref_pct_sel.value["right"]["v"] = v;
   ref_pct_sel.value["right"]["p"] = p;
-  ref_pct_sel.value["width"] =  x- ref_pct_sel.value["left"]["x"];
+  ref_pct_sel.value["width"] =  x - ref_pct_sel.value["left"]["x"];
 }
 
 /*
@@ -230,11 +236,7 @@ function plot_histogram() {
  * Simluation
  */
 
-function update_generator() {
-  data_reset();
-  let txt = ref_distribution.value;
-  let ev = "() => (" + txt.replace(/\$/g, "this.") + ")";
-  let scope = {
+const SCOPE = Object.assign({}, {
     U: uniform.sample,
     N: normal.sample,
     E: exponential.sample,
@@ -242,10 +244,15 @@ function update_generator() {
     Beta: beta.sample,
     B: binomial,
     Ber: (p) => binomial(1, p),
-  }
+});
+
+function update_generator() {
+  data_reset();
+  let txt = ref_distribution.value;
+  let ev = "() => (" + txt.replace(/\$/g, "this.") + ")";
   try {
     // https://stackoverflow.com/questions/8403108/calling-eval-in-particular-context
-    let g = function () { return eval(ev) }.call(scope);
+    let g = function () { return eval(ev) }.call(SCOPE);
     if (typeof g() == "number") {
       console.log("New Generator:", ev);
       sample_generator = g;
@@ -344,7 +351,7 @@ onMounted(() => {
     <svg id="x-svg" :width="`${width + svg_margin.left + svg_margin.right}`"
       :height="`${height + svg_margin.top + svg_margin.bottom}`">
       <g id="x-ax" :transform="`translate(${svg_margin.left},${svg_margin.top})`">
-        <text :x="`${width}`" :y="`${height + 25}`" text-anchor="end" style="dominant-baseline:hanging">Iteration {{
+        <text :x="`${width}`" :y="`${height + 40}`" text-anchor="end" style="dominant-baseline:hanging">Iteration {{
             sim_count
         }}</text>
         <g id="x-hist"></g>
@@ -356,8 +363,8 @@ onMounted(() => {
           <line :x1="`${ref_pct_sel.width}`" :x2="`${ref_pct_sel.width}`" y1="0" :y2="`${height}`" class="bar"></line>
           <text :x="`${ref_pct_sel.width + 3}`" y="20">{{ `→ ${(100 - ref_pct_sel.right.p).toFixed(1)}%` }}</text>
           <text :x="`${ref_pct_sel.width}`" :y="`${height + 20}`" text-anchor="middle" style="dominant-baseline:hanging">{{ ref_pct_sel.right.v.toFixed(3) }}</text>
-          <text :x="`${ref_pct_sel.width / 2}`" y="20" text-anchor="middle" :display="ref_pct_sel.width < 50 ? 'none' : 'block'" >{{ `← ${( ref_pct_sel.right.p ).toFixed(1)}% →` }}</text>
-          <text :x="`${ref_pct_sel.width / 2}`" :y="`${height + 20}`" text-anchor="middle" style="dominant-baseline:hanging" :display="ref_pct_sel.width < 50 ? 'none' : 'block'">{{ `← ${ Math.abs(ref_pct_sel.left.v.toFixed(3) - ref_pct_sel.right.v.toFixed(3)).toFixed(3)} →` }}</text>
+          <text :x="`${ref_pct_sel.width / 2}`" y="20" text-anchor="middle" :display="ref_pct_sel.width < 50 ? 'none' : 'block'" >{{ `← ${( ref_pct_sel.right.p - ref_pct_sel.left.p ).toFixed(1)}% →` }}</text>
+          <text :x="`${ref_pct_sel.width / 2}`" :y="`${height + 40}`" text-anchor="middle" style="dominant-baseline:hanging" :display="ref_pct_sel.width < 50 ? 'none' : 'block'">{{ `← ${ Math.abs(ref_pct_sel.left.v.toFixed(3) - ref_pct_sel.right.v.toFixed(3)).toFixed(3)} →` }}</text>
         </g>
       </g>
     </svg>

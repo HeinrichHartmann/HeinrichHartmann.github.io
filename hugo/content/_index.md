@@ -1,6 +1,23 @@
 ---
 content:
-- tags: tool, monitoring, calc
+- type: talk
+  tags: mon, talk
+  date: 2022-06-22
+  occasion: DevOpsCon
+  location: Berlin
+  title: Zalando's Quest for Operating 10K Micro Services
+  slides: "/pdf/Hartmann - Zalando Quest - DevOpsCon Berlin.pdf"
+  href: "https://devopscon.io/monitoring-observability/zalandos-quest-for-operating-10k-micro-services-without-loosing-sleep/"
+
+- type: talk
+  tags: mon, talk
+  date: 2021-10-19
+  occasion: P99 Conf
+  location: remote
+  title: How to Measure Latency
+  href: "https://www.p99conf.io/session/how-to-measure-latency/"
+
+- tags: tool, mon, calc
   date: 2022-05-29
   href: "/sampling"
   title: "Sampling Calculator"
