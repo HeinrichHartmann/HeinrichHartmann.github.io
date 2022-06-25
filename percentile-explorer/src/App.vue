@@ -20,7 +20,7 @@ const SIMULATION_STEPS = 20_000;
 const MAX_MOMENTS = 11;
 
 const sim_count = ref(0);
-const ref_sim_steps = ref(100_000);
+const ref_sim_steps = ref(500_000);
 const ref_bin_count = ref(300);
 const ref_distribution = ref("$N(0,1)");
 const ref_dist_select = ref("Normal")
@@ -324,6 +324,33 @@ function update_stats() {
   ref_percentiles.value = m;
 }
 
+function parse_url() {
+    let urlParams = new URLSearchParams(window.location.search);
+    function set(ref, param) {
+      if(urlParams.get(param)) {
+        ref.value = urlParams.get(param);
+      }
+    }
+    set(ref_percentile, "pct_low");
+    set(ref_distribution, "dist");
+    set(ref_percentile_2, "pct_high");
+    set(ref_sim_steps, "iterations");
+    set(ref_bin_count, "bins");
+}
+
+function update_url() {
+  const params = new URLSearchParams("");
+  function set(ref, param) {
+    params.set(param, ref.value);    
+  }
+  set(ref_percentile, "pct_low");
+  set(ref_percentile_2, "pct_high");
+  set(ref_distribution, "dist");
+  set(ref_sim_steps, "iterations");
+  set(ref_bin_count, "bins");
+  window.history.replaceState({}, '', `${location.pathname}?${params.toString()}`);
+}
+
 /*
  * Reactive Bindings
  */
@@ -334,8 +361,11 @@ watch(sim_count, update_stats);
 watch(ref_distribution, update_generator);
 watch(ref_bin_count, plot_histogram);
 watch(ref_sim_steps, simulate_restart);
+watch([ref_distribution,ref_percentile,ref_sim_steps,ref_bin_count], update_url);
 
 onMounted(() => {
+  parse_url();
+  
   histogram_setup();
   pct_setup();
   data_reset();
@@ -347,7 +377,10 @@ onMounted(() => {
 
 <template>
   <h1>Percentile Explorer</h1>
-  <div id="x-d3">
+  <p class="meta" style="color:#aaa; float:right">Stemwede, 2022-06-26</p>
+  <p class="meta" style="color:#aaa; float:left"><a href="https://github.com/HeinrichHartmann/HeinrichHartmann.github.io/tree/source/percentile-explorer">View Source</a></p>
+
+   <div id="x-d3">
     <svg id="x-svg" :width="`${width + svg_margin.left + svg_margin.right}`"
       :height="`${height + svg_margin.top + svg_margin.bottom}`">
       <g id="x-ax" :transform="`translate(${svg_margin.left},${svg_margin.top})`">

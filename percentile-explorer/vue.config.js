@@ -2,5 +2,5 @@ const { defineConfig } = require('@vue/cli-service')
 module.exports = defineConfig({
   publicPath: '', 
   transpileDependencies: true,
-  outputDir: '../public/stats-calc',
+  outputDir: '../public/percentile-explorer',
 });
