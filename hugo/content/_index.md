@@ -1,5 +1,10 @@
 ---
 content:
+- tags: tool, mon, calc
+  date: 2022-06-26
+  href: "/percentile-explorer"
+  title: "Percentile Explorer"
+
 - type: talk
   tags: mon, talk
   date: 2022-06-22
