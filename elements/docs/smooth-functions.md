@@ -39,7 +39,7 @@ $$
 \newcommand{\floor}[1]{\lfloor #1 \rfloor}
 \newcommand{\ceil}[1]{\lceil #1 \rceil}
 \newcommand{\set}[2]{\{\, #1 \;\vert\; #2 \,\}}
-\newcommand{\Set}[2]{\left\\{\, #1 \;\vert\; #2 \,\right\\}}
+\newcommand{\Set}[2]{\left\{\, #1 \;\vert\; #2 \,\right\}}
 \newcommand{\C}{\,\#}
 \newcommand{\CSet}[2]{\#\{\, #1 \;\vert\; #2 \,\}}
 \newcommand{\qtext}[1]{\quad\text{#1}\quad}
@@ -118,9 +118,12 @@ $$
 $$
 </div>
 
+## Germs of Maps
+
 ## Setting
 
-**Definition.** The local ring of $C^\infty$ functions around $0 \in \IR^n$  is defined as
+**Definition.** 
+The local ring of $C^\infty$ functions around $0 \in \IR^n$  is defined as
 
 $$ \AINF^n = \lim_\ra \{ \CINF(U,\IR) \,|\, 0 \in U \subset \IR^n \}. $$
 
@@ -130,10 +133,11 @@ More explicitly, an element $a \in \AINF$ is hence represented by a pair $(U,a)$
 Two pairs $(U,a), (V,b)$ represent the same element in $\AINF^n$ if there is a $W \subset U \cap V, 0 \in W$
 so that $\rho_W(a) = \rho_W(b)$.
 
-**Naturality.** Any ($C^\infty$-)differentiable map $f: \IR^n \ra \IR^m$ with $f(0) = 0$ gives rise to a map $f^*: \AINF^m \ra \AINF^n$, which sends $(b,V)$ to $(b \circ f, f^{-1}(V))$. We call $f^*[a]$ the pullback of a along $f$.
+**Naturality.** 
+Any ($C^\infty$-)differentiable map $f: \IR^n \ra \IR^m$ with $f(0) = 0$ gives rise to a map $f^*: \AINF^m \ra \AINF^n$, which sends $(b,V)$ to $(b \circ f, f^{-1}(V))$. We call $f^*[a]$ the pullback of a along $f$.
 
 **Evaluation.** For $a \in \AINF^n$, we denote by $e[a] := ev_0[a] := a(0) \in \IR$, the evaluation of $a$ at $0 \in \IR^n$.
-This is operatin can be identified with the pullback along the injection $0: \IR^0 \ra \IR^n$, $e = 0^*$.
+This is operation can be identified with the pullback along the injection $0: \IR^0 \ra \IR^n$, $e = 0^*$.
 
 **Constants.** For $\lambda \in \IR$ the constant function $\IR^n \ra \IR, x \mapsto \lambda$ by the same letter $\lambda \in \AINF^n$.
 If we want to stress the function character of $\lambda$ we may use the symbol $\underline{\lambda}$.
@@ -161,7 +165,7 @@ For a multi-index $I \in \IN^n, I = (i_1, \dots, i_n)$, we define:
 * Chain Rule. $\del_j f^*[b] = \sum_k f^*\del_k[b] \cdot \del_i[f^k]$, where $f^k$ are
   the components $f^k = x^k \circ f$.
 
-### Taylor Series
+## Taylor Series
 
 **Definition.** 
 The taylor series of $a \in \AINF^n$ is the formal power series
@@ -178,16 +182,17 @@ $$
 $$
 
 **Properties.**
+
 * For a polynomial $p \in \IR[x^1, \dots, x^n]$, we have $T_k[p] = p$ if $k \geq deg(p)$.
 * For $a,b \in \AINF^n$, we have 
-$$ 
-T(a \cdot b) = T(a) \cdot T(b), \quad\text{and}\quad  T_k(a) \cdot T_k(b).
-$$
+  $$ 
+    T(a \cdot b) = T(a) \cdot T(b), \quad\text{and}\quad  T_k(a) \cdot T_k(b).
+  $$
 
 **Proof** The first property follows from the observation that $e \del^I[x^J] = I!$ if $I = J$ and zero otherwise.
 The second and third property follow from the iterated product rule.
 
-**Theorem (Borel)** 
+**Theorem (Borel).** 
 For every power series $p \in \IR\dbrackets{ x^1, \dots, x^n }$ there exists a $C^\infty$ function $a \in \AINF^n$
 with $T(a)  = p$. 
 In other words, the map $T : \AINF^n \ra \IR\dbrackets{ x^1, \dots, x^n }$ is surjective,
@@ -196,8 +201,7 @@ and hence $\IR\dbrackets{ x^1, \dots, x^n } \isom  \AINF^n / \ker(T)$.
 For a proof see Ieke Moerdijk, Gonzalo E. Reyes: Models for Smooth Infinitesimal Analysis, p13.
 or [ncatlab](https://ncatlab.org/nlab/show/Borel%27s+theorem#Moerdijk).
 
-
-### Commutative Algebra
+## Commutative Algebra
 
 **$\IR$-Algebra Structure.** The ring $\AINF^n$ inherits the structure of a unital $\IR$ algebra form $\CINF(U,\IR)$.
 In other words elements $a,b \in \AINF^n$ can be added, multiplied and multiplied by scalars $\lambda \in \IR$,
@@ -250,7 +254,6 @@ $$
   and we have:
   $$ \fm^k / \fm^{k+1} = (x^1, \dots, x^n)^k /  (x^1, \dots, x^n)^{k+1} = \IR< x^I \,|\, |I| = k >.$$
 
-
 **Lemma**
 For an open set $0 \in U \subset \IR^n$, denote the restriction map by $\rho: C^\infty(U, \IR) \ra \AINF^n$, 
 let $\fm_0 \subset C^\infty(U, \IR)$ be the kernel of the evaluation map at $0$. Then,
@@ -273,11 +276,10 @@ Let $\delta$ be a bump function with $\delta(1) = 1$ and $\delta(x) = 0$ outside
 Then $\delta \notin \fm_0$ but $\delta a = 0 \in  C^\infty(U, \IR)$, showing that
 $(a,b) = 0 \in  C^\infty(U, \IR)_{\fm_0}$.
 
-### Tangent Vectors
+## Tangent Vectors
 
 In this section we construct tangent and co-tangent space at the origin $0 \in \IR^n$.
 In order to study higher differentials like $\del_i^2$ we will also need to construct tangent modules of vector fields.
-
 
 **Tangent Space**
 
@@ -307,7 +309,11 @@ It comes with a canonical map $d: \AINF^n \ra \Omega_0, a \mapsto a - a(0) = a -
   vectors space $V$, the map
   $$ Hom_\IR(\Omega_0, V) \ra Der_\IR(\AINF^n, V), \alpha \mapsto \alpha \circ d $$
   is an isomorphism. 
-  
+
+* For $\omega \in \Omega_0$ and $\delta \in T_0$, we denote the natural pairing
+  between tangent and co-tangent space as: 
+  $$ (\delta, \omega) = \delta[\omega] \in \IR $$
+
 **Proof.** 
 To show that the exterior differential is a derivation, note that
 $d[a b] - e[b] d[a] - e[a] d[b] = \dots = - d[a] \cdot d[b] \in \fm^2$.
@@ -323,8 +329,7 @@ This shows the universal property of the co-tangent space.
 By Hadamard's lemma we have $\Omega_0 = \fm/\fm^2 = \IR<dx^1, \dots, dx^n>.$ 
 
 Hence $T_0 \isom Der_\IR(\AINF^n, \IR) \isom Hom_\IR(\Omega_0, \IR)$.
-Under this identification $e \del_i$ maps to the dual basis mapping $dx^j \ra \delta_{i,j}$,
-since $e \del_i (dx^i) = e \del_i[x^j]$. QED.
+Under this identification $dx_i$ and $dx^i$ are dual to each other:  $dx_i[dx^j] = e \del_i[x^j] = \delta_{i,j}$. QED.
 
 **Naturality.** 
 
@@ -337,51 +342,74 @@ since $e \del_i (dx^i) = e \del_i[x^j]$. QED.
   $$
     D_0^*\vphi = \vphi^\*: \Omega_0^m \lra \Omega^n_0, \quad b \mapsto b \circ \vphi.
   $$
-* Those maps are dual/adjoint to each other with regards to the isomorphism $T_0 \isom Hom(\Omega_0, \IR)$.
-  For $db \in \Omega_0^m$ and $\delta \in T_0^n$ we have:
-  $$
-     \delta \cdot D_0^*\vphi(db) = \delta[b \circ \vphi] = D_0 \vphi(\delta) \cdot db. 
-  $$
-  
+
 * Naturality (Chain Rule). If $\psi: \IR^m \lra \IR^l$ is a second differentiable map with $\psi(0) = 0$,
   then 
-  $$ D_0(\psi \circ \vphi) = D_0\psi \circ D_0\vphi. $$
-  This statement is equivalent to the claim that $D_0$ is a natural transformation, which is obvious from the definition.
+  $$ D_0(\psi \circ \vphi) = D_0\psi \circ D_0\vphi, \quad D_0^\*(\psi \circ \vphi) = D_0^\*\vphi \circ D_0^\*\psi, $$
+  This statement is equivalent to the claim that $D_0,D_0^*$ are natural transformations, which is obvious 
+  from the definition.
 
-* Linearity. 
-  If $\vphi': \IR^n \ra \IR^m$ is another map with $\vphi'(0) = 0$, 
-  and then $D_0(\vphi + \vphi') = D_0\vphi + D_0\vphi'$.
-
+* Those maps are dual/adjoint to each other with regards to the isomorphism $T_0 \isom Hom(\Omega_0, \IR)$.
+  For $\omega \in \Omega_0^m$ and $\delta \in T_0^n$ we have:
+  $$
+    (\vphi_\*(\delta), \omega) = (D_0 \vphi(\delta), \omega) = (\delta, D_0^*\vphi(\omega)) = (\delta,\vphi^\* \omega) 
+  $$
+  If $\omega = db$ then all those expressions are equal to $\delta(b \circ \vphi)$.
+  
 * Linear maps. If $A: \IR^n \ra \IR^m$ is a linear map, then
   $$ 
-    dy^j(D_0 A)(dx_i) = y^j A x_i = A_{ji}.
+    dy^j(D_0 A)(dx_i) = y^j A x_i = A_{ij}.
   $$
   Hence "$D_0A = A$" under the identification of $T_0^n \isom \IR^n$ given by the canonical basis $dx_i$.
 
+* Coordinate representation. In coordinates $x^i,x_i$ on $\IR^n$ and $y^j,y_j$ on $\IR^m$ we have:
+  $$
+    D_0 \vphi 
+    = D_0( (\sum_j y_j \circ y^j) \circ \vphi(  \sum_i x_i \circ x^i ) )
+    = \sum_{j} D_0 y_j \circ D_0(y^j \circ \vphi) \circ D_0( \sum_i x_i \circ x^i )
+  $$
+  $$
+    = \sum_{i,j} D_0 y_j \circ D_0(y^j \circ \vphi \circ x_i) \circ D_0(x^i)
+  $$
+  $$
+    = \sum_{i,j} \frac{\del \vphi^j}{\del x^i}(0) \cdot  dy_j \circ dx^i
+  $$
+  Where we used the canonical identifications $dx_i = (D_0 x_i)(e \del_t)$, $dx^i = D_0 x^i$.
+  Also note that, while $\vphi$ is not linear, the derivative $D_0 \vphi$ is linear and we can
+  "pull-out" summation in step 3. 
 
-* In coordinates $x^i$ on $\IR^n$ and $y^j$ on $\IR^m$ we have
-  $$
-    D_0 \vphi = D_0
-  $$
+## Implicit Functions
+
+**Germs of Functions.** The category $G$ of germs of $C^\infty$-spaces has objects $\IR^n_{,0}$ for $n \in \IN_0$ and morphisms germs of $C^\infty$-functions:
+$$ Mor(\IR^n_{,0},\IR^m_{,0}) = \lim_{\lra} \Set{ C^\infty_0(U, \IR^m) }{ 0 \in U \subset \IR^n },  $$
+where $C^\infty_0(U, \IR^m)$ is the set of $C^\infty$-functions $\IR^n \ra \IR^m$ mapping $0$ to $0$.
+Composition of functions descends to an associative composition operations on $G$.
+
+* Every function $\vphi: \IR^n \ra \IR^m$ with $\vphi(0) = 0$ defines a germ $\vphi \in Mor(\IR^n_{,0},\IR^m_{,0})$.
+
+* Elements in $Mor(\IR^n_{,0},\IR^m_{,0})$ are represented by functions $\vphi: U \ra \IR^n$ defined in an
+  open neighborhood $U$ of $0 \in \IR^n$.
+
+* Germs $\vphi \in Mor(\IR^n_{,0},\IR^m_{,0})$ induce algebra morphisms $\vphi^*: \AINF^m \ra \AINF^n$.
+
+**Theorem (Inverese Functions).** If $\vphi: \IR^n_{,0} \ra \IR^n_{,0}$ is a function germ, then
+$\vphi$ is invertible as a germ if $D_0 \vphi$ is invertible as a linear endomorphism of $T_0$. 
+In this case $D_0 \vphi^{-1} = (D_0\vphi)^{-1}$.
+
+**Theorem (Implicit Function).** If $a \in \AINF^n$ is a function with $a(0) = 0$, $da \neq 0$, then $\AINF^n / a \AINF^n \isom \AINF^{n-1}$.
+
+More precisely, if $dx_1[a] \neq 0$ then $\pi: \IR^{n} \ra \IR^{n-1}, (x_1,\dots,x_n) n\mapsto (x_2, \dots, x_n)$ induces an isomorphism $\pi^*: \AINF^{n-1} \ra \AINF^n / a$.
+
+**Proof** Assume that $dx_1[a] \neq 0$, by the inverse function theorem, the germ $a \circ x_1: \IR^1_{,0} \ra \IR^1_{,0}$ is invertible
 
 
-* In coordinates we $y^1, \dots, y^m$ on $\IR^m$, have
-  $$
-    \vphi^* dy^j
-    = d y^j \circ \vphi
-    = \sum_i e \del_i^x [y^j \circ \vphi] \cdot dx^i
-    = \sum_i e \del_i^x \vphi^\*[y^j] \cdot dx^i.
-  $$
-  and
-  $$
-    \vphi_\* (e \del_i^x) [b]
-    = e \del_i[b \circ \vphi]
-    = \sum_j e \del_i^x [ y^j \circ \vphi] \cdot e \del_j^y[b]
-    = \sum_j e \del_i^x \vphi^\*[y^j] \cdot e \del_j^y[b]
-  $$
+and let $a = \sum_i x_i a_i$ be a Hadamard representation.
+We have $dx_1 a = a_1(0) \neq 0$, hence $a(1)$ is invertible and we can write $x_1 = a/a(1) - \sum_{i>1}x_i a_i \in \AINF^n$.
+
+To construct an inverse to $\pi^*$, we map $b \in \AINF^n$ to $(x_2)$
 
 
-### Invariant Theory
+## Invariant Theory
 
 **Group Action.** 
 Let $\mathrm{Diff}_0^n$ be the group of local diffeomorphisms of $\IR^n$.

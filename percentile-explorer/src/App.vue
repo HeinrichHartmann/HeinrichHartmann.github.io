@@ -2,6 +2,7 @@
   IDEAS/TODO:
   * Add support for NaN value -> ignored samples
   * Link percentile sliders to selection
+  * Use web-service worker for computation
  -->
 <script setup>
 /* eslint-disable */
@@ -31,8 +32,8 @@ const ref_iqr = ref(1);
 const ref_moments = ref("");
 const ref_error = ref("OK");
 const ref_percentiles = ref("");
-const ref_percentile = ref(50);
-const ref_percentile_2 = ref(50);
+const ref_percentile = ref(25);
+const ref_percentile_2 = ref(75);
 
 var svg_ax = null;
 var svg_hist_ax = null;
@@ -95,13 +96,15 @@ var pct_tmp = {};
 const ref_pct_sel = ref({
   left :  { x : 0, v : 0, p : 0 },
   right : { x : 0, v : 0, p : 0 },
-  width: 0,
 });
 
-function pct_mode_adv(ev) {
+function pct_width() {
+  return ref_pct_sel.value["right"]["x"] - ref_pct_sel.value["left"]["x"];
+}
+
+function hist_click(ev) {
     pct_mode = (pct_mode + 1) % 3;
     if (pct_mode == 1) {
-      ref_pct_sel.value["width"] = 0;
       let x = d3.pointer(ev, svg_ax.node())[0];
       pct_update(x);
     }
@@ -110,9 +113,8 @@ function pct_mode_adv(ev) {
     }
 }
 
-function pct_setup() {
-  d3.select("#x-svg").on("mousemove", (ev) => pct_update(d3.pointer(ev, svg_ax.node())[0]));
-  d3.select("#x-svg").on("click", pct_mode_adv)
+function hist_mousemove(ev) {
+   pct_update(d3.pointer(ev, svg_ax.node())[0]);
 }
 
 function pct_update(x) {
@@ -137,14 +139,12 @@ function pct_update(x) {
     ref_pct_sel.value["right"]["x"] = x;
     ref_pct_sel.value["right"]["v"] = v;
     ref_pct_sel.value["right"]["p"] = p;
-    ref_pct_sel.value["width"] = x - pct_tmp["x"];
     if (pct_shift) {
       let w = x - pct_tmp["x"];
       let wv = v - pct_tmp["v"];
       ref_pct_sel.value["left"]["x"] = pct_tmp["x"] - w;
       ref_pct_sel.value["left"]["v"] = pct_tmp["v"] - wv;
       ref_pct_sel.value["left"]["p"] = data_cdf(ref_pct_sel.value["left"]["v"]) * 100;
-      ref_pct_sel.value["width"] = 2*w;
     }
   }
 }
@@ -157,17 +157,16 @@ function pct_data_update() {
   }
   update(ref_pct_sel.value["left"]);
   update(ref_pct_sel.value["right"]);
-  ref_pct_sel.value["width"] = ref_pct_sel.value["right"]["x"] - ref_pct_sel.value["left"]["x"];
 }
 
 function update_percentile() { // slider
   const p = Number(ref_percentile.value);
   const v = data_quantile_sorted(p / 100);
   const x = svg_hist_ax(v);
+  pct_mode = 1;
   ref_pct_sel.value["left"]["x"] = x;
   ref_pct_sel.value["left"]["v"] = v;
   ref_pct_sel.value["left"]["p"] = p;
-  ref_pct_sel.value["width"] = ref_pct_sel.value["right"]["x"] - x;
 }
 
 function update_percentile_2() { // slider
@@ -177,7 +176,6 @@ function update_percentile_2() { // slider
   ref_pct_sel.value["right"]["x"] = x;
   ref_pct_sel.value["right"]["v"] = v;
   ref_pct_sel.value["right"]["p"] = p;
-  ref_pct_sel.value["width"] =  x - ref_pct_sel.value["left"]["x"];
 }
 
 /*
@@ -367,7 +365,6 @@ onMounted(() => {
   parse_url();
   
   histogram_setup();
-  pct_setup();
   data_reset();
 
   plot_histogram();
@@ -382,7 +379,9 @@ onMounted(() => {
 
    <div id="x-d3">
     <svg id="x-svg" :width="`${width + svg_margin.left + svg_margin.right}`"
-      :height="`${height + svg_margin.top + svg_margin.bottom}`">
+      :height="`${height + svg_margin.top + svg_margin.bottom}`"
+      @click="hist_click"  @mousemove="hist_mousemove"
+      >
       <g id="x-ax" :transform="`translate(${svg_margin.left},${svg_margin.top})`">
         <text :x="`${width}`" :y="`${height + 40}`" text-anchor="end" style="dominant-baseline:hanging">Iteration {{
             sim_count
@@ -392,12 +391,12 @@ onMounted(() => {
           <line x1="0" x2="0" y1="0" :y2="`${height}`" class="bar"></line>
           <text x="-3" y="20" text-anchor="end">{{ `${ref_pct_sel.left.p.toFixed(1)}% ←` }}</text>
           <text x="0" :y="`${height + 20}`" text-anchor="middle" style="dominant-baseline:hanging">{{ `${ref_pct_sel.left.v.toFixed(3)}` }}</text>
-          <rect x="0" y="0" :width="`${ref_pct_sel.width}`" :height="`${height}`" fill="#3332"></rect>
-          <line :x1="`${ref_pct_sel.width}`" :x2="`${ref_pct_sel.width}`" y1="0" :y2="`${height}`" class="bar"></line>
-          <text :x="`${ref_pct_sel.width + 3}`" y="20">{{ `→ ${(100 - ref_pct_sel.right.p).toFixed(1)}%` }}</text>
-          <text :x="`${ref_pct_sel.width}`" :y="`${height + 20}`" text-anchor="middle" style="dominant-baseline:hanging">{{ ref_pct_sel.right.v.toFixed(3) }}</text>
-          <text :x="`${ref_pct_sel.width / 2}`" y="20" text-anchor="middle" :display="ref_pct_sel.width < 50 ? 'none' : 'block'" >{{ `← ${( ref_pct_sel.right.p - ref_pct_sel.left.p ).toFixed(1)}% →` }}</text>
-          <text :x="`${ref_pct_sel.width / 2}`" :y="`${height + 40}`" text-anchor="middle" style="dominant-baseline:hanging" :display="ref_pct_sel.width < 50 ? 'none' : 'block'">{{ `← ${ Math.abs(ref_pct_sel.left.v.toFixed(3) - ref_pct_sel.right.v.toFixed(3)).toFixed(3)} →` }}</text>
+          <rect x="0" y="0" :width="`${pct_width()}`" :height="`${height}`" fill="#3332"></rect>
+          <line :x1="`${pct_width()}`" :x2="`${pct_width()}`" y1="0" :y2="`${height}`" class="bar"></line>
+          <text :x="`${pct_width() + 3}`" y="20">{{ `→ ${(100 - ref_pct_sel.right.p).toFixed(1)}%` }}</text>
+          <text :x="`${pct_width()}`" :y="`${height + 20}`" text-anchor="middle" style="dominant-baseline:hanging">{{ ref_pct_sel.right.v.toFixed(3) }}</text>
+          <text :x="`${pct_width() / 2}`" y="20" text-anchor="middle" :display="pct_width() < 50 ? 'none' : 'block'" >{{ `← ${( ref_pct_sel.right.p - ref_pct_sel.left.p ).toFixed(1)}% →` }}</text>
+          <text :x="`${pct_width() / 2}`" :y="`${height + 40}`" text-anchor="middle" style="dominant-baseline:hanging" :display="pct_width() < 50 ? 'none' : 'block'">{{ `← ${ Math.abs(ref_pct_sel.left.v.toFixed(3) - ref_pct_sel.right.v.toFixed(3)).toFixed(3)} →` }}</text>
         </g>
       </g>
     </svg>
