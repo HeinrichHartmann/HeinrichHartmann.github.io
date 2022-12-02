@@ -3,10 +3,19 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
     <loc>/</loc>
-    <lastmod>2022-04-15T00:00:00+00:00</lastmod>
+    <lastmod>2022-07-09T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>/tags/post-math/</loc>
+    <lastmod>2022-07-09T00:00:00+00:00</lastmod>
   </url><url>
     <loc>/posts/</loc>
-    <lastmod>2022-04-15T00:00:00+00:00</lastmod>
+    <lastmod>2022-07-09T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>/tags/</loc>
+    <lastmod>2022-07-09T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>/posts/2022-07-09-smooth-local-functions/</loc>
+    <lastmod>2022-07-09T00:00:00+00:00</lastmod>
   </url><url>
     <loc>/posts/writing/</loc>
     <lastmod>2022-04-15T00:00:00+00:00</lastmod>
@@ -17,13 +26,7 @@
     <loc>/tags/nix-post/</loc>
     <lastmod>2021-08-08T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>/tags/</loc>
-    <lastmod>2021-08-08T00:00:00+00:00</lastmod>
-  </url><url>
     <loc>/posts/2021-03-08-rank-decomposition/</loc>
-    <lastmod>2021-03-08T00:00:00+00:00</lastmod>
-  </url><url>
-    <loc>/tags/post-math/</loc>
     <lastmod>2021-03-08T00:00:00+00:00</lastmod>
   </url><url>
     <loc>/posts/new/</loc>
@@ -40,6 +43,9 @@
   </url><url>
     <loc>/about/</loc>
     <lastmod>2021-02-01T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>/consulting/</loc>
+    <lastmod>2021-01-01T00:00:00+00:00</lastmod>
   </url><url>
     <loc>/posts/crash/</loc>
     <lastmod>2020-05-27T00:00:00+00:00</lastmod>
