@@ -22,7 +22,7 @@ style: markdown
 
 - 7 years+ of experience in the SRE Space & Observability space
 - PhD in Mathematics
-- Publications
+- Talks and Publications
   - [CACM Vol. 59 No. 7](
 ) – Statistics for Engineers - Applying statistical techniques to operations data
   - [Monitorama PDX, 2016](
@@ -31,6 +31,7 @@ style: markdown
 ) – Circonus Design (Failures) Case Study
   - Training [Statistics for Engineers](
 ) at various conferences including SRECon 22, 19, 18, 17, 16, 15.
+  - [more](https://www.heinrichhartmann.com/#talk)
 
 ### Testimonials
 
