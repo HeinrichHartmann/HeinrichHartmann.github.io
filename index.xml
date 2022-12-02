@@ -90,10 +90,10 @@ Dr. Heinrich Hartmann Am Bökel 3 32351 Stemwede Telefonnummer: +49 1525 3638134
     
     <item>
       <title>Consulting</title>
-      <link>/consulting/</link>
+      <link>/consulting-2/</link>
       <pubDate>Fri, 01 Jan 2021 00:00:00 +0000</pubDate>
       
-      <guid>/consulting/</guid>
+      <guid>/consulting-2/</guid>
       <description>Services   Consulting on SRE and Observability Topics
   Establishing SRE Practices including SLOs, PostMortems &amp;amp; running WORMS.
   Training “Statistics for Engineers”, teaching best practices in analyzing telemetry data.
