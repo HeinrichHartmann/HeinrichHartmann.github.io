@@ -15,8 +15,7 @@ style: markdown
 
 * Training “Statistics for Engineers”, teaching best practices in analyzing telemetry data.
 
-* Improvement of existing applications and infrastructure to improve observability, operability and debugability.
-
+* Improvement of existing infrastructure and applications and infrastructure to improve observability.
 
 ### Credentials
 

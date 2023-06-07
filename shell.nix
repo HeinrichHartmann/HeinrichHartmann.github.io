@@ -10,7 +10,7 @@ mkShell {
     hugo
     # /latency with mkdocs
     python3
-    python3Packages.poetry
+    poetry
     nodejs
   ];
 }

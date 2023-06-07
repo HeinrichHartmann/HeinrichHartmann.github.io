@@ -1,6 +1,5 @@
 install: pyproject.toml
 	poetry install
-	touch $@
 
 build: install
 	poetry run mkdocs build
