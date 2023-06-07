@@ -1,0 +1,38 @@
+#!/bin/bash
+#: Title : mkpost
+#: Date : 2018-10-11
+#: Author : "Heinrich Hartmann" <heinrich@heinrichhartmann.com>
+#: Version : 0.0.1
+
+set -o errexit   # Exit script on first error.
+set -o nounset   # Treat references to unset variables as errors. 
+set -o pipefail  # Use the first non-zero exit code for pipes.
+set -o noclobber # Don't overwrite files with >
+
+TITLE="$*"
+FTITLE="${TITLE// /-}"
+FILE="_posts/$(date +%Y-%m-%d)-$FTITLE.md"
+
+if [[ -z $TITLE ]];
+then
+  echo "No title provided"
+  exit 1
+fi
+
+
+if [[ ! -e ".dir-mark-6f8ac0e6-3b82-49d9-8910-f88b6b7926fc" ]];
+then
+  echo "Did not find directory marker. Are you in the project root?"
+  exit 1
+fi
+
+cat _posts/2000-01-01-Example.md \
+    | sed "s/@TITLE@/$TITLE/g" \
+    > "$FILE"
+
+echo "$FILE"
+
+# Local Variables:
+# mode: shell-script
+# End:
+

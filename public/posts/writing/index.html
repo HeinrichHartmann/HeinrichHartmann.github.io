@@ -1,0 +1,1540 @@
+<!DOCTYPE html>
+<html lang="en-us">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title>Writing for Engineers</title>
+	
+	
+	
+  
+  <link rel="icon" type="image/png" href="/favicon.png">
+  <style>
+    
+   header a {
+  text-align: center;
+  width: 100%;
+  font-family: Helvetica, arial, sans-serif;
+  font-size: 20px;
+  color: #a00;
+  font-weight: bold;
+  margin-top: 2em;
+  text-decoration: none;
+  display: block;
+}
+
+header a {
+  color: #00a;
+}
+
+header a:hover {
+  color: black;
+}
+
+header a:visited {
+  color: #a00;
+}
+
+.sticker {
+  color:red;
+  display: block;
+  border-style:solid !important;
+  border-color:red !important;
+  border-radius:0.2em !important;
+  border-width: 3px !important;
+  padding: 0px !important;
+  text-align: center !important;
+  margin-top: 50px !important;
+  margin-bottom: 50px !important;
+}
+
+    
+   /* Background */ .chroma { background-color: #f8f8f8 }
+/* Other */ .chroma .x { color: #000000 }
+/* Error */ .chroma .err { color: #a40000 }
+/* LineTableTD */ .chroma .lntd { vertical-align: top; padding: 0; margin: 0; border: 0; }
+/* LineTable */ .chroma .lntable { border-spacing: 0; padding: 0; margin: 0; border: 0; width: auto; overflow: auto; display: block; }
+/* LineHighlight */ .chroma .hl { display: block; width: 100%;background-color: #ffffcc }
+/* LineNumbersTable */ .chroma .lnt { margin-right: 0.4em; padding: 0 0.4em 0 0.4em;color: #7f7f7f }
+/* LineNumbers */ .chroma .ln { margin-right: 0.4em; padding: 0 0.4em 0 0.4em;color: #7f7f7f }
+/* Keyword */ .chroma .k { color: #204a87; font-weight: bold }
+/* KeywordConstant */ .chroma .kc { color: #204a87; font-weight: bold }
+/* KeywordDeclaration */ .chroma .kd { color: #204a87; font-weight: bold }
+/* KeywordNamespace */ .chroma .kn { color: #204a87; font-weight: bold }
+/* KeywordPseudo */ .chroma .kp { color: #204a87; font-weight: bold }
+/* KeywordReserved */ .chroma .kr { color: #204a87; font-weight: bold }
+/* KeywordType */ .chroma .kt { color: #204a87; font-weight: bold }
+/* Name */ .chroma .n { color: #000000 }
+/* NameAttribute */ .chroma .na { color: #c4a000 }
+/* NameBuiltin */ .chroma .nb { color: #204a87 }
+/* NameBuiltinPseudo */ .chroma .bp { color: #3465a4 }
+/* NameClass */ .chroma .nc { color: #000000 }
+/* NameConstant */ .chroma .no { color: #000000 }
+/* NameDecorator */ .chroma .nd { color: #5c35cc; font-weight: bold }
+/* NameEntity */ .chroma .ni { color: #ce5c00 }
+/* NameException */ .chroma .ne { color: #cc0000; font-weight: bold }
+/* NameFunction */ .chroma .nf { color: #000000 }
+/* NameFunctionMagic */ .chroma .fm { color: #000000 }
+/* NameLabel */ .chroma .nl { color: #f57900 }
+/* NameNamespace */ .chroma .nn { color: #000000 }
+/* NameOther */ .chroma .nx { color: #000000 }
+/* NameProperty */ .chroma .py { color: #000000 }
+/* NameTag */ .chroma .nt { color: #204a87; font-weight: bold }
+/* NameVariable */ .chroma .nv { color: #000000 }
+/* NameVariableClass */ .chroma .vc { color: #000000 }
+/* NameVariableGlobal */ .chroma .vg { color: #000000 }
+/* NameVariableInstance */ .chroma .vi { color: #000000 }
+/* NameVariableMagic */ .chroma .vm { color: #000000 }
+/* Literal */ .chroma .l { color: #000000 }
+/* LiteralDate */ .chroma .ld { color: #000000 }
+/* LiteralString */ .chroma .s { color: #4e9a06 }
+/* LiteralStringAffix */ .chroma .sa { color: #4e9a06 }
+/* LiteralStringBacktick */ .chroma .sb { color: #4e9a06 }
+/* LiteralStringChar */ .chroma .sc { color: #4e9a06 }
+/* LiteralStringDelimiter */ .chroma .dl { color: #4e9a06 }
+/* LiteralStringDoc */ .chroma .sd { color: #8f5902; font-style: italic }
+/* LiteralStringDouble */ .chroma .s2 { color: #4e9a06 }
+/* LiteralStringEscape */ .chroma .se { color: #4e9a06 }
+/* LiteralStringHeredoc */ .chroma .sh { color: #4e9a06 }
+/* LiteralStringInterpol */ .chroma .si { color: #4e9a06 }
+/* LiteralStringOther */ .chroma .sx { color: #4e9a06 }
+/* LiteralStringRegex */ .chroma .sr { color: #4e9a06 }
+/* LiteralStringSingle */ .chroma .s1 { color: #4e9a06 }
+/* LiteralStringSymbol */ .chroma .ss { color: #4e9a06 }
+/* LiteralNumber */ .chroma .m { color: #0000cf; font-weight: bold }
+/* LiteralNumberBin */ .chroma .mb { color: #0000cf; font-weight: bold }
+/* LiteralNumberFloat */ .chroma .mf { color: #0000cf; font-weight: bold }
+/* LiteralNumberHex */ .chroma .mh { color: #0000cf; font-weight: bold }
+/* LiteralNumberInteger */ .chroma .mi { color: #0000cf; font-weight: bold }
+/* LiteralNumberIntegerLong */ .chroma .il { color: #0000cf; font-weight: bold }
+/* LiteralNumberOct */ .chroma .mo { color: #0000cf; font-weight: bold }
+/* Operator */ .chroma .o { color: #ce5c00; font-weight: bold }
+/* OperatorWord */ .chroma .ow { color: #204a87; font-weight: bold }
+/* Punctuation */ .chroma .p { color: #000000; font-weight: bold }
+/* Comment */ .chroma .c { color: #8f5902; font-style: italic }
+/* CommentHashbang */ .chroma .ch { color: #8f5902; font-style: italic }
+/* CommentMultiline */ .chroma .cm { color: #8f5902; font-style: italic }
+/* CommentSingle */ .chroma .c1 { color: #8f5902; font-style: italic }
+/* CommentSpecial */ .chroma .cs { color: #8f5902; font-style: italic }
+/* CommentPreproc */ .chroma .cp { color: #8f5902; font-style: italic }
+/* CommentPreprocFile */ .chroma .cpf { color: #8f5902; font-style: italic }
+/* Generic */ .chroma .g { color: #000000 }
+/* GenericDeleted */ .chroma .gd { color: #a40000 }
+/* GenericEmph */ .chroma .ge { color: #000000; font-style: italic }
+/* GenericError */ .chroma .gr { color: #ef2929 }
+/* GenericHeading */ .chroma .gh { color: #000080; font-weight: bold }
+/* GenericInserted */ .chroma .gi { color: #00a000 }
+/* GenericOutput */ .chroma .go { color: #000000; font-style: italic }
+/* GenericPrompt */ .chroma .gp { color: #8f5902 }
+/* GenericStrong */ .chroma .gs { color: #000000; font-weight: bold }
+/* GenericSubheading */ .chroma .gu { color: #800080; font-weight: bold }
+/* GenericTraceback */ .chroma .gt { color: #a40000; font-weight: bold }
+/* GenericUnderline */ .chroma .gl { color: #000000; text-decoration: underline }
+/* TextWhitespace */ .chroma .w { color: #f8f8f8; text-decoration: underline }
+
+   
+      
+     .markdown-container {
+  width: 48em;
+  margin-right: auto;
+  margin-left: auto;
+  box-sizing: border-box;
+  padding: 45px 45px 5px 45px;
+}
+
+
+/**
+ * Responsive
+ **/
+@media only screen and (max-width: 48em) {
+    .markdown-container {
+        text-align: left;
+        width: 100%;
+        margin: 0;
+        margin-top: 3em;
+        padding: 0.1em;
+    }
+}
+
+.markdown-container:after {
+  display:table;
+  clear:both;
+}
+.markdown-container:before {
+  display:table;
+  content:" ";
+}
+
+.markdown-body .octicon {
+  display: inline-block;
+  fill: currentColor;
+  vertical-align: text-bottom;
+}
+
+.markdown-body .anchor {
+  float: left;
+  line-height: 1;
+  margin-left: -20px;
+  padding-right: 4px;
+}
+
+.markdown-body .anchor:focus {
+  outline: none;
+}
+
+.markdown-body h1 .octicon-link,
+.markdown-body h2 .octicon-link,
+.markdown-body h3 .octicon-link,
+.markdown-body h4 .octicon-link,
+.markdown-body h5 .octicon-link,
+.markdown-body h6 .octicon-link {
+  color: #1b1f23;
+  vertical-align: middle;
+  visibility: hidden;
+}
+
+.markdown-body h1:hover .anchor,
+.markdown-body h2:hover .anchor,
+.markdown-body h3:hover .anchor,
+.markdown-body h4:hover .anchor,
+.markdown-body h5:hover .anchor,
+.markdown-body h6:hover .anchor {
+  text-decoration: none;
+}
+
+.markdown-body h1:hover .anchor .octicon-link,
+.markdown-body h2:hover .anchor .octicon-link,
+.markdown-body h3:hover .anchor .octicon-link,
+.markdown-body h4:hover .anchor .octicon-link,
+.markdown-body h5:hover .anchor .octicon-link,
+.markdown-body h6:hover .anchor .octicon-link {
+  visibility: visible;
+}
+
+.markdown-body h1:hover .anchor .octicon-link:before,
+.markdown-body h2:hover .anchor .octicon-link:before,
+.markdown-body h3:hover .anchor .octicon-link:before,
+.markdown-body h4:hover .anchor .octicon-link:before,
+.markdown-body h5:hover .anchor .octicon-link:before,
+.markdown-body h6:hover .anchor .octicon-link:before {
+  width: 16px;
+  height: 16px;
+  content: ' ';
+  display: inline-block;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' version='1.1' width='16' height='16' aria-hidden='true'%3E%3Cpath fill-rule='evenodd' d='M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z'%3E%3C/path%3E%3C/svg%3E");
+}.markdown-body {
+  -ms-text-size-adjust: 100%;
+  -webkit-text-size-adjust: 100%;
+  line-height: 1.5;
+  color: #24292e;
+  font-family: -apple-system,BlinkMacSystemFont,Segoe UI,Helvetica,Arial,sans-serif,Apple Color Emoji,Segoe UI Emoji;
+  font-size: 16px;
+  line-height: 1.5;
+  word-wrap: break-word;
+}
+
+.markdown-body details {
+  display: block;
+}
+
+.markdown-body summary {
+  display: list-item;
+}
+
+.markdown-body a {
+  background-color: initial;
+}
+
+.markdown-body a:active,
+.markdown-body a:hover {
+  outline-width: 0;
+}
+
+.markdown-body strong {
+  font-weight: inherit;
+  font-weight: bolder;
+}
+
+.markdown-body h1 {
+  font-size: 2em;
+  margin: .67em 0;
+}
+
+.markdown-body img {
+  border-style: none;
+}
+
+.markdown-body code,
+.markdown-body kbd,
+.markdown-body pre {
+  font-family: monospace,monospace;
+  font-size: 1em;
+}
+
+.markdown-body hr {
+  box-sizing: initial;
+  height: 0;
+  overflow: visible;
+}
+
+.markdown-body input {
+  font: inherit;
+  margin: 0;
+}
+
+.markdown-body input {
+  overflow: visible;
+}
+
+.markdown-body [type=checkbox] {
+  box-sizing: border-box;
+  padding: 0;
+}
+
+.markdown-body * {
+  box-sizing: border-box;
+}
+
+.markdown-body input {
+  font-family: inherit;
+  font-size: inherit;
+  line-height: inherit;
+}
+
+.markdown-body a {
+  color: #0366d6;
+  text-decoration: none;
+}
+
+.markdown-body a:hover {
+  text-decoration: underline;
+}
+
+.markdown-body strong {
+  font-weight: 600;
+}
+
+.markdown-body hr {
+  height: 0;
+  margin: 15px 0;
+  overflow: hidden;
+  background: transparent;
+  border: 0;
+  border-bottom: 1px solid #dfe2e5;
+}
+
+.markdown-body hr:after,
+.markdown-body hr:before {
+  display: table;
+  content: "";
+}
+
+.markdown-body hr:after {
+  clear: both;
+}
+
+.markdown-body table {
+  border-spacing: 0;
+  border-collapse: collapse;
+}
+
+.markdown-body td,
+.markdown-body th {
+  padding: 0;
+}
+
+.markdown-body details summary {
+  cursor: pointer;
+}
+
+.markdown-body kbd {
+  display: inline-block;
+  padding: 3px 5px;
+  font: 11px SFMono-Regular,Consolas,Liberation Mono,Menlo,monospace;
+  line-height: 10px;
+  color: #444d56;
+  vertical-align: middle;
+  background-color: #fafbfc;
+  border: 1px solid #d1d5da;
+  border-radius: 3px;
+  box-shadow: inset 0 -1px 0 #d1d5da;
+}
+
+.markdown-body h1,
+.markdown-body h2,
+.markdown-body h3,
+.markdown-body h4,
+.markdown-body h5,
+.markdown-body h6 {
+  margin-top: 0;
+  margin-bottom: 0;
+}
+
+.markdown-body h1 {
+  font-size: 32px;
+}
+
+.markdown-body h1,
+.markdown-body h2 {
+  font-weight: 600;
+}
+
+.markdown-body h2 {
+  font-size: 24px;
+}
+
+.markdown-body h3 {
+  font-size: 20px;
+}
+
+.markdown-body h3,
+.markdown-body h4 {
+  font-weight: 600;
+}
+
+.markdown-body h4 {
+  font-size: 16px;
+}
+
+.markdown-body h5 {
+  font-size: 14px;
+}
+
+.markdown-body h5,
+.markdown-body h6 {
+  font-weight: 600;
+}
+
+.markdown-body h6 {
+  font-size: 12px;
+}
+
+.markdown-body p {
+  margin-top: 0;
+  margin-bottom: 10px;
+}
+
+.markdown-body blockquote {
+  margin: 0;
+}
+
+.markdown-body ol,
+.markdown-body ul {
+  padding-left: 0;
+  margin-top: 0;
+  margin-bottom: 0;
+}
+
+.markdown-body ol ol,
+.markdown-body ul ol {
+  list-style-type: lower-roman;
+}
+
+.markdown-body ol ol ol,
+.markdown-body ol ul ol,
+.markdown-body ul ol ol,
+.markdown-body ul ul ol {
+  list-style-type: lower-alpha;
+}
+
+.markdown-body dd {
+  margin-left: 0;
+}
+
+.markdown-body code,
+.markdown-body pre {
+  font-family: SFMono-Regular,Consolas,Liberation Mono,Menlo,monospace;
+  font-size: 12px;
+}
+
+.markdown-body pre {
+  margin-top: 0;
+  margin-bottom: 0;
+}
+
+.markdown-body input::-webkit-inner-spin-button,
+.markdown-body input::-webkit-outer-spin-button {
+  margin: 0;
+  -webkit-appearance: none;
+  appearance: none;
+}
+
+.markdown-body :checked+.radio-label {
+  position: relative;
+  z-index: 1;
+  border-color: #0366d6;
+}
+
+.markdown-body .border {
+  border: 1px solid #e1e4e8!important;
+}
+
+.markdown-body .border-0 {
+  border: 0!important;
+}
+
+.markdown-body .border-bottom {
+  border-bottom: 1px solid #e1e4e8!important;
+}
+
+.markdown-body .rounded-1 {
+  border-radius: 3px!important;
+}
+
+.markdown-body .bg-white {
+  background-color: #fff!important;
+}
+
+.markdown-body .bg-gray-light {
+  background-color: #fafbfc!important;
+}
+
+.markdown-body .text-gray-light {
+  color: #6a737d!important;
+}
+
+.markdown-body .mb-0 {
+  margin-bottom: 0!important;
+}
+
+.markdown-body .my-2 {
+  margin-top: 8px!important;
+  margin-bottom: 8px!important;
+}
+
+.markdown-body .pl-0 {
+  padding-left: 0!important;
+}
+
+.markdown-body .py-0 {
+  padding-top: 0!important;
+  padding-bottom: 0!important;
+}
+
+.markdown-body .pl-1 {
+  padding-left: 4px!important;
+}
+
+.markdown-body .pl-2 {
+  padding-left: 8px!important;
+}
+
+.markdown-body .py-2 {
+  padding-top: 8px!important;
+  padding-bottom: 8px!important;
+}
+
+.markdown-body .pl-3,
+.markdown-body .px-3 {
+  padding-left: 16px!important;
+}
+
+.markdown-body .px-3 {
+  padding-right: 16px!important;
+}
+
+.markdown-body .pl-4 {
+  padding-left: 24px!important;
+}
+
+.markdown-body .pl-5 {
+  padding-left: 32px!important;
+}
+
+.markdown-body .pl-6 {
+  padding-left: 40px!important;
+}
+
+.markdown-body .f6 {
+  font-size: 12px!important;
+}
+
+.markdown-body .lh-condensed {
+  line-height: 1.25!important;
+}
+
+.markdown-body .text-bold {
+  font-weight: 600!important;
+}
+
+.markdown-body .pl-c {
+  color: #6a737d;
+}
+
+.markdown-body .pl-c1,
+.markdown-body .pl-s .pl-v {
+  color: #005cc5;
+}
+
+.markdown-body .pl-e,
+.markdown-body .pl-en {
+  color: #6f42c1;
+}
+
+.markdown-body .pl-s .pl-s1,
+.markdown-body .pl-smi {
+  color: #24292e;
+}
+
+.markdown-body .pl-ent {
+  color: #22863a;
+}
+
+.markdown-body .pl-k {
+  color: #d73a49;
+}
+
+.markdown-body .pl-pds,
+.markdown-body .pl-s,
+.markdown-body .pl-s .pl-pse .pl-s1,
+.markdown-body .pl-sr,
+.markdown-body .pl-sr .pl-cce,
+.markdown-body .pl-sr .pl-sra,
+.markdown-body .pl-sr .pl-sre {
+  color: #032f62;
+}
+
+.markdown-body .pl-smw,
+.markdown-body .pl-v {
+  color: #e36209;
+}
+
+.markdown-body .pl-bu {
+  color: #b31d28;
+}
+
+.markdown-body .pl-ii {
+  color: #fafbfc;
+  background-color: #b31d28;
+}
+
+.markdown-body .pl-c2 {
+  color: #fafbfc;
+  background-color: #d73a49;
+}
+
+.markdown-body .pl-c2:before {
+  content: "^M";
+}
+
+.markdown-body .pl-sr .pl-cce {
+  font-weight: 700;
+  color: #22863a;
+}
+
+.markdown-body .pl-ml {
+  color: #735c0f;
+}
+
+.markdown-body .pl-mh,
+.markdown-body .pl-mh .pl-en,
+.markdown-body .pl-ms {
+  font-weight: 700;
+  color: #005cc5;
+}
+
+.markdown-body .pl-mi {
+  font-style: italic;
+  color: #24292e;
+}
+
+.markdown-body .pl-mb {
+  font-weight: 700;
+  color: #24292e;
+}
+
+.markdown-body .pl-md {
+  color: #b31d28;
+  background-color: #ffeef0;
+}
+
+.markdown-body .pl-mi1 {
+  color: #22863a;
+  background-color: #f0fff4;
+}
+
+.markdown-body .pl-mc {
+  color: #e36209;
+  background-color: #ffebda;
+}
+
+.markdown-body .pl-mi2 {
+  color: #f6f8fa;
+  background-color: #005cc5;
+}
+
+.markdown-body .pl-mdr {
+  font-weight: 700;
+  color: #6f42c1;
+}
+
+.markdown-body .pl-ba {
+  color: #586069;
+}
+
+.markdown-body .pl-sg {
+  color: #959da5;
+}
+
+.markdown-body .pl-corl {
+  text-decoration: underline;
+  color: #032f62;
+}
+
+.markdown-body .mb-0 {
+  margin-bottom: 0!important;
+}
+
+.markdown-body .my-2 {
+  margin-bottom: 8px!important;
+}
+
+.markdown-body .my-2 {
+  margin-top: 8px!important;
+}
+
+.markdown-body .pl-0 {
+  padding-left: 0!important;
+}
+
+.markdown-body .py-0 {
+  padding-top: 0!important;
+  padding-bottom: 0!important;
+}
+
+.markdown-body .pl-1 {
+  padding-left: 4px!important;
+}
+
+.markdown-body .pl-2 {
+  padding-left: 8px!important;
+}
+
+.markdown-body .py-2 {
+  padding-top: 8px!important;
+  padding-bottom: 8px!important;
+}
+
+.markdown-body .pl-3 {
+  padding-left: 16px!important;
+}
+
+.markdown-body .pl-4 {
+  padding-left: 24px!important;
+}
+
+.markdown-body .pl-5 {
+  padding-left: 32px!important;
+}
+
+.markdown-body .pl-6 {
+  padding-left: 40px!important;
+}
+
+.markdown-body .pl-7 {
+  padding-left: 48px!important;
+}
+
+.markdown-body .pl-8 {
+  padding-left: 64px!important;
+}
+
+.markdown-body .pl-9 {
+  padding-left: 80px!important;
+}
+
+.markdown-body .pl-10 {
+  padding-left: 96px!important;
+}
+
+.markdown-body .pl-11 {
+  padding-left: 112px!important;
+}
+
+.markdown-body .pl-12 {
+  padding-left: 128px!important;
+}
+
+.markdown-body hr {
+  border-bottom-color: #eee;
+}
+
+.markdown-body kbd {
+  display: inline-block;
+  padding: 3px 5px;
+  font: 11px SFMono-Regular,Consolas,Liberation Mono,Menlo,monospace;
+  line-height: 10px;
+  color: #444d56;
+  vertical-align: middle;
+  background-color: #fafbfc;
+  border: 1px solid #d1d5da;
+  border-radius: 3px;
+  box-shadow: inset 0 -1px 0 #d1d5da;
+}
+
+.markdown-body:after,
+.markdown-body:before {
+  display: table;
+  content: "";
+}
+
+.markdown-body:after {
+  clear: both;
+}
+
+.markdown-body>:first-child {
+  margin-top: 0!important;
+}
+
+.markdown-body>:last-child {
+  margin-bottom: 0!important;
+}
+
+.markdown-body a:not([href]) {
+  color: inherit;
+  text-decoration: none;
+}
+
+.markdown-body blockquote,
+.markdown-body details,
+.markdown-body dl,
+.markdown-body ol,
+.markdown-body p,
+.markdown-body pre,
+.markdown-body table,
+.markdown-body ul {
+  margin-top: 0;
+  margin-bottom: 16px;
+}
+
+.markdown-body hr {
+  height: .25em;
+  padding: 0;
+  margin: 24px 0;
+  background-color: #e1e4e8;
+  border: 0;
+}
+
+.markdown-body blockquote {
+  padding: 0 1em;
+  color: #6a737d;
+  border-left: .25em solid #dfe2e5;
+}
+
+.markdown-body blockquote>:first-child {
+  margin-top: 0;
+}
+
+.markdown-body blockquote>:last-child {
+  margin-bottom: 0;
+}
+
+.markdown-body h1,
+.markdown-body h2,
+.markdown-body h3,
+.markdown-body h4,
+.markdown-body h5,
+.markdown-body h6 {
+  margin-top: 24px;
+  margin-bottom: 16px;
+  font-weight: 600;
+  line-height: 1.25;
+}
+
+.markdown-body h1 {
+  font-size: 2em;
+}
+
+.markdown-body h1,
+.markdown-body h2 {
+  padding-bottom: .3em;
+  border-bottom: 1px solid #eaecef;
+}
+
+.markdown-body h2 {
+  font-size: 1.5em;
+}
+
+.markdown-body h3 {
+  font-size: 1.25em;
+}
+
+.markdown-body h4 {
+  font-size: 1em;
+}
+
+.markdown-body h5 {
+  font-size: .875em;
+}
+
+.markdown-body h6 {
+  font-size: .85em;
+  color: #6a737d;
+}
+
+.markdown-body ol,
+.markdown-body ul {
+  padding-left: 2em;
+}
+
+.markdown-body ol ol,
+.markdown-body ol ul,
+.markdown-body ul ol,
+.markdown-body ul ul {
+  margin-top: 0;
+  margin-bottom: 0;
+}
+
+.markdown-body li {
+  word-wrap: break-all;
+}
+
+.markdown-body li>p {
+  margin-top: 16px;
+}
+
+.markdown-body li+li {
+  margin-top: .25em;
+}
+
+.markdown-body dl {
+  padding: 0;
+}
+
+.markdown-body dl dt {
+  padding: 0;
+  margin-top: 16px;
+  font-size: 1em;
+  font-style: italic;
+  font-weight: 600;
+}
+
+.markdown-body dl dd {
+  padding: 0 16px;
+  margin-bottom: 16px;
+}
+
+.markdown-body table {
+  display: block;
+  width: 100%;
+  overflow: auto;
+}
+
+.markdown-body table th {
+  font-weight: 600;
+}
+
+.markdown-body table td,
+.markdown-body table th {
+  padding: 6px 13px;
+  border: 1px solid #dfe2e5;
+}
+
+.markdown-body table tr {
+  background-color: #fff;
+  border-top: 1px solid #c6cbd1;
+}
+
+.markdown-body table tr:nth-child(2n) {
+  background-color: #f6f8fa;
+}
+
+.markdown-body img {
+  max-width: 100%;
+  box-sizing: initial;
+  background-color: #fff;
+}
+
+.markdown-body img[align=right] {
+  padding-left: 20px;
+}
+
+.markdown-body img[align=left] {
+  padding-right: 20px;
+}
+
+.markdown-body code {
+  padding: .2em .4em;
+  margin: 0;
+  font-size: 85%;
+  background-color: rgba(27,31,35,.05);
+  border-radius: 3px;
+}
+
+.markdown-body pre {
+  word-wrap: normal;
+}
+
+.markdown-body pre>code {
+  padding: 0;
+  margin: 0;
+  font-size: 100%;
+  word-break: normal;
+  white-space: pre;
+  background: transparent;
+  border: 0;
+}
+
+.markdown-body .highlight {
+  margin-bottom: 16px;
+}
+
+.markdown-body .highlight pre {
+  margin-bottom: 0;
+  word-break: normal;
+}
+
+.markdown-body .highlight pre,
+.markdown-body pre {
+  padding: 16px;
+  overflow: auto;
+  font-size: 85%;
+  line-height: 1.45;
+  background-color: #f6f8fa;
+  border-radius: 3px;
+}
+
+.markdown-body pre code {
+  display: inline;
+  max-width: auto;
+  padding: 0;
+  margin: 0;
+  overflow: visible;
+  line-height: inherit;
+  word-wrap: normal;
+  background-color: initial;
+  border: 0;
+}
+
+.markdown-body .commit-tease-sha {
+  display: inline-block;
+  font-family: SFMono-Regular,Consolas,Liberation Mono,Menlo,monospace;
+  font-size: 90%;
+  color: #444d56;
+}
+
+.markdown-body .full-commit .btn-outline:not(:disabled):hover {
+  color: #005cc5;
+  border-color: #005cc5;
+}
+
+.markdown-body .blob-wrapper {
+  overflow-x: auto;
+  overflow-y: hidden;
+}
+
+.markdown-body .blob-wrapper-embedded {
+  max-height: 240px;
+  overflow-y: auto;
+}
+
+.markdown-body .blob-num {
+  width: 1%;
+  min-width: 50px;
+  padding-right: 10px;
+  padding-left: 10px;
+  font-family: SFMono-Regular,Consolas,Liberation Mono,Menlo,monospace;
+  font-size: 12px;
+  line-height: 20px;
+  color: rgba(27,31,35,.3);
+  text-align: right;
+  white-space: nowrap;
+  vertical-align: top;
+  cursor: pointer;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+.markdown-body .blob-num:hover {
+  color: rgba(27,31,35,.6);
+}
+
+.markdown-body .blob-num:before {
+  content: attr(data-line-number);
+}
+
+.markdown-body .blob-code {
+  position: relative;
+  padding-right: 10px;
+  padding-left: 10px;
+  line-height: 20px;
+  vertical-align: top;
+}
+
+.markdown-body .blob-code-inner {
+  overflow: visible;
+  font-family: SFMono-Regular,Consolas,Liberation Mono,Menlo,monospace;
+  font-size: 12px;
+  color: #24292e;
+  word-wrap: normal;
+  white-space: pre;
+}
+
+.markdown-body .pl-token.active,
+.markdown-body .pl-token:hover {
+  cursor: pointer;
+  background: #ffea7f;
+}
+
+.markdown-body .tab-size[data-tab-size="1"] {
+  -moz-tab-size: 1;
+  tab-size: 1;
+}
+
+.markdown-body .tab-size[data-tab-size="2"] {
+  -moz-tab-size: 2;
+  tab-size: 2;
+}
+
+.markdown-body .tab-size[data-tab-size="3"] {
+  -moz-tab-size: 3;
+  tab-size: 3;
+}
+
+.markdown-body .tab-size[data-tab-size="4"] {
+  -moz-tab-size: 4;
+  tab-size: 4;
+}
+
+.markdown-body .tab-size[data-tab-size="5"] {
+  -moz-tab-size: 5;
+  tab-size: 5;
+}
+
+.markdown-body .tab-size[data-tab-size="6"] {
+  -moz-tab-size: 6;
+  tab-size: 6;
+}
+
+.markdown-body .tab-size[data-tab-size="7"] {
+  -moz-tab-size: 7;
+  tab-size: 7;
+}
+
+.markdown-body .tab-size[data-tab-size="8"] {
+  -moz-tab-size: 8;
+  tab-size: 8;
+}
+
+.markdown-body .tab-size[data-tab-size="9"] {
+  -moz-tab-size: 9;
+  tab-size: 9;
+}
+
+.markdown-body .tab-size[data-tab-size="10"] {
+  -moz-tab-size: 10;
+  tab-size: 10;
+}
+
+.markdown-body .tab-size[data-tab-size="11"] {
+  -moz-tab-size: 11;
+  tab-size: 11;
+}
+
+.markdown-body .tab-size[data-tab-size="12"] {
+  -moz-tab-size: 12;
+  tab-size: 12;
+}
+
+.markdown-body .task-list-item {
+  list-style-type: none;
+}
+
+.markdown-body .task-list-item+.task-list-item {
+  margin-top: 3px;
+}
+
+.markdown-body .task-list-item input {
+  margin: 0 .2em .25em -1.6em;
+  vertical-align: middle;
+}
+
+/* Center inline tweets */
+.twitter-tweet {
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.Box-header {
+  display: flex !important;
+  padding: 16px;
+  padding-top: 16px;
+  padding-bottom: 16px;
+  margin: -1px -1px 0;
+  background-color: #f6f8fa;
+  border: 1px solid #d1d5da;
+  border-top-left-radius: 3px;
+  border-top-right-radius: 3px;
+}
+
+.markdown-frame {
+  border: 1px solid #ddd;
+  border-radius: 3px;
+}
+
+   
+  </style>
+</head>
+<body>
+	<header>
+	<a href="/">HeinrichHartmann.com</a>
+</header>
+
+	
+  <main class="markdown-container">
+    <article class="markdown-body">
+      
+      <h1>Writing for Engineers</h1>
+      <p class="meta" style="color:#aaa; float:right">
+         Stemwede, 
+        2022-04-15
+        
+      </p>
+      <div style="clear:both">
+	<p><em>This article is available as <a href="https://gist.github.com/longfin/a54f29d866b2deff2e872aeafd4c0f56">Korean-</a> (thanks to <a href="https://github.com/longfin">longfin</a>) and <a href="https://www.yuque.com/serviceup/misc/cn-writing-for-engineers">Chineese-</a> (thanks to <a href="https://github.com/webup">webup</a>) translation.</em></p>
+<p>Writing is key to have impact in large organizations. As a senior software
+engineer chances are that writing is the most important skill you have to
+acquire in order to increase your scope beyond the team and advance your career.</p>
+<p>Writing is hard. Many Software engineers struggle with writing. Personally I
+never had an intrinsic interest in literature, so writing did not naturally come
+to me either. I have spent days and weeks agonizing and procrastinating around
+larger writing tasks. And to this day, having pressure to produce high-quality
+documents on a deadline gives me nightmares.</p>
+<p>This article contains some learnings that have helped me (and others) to become
+better and more productive as a writer over the past 15 years. I am sharing them
+in the hope, that you find them useful. However, don&rsquo;t think that I am always
+able to follow this advice myself 😅. I still have a lot to learn.</p>
+<p><strong>Outline</strong></p>
+<nav id="TableOfContents">
+  <ul>
+    <li><a href="#before-you-begin">Before you begin</a>
+      <ul>
+        <li><a href="#have-something-to-say">Have something to say</a></li>
+        <li><a href="#dont-confuse-writing-and-learning">Don&rsquo;t confuse writing and learning</a></li>
+        <li><a href="#know-your-audience">Know your audience</a></li>
+        <li><a href="#respect-your-state-of-mind">Respect your state-of-mind</a></li>
+        <li><a href="#work-the-iron-while-its-hot">Work the iron while it&rsquo;s hot</a></li>
+        <li><a href="#heat-the-iron-before-working-it">Heat the iron before working it</a></li>
+      </ul>
+    </li>
+    <li><a href="#while-writing">While writing</a>
+      <ul>
+        <li><a href="#start-at-the-top-not-the-beginning">Start at the Top not the Beginning</a></li>
+        <li><a href="#fix-the-story-line-before-fleshing-things-out">Fix the story-line before fleshing things out</a></li>
+        <li><a href="#finish-the-content-before-starting-to-polish">Finish the content before starting to polish</a></li>
+        <li><a href="#make-your-text-skimable">Make your text skimable</a></li>
+        <li><a href="#provide-summary-sections">Provide Summary Sections</a></li>
+      </ul>
+    </li>
+    <li><a href="#the-practice-of-writing">The Practice of Writing</a>
+      <ul>
+        <li><a href="#keep-writing">Keep Writing</a></li>
+        <li><a href="#leverage-small-writing-tasks-as-exercise">Leverage small writing tasks as exercise</a></li>
+        <li><a href="#get-early-feedback-on-your-outline">Get early feedback on your outline</a></li>
+        <li><a href="#circulate-drafts-of-the-text-to-the-selected-audience">Circulate drafts of the text to the selected audience</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav>
+
+<h2 id="before-you-begin">Before you begin</h2>
+<h3 id="have-something-to-say">Have something to say</h3>
+<p>This statement seems obvious, but turns out to be a problem surprisingly often.
+<strong>The goal of writing is to deliver a message to an audience in an effective
+way.</strong> If you don&rsquo;t have a good message, you will struggle to write something
+useful.</p>
+<blockquote>
+<p>During my time at University, I was tasked multiple times with writing long
+reporting documents for EU projects. This was terrible experience, because the
+main goal was to look good and fill pages. Generally, I had a good idea of the
+domain, but did not have a clear message or sufficient depth. For me, this made
+it incredibly hard to write anything. Thinking about this now, I think
+<a href="https://en.wikipedia.org/wiki/GPT-3">GPT-3</a> would be amazing at writing EU
+Project reports.</p>
+</blockquote>
+<blockquote>
+<p>One of my most successful <a href="https://www.circonus.com/2018/08/latency-slos-done-right/">blog
+posts</a> (that led to a
+<a href="https://archive.fosdem.org/2019/schedule/event/latency_slos_done_right/">series</a>
+<a href="https://www.usenix.org/conference/srecon19asia/presentation/schlossnagle-latency">of</a>
+<a href="https://www.usenix.org/conference/srecon19americas/presentation/moyer">talks</a>
+on the topic) was written over the course of 3 hours in a hotel room, and
+published the next day. It was a followup to a discussion that I had on that
+same day with a few Google SREs at SRECon EMEA 2018. I knew what I wanted to
+say. I knew who I wanted to reach. That made writing the post super easy.</p>
+</blockquote>
+<p>If you don&rsquo;t have a clear message in your head, your are not ready to start
+writing a narrative yet. You have other things to do first: Research the topic
+and find your message. It&rsquo;s important to realize that these are different tasks.
+They may involve writing in the form of note-taking or journaling, but this is
+not material you would directly use in the final document.</p>
+<h3 id="dont-confuse-writing-and-learning">Don&rsquo;t confuse writing and learning</h3>
+<p>The realization that you don&rsquo;t have the complete message in your head, will
+often only become apparent while writing. This surfaces as inability to find a
+good punch-line or to express yourself clearly. In fact, writing is a great test
+to see if you have a good understanding of a topic, and have a firm grasp on the
+vocabulary of the domain. There is a saying that:</p>
+<blockquote>
+<p>Writing is god&rsquo;s way to show you how imperfect your thoughts are.</p>
+</blockquote>
+<p>And similarly:</p>
+<blockquote>
+<p>An argument is only half as good once you are uttering it.</p>
+</blockquote>
+<p>If you run into this problem, it means that you are learning things. Writing is
+generally a great way to learn, but one has to realize that you are doing it.
+Learning is a slow process and requires patience. It is not helped much by
+agonizing in front of a screen, trying to squeeze out another sentence. Doing
+more research on the topic by reading a book, blog or paper and taking notes may
+be a better time investment.</p>
+<h3 id="know-your-audience">Know your audience</h3>
+<p>The better you know and understand your audience the easier it will be to reach
+the goal of delivering a message to them. The intended audience of the text
+influences the terminology you can use, the context you can assume and the
+writing style (casual/formal).</p>
+<p>When writing an article, I generally <strong>visualize a concrete person as
+representative of the audience</strong>, that I am directing this text towards. This
+will usually also be the first person, that will get a draft to read. It&rsquo;s
+generally much easier to tell a story &ldquo;to someone&rdquo; as opposed to talking into
+the void.</p>
+<blockquote>
+<p>Most of my <a href="/#math">#math</a> posts on this blog are actually lacking a good
+audience. They are only readable for people who are proficient in abstract
+mathematics, but they are only interesting for people working in software. The
+intersection of both groups is tiny. Hence I don&rsquo;t expect a lot of resonance or
+impact with those. They are documenting things that I wanted to learn myself.</p>
+</blockquote>
+<h3 id="respect-your-state-of-mind">Respect your state-of-mind</h3>
+<p>Writing requires intense focus over long periods of time. Ideally you want to
+get into a flow state where you are zoned in and working on the text for hours
+on-end. This is by far the most efficient way to write a narrative or a
+blog-post &ndash; at least for me.</p>
+<p><strong>Prepare for a writing task, like you would for a hike. You are in for a grind.</strong>
+Find a comfortable space to sit. Grab a beverage/snack of your preference. Most
+importantly make sure that you are rested and able to focus. Don&rsquo;t start a
+writing task when you are already tired. There is no way you will get anything
+useful written.</p>
+<p>Also, avoid distractions as much as you can. Most importantly: Mute the Chat.
+Block at least 3h in your calendar for a writing session. If I am writing longer
+documents for work, I will try to block a full afternoon. For me, the most
+effective writing sessions happen on weekends or vacations where I don&rsquo;t have
+any meetings at all.</p>
+<h3 id="work-the-iron-while-its-hot">Work the iron while it&rsquo;s hot</h3>
+<p>Just like programming, writing requires a lot of context that you hold in your
+short term memory. You need to recall a lot of details about the topic you are
+writing about, as well as your punch-line and the current state of the document.
+All this state takes time to load into memory, and is easily lost by
+distractions or context switching.</p>
+<p>If you have loaded a lot of useful context in your brain at any given point in
+time, use this context to do something useful with it. Try to milk that moment,
+and make space when you realize you are in a position to write effectively on
+your topic.</p>
+<h3 id="heat-the-iron-before-working-it">Heat the iron before working it</h3>
+<p>Conversely, if you don&rsquo;t have the context in your brain right now, you have
+two options (1) don&rsquo;t write or (2) start loading the context into your brain.</p>
+<p>Missing context is a frequent source of agony and procrastination. Don&rsquo;t expect
+to take a TODO like &ldquo;Write conference talk&rdquo; from your list, and start working on
+it right way. You need to invest time into loading context before you have a
+chance to write even a single sentence.</p>
+<p>Good ways to load some context are:</p>
+<ol>
+<li>Go through your notes that you took about the topic.</li>
+<li>Discuss the topic with a coworker / random stranger / family member.</li>
+<li>Read some books / blogs / papers on the topic.</li>
+</ol>
+<p>Bad ways to load the context are surfing HackerNews or YouTube.</p>
+<h2 id="while-writing">While writing</h2>
+<h3 id="start-at-the-top-not-the-beginning">Start at the Top not the Beginning</h3>
+<p>This is by far the most common and damaging mistake I see people make. They
+start with writing at the beginning of the narrative:</p>
+<blockquote>
+<p>&ldquo;Once upon a time, in a galaxy far, far away &hellip;&rdquo;</p>
+</blockquote>
+<p>Do you really think that those were the first words that George Lucas brought
+to paper, when writing the original Star Wars trilogy?</p>
+<p>For documents that are more than a page long you must take a top-down approach
+and start with an <strong>outline</strong>. An outline is a list of sections together with
+rough notes, often in the form of bullet points. For this document the <a href="https://github.com/HeinrichHartmann/HeinrichHartmann.github.io/commit/46be4c95faeda16996baf6799eca8a551b282565">first
+outline</a> looked something like this:</p>
+<pre tabindex="0"><code># How to Write?
+
+- Audience: Senior+ SWE
+- Goal: Upskill and unblock writing
+
+## Have something to say
+
+- Goal: Deliver message to audience.
+- Without message writing is agony: Squeezing a water from a stone.
+
+## Know your audience
+
+## Work the iron while it&#39;s hot
+
+- Be aware of your brain context
+- Start/Stay on task, if you have the right context
+- Load context before you start
+
+## Separate Editing, Publishing and Writing
+
+- If you are fiddling with git/emacs before starting to write,
+  you are doing something wrong.
+  
+...
+</code></pre><p>Note that, the section titles are not just generic scaffolding (e.g.
+&ldquo;Introduction&rdquo; / &ldquo;Body&rdquo; / &ldquo;Conclusion&rdquo;) but already tell the whole story.</p>
+<h3 id="fix-the-story-line-before-fleshing-things-out">Fix the story-line before fleshing things out</h3>
+<p>When building a house, you finish the brick-work before applying the paint. When
+writing, you want to arrive at a good story-line for you document, before you
+start fleshing out and polishing the text. A outline should be the
+first milestone for any larger document you are writing. The outline, should
+convey the main message and provide a clear &ldquo;red thread&rdquo; that guides your reader
+through your argument.</p>
+<blockquote>
+<p>When working for <a href="https://www.mckinsey.com/">a consulting firm</a>, I saw my
+senior colleagues spending a lot of time polishing and iterating the structure
+of their slide decks before working on the details. They would print the deck on
+paper, pin the slides to a wall, and keep re-arranging them until they were
+happy with the story-line. The slides would remain on the wall and subject to
+re-arrangement until the deck was finalized.</p>
+</blockquote>
+<p>Fixing the story-line of a document becomes MUCH more expensive once you have
+already fleshed out the paragraphs. In some cases, the best thing you can do
+is to stash away the whole content and go back to an outline before building
+the document up again.</p>
+<h3 id="finish-the-content-before-starting-to-polish">Finish the content before starting to polish</h3>
+<p>A trap I have found myself in way too many times, is to get distracted by
+adjacent tasks that are not needed to produce the narrative. Those tasks
+include:</p>
+<ol>
+<li><strong>Editing</strong>. Fixing spelling, wording or restructuring paragraphs.</li>
+<li><strong>Publishing</strong>. Fiddling with formatting, tuning WordPress, automating your
+git+hugo+heroku deployments.</li>
+<li><strong>Producing Figures</strong>. Sketching figures on paper or browsing the web for
+images that you can use in your presentation.</li>
+</ol>
+<p>Remember: <strong>The first milestone for your document is an outline. Everything that
+is not directly contributing to this goal is a distraction.</strong></p>
+<p>When you are happy with the outline, <strong>the second milestone is a fully fleshed
+out text, where all notes have been converted to paragraphs.</strong> The text should
+cover the intended content but does not need to be polished or well written.</p>
+<p>Once you are at this point, you start worrying about polish: Remove typos,
+improve wording, restructure paragraphs. Also work on figures and publishing can
+be delayed to this point without any problems.</p>
+<h3 id="make-your-text-skimable">Make your text skimable</h3>
+<p>According to <a href="https://www.towermarketing.net/blog/winning-the-fight-against-a-website-users-attention-span/">someone on the
+internet</a>:</p>
+<blockquote>
+<p>Eight seconds. A website user’s attention span lies somewhere around eight seconds.</p>
+</blockquote>
+<p>In these eight seconds, your document has to reveal enough value to the user,
+that he/she is willing to invest more time into actually reading the document.</p>
+<p>If you want your voice to be heard (and also improve the
+<a href="https://www.amazon.com/Dont-Make-Think-Revisited-Usability/dp/0321965515/ref=pd_sbs_sccl_1/142-5208579-0665727?pd_rd_w=IgY9h&amp;pf_rd_p=3676f086-9496-4fd7-8490-77cf7f43f846&amp;pf_rd_r=CGY8ZQY3T7ESSFA4W7RD&amp;pd_rd_r=a1baa3bd-3e30-402a-afe2-9d01086d2fc5&amp;pd_rd_wg=eMOQZ&amp;pd_rd_i=0321965515&amp;psc=1">usability</a>
+of your text) you have to design your document for &ldquo;skim-ability&rdquo;. You do this
+by providing anchor points that allow the user to gauge the content without
+actually reading it. You want the outline and key arguments to keep standing out
+in the final version of the document.</p>
+<p>Section Headings and Lists are the key anchor points you want to use to reach
+this goal. Also Figures, Quotes and Highlights are features that stand out and
+grab attention while skimming.</p>
+<blockquote>
+<p>If you are writing a slide-deck, a good approach to ensure skim-ability is the
+use of Action Titles. Action Titles are slide titles that summarize the content
+of a slide in a complete sentence. By doing this you allow the reader to get the
+gist of your document by just reading the titles. This highly annoying guy on
+the internet does a fine job of explaining the concept
+<a href="https://youtu.be/rSk11YqnXoc?t=131">here</a> and ideas around it.</p>
+</blockquote>
+<h3 id="provide-summary-sections">Provide Summary Sections</h3>
+<p>Summary sections are commonly found in document templates and academic writing.
+They are usability features, that provide a high-level overview about the
+content for readers in a hurry. Expect that a large fraction of your audience
+will only read a summary.</p>
+<ul>
+<li>
+<p><strong>Abstract</strong> / <strong>Executive Summary</strong> / <strong>TL;DR</strong>. This section summarizes the
+content of the document, deliberately duplicating information. It&rsquo;s generally
+the first section of your document, and is intended for reader that has not
+yet read the document. A good abstract describes context, motivates the
+problem summarizes the findings but also leaves some suspension to motivate
+further reading.</p>
+</li>
+<li>
+<p><strong>Conclusion.</strong> This section also summarizes the content and is hence similar
+to an abstract. The difference is that it is the last section in your
+document, focuses on the outcomes and is deliberately referencing back to the
+content. The basic idea is that the reader had read the document before he/she
+arrives there, but this is in practice almost never the case.</p>
+</li>
+</ul>
+<p>It&rsquo;s important to note that these summary sections are independent of the main
+story line, and are hence an artifact that can be prepared independently.
+Generally, I would recommend to start working on summary sections (like
+Abstract/Conclusion) last, since only then will you be certain what your
+document actually covers.</p>
+<h2 id="the-practice-of-writing">The Practice of Writing</h2>
+<h3 id="keep-writing">Keep Writing</h3>
+<p>The only way to improve your writing is by writing. As with practice in general,
+valuing quantity over quality is generally a good idea. Developing a writing
+muscle, and writing relatively short medium quality documents every week will
+make you a much better writer than crafting highly polished documents once a
+year.</p>
+<blockquote>
+<p>My English teacher in school used to say: &ldquo;Writing. Only writing brings
+blessing.&rdquo; I did not think much about this slogan, but it was catchy enough to
+stick with me. Now I consider it a deep truth, and keep it at the top of my
+blog, as a reminder.</p>
+</blockquote>
+<h3 id="leverage-small-writing-tasks-as-exercise">Leverage small writing tasks as exercise</h3>
+<p>Most of the rules that apply to writing long-form documents like Tech
+Narratives, Blog Posts or Papers hold up for writing short documents like
+E-Mails or issue tickets. Use this documents to practice your writing skills, by
+make them well structured, usable and polished.</p>
+<h3 id="get-early-feedback-on-your-outline">Get early feedback on your outline</h3>
+<p>Once you have constructed an outline and polished the story-line you are at a
+great place to get initial feedback on your document. This allows you to uncover
+flaws in your story-line early, and make sure you are on-target with the
+content. Also, reading an outline is a very quick thing to do, so it will not
+take a lot of effort for your reviewer to go through your text.</p>
+<p>This is most important for long documents, that you are producing on request of
+a stakeholder (manager).</p>
+<h3 id="circulate-drafts-of-the-text-to-the-selected-audience">Circulate drafts of the text to the selected audience</h3>
+<p>Once you fleshed out the content, and did a first editing pass removing the most
+glaring grammar and spelling mistakes, you are at a good point to sent the
+document to a few selected members of the target audience.</p>
+<p>This practice has three benefits:</p>
+<ol>
+<li>You will get a pair of fresh eyes on the text that will at the very least
+catch a few grammar quirks that remained in the text.</li>
+<li>You take a break from working on the text yourself, until you received the
+feedback, allowing yourself to take a fresh look at your writing.</li>
+<li>You have an excuse to reach out to old friends that you had neglected for far
+too long.</li>
+</ol>
+<p>Hint: Don&rsquo;t forget to thank your reviewers in an &ldquo;Acknowledgements&rdquo; section.</p>
+<h1 id="acknowledgements">Acknowledgements</h1>
+<p>Thanks to my sister, Johanna Hartmann, and <a href="https://twitter.com/andrewhowdencom">Andrew
+Howden</a> for feedback on earlier versions of
+this document.</p>
+<h1 id="comments">Comments</h1>
+<script src="https://utteranc.es/client.js"
+        repo="HeinrichHartmann/comments"
+        issue-term="title"
+        label="Comment"
+        theme="github-light"
+        crossorigin="anonymous"
+        async>
+</script>
+
+      </div>
+    </article>
+  </main>
+
+	<footer style="float:right; margin: 20px auto 20px auto; color:#AAA">&copy; 2023 Heinrich Hartmann. All rights reserved.</footer>
+
+</body>
+
+</html>

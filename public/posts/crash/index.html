@@ -1,0 +1,1533 @@
+<!DOCTYPE html>
+<html lang="en-us">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title>Better Crash Reporting</title>
+	
+	
+	
+   <link rel="canonical" href="https://www.circonus.com/2020/05/better-crash-reporting/"/>   
+  <link rel="icon" type="image/png" href="/favicon.png">
+  <style>
+    
+   header a {
+  text-align: center;
+  width: 100%;
+  font-family: Helvetica, arial, sans-serif;
+  font-size: 20px;
+  color: #a00;
+  font-weight: bold;
+  margin-top: 2em;
+  text-decoration: none;
+  display: block;
+}
+
+header a {
+  color: #00a;
+}
+
+header a:hover {
+  color: black;
+}
+
+header a:visited {
+  color: #a00;
+}
+
+.sticker {
+  color:red;
+  display: block;
+  border-style:solid !important;
+  border-color:red !important;
+  border-radius:0.2em !important;
+  border-width: 3px !important;
+  padding: 0px !important;
+  text-align: center !important;
+  margin-top: 50px !important;
+  margin-bottom: 50px !important;
+}
+
+    
+   /* Background */ .chroma { background-color: #f8f8f8 }
+/* Other */ .chroma .x { color: #000000 }
+/* Error */ .chroma .err { color: #a40000 }
+/* LineTableTD */ .chroma .lntd { vertical-align: top; padding: 0; margin: 0; border: 0; }
+/* LineTable */ .chroma .lntable { border-spacing: 0; padding: 0; margin: 0; border: 0; width: auto; overflow: auto; display: block; }
+/* LineHighlight */ .chroma .hl { display: block; width: 100%;background-color: #ffffcc }
+/* LineNumbersTable */ .chroma .lnt { margin-right: 0.4em; padding: 0 0.4em 0 0.4em;color: #7f7f7f }
+/* LineNumbers */ .chroma .ln { margin-right: 0.4em; padding: 0 0.4em 0 0.4em;color: #7f7f7f }
+/* Keyword */ .chroma .k { color: #204a87; font-weight: bold }
+/* KeywordConstant */ .chroma .kc { color: #204a87; font-weight: bold }
+/* KeywordDeclaration */ .chroma .kd { color: #204a87; font-weight: bold }
+/* KeywordNamespace */ .chroma .kn { color: #204a87; font-weight: bold }
+/* KeywordPseudo */ .chroma .kp { color: #204a87; font-weight: bold }
+/* KeywordReserved */ .chroma .kr { color: #204a87; font-weight: bold }
+/* KeywordType */ .chroma .kt { color: #204a87; font-weight: bold }
+/* Name */ .chroma .n { color: #000000 }
+/* NameAttribute */ .chroma .na { color: #c4a000 }
+/* NameBuiltin */ .chroma .nb { color: #204a87 }
+/* NameBuiltinPseudo */ .chroma .bp { color: #3465a4 }
+/* NameClass */ .chroma .nc { color: #000000 }
+/* NameConstant */ .chroma .no { color: #000000 }
+/* NameDecorator */ .chroma .nd { color: #5c35cc; font-weight: bold }
+/* NameEntity */ .chroma .ni { color: #ce5c00 }
+/* NameException */ .chroma .ne { color: #cc0000; font-weight: bold }
+/* NameFunction */ .chroma .nf { color: #000000 }
+/* NameFunctionMagic */ .chroma .fm { color: #000000 }
+/* NameLabel */ .chroma .nl { color: #f57900 }
+/* NameNamespace */ .chroma .nn { color: #000000 }
+/* NameOther */ .chroma .nx { color: #000000 }
+/* NameProperty */ .chroma .py { color: #000000 }
+/* NameTag */ .chroma .nt { color: #204a87; font-weight: bold }
+/* NameVariable */ .chroma .nv { color: #000000 }
+/* NameVariableClass */ .chroma .vc { color: #000000 }
+/* NameVariableGlobal */ .chroma .vg { color: #000000 }
+/* NameVariableInstance */ .chroma .vi { color: #000000 }
+/* NameVariableMagic */ .chroma .vm { color: #000000 }
+/* Literal */ .chroma .l { color: #000000 }
+/* LiteralDate */ .chroma .ld { color: #000000 }
+/* LiteralString */ .chroma .s { color: #4e9a06 }
+/* LiteralStringAffix */ .chroma .sa { color: #4e9a06 }
+/* LiteralStringBacktick */ .chroma .sb { color: #4e9a06 }
+/* LiteralStringChar */ .chroma .sc { color: #4e9a06 }
+/* LiteralStringDelimiter */ .chroma .dl { color: #4e9a06 }
+/* LiteralStringDoc */ .chroma .sd { color: #8f5902; font-style: italic }
+/* LiteralStringDouble */ .chroma .s2 { color: #4e9a06 }
+/* LiteralStringEscape */ .chroma .se { color: #4e9a06 }
+/* LiteralStringHeredoc */ .chroma .sh { color: #4e9a06 }
+/* LiteralStringInterpol */ .chroma .si { color: #4e9a06 }
+/* LiteralStringOther */ .chroma .sx { color: #4e9a06 }
+/* LiteralStringRegex */ .chroma .sr { color: #4e9a06 }
+/* LiteralStringSingle */ .chroma .s1 { color: #4e9a06 }
+/* LiteralStringSymbol */ .chroma .ss { color: #4e9a06 }
+/* LiteralNumber */ .chroma .m { color: #0000cf; font-weight: bold }
+/* LiteralNumberBin */ .chroma .mb { color: #0000cf; font-weight: bold }
+/* LiteralNumberFloat */ .chroma .mf { color: #0000cf; font-weight: bold }
+/* LiteralNumberHex */ .chroma .mh { color: #0000cf; font-weight: bold }
+/* LiteralNumberInteger */ .chroma .mi { color: #0000cf; font-weight: bold }
+/* LiteralNumberIntegerLong */ .chroma .il { color: #0000cf; font-weight: bold }
+/* LiteralNumberOct */ .chroma .mo { color: #0000cf; font-weight: bold }
+/* Operator */ .chroma .o { color: #ce5c00; font-weight: bold }
+/* OperatorWord */ .chroma .ow { color: #204a87; font-weight: bold }
+/* Punctuation */ .chroma .p { color: #000000; font-weight: bold }
+/* Comment */ .chroma .c { color: #8f5902; font-style: italic }
+/* CommentHashbang */ .chroma .ch { color: #8f5902; font-style: italic }
+/* CommentMultiline */ .chroma .cm { color: #8f5902; font-style: italic }
+/* CommentSingle */ .chroma .c1 { color: #8f5902; font-style: italic }
+/* CommentSpecial */ .chroma .cs { color: #8f5902; font-style: italic }
+/* CommentPreproc */ .chroma .cp { color: #8f5902; font-style: italic }
+/* CommentPreprocFile */ .chroma .cpf { color: #8f5902; font-style: italic }
+/* Generic */ .chroma .g { color: #000000 }
+/* GenericDeleted */ .chroma .gd { color: #a40000 }
+/* GenericEmph */ .chroma .ge { color: #000000; font-style: italic }
+/* GenericError */ .chroma .gr { color: #ef2929 }
+/* GenericHeading */ .chroma .gh { color: #000080; font-weight: bold }
+/* GenericInserted */ .chroma .gi { color: #00a000 }
+/* GenericOutput */ .chroma .go { color: #000000; font-style: italic }
+/* GenericPrompt */ .chroma .gp { color: #8f5902 }
+/* GenericStrong */ .chroma .gs { color: #000000; font-weight: bold }
+/* GenericSubheading */ .chroma .gu { color: #800080; font-weight: bold }
+/* GenericTraceback */ .chroma .gt { color: #a40000; font-weight: bold }
+/* GenericUnderline */ .chroma .gl { color: #000000; text-decoration: underline }
+/* TextWhitespace */ .chroma .w { color: #f8f8f8; text-decoration: underline }
+
+   
+      
+     .markdown-container {
+  width: 48em;
+  margin-right: auto;
+  margin-left: auto;
+  box-sizing: border-box;
+  padding: 45px 45px 5px 45px;
+}
+
+
+/**
+ * Responsive
+ **/
+@media only screen and (max-width: 48em) {
+    .markdown-container {
+        text-align: left;
+        width: 100%;
+        margin: 0;
+        margin-top: 3em;
+        padding: 0.1em;
+    }
+}
+
+.markdown-container:after {
+  display:table;
+  clear:both;
+}
+.markdown-container:before {
+  display:table;
+  content:" ";
+}
+
+.markdown-body .octicon {
+  display: inline-block;
+  fill: currentColor;
+  vertical-align: text-bottom;
+}
+
+.markdown-body .anchor {
+  float: left;
+  line-height: 1;
+  margin-left: -20px;
+  padding-right: 4px;
+}
+
+.markdown-body .anchor:focus {
+  outline: none;
+}
+
+.markdown-body h1 .octicon-link,
+.markdown-body h2 .octicon-link,
+.markdown-body h3 .octicon-link,
+.markdown-body h4 .octicon-link,
+.markdown-body h5 .octicon-link,
+.markdown-body h6 .octicon-link {
+  color: #1b1f23;
+  vertical-align: middle;
+  visibility: hidden;
+}
+
+.markdown-body h1:hover .anchor,
+.markdown-body h2:hover .anchor,
+.markdown-body h3:hover .anchor,
+.markdown-body h4:hover .anchor,
+.markdown-body h5:hover .anchor,
+.markdown-body h6:hover .anchor {
+  text-decoration: none;
+}
+
+.markdown-body h1:hover .anchor .octicon-link,
+.markdown-body h2:hover .anchor .octicon-link,
+.markdown-body h3:hover .anchor .octicon-link,
+.markdown-body h4:hover .anchor .octicon-link,
+.markdown-body h5:hover .anchor .octicon-link,
+.markdown-body h6:hover .anchor .octicon-link {
+  visibility: visible;
+}
+
+.markdown-body h1:hover .anchor .octicon-link:before,
+.markdown-body h2:hover .anchor .octicon-link:before,
+.markdown-body h3:hover .anchor .octicon-link:before,
+.markdown-body h4:hover .anchor .octicon-link:before,
+.markdown-body h5:hover .anchor .octicon-link:before,
+.markdown-body h6:hover .anchor .octicon-link:before {
+  width: 16px;
+  height: 16px;
+  content: ' ';
+  display: inline-block;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' version='1.1' width='16' height='16' aria-hidden='true'%3E%3Cpath fill-rule='evenodd' d='M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z'%3E%3C/path%3E%3C/svg%3E");
+}.markdown-body {
+  -ms-text-size-adjust: 100%;
+  -webkit-text-size-adjust: 100%;
+  line-height: 1.5;
+  color: #24292e;
+  font-family: -apple-system,BlinkMacSystemFont,Segoe UI,Helvetica,Arial,sans-serif,Apple Color Emoji,Segoe UI Emoji;
+  font-size: 16px;
+  line-height: 1.5;
+  word-wrap: break-word;
+}
+
+.markdown-body details {
+  display: block;
+}
+
+.markdown-body summary {
+  display: list-item;
+}
+
+.markdown-body a {
+  background-color: initial;
+}
+
+.markdown-body a:active,
+.markdown-body a:hover {
+  outline-width: 0;
+}
+
+.markdown-body strong {
+  font-weight: inherit;
+  font-weight: bolder;
+}
+
+.markdown-body h1 {
+  font-size: 2em;
+  margin: .67em 0;
+}
+
+.markdown-body img {
+  border-style: none;
+}
+
+.markdown-body code,
+.markdown-body kbd,
+.markdown-body pre {
+  font-family: monospace,monospace;
+  font-size: 1em;
+}
+
+.markdown-body hr {
+  box-sizing: initial;
+  height: 0;
+  overflow: visible;
+}
+
+.markdown-body input {
+  font: inherit;
+  margin: 0;
+}
+
+.markdown-body input {
+  overflow: visible;
+}
+
+.markdown-body [type=checkbox] {
+  box-sizing: border-box;
+  padding: 0;
+}
+
+.markdown-body * {
+  box-sizing: border-box;
+}
+
+.markdown-body input {
+  font-family: inherit;
+  font-size: inherit;
+  line-height: inherit;
+}
+
+.markdown-body a {
+  color: #0366d6;
+  text-decoration: none;
+}
+
+.markdown-body a:hover {
+  text-decoration: underline;
+}
+
+.markdown-body strong {
+  font-weight: 600;
+}
+
+.markdown-body hr {
+  height: 0;
+  margin: 15px 0;
+  overflow: hidden;
+  background: transparent;
+  border: 0;
+  border-bottom: 1px solid #dfe2e5;
+}
+
+.markdown-body hr:after,
+.markdown-body hr:before {
+  display: table;
+  content: "";
+}
+
+.markdown-body hr:after {
+  clear: both;
+}
+
+.markdown-body table {
+  border-spacing: 0;
+  border-collapse: collapse;
+}
+
+.markdown-body td,
+.markdown-body th {
+  padding: 0;
+}
+
+.markdown-body details summary {
+  cursor: pointer;
+}
+
+.markdown-body kbd {
+  display: inline-block;
+  padding: 3px 5px;
+  font: 11px SFMono-Regular,Consolas,Liberation Mono,Menlo,monospace;
+  line-height: 10px;
+  color: #444d56;
+  vertical-align: middle;
+  background-color: #fafbfc;
+  border: 1px solid #d1d5da;
+  border-radius: 3px;
+  box-shadow: inset 0 -1px 0 #d1d5da;
+}
+
+.markdown-body h1,
+.markdown-body h2,
+.markdown-body h3,
+.markdown-body h4,
+.markdown-body h5,
+.markdown-body h6 {
+  margin-top: 0;
+  margin-bottom: 0;
+}
+
+.markdown-body h1 {
+  font-size: 32px;
+}
+
+.markdown-body h1,
+.markdown-body h2 {
+  font-weight: 600;
+}
+
+.markdown-body h2 {
+  font-size: 24px;
+}
+
+.markdown-body h3 {
+  font-size: 20px;
+}
+
+.markdown-body h3,
+.markdown-body h4 {
+  font-weight: 600;
+}
+
+.markdown-body h4 {
+  font-size: 16px;
+}
+
+.markdown-body h5 {
+  font-size: 14px;
+}
+
+.markdown-body h5,
+.markdown-body h6 {
+  font-weight: 600;
+}
+
+.markdown-body h6 {
+  font-size: 12px;
+}
+
+.markdown-body p {
+  margin-top: 0;
+  margin-bottom: 10px;
+}
+
+.markdown-body blockquote {
+  margin: 0;
+}
+
+.markdown-body ol,
+.markdown-body ul {
+  padding-left: 0;
+  margin-top: 0;
+  margin-bottom: 0;
+}
+
+.markdown-body ol ol,
+.markdown-body ul ol {
+  list-style-type: lower-roman;
+}
+
+.markdown-body ol ol ol,
+.markdown-body ol ul ol,
+.markdown-body ul ol ol,
+.markdown-body ul ul ol {
+  list-style-type: lower-alpha;
+}
+
+.markdown-body dd {
+  margin-left: 0;
+}
+
+.markdown-body code,
+.markdown-body pre {
+  font-family: SFMono-Regular,Consolas,Liberation Mono,Menlo,monospace;
+  font-size: 12px;
+}
+
+.markdown-body pre {
+  margin-top: 0;
+  margin-bottom: 0;
+}
+
+.markdown-body input::-webkit-inner-spin-button,
+.markdown-body input::-webkit-outer-spin-button {
+  margin: 0;
+  -webkit-appearance: none;
+  appearance: none;
+}
+
+.markdown-body :checked+.radio-label {
+  position: relative;
+  z-index: 1;
+  border-color: #0366d6;
+}
+
+.markdown-body .border {
+  border: 1px solid #e1e4e8!important;
+}
+
+.markdown-body .border-0 {
+  border: 0!important;
+}
+
+.markdown-body .border-bottom {
+  border-bottom: 1px solid #e1e4e8!important;
+}
+
+.markdown-body .rounded-1 {
+  border-radius: 3px!important;
+}
+
+.markdown-body .bg-white {
+  background-color: #fff!important;
+}
+
+.markdown-body .bg-gray-light {
+  background-color: #fafbfc!important;
+}
+
+.markdown-body .text-gray-light {
+  color: #6a737d!important;
+}
+
+.markdown-body .mb-0 {
+  margin-bottom: 0!important;
+}
+
+.markdown-body .my-2 {
+  margin-top: 8px!important;
+  margin-bottom: 8px!important;
+}
+
+.markdown-body .pl-0 {
+  padding-left: 0!important;
+}
+
+.markdown-body .py-0 {
+  padding-top: 0!important;
+  padding-bottom: 0!important;
+}
+
+.markdown-body .pl-1 {
+  padding-left: 4px!important;
+}
+
+.markdown-body .pl-2 {
+  padding-left: 8px!important;
+}
+
+.markdown-body .py-2 {
+  padding-top: 8px!important;
+  padding-bottom: 8px!important;
+}
+
+.markdown-body .pl-3,
+.markdown-body .px-3 {
+  padding-left: 16px!important;
+}
+
+.markdown-body .px-3 {
+  padding-right: 16px!important;
+}
+
+.markdown-body .pl-4 {
+  padding-left: 24px!important;
+}
+
+.markdown-body .pl-5 {
+  padding-left: 32px!important;
+}
+
+.markdown-body .pl-6 {
+  padding-left: 40px!important;
+}
+
+.markdown-body .f6 {
+  font-size: 12px!important;
+}
+
+.markdown-body .lh-condensed {
+  line-height: 1.25!important;
+}
+
+.markdown-body .text-bold {
+  font-weight: 600!important;
+}
+
+.markdown-body .pl-c {
+  color: #6a737d;
+}
+
+.markdown-body .pl-c1,
+.markdown-body .pl-s .pl-v {
+  color: #005cc5;
+}
+
+.markdown-body .pl-e,
+.markdown-body .pl-en {
+  color: #6f42c1;
+}
+
+.markdown-body .pl-s .pl-s1,
+.markdown-body .pl-smi {
+  color: #24292e;
+}
+
+.markdown-body .pl-ent {
+  color: #22863a;
+}
+
+.markdown-body .pl-k {
+  color: #d73a49;
+}
+
+.markdown-body .pl-pds,
+.markdown-body .pl-s,
+.markdown-body .pl-s .pl-pse .pl-s1,
+.markdown-body .pl-sr,
+.markdown-body .pl-sr .pl-cce,
+.markdown-body .pl-sr .pl-sra,
+.markdown-body .pl-sr .pl-sre {
+  color: #032f62;
+}
+
+.markdown-body .pl-smw,
+.markdown-body .pl-v {
+  color: #e36209;
+}
+
+.markdown-body .pl-bu {
+  color: #b31d28;
+}
+
+.markdown-body .pl-ii {
+  color: #fafbfc;
+  background-color: #b31d28;
+}
+
+.markdown-body .pl-c2 {
+  color: #fafbfc;
+  background-color: #d73a49;
+}
+
+.markdown-body .pl-c2:before {
+  content: "^M";
+}
+
+.markdown-body .pl-sr .pl-cce {
+  font-weight: 700;
+  color: #22863a;
+}
+
+.markdown-body .pl-ml {
+  color: #735c0f;
+}
+
+.markdown-body .pl-mh,
+.markdown-body .pl-mh .pl-en,
+.markdown-body .pl-ms {
+  font-weight: 700;
+  color: #005cc5;
+}
+
+.markdown-body .pl-mi {
+  font-style: italic;
+  color: #24292e;
+}
+
+.markdown-body .pl-mb {
+  font-weight: 700;
+  color: #24292e;
+}
+
+.markdown-body .pl-md {
+  color: #b31d28;
+  background-color: #ffeef0;
+}
+
+.markdown-body .pl-mi1 {
+  color: #22863a;
+  background-color: #f0fff4;
+}
+
+.markdown-body .pl-mc {
+  color: #e36209;
+  background-color: #ffebda;
+}
+
+.markdown-body .pl-mi2 {
+  color: #f6f8fa;
+  background-color: #005cc5;
+}
+
+.markdown-body .pl-mdr {
+  font-weight: 700;
+  color: #6f42c1;
+}
+
+.markdown-body .pl-ba {
+  color: #586069;
+}
+
+.markdown-body .pl-sg {
+  color: #959da5;
+}
+
+.markdown-body .pl-corl {
+  text-decoration: underline;
+  color: #032f62;
+}
+
+.markdown-body .mb-0 {
+  margin-bottom: 0!important;
+}
+
+.markdown-body .my-2 {
+  margin-bottom: 8px!important;
+}
+
+.markdown-body .my-2 {
+  margin-top: 8px!important;
+}
+
+.markdown-body .pl-0 {
+  padding-left: 0!important;
+}
+
+.markdown-body .py-0 {
+  padding-top: 0!important;
+  padding-bottom: 0!important;
+}
+
+.markdown-body .pl-1 {
+  padding-left: 4px!important;
+}
+
+.markdown-body .pl-2 {
+  padding-left: 8px!important;
+}
+
+.markdown-body .py-2 {
+  padding-top: 8px!important;
+  padding-bottom: 8px!important;
+}
+
+.markdown-body .pl-3 {
+  padding-left: 16px!important;
+}
+
+.markdown-body .pl-4 {
+  padding-left: 24px!important;
+}
+
+.markdown-body .pl-5 {
+  padding-left: 32px!important;
+}
+
+.markdown-body .pl-6 {
+  padding-left: 40px!important;
+}
+
+.markdown-body .pl-7 {
+  padding-left: 48px!important;
+}
+
+.markdown-body .pl-8 {
+  padding-left: 64px!important;
+}
+
+.markdown-body .pl-9 {
+  padding-left: 80px!important;
+}
+
+.markdown-body .pl-10 {
+  padding-left: 96px!important;
+}
+
+.markdown-body .pl-11 {
+  padding-left: 112px!important;
+}
+
+.markdown-body .pl-12 {
+  padding-left: 128px!important;
+}
+
+.markdown-body hr {
+  border-bottom-color: #eee;
+}
+
+.markdown-body kbd {
+  display: inline-block;
+  padding: 3px 5px;
+  font: 11px SFMono-Regular,Consolas,Liberation Mono,Menlo,monospace;
+  line-height: 10px;
+  color: #444d56;
+  vertical-align: middle;
+  background-color: #fafbfc;
+  border: 1px solid #d1d5da;
+  border-radius: 3px;
+  box-shadow: inset 0 -1px 0 #d1d5da;
+}
+
+.markdown-body:after,
+.markdown-body:before {
+  display: table;
+  content: "";
+}
+
+.markdown-body:after {
+  clear: both;
+}
+
+.markdown-body>:first-child {
+  margin-top: 0!important;
+}
+
+.markdown-body>:last-child {
+  margin-bottom: 0!important;
+}
+
+.markdown-body a:not([href]) {
+  color: inherit;
+  text-decoration: none;
+}
+
+.markdown-body blockquote,
+.markdown-body details,
+.markdown-body dl,
+.markdown-body ol,
+.markdown-body p,
+.markdown-body pre,
+.markdown-body table,
+.markdown-body ul {
+  margin-top: 0;
+  margin-bottom: 16px;
+}
+
+.markdown-body hr {
+  height: .25em;
+  padding: 0;
+  margin: 24px 0;
+  background-color: #e1e4e8;
+  border: 0;
+}
+
+.markdown-body blockquote {
+  padding: 0 1em;
+  color: #6a737d;
+  border-left: .25em solid #dfe2e5;
+}
+
+.markdown-body blockquote>:first-child {
+  margin-top: 0;
+}
+
+.markdown-body blockquote>:last-child {
+  margin-bottom: 0;
+}
+
+.markdown-body h1,
+.markdown-body h2,
+.markdown-body h3,
+.markdown-body h4,
+.markdown-body h5,
+.markdown-body h6 {
+  margin-top: 24px;
+  margin-bottom: 16px;
+  font-weight: 600;
+  line-height: 1.25;
+}
+
+.markdown-body h1 {
+  font-size: 2em;
+}
+
+.markdown-body h1,
+.markdown-body h2 {
+  padding-bottom: .3em;
+  border-bottom: 1px solid #eaecef;
+}
+
+.markdown-body h2 {
+  font-size: 1.5em;
+}
+
+.markdown-body h3 {
+  font-size: 1.25em;
+}
+
+.markdown-body h4 {
+  font-size: 1em;
+}
+
+.markdown-body h5 {
+  font-size: .875em;
+}
+
+.markdown-body h6 {
+  font-size: .85em;
+  color: #6a737d;
+}
+
+.markdown-body ol,
+.markdown-body ul {
+  padding-left: 2em;
+}
+
+.markdown-body ol ol,
+.markdown-body ol ul,
+.markdown-body ul ol,
+.markdown-body ul ul {
+  margin-top: 0;
+  margin-bottom: 0;
+}
+
+.markdown-body li {
+  word-wrap: break-all;
+}
+
+.markdown-body li>p {
+  margin-top: 16px;
+}
+
+.markdown-body li+li {
+  margin-top: .25em;
+}
+
+.markdown-body dl {
+  padding: 0;
+}
+
+.markdown-body dl dt {
+  padding: 0;
+  margin-top: 16px;
+  font-size: 1em;
+  font-style: italic;
+  font-weight: 600;
+}
+
+.markdown-body dl dd {
+  padding: 0 16px;
+  margin-bottom: 16px;
+}
+
+.markdown-body table {
+  display: block;
+  width: 100%;
+  overflow: auto;
+}
+
+.markdown-body table th {
+  font-weight: 600;
+}
+
+.markdown-body table td,
+.markdown-body table th {
+  padding: 6px 13px;
+  border: 1px solid #dfe2e5;
+}
+
+.markdown-body table tr {
+  background-color: #fff;
+  border-top: 1px solid #c6cbd1;
+}
+
+.markdown-body table tr:nth-child(2n) {
+  background-color: #f6f8fa;
+}
+
+.markdown-body img {
+  max-width: 100%;
+  box-sizing: initial;
+  background-color: #fff;
+}
+
+.markdown-body img[align=right] {
+  padding-left: 20px;
+}
+
+.markdown-body img[align=left] {
+  padding-right: 20px;
+}
+
+.markdown-body code {
+  padding: .2em .4em;
+  margin: 0;
+  font-size: 85%;
+  background-color: rgba(27,31,35,.05);
+  border-radius: 3px;
+}
+
+.markdown-body pre {
+  word-wrap: normal;
+}
+
+.markdown-body pre>code {
+  padding: 0;
+  margin: 0;
+  font-size: 100%;
+  word-break: normal;
+  white-space: pre;
+  background: transparent;
+  border: 0;
+}
+
+.markdown-body .highlight {
+  margin-bottom: 16px;
+}
+
+.markdown-body .highlight pre {
+  margin-bottom: 0;
+  word-break: normal;
+}
+
+.markdown-body .highlight pre,
+.markdown-body pre {
+  padding: 16px;
+  overflow: auto;
+  font-size: 85%;
+  line-height: 1.45;
+  background-color: #f6f8fa;
+  border-radius: 3px;
+}
+
+.markdown-body pre code {
+  display: inline;
+  max-width: auto;
+  padding: 0;
+  margin: 0;
+  overflow: visible;
+  line-height: inherit;
+  word-wrap: normal;
+  background-color: initial;
+  border: 0;
+}
+
+.markdown-body .commit-tease-sha {
+  display: inline-block;
+  font-family: SFMono-Regular,Consolas,Liberation Mono,Menlo,monospace;
+  font-size: 90%;
+  color: #444d56;
+}
+
+.markdown-body .full-commit .btn-outline:not(:disabled):hover {
+  color: #005cc5;
+  border-color: #005cc5;
+}
+
+.markdown-body .blob-wrapper {
+  overflow-x: auto;
+  overflow-y: hidden;
+}
+
+.markdown-body .blob-wrapper-embedded {
+  max-height: 240px;
+  overflow-y: auto;
+}
+
+.markdown-body .blob-num {
+  width: 1%;
+  min-width: 50px;
+  padding-right: 10px;
+  padding-left: 10px;
+  font-family: SFMono-Regular,Consolas,Liberation Mono,Menlo,monospace;
+  font-size: 12px;
+  line-height: 20px;
+  color: rgba(27,31,35,.3);
+  text-align: right;
+  white-space: nowrap;
+  vertical-align: top;
+  cursor: pointer;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+.markdown-body .blob-num:hover {
+  color: rgba(27,31,35,.6);
+}
+
+.markdown-body .blob-num:before {
+  content: attr(data-line-number);
+}
+
+.markdown-body .blob-code {
+  position: relative;
+  padding-right: 10px;
+  padding-left: 10px;
+  line-height: 20px;
+  vertical-align: top;
+}
+
+.markdown-body .blob-code-inner {
+  overflow: visible;
+  font-family: SFMono-Regular,Consolas,Liberation Mono,Menlo,monospace;
+  font-size: 12px;
+  color: #24292e;
+  word-wrap: normal;
+  white-space: pre;
+}
+
+.markdown-body .pl-token.active,
+.markdown-body .pl-token:hover {
+  cursor: pointer;
+  background: #ffea7f;
+}
+
+.markdown-body .tab-size[data-tab-size="1"] {
+  -moz-tab-size: 1;
+  tab-size: 1;
+}
+
+.markdown-body .tab-size[data-tab-size="2"] {
+  -moz-tab-size: 2;
+  tab-size: 2;
+}
+
+.markdown-body .tab-size[data-tab-size="3"] {
+  -moz-tab-size: 3;
+  tab-size: 3;
+}
+
+.markdown-body .tab-size[data-tab-size="4"] {
+  -moz-tab-size: 4;
+  tab-size: 4;
+}
+
+.markdown-body .tab-size[data-tab-size="5"] {
+  -moz-tab-size: 5;
+  tab-size: 5;
+}
+
+.markdown-body .tab-size[data-tab-size="6"] {
+  -moz-tab-size: 6;
+  tab-size: 6;
+}
+
+.markdown-body .tab-size[data-tab-size="7"] {
+  -moz-tab-size: 7;
+  tab-size: 7;
+}
+
+.markdown-body .tab-size[data-tab-size="8"] {
+  -moz-tab-size: 8;
+  tab-size: 8;
+}
+
+.markdown-body .tab-size[data-tab-size="9"] {
+  -moz-tab-size: 9;
+  tab-size: 9;
+}
+
+.markdown-body .tab-size[data-tab-size="10"] {
+  -moz-tab-size: 10;
+  tab-size: 10;
+}
+
+.markdown-body .tab-size[data-tab-size="11"] {
+  -moz-tab-size: 11;
+  tab-size: 11;
+}
+
+.markdown-body .tab-size[data-tab-size="12"] {
+  -moz-tab-size: 12;
+  tab-size: 12;
+}
+
+.markdown-body .task-list-item {
+  list-style-type: none;
+}
+
+.markdown-body .task-list-item+.task-list-item {
+  margin-top: 3px;
+}
+
+.markdown-body .task-list-item input {
+  margin: 0 .2em .25em -1.6em;
+  vertical-align: middle;
+}
+
+/* Center inline tweets */
+.twitter-tweet {
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.Box-header {
+  display: flex !important;
+  padding: 16px;
+  padding-top: 16px;
+  padding-bottom: 16px;
+  margin: -1px -1px 0;
+  background-color: #f6f8fa;
+  border: 1px solid #d1d5da;
+  border-top-left-radius: 3px;
+  border-top-right-radius: 3px;
+}
+
+.markdown-frame {
+  border: 1px solid #ddd;
+  border-radius: 3px;
+}
+
+   
+  </style>
+</head>
+<body>
+	<header>
+	<a href="/">HeinrichHartmann.com</a>
+</header>
+
+	
+  <main class="markdown-container">
+    <article class="markdown-body">
+      
+      <h1>Better Crash Reporting</h1>
+      <p class="meta" style="color:#aaa; float:right">
+         Stemwede, 
+        2020-05-27
+         for the <a href="https://www.circonus.com/2020/05/better-crash-reporting/">Circonus blog</a>. 
+      </p>
+      <div style="clear:both">
+	<p>Crash events are some of the more serious events that can happen when operating a service.  Usually
+it is crashing components that cause cascading failures and service outages.  It is critical to have
+good visibility into those events, since they can cause major damage and should be avoided.</p>
+<p>Unfortunately, debugging crashes is one of the more complicated endeavors.  The state of a crashed
+process is often compromised and the process can&rsquo;t be trusted to collect debugging information on
+its own.</p>
+<p>In this post we list a few desirable properties that we want crash reporting to have in order to
+enable and simplify effective debugging.  Afterwards we are going to report on some progress we have
+made towards these goals, with our Circonus internal components.</p>
+<h2 id="crash-reporting-wishlist">Crash Reporting Wishlist</h2>
+<p>In case of a crash, some key questions to answer are:</p>
+<ul>
+<li>
+<p>In what state was the process at the time of the crash event?</p>
+</li>
+<li>
+<p>What are the events that lead to this error?</p>
+</li>
+</ul>
+<p>Of course, we could answer those questions by taking a full core-dump together with an archive of the log
+directory and call it a day. The only downside is that your crash-handler will take hours to run
+and leave the operator with the overwhelming task to make sense of gigabytes of unstructured data.</p>
+<p>The core balance to strike when implementing effective crash reporting is between the breadth of
+information to capture and the size of the crash report. We have to be selective with the
+information we capture to allow the crash handler to finish its work within seconds. The
+crash-report should be no-larger than a few megabytes and presented it in a way that is useful to
+operators.</p>
+<p>A good crash report should contain the following bits of information:</p>
+<p><strong>Meta Information</strong></p>
+<ol start="0">
+<li>
+<p>Meta information like time, host, service, etc. (&ldquo;tags&rdquo;).</p>
+</li>
+<li>
+<p>Meta information about the exact version of the loaded executables and libraries.</p>
+</li>
+</ol>
+<p><strong>State Information</strong></p>
+<ol start="2">
+<li>
+<p>Stack traces of all active threads/coroutines in the process.<br>
+When using event loops: The list of pending events on each queue.</p>
+</li>
+<li>
+<p>The values of all local variables on active stack-frames.<br>
+When those variables are pointing to structs/objects we want to have the stored attribute values of
+those objects as well - up to a sensible recursion depth.</p>
+</li>
+<li>
+<p>The list of all active work units
+(requests/transactions/<a href="https://github.com/opentracing/specification/blob/master/specification.md">spans</a>)
+that the process was executing at the time of the request.</p>
+</li>
+</ol>
+<p><strong>Context Information</strong></p>
+<ol start="5">
+<li>
+<p>Recent memory, CPU, disk and network utilization.</p>
+</li>
+<li>
+<p>A list of recent completed units of work, e.g. output of <code>tail accesslog</code>.</p>
+</li>
+</ol>
+<h3 id="common-pitfall-logging">Common Pitfall: Logging</h3>
+<p>There is a common pitfall, when trying to extract crash information from logs or event data:
+Logs are only written once the request is completed.
+Otherwise you won&rsquo;t have information about http return code, payload length or request duration.</p>
+<p>So, if you crash during a request is being serviced, you will not have log line/event for this very request.
+A public example, of this exact problem can be found <a href="https://twitter.com/lizthegrey/status/1192178908982104067">here</a>:</p>
+<blockquote>
+<p>None of [our] traces showed this because the traces in flight were destroyed by the OOM and never
+transmitted to metamonitoring.  The black box monitor of AWS ALB logs did tell us we had a
+problem, but we misinterpreted the signs.</p>
+</blockquote>
+<p>It&rsquo;s for this reason that whish &ldquo;#4 - List of active work units&rdquo; is non-trivial to attain.</p>
+<h3 id="in-process-vs-out-of-process-crash-handling">In-Process vs. Out-of-Process crash handling</h3>
+<blockquote>
+<p>In-Process crash handling is like trying to rescue paper-work from a burning building.
+Out-of-Process crash handling is the forensic work that you carry out on a closed-off crime-scene
+the next day.</p>
+</blockquote>
+<p>In some crash situations the application is able to execute an exception handler before going down.
+This is the case for usual exception handling, as well as for signals like SIGABRT, SIGSEGV, SIGTERM
+that can be hooked with a signal handler.
+The application can then try to collect some debugging information on its own behalf. But there
+are some difficulties that make that task hard:</p>
+<ol>
+<li>
+<p>Signal handlers may be called at any point in time, so the process state might be temporary
+inconsistent. We might be in the middle of a update operation or a memory allocation.</p>
+</li>
+<li>
+<p>Signal handlers must be re-entrant. It&rsquo;s possible for a signal handler to be called while
+executing a signal handler.</p>
+</li>
+<li>
+<p>The process state might be corrupted as a result buffer overflow or use-after-free issue.  Memory
+corruptions bugs may mean that the callstack is unsalvageable. Some threads might even be
+non-reachable when critical thread meta-data is sufficiently corrupted.</p>
+</li>
+</ol>
+<p>If your in-process crash handler can&rsquo;t cope with any of those difficulties you might corrupt the
+process state even more, or risk hanging or crashing inside the crash handing routine. At the very
+least you will have incomplete information to work with.</p>
+<p>Out-of-process crash handling looks at a stopped process or a core-dump and treats it as a gigantic
+byte array, together with a few bytes of register state.  From there, it tries to figure out what
+was going on by poking at the memory contents.</p>
+<p>The good thing about this approach is that it is much more reliable and safer.  You can&rsquo;t corrupt
+the state any further.  You are not running inside the constrained environment of a signal handler.
+This means you can perform more complex analysis tasks, like detection of <a href="https://help.backtrace.io/en/articles/1944180-feature-overview">heap corruptions or stale
+pointers</a>.  Also, you have
+additional flexibility as an operator, since you need the application itself to come with the right
+crash handling code.</p>
+<p>The downside, of course, is that you have to understand the exact memory contents of your application.
+This quite doable with low-level languages like C, but get&rsquo;s much harder with interpreted languages
+like JavaScript, Python or Lua.
+For an example on how this might look like see
+<a href="https://www.youtube.com/watch?v=5TFILa4ju9U">Cantrill,Pacheco - Dynamic Languages in Production (GoTo 2012)</a>,
+which talks about the same problem in the context of dynamic tracing of Node.js.</p>
+<h2 id="crash-reporting-at-circonus">Crash Reporting at Circonus</h2>
+<p>In the last months we took a few step towards our goal of better crash reporting in our
+open-source application framework <a href="https://github.com/circonus-labs/libmtev/">libmtev</a> which
+underpins most of the Circonus components.</p>
+<h3 id="watchdog-supervision">Watchdog supervision</h3>
+<p>The first piece in the puzzle is the mtev watchdog process. Mtev applications run under the
+supervision of a parent process called &ldquo;watchdog&rdquo;, that coordinates in-process and out-of-process
+crash handling.</p>
+<p>To do so, the child process registers signal handlers for common crash signals.  From the signal
+handler (<code>emancipate</code>) stop&rsquo;s itself (using SIGSTOP), which in-turn notifies the watchdog process
+to trigger out-of-process crash reporting routines. Afterwards the child process is continued and
+free to perform in-process crash handling and cleanup work (write logs, capture stack traces) by
+itself.</p>
+<p>Here is a simplified interaction diagram from <a href="https://github.com/circonus-labs/libmtev/blob/master/src/utils/mtev_watchdog.c">src</a>:</p>
+<pre tabindex="0"><code>  /-----------------/                                    /-----------------------/
+  /  Child running  /                                    / parent (watchdog)     /
+  /-----------------/                                    / waiting               /
+         |                                               /-----------------------/
+         |                                                     |
+       (crash SIGSEGV/SIGABRT/SIGILL/...)                      |
+         |                                                     |
+  /--------------------------------------------------/         |
+  /   `emancipate`                                   /         |
+  /  Child annotates shared memory CRASHED indicator / ---(notices crash: SIGCLD)
+  /  Child SIGSTOPs itself.                          /         |
+  /--------------------------------------------------/         |
+         |                                                     |
+         |                                               /-------------------------------------------/
+         |                                               /  Parent runs out-of-process crash handler /
+         |&lt;----(wakeup: SIGCONT) ------------------------/  Send SIGCONT to child.                   /
+         |                                               /-------------------------------------------/
+         |                                                     |
+  /-------------------/                                        |
+  /  Log stack trace  /                                        |
+  /  notify parent    /-------(notify parent via shread-mem)--&gt;|
+  /-------------------/                                        |
+         |                                               /-------------------------/
+  /-------------------------------------/                / spawn new child process /
+  / Child runs in-process crash handler /                /-------------------------/
+  / Child reraises signal               /
+  /-------------------------------------/
+         |
+     (terminated)
+</code></pre><p>Crash artifacts (core-dumps, crash-reports, logs) are written to dedicated directories on the file
+system, from where there are picked-up by separate processes that upload them to centralized places,
+and trigger Slack or e-mail notifications.</p>
+<h3 id="plain-stack-traces">Plain stack traces</h3>
+<p>Stack traces are the most common artifact that is salvaged from a crash.
+It&rsquo;s possible to generate stack traces from inside inside the process (via
+backtrace(3)/<a href="http://www.nongnu.org/libunwind/">libunwind</a>), but it can also be extracted from a
+stopped process or a coredump (via gdb(1)/pstack(1)).</p>
+<p>Here is an example of an in-process stack trace:</p>
+<pre tabindex="0"><code>[ 00 ] ld-2.17.so              _dl_fixup
+[ 01 ] ld-2.17.so              _dl_runtime_resolve_xsave
+[ 02 ] libunwind.so.8.0.1      _ULx86_64_init
+[ 03 ] libunwind.so.8.0.1      unw_init_local_common
+[ 04 ] libunwind.so.8.0.1      _ULx86_64_init_local
+[ 05 ] libmtev.so.1.10.4       mtev_backtrace_ucontext                 ( mtev_stacktrace.c:956 )
+[ 06 ] libmtev.so.1.10.4       mtev_stacktrace_ucontext_skip           ( mtev_stacktrace.c:994 )
+[ 07 ] libmtev.so.1.10.4       emancipate                              ( mtev_watchdog.c:627 )
+[ 08 ] libpthread-2.17.so
+[ 09 ] libc-2.17.so            __GI_raise
+[ 10 ] libc-2.17.so            __GI_abort
+[ 11 ] libluajit-5.1.so.2.1.0  lj_vm_ffi_call                          ( lj_clib.c:38 )
+[ 12 ] libluajit-5.1.so.2.1.0  lj_ccall_func                           ( lj_ccall.c:1161 )
+[ 13 ] libluajit-5.1.so.2.1.0  lj_cf_ffi_meta___call                   ( lib_ffi.c:230 )
+[ 14 ] libluajit-5.1.so.2.1.0  lj_BC_FUNCC                             ( lj_clib.c:38 )
+[ 15 ] lua_mtev.so             mtev_lua_resume                         ( lua.c:296 )
+...
+[ 24 ] libmtev.so.1.10.4       eventer_epoll_impl_trigger              ( eventer_epoll_impl.c:375 )
+[ 25 ] libmtev.so.1.10.4       eventer_epoll_impl_loop                 ( eventer_epoll_impl.c:536 )
+[ 26 ] libmtev.so.1.10.4       thrloopwrap                             ( eventer_impl.c:716 )
+[ 27 ] libpthread-2.17.so      start_thread
+</code></pre><p>There are a few things to note:</p>
+<ol>
+<li>
+<p>We see the signal handler <code>emancipate</code> from mtev_watchdog.c on the stack. At this place the
+application is interrupted by the signal handler, and a stack trace is taken.</p>
+</li>
+<li>
+<p>We see a few frames from <code>libluajit_*</code> in the stack trace, which indicates that we have been running some
+Lua code during the crash. Unfortunately, we don&rsquo;t know much about what we where doing inside of
+Lua.</p>
+</li>
+</ol>
+<p>We will see how to improve on both of these aspects below.</p>
+<h3 id="full-stack-traces-with-backtraceio">Full stack traces with backtrace.io</h3>
+<p>We use the ptrace tool provided by
+<a href="https://help.backtrace.io/en/articles/1717329-snapshots">backtrace.io</a> for out-of-process crash
+reporting.  The stack traces extracted by this tool include the values of local variables (fully
+symbolized), thereby realizing #2 and #3 from our list for parts of the system written in C.
+backtrace.io reports can be presented in a web console, which looks like this:</p>
+<p><img src="/v2/images/stacktrace-full.png" alt="Full Stack trace"></p>
+<p>These reports can further be annotated with meta information about the environment and versions
+in the form of key-value tags, which allows us to realize goals #0 and #1.</p>
+<h3 id="mixed-mode-stack-traces">Mixed-mode stack traces</h3>
+<p>When running interpreted languages like Lua, the C stack traces shown above will not be very helpful.
+The only information they provide is essentially: &ldquo;You have been running Lua code&rdquo; &ndash; Well, thanks very much.
+In cases like this, you ideally want mixed-mode stack traces, that interleave the Lua stack frames with the
+C stack frames of the interpreter.</p>
+<p>batcktrace.io provides mixed-mode stack traces out of the box for a number of run-times including
+Python, Java, Node.js.  Unfortunately for us, Lua/LuaJIT is not directly supported at the time of
+this writing.</p>
+<p>To work around this, and get mixed-mode stack traces from production crashes, we resort to
+in-process crash handling, and call <code>lua_getstack</code> from the signal handler
+(<a href="https://github.com/circonus-labs/libmtev/commit/b33a530964066bf7266b3ebdbf7f3115e9f01537">src</a>)
+and hope for the best: 🤞. When it works, it looks like this:</p>
+<pre tabindex="0"><code>STACKTRACE(23835):
+&gt; /lib64/libc.so.6&#39;gsignal+0x37[0x36387]
+&gt; /lib64/libc.so.6&#39;abort+0x148[0x37a78]
+&gt; /opt/circonus/lib/libluajit-5.1.so.2&#39;lj_vm_ffi_call+0x84[0xccb6]
+&gt; -- mtev lua runtime stacktrace --
+&gt; stack traceback:
+&gt;        [C]: in function &#39;abort&#39;
+&gt;        [string &#34;return function(http)...&#34;]:16: in function &lt;[string &#34;return function(http)...&#34;]:14&gt;
+&gt;        [C]: in function &#39;xpcall&#39;
+&gt;        /opt/noit/prod/share/lua/support/rest_utils.lua:74: in function &#39;handle_request&#39;
+&gt;        [string &#34;return function(http)...&#34;]:19: in function &#39;f&#39;
+&gt;        /opt/noit/prod/libexec/noit/lua/web.lua:87: in function &#39;serve&#39;
+&gt;        /opt/noit/prod/libexec/noit/lua/web.lua:124: in function &#39;serve&#39;
+&gt;        /opt/noit/prod/libexec/noit/lua/web.lua:155: in function &lt;web.lua:127&gt;
+&gt; /opt/circonus/lib/libluajit-5.1.so.2&#39;lj_ccall_func+0x35b[0x4df8b]
+&gt; /opt/circonus/lib/libluajit-5.1.so.2&#39;lj_cf_ffi_meta___call+0x37[0x62527]
+&gt; /opt/circonus/lib/libluajit-5.1.so.2&#39;lj_BC_FUNCC+0x1c85[0xa895]
+&gt; /opt/circonus/libexec/mtev/lua_mtev.so&#39;mtev_lua_resume+0x16e[0x812e]
+...
+&gt; /opt/circonus/lib/libmtev.so.1&#39;0x9ae79
+&gt; /lib64/libpthread.so.0&#39;start_thread+0xc5[0x7ea5]
+&gt; /lib64/libc.so.6&#39;clone+0x34[0xfe8dd]
+</code></pre><p>When it does not work, we usually get a SIGSEGV from the crash handler.</p>
+<p>So far this has been working OK for us, and provides valuable insight in 80% of our Lua-related
+crashes.  In the mid-term future we would like to move to a more reliable solution, involving
+out-of-process tracing. One way to do this, would be to extend the backtrace.io-tracer with an
+appropriate module (see below). We might invest some time into this in the future.</p>
+<h2 id="salvaging-active-http-requests">Salvaging Active HTTP Requests</h2>
+<p>The most interesting unit of work in most of our applications are HTTP requests.  With old-school
+thread-based concurrency model, information about HTTP requests were readily extracted from active
+stack traces.  In the event-based systems, like ours, active HTTP requests don&rsquo;t always manifest
+themselves in stack frames. A request might dispatch into dozens of micro-tasks that are executed in
+different even loops or job queues, waiting to be re-assembled upon completion.  This makes
+reconstructing active HTTP requests from local variable state impractical.</p>
+<p>There are two approaches to salvaging active HTTP requests from a crashed mtev app:</p>
+<ol>
+<li>
+<p>Leveraging the DistributedTracing/<a href="https://github.com/circonus-labs/libmtev/blob/master/src/utils/mtev_zipkin.c">zipkin module</a></p>
+</li>
+<li>
+<p>Leveraging the <a href="https://github.com/circonus-labs/libmtev/blob/master/src/modules/http_observer.c">http_observer module</a></p>
+</li>
+</ol>
+<p>Leveraging DistributedTracing data (1) is fundamentally more powerful approach since it is not tied
+to HTTP requests and applies more generally to application instrumented with tracing technology
+(cf. <a href="https://opentracing.io/">OpenTracing</a>).  Libmtev comes with a Zipkin module, that annotates
+HTTP requests with spans, which could be leveraged for the task at hand. There are open practical
+questions about sampling and global book-keeping that led us to punt on this approach for now.</p>
+<p>For the case of HTTP requests, libmtev already comes with a global register of active and recent requests as part
+of the http_observer module (2), which allows the operator to view them
+from within the admin web console:</p>
+<p><img src="/v2/images/http-observer-console.png" alt=""></p>
+<p>The list of active HTTP requests can be extracted by an out-of-process tracer by inspecting a global
+(static) hash table. We have built a <a href="https://github.com/circonus-labs/libmtev/pull/681">backtrace.io tracer
+module</a> that walks this hash table using a
+provided raw-memory API, and attaches a list of active HTTP requests to the crash report:</p>
+<p><img src="/v2/images/http-observer-annotations.png" alt=""></p>
+<p>This allows us to get a precise high-level picture about the current work-load that the component
+was serving at the time of the crash.</p>
+<h2 id="conclusion">Conclusion</h2>
+<p>When done right, crash-reporting can speed up the debugging process for production incidents dramatically
+and lead to a more methodical approach to isolating root-causes.</p>
+<blockquote>
+<p>It allows you to be less of a fire fighter and more of a police detective.</p>
+</blockquote>
+<p>In this article we outlined a vision on how we would like effective crash reporting tooling to look
+and explained some of the steps we have taken in this direction.</p>
+<p>By leveraging tooling provided by <a href="https://backtrace.io">backtrace.io</a> we were able to a lot closer
+to our visibility goals for crash events and hangs. We have been able to narrow the gap further,
+by writing our own backtrace.io-modules. With this, we are now able to get</p>
+<ul>
+<li>
+<p>Full stack traces with local variable state for all C-based components</p>
+</li>
+<li>
+<p>Mixed-mode stack traces for Lua/LuaJIT-related crashes</p>
+</li>
+<li>
+<p>Concise information about active HTTP requests at the time of the crash</p>
+</li>
+</ul>
+<p>All this is delivered in the form of crash reports to a Slack channel ready for immediate inspection via a powerful web UI.
+This saves us many hours of debugging and email support every month.
+In some cases we were able to root cause problems right from the crash report, and ship a fix only a few minutes after the crash first occurred.</p>
+<p>However, we think that crash reporting could be even better.
+Areas where we would like to improve our visibility include:</p>
+<ol>
+<li>
+<p>Integrating with distributed-tracing tools to annotate crash reports with high-level information
+about active work units/spans at the time of the crash.</p>
+</li>
+<li>
+<p>Integrating with monitoring tools to provide better contextual information about resource usage
+and historic behavior of the application.</p>
+</li>
+<li>
+<p>Improve the visibility into interpreter state for Lua/LuaJIT. In particular regarding stack
+traces and variable state. This seems to be already working well for more main-stream languages
+like Python or Node.js.</p>
+</li>
+</ol>
+<p>We are looking forward to future development in these areas.</p>
+      </div>
+    </article>
+  </main>
+
+	<footer style="float:right; margin: 20px auto 20px auto; color:#AAA">&copy; 2023 Heinrich Hartmann. All rights reserved.</footer>
+
+</body>
+
+</html>

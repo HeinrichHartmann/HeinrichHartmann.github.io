@@ -1,0 +1,801 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+      
+      <link rel="icon" href="../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.2.2, mkdocs-material-7.2.4">
+    
+    
+      
+        <title>Linked structures - Elements</title>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/main.f7f47774.min.css">
+      
+        
+        <link rel="stylesheet" href="../assets/stylesheets/palette.3f5d1f46.min.css">
+        
+          
+          
+          <meta name="theme-color" content="#000000">
+        
+      
+    
+    
+    
+      
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=source+code+pro:300,400,400i,700%7Csource+code+pro&display=fallback">
+        <style>:root{--md-text-font-family:"source code pro";--md-code-font-family:"source code pro"}</style>
+      
+    
+    
+    
+    
+      
+
+
+    
+    
+  </head>
+  
+  
+    
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="" data-md-color-primary="black" data-md-color-accent="gray">
+  
+    
+    <script>function __prefix(e){return new URL("..",location).pathname+"."+e}function __get(e,t=localStorage){return JSON.parse(t.getItem(__prefix(e)))}</script>
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#linked-structures" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+      <header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href=".." title="Elements" class="md-header__button md-logo" aria-label="Elements" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54z"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Elements
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Linked structures
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5z"/></svg>
+      </label>
+      
+<div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5z"/></svg>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" aria-label="Clear" tabindex="-1">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+  </nav>
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+<nav class="md-nav md-nav--primary md-nav--integrated" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href=".." title="Elements" class="md-nav__button md-logo" aria-label="Elements" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54z"/></svg>
+
+    </a>
+    Elements
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href=".." class="md-nav__link">
+        Home
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+    
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" data-md-toggle="toc" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          Linked structures
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        Linked structures
+      </a>
+      
+        
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#introduction" class="md-nav__link">
+    Introduction
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#linked-structures_1" class="md-nav__link">
+    Linked Structures
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#morphisms" class="md-nav__link">
+    Morphisms
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#generators-and-co-generators" class="md-nav__link">
+    Generators and Co-Generators
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#connected-components" class="md-nav__link">
+    Connected Components
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#sub-structures" class="md-nav__link">
+    Sub-Structures
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#trees" class="md-nav__link">
+    Trees
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#acknowlegements" class="md-nav__link">
+    Acknowlegements
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#comments" class="md-nav__link">
+    Comments
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../smooth-functions/" class="md-nav__link">
+        Local Theory of Smooth Functions
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+          
+          <div class="md-content" data-md-component="content">
+            <article class="md-content__inner md-typeset">
+              
+                
+                
+                <ul>
+<li>Date: 2021-08-30</li>
+</ul>
+<div style="display:none"> 
+$$ 
+  \newcommand{\nl}{\\}
+
+  \newcommand{\half}{\frac{1}{2}}
+  \newcommand{\floor}[1]{\lfloor #1 \rfloor}
+  \newcommand{\ceil}[1]{\lceil #1 \rceil}
+  \newcommand{\Set}[2]{\left\{\, #1 \;\vert\; #2 \,\right\}}
+  \newcommand{\C}{\,\#}
+  \newcommand{\CSet}[2]{\#\{\, #1 \;\vert\; #2 \,\}}
+
+  \newcommand{\qtext}[1]{\quad\text{#1}\quad}
+  \newcommand{\stext}[1]{\;\text{#1}\;}
+
+  \newcommand{\IFF}{\Leftrightarrow}
+  \newcommand{\inf}{\infty}
+
+  \newcommand{\Ind}{\mathbb{1}}
+
+  \newcommand{\IR}{\mathbb{R}}
+  \newcommand{\IA}{\mathbb{A}}
+  \newcommand{\IB}{\mathbb{B}}
+  \newcommand{\IC}{\mathbb{C}}
+  \newcommand{\ID}{\mathbb{D}}
+  \newcommand{\IF}{\mathbb{F}}
+  \newcommand{\IH}{\mathbb{H}}
+  \newcommand{\II}{\mathbb{I}}
+  \newcommand{\IL}{\mathbb{L}}
+  \newcommand{\IN}{\mathbb{N}}
+  \newcommand{\IP}{\mathbb{P}}
+  \newcommand{\IQ}{\mathbb{Q}}
+  \newcommand{\IR}{\mathbb{R}}
+  \newcommand{\IS}{\mathbb{S}}
+  \newcommand{\IV}{\mathbb{V}}
+  \newcommand{\IZ}{\mathbb{Z}}
+
+  \newcommand{\KR}{\matcal{R}}
+  \newcommand{\KA}{\matcal{A}}
+  \newcommand{\KB}{\matcal{B}}
+  \newcommand{\KC}{\matcal{C}}
+  \newcommand{\KD}{\matcal{D}}
+  \newcommand{\KF}{\matcal{F}}
+  \newcommand{\KH}{\matcal{H}}
+  \newcommand{\KI}{\matcal{I}}
+  \newcommand{\KL}{\matcal{L}}
+  \newcommand{\KN}{\matcal{N}}
+  \newcommand{\KP}{\matcal{P}}
+  \newcommand{\KQ}{\matcal{Q}}
+  \newcommand{\KR}{\matcal{R}}
+  \newcommand{\KS}{\matcal{S}}
+  \newcommand{\KV}{\matcal{V}}
+  \newcommand{\KZ}{\matcal{Z}}
+
+  \newcommand{\gc}{\mathfrak{C}}
+  \newcommand{\gd}{\mathfrak{D}}
+  \newcommand{\gM}{\mathfrak{M}}
+  \newcommand{\gm}{\mathfrak{m}}
+  \newcommand{\gf}{\mathfrak{f}}
+  \newcommand{\gu}{\mathfrak{U}}
+
+  \newcommand{\fa}{\mathfrak{a}}
+  \newcommand{\fg}{\mathfrak{g}}
+  \newcommand{\fn}{\mathfrak{n}}
+  \newcommand{\fk}{\mathfrak{k}}
+  \newcommand{\fm}{\mathfrak{m}}
+  \newcommand{\fp}{\mathfrak{p}}
+
+  \newcommand{\curly}[1]{\mathcal{#1}}
+  \newcommand{\op}[1]{\mathrm{#1}}
+  \newcommand{\Cat}[1]{\mathfrak{#1}}
+  \newcommand{\cat}[1]{\mathbf{#1}}
+
+  \newcommand{\vphi}{\varphi}
+  \newcommand{\sphi}{\phi}
+  \newcommand{\eps}{\varepsilon}
+
+  \newcommand{\tensor}{\otimes}
+  \newcommand{\tensors}{\tensor\dots\tensor}
+  \newcommand{\Tensor}{\bigotimes}
+  \newcommand{\ra}{\rightarrow}
+  \newcommand{\lra}{\longrightarrow}
+  \newcommand{\la}{\leftarrow}
+  \newcommand{\lla}{\longleftarrow}
+  \newcommand{\isom}{\cong}
+  \newcommand{\epi}{\twoheadrightarrow}
+  \newcommand{\mono}{\hookrightarrow}
+  \newcommand{\del}{\partial}
+  \newcommand{\union}{\cup}
+  \newcommand{\Union}{\bigcup}
+  \newcommand{\dotcup}{\ensuremath{\mathaccent\cdot\cup}}
+  \newcommand{\dunion}{\dotcup}
+  \newcommand{\<}{\langle}
+  \renewcommand{\>}{\rangle}
+  \newcommand{\inpart}[1]{\in\text{\part}(#1)}
+  \newcommand{\Vsum}{\bigoplus}
+  \newcommand{\vsum}{\oplus}
+
+  \renewcommand{\S}{\mathfrak{S}}
+  \newcommand{\id}{\mathrm{id}}
+  \newcommand{\rk}{\mathrm{rk}}
+  \newcommand{\Diff}{\mathrm{Diff}}
+  \newcommand{\Hom}{\mathrm{Hom}}
+  \newcommand{\Pic}{\mathrm{Pic}}
+  \newcommand{\Spec}{\mathrm{Spec}}
+  \newcommand{\End}{\mathrm{End}}
+  \newcommand{\Ext}{\mathrm{Ext}}
+
+  \DeclareMathOperator{\Supp}{\mathrm{Supp}}
+  \DeclareMathOperator{\Sym}{Sym}
+  \DeclareMathOperator{\Alt}{\Lambda}
+  \DeclareMathOperator{\ad}{ad}
+  \DeclareMathOperator{\ch}{ch}
+  \DeclareMathOperator{\td}{td}
+  \DeclareMathOperator{\pr}{pr}
+
+  \newcommand{\dra}{\dashrightarrow}
+  \newcommand{\0}{\mathsf{null}} 
+  \newcommand{\nxt}{{\rm nxt}} 
+  \newcommand{\lr}{\leftrightarrow} 
+  \DeclareMathOperator{\mod}{mod}
+$$
+</div>
+
+<h1 id="linked-structures">Linked Structures</h1>
+<h2 id="introduction">Introduction</h2>
+<p>In this note we will formalize and study a straight-forward mathematical model, for a simple C
+structure, that can be used to represent linked list and trees:</p>
+<div class="highlight"><pre><span></span><code><span class="k">typedef</span><span class="w"> </span><span class="k">struct</span> <span class="p">{</span><span class="w"></span>
+<span class="w">    </span><span class="k">struct</span> <span class="nc">node</span><span class="w"> </span><span class="o">*</span><span class="n">nxt</span><span class="p">;</span><span class="w"></span>
+<span class="p">}</span><span class="w"> </span><span class="n">node</span><span class="p">;</span><span class="w"></span>
+</code></pre></div>
+<p>We are deliberately verbose with giving full proofs even for rather trivial statements. In fact, the
+main result, the classification of all finite linked structures up to isomorphy is fairly intuitive
+and may be regarded by many as rather obvious. By building the theory step by step, we make
+reasonably sure, we are on safe footing (i.e. correct) and explore the full width of the concept.</p>
+<h2 id="linked-structures_1">Linked Structures</h2>
+<p><strong>Definition.</strong> A partially defined map <span class="arithmatex">\(f: A \dra B\)</span> between two sets is given by either:</p>
+<ol>
+<li>A subset <span class="arithmatex">\(D \subset A\)</span> and a map <span class="arithmatex">\(f_d: D \ra B\)</span>.</li>
+<li>A map <span class="arithmatex">\(f_0: A \ra B^+\)</span>, where <span class="arithmatex">\(B^+ = B \cup \{ \0 \}\)</span>.</li>
+</ol>
+<p><strong>Definition.</strong> A <em>linked structure</em> is a set <span class="arithmatex">\(N\)</span> together with a partially defined map <span class="arithmatex">\(\rm{nxt}: N \dra N\)</span>.</p>
+<ul>
+<li>We call <span class="arithmatex">\(N\)</span> <em>complete</em> if <span class="arithmatex">\(\nxt\)</span> is defined everywhere.</li>
+<li>Elements of <span class="arithmatex">\(N\)</span> are called <em>nodes</em>. </li>
+<li>If <span class="arithmatex">\(b = \nxt(a)\)</span> then <span class="arithmatex">\(b\)</span> is said to be the  <em>parent</em> of <span class="arithmatex">\(a\)</span>, and <span class="arithmatex">\(a\)</span> is said to be a <em>child</em> of <span class="arithmatex">\(a\)</span>.</li>
+<li>Elements <span class="arithmatex">\(a \in N\)</span> with <span class="arithmatex">\(\nxt(a) = \0\)</span> are called <em>sinks</em>. </li>
+<li>Elements in <span class="arithmatex">\(N - \nxt(N)\)</span> (i.e. elements that have no children) are called <em>leaves</em>.<sup id="fnref:1"><a class="footnote-ref" href="#fn:1">1</a></sup></li>
+</ul>
+<p><strong>Remark.</strong>  A linked structure can be viewed as an example of different mathematical structures:</p>
+<ol>
+<li>A <em>graph</em> with vertices <span class="arithmatex">\(a \ra \nxt(a)\)</span> (hence also a <a href="https://en.wikipedia.org/wiki/Quiver_%28mathematics%29">quiver</a>).</li>
+<li>A (deterministic) Markov Chain.</li>
+<li>If <span class="arithmatex">\(N\)</span> is complete, then <span class="arithmatex">\((N, \nxt)\)</span> is discrete dynamical system.</li>
+</ol>
+<p>This observation gives us several new angles to study linked structures. </p>
+<p><strong>Example.</strong></p>
+<ul>
+<li>A set <span class="arithmatex">\(A\)</span> can be regarded as a Linked Structure with <span class="arithmatex">\(\nxt(a) = \\0\)</span> for all <span class="arithmatex">\(a \in A\)</span>.</li>
+</ul>
+<ul>
+<li>The <em>linked-list</em> of length <span class="arithmatex">\(k \geq 0\)</span> is given by <span class="arithmatex">\(L_k = \{ 1, \dots, k \}\)</span>, with <span class="arithmatex">\(\nxt(i) = i+1\)</span> for
+  <span class="arithmatex">\(i &lt; k\)</span>, <span class="arithmatex">\(\nxt(k) = \0\)</span>.</li>
+</ul>
+<ul>
+<li>The <em>cyclic-linked-list</em> of length <span class="arithmatex">\(p \geq 1\)</span> is given by <span class="arithmatex">\(C_p = \{ 0, \dots, p-1\}\)</span>, 
+  with <span class="arithmatex">\(\nxt(i) = i + 1 \mod p\)</span>.</li>
+</ul>
+<ul>
+<li>The <em>racket</em> of type <span class="arithmatex">\(k \geq 0, p \geq 1\)</span> is an "amalgamation" of <span class="arithmatex">\(L_k\)</span> with <span class="arithmatex">\(C_p\)</span>, defined as
+  <span class="arithmatex">\(R_{k,p} = \{-k, \dots, -1,0,1\dots,p-1\}\)</span>, with <span class="arithmatex">\(\nxt\ i = i + 1\)</span> for <span class="arithmatex">\(i &lt; 0\)</span> and <span class="arithmatex">\(\nxt\ i = i +
+  1 \mod p\)</span> for <span class="arithmatex">\(i \geq 0\)</span>.</li>
+</ul>
+<ul>
+<li>The binary tree of size <span class="arithmatex">\(k\)</span> is defined as <span class="arithmatex">\(B_k = \{ 0, \dots, k \}\)</span>, with map <span class="arithmatex">\(\nxt(0) = \0,
+  \nxt(i) = \floor{ i / 2 }, i &gt; 0\)</span>.</li>
+</ul>
+<ul>
+<li>
+<p>Infinite Linked Lists:</p>
+<ul>
+<li>Let <span class="arithmatex">\(L_{\infty}\)</span> be the Linked Structure with nodes <span class="arithmatex">\(k \in \IZ\)</span> and <span class="arithmatex">\(\nxt(k) = k + 1\)</span>.</li>
+<li>Let <span class="arithmatex">\(L_{+}\)</span> be the Linked Structure with nodes <span class="arithmatex">\(\{ k \geq 0 \}\)</span>, and <span class="arithmatex">\(\nxt(k) = k + 1\)</span>.</li>
+<li>Let <span class="arithmatex">\(L_{-}\)</span> be the Linked Structure with nodes <span class="arithmatex">\(\{ k \leq 0 \}\)</span>, and <span class="arithmatex">\(\nxt(0) = \0, \nxt(k) = k + 1\)</span>.</li>
+</ul>
+</li>
+</ul>
+<h2 id="morphisms">Morphisms</h2>
+<p><strong>Definition.</strong> Let <span class="arithmatex">\(M,N\)</span> be linked structures, a <em>morphism</em> of linked structures is a map <span class="arithmatex">\(f: M
+\ra N\)</span>, so that <span class="arithmatex">\(\nxt_N(f(a)) = f( \nxt_M(a) )\)</span> for all <span class="arithmatex">\(a \in N\)</span> with <span class="arithmatex">\(\nxt_N(a)\)</span> defined (i.e. <span class="arithmatex">\(f(a)
+\neq \0\)</span>).</p>
+<p>Set theoretic composition of maps is clearly associative, and makes Linked Structures a
+<a href="https://en.wikipedia.org/wiki/Category_(mathematics)">Category</a>. From this observation, we derive
+the notions of isomorphisms and (co-)products of Linked Structures.</p>
+<p><strong>Example.</strong> </p>
+<ul>
+<li>Let <span class="arithmatex">\(0 \leq k &lt; l\)</span>, then the inclusion <span class="arithmatex">\(L_k \ra L_l\)</span> is a morphism.</li>
+</ul>
+<ul>
+<li>If <span class="arithmatex">\(k|l\)</span>, then the identity induces a map <span class="arithmatex">\(C_l \ra C_k\)</span> which is a morphism.</li>
+</ul>
+<ul>
+<li>If <span class="arithmatex">\(set(N)\)</span> is the set underlying a linked structure <span class="arithmatex">\(N\)</span>. We regards <span class="arithmatex">\(set(N)\)</span> as a linked
+  structure where <span class="arithmatex">\(\nxt\)</span> is <span class="arithmatex">\(\0\)</span> everywhere. <ul>
+<li>Then <span class="arithmatex">\(set(N) \ra N\)</span> is a morphism.</li>
+<li>The map <span class="arithmatex">\(N \ra set(N)\)</span> is a morphism if and only if <span class="arithmatex">\(\nxt_N\ a = \0\)</span> for all <span class="arithmatex">\(a \in N\)</span>.</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>For every linked structure <span class="arithmatex">\(N\)</span> there is exactly one morphism <span class="arithmatex">\(N \ra C_1\)</span>. In other words <span class="arithmatex">\(C_1\)</span> is
+  a terminal object.</li>
+</ul>
+<ul>
+<li>The unique map <span class="arithmatex">\(N \ra L_1\)</span> is a morphism if and only if <span class="arithmatex">\(\nxt\ a = \0\)</span> for all <span class="arithmatex">\(a \in N\)</span>.</li>
+</ul>
+<p><strong>Proposition.</strong> Let <span class="arithmatex">\(f: M \ra N\)</span> be a morphism of linked structures, then <span class="arithmatex">\(f\)</span> is an isomorphism,
+if and only if <span class="arithmatex">\(f\)</span> bijective as a map of sets and <span class="arithmatex">\(\nxt\ f(a) \neq \0\)</span> implies <span class="arithmatex">\(\nxt\ a \neq
+\0\)</span> (*).</p>
+<p><em>Proof.</em> If <span class="arithmatex">\(f\)</span> is an isomorphism, with inverse <span class="arithmatex">\(g\)</span>, then <span class="arithmatex">\(f,g\)</span> are set-theoretic inverses, hence <span class="arithmatex">\(f\)</span>
+is bijective, moreover <span class="arithmatex">\(\nxt\ f(a) \neq \0\)</span> implies <span class="arithmatex">\(\nxt\ a = \nxt\ g(f(a)) \neq \0\)</span>.</p>
+<p>Conversely suppose that <span class="arithmatex">\(f\)</span> is bijective and the condition (*) holds. Let <span class="arithmatex">\(g\)</span> be the set-theoretic
+inverse. We claim that <span class="arithmatex">\(g\)</span> is a morphism of linked structures. Indeed, if <span class="arithmatex">\(b \in N\)</span> with <span class="arithmatex">\(\nxt\ b
+\neq \0\)</span>. Set <span class="arithmatex">\(a = g(b)\)</span>, so <span class="arithmatex">\(b = f(a)\)</span>. Now <span class="arithmatex">\(\nxt\ b = \nxt f(a) \neq \0\)</span> implies <span class="arithmatex">\(\nxt\ a \neq \0\)</span> since <span class="arithmatex">\(f\)</span>
+is a morphism. Hence <span class="arithmatex">\(\nxt\ b = \nxt\ f(a) = f(\nxt\ a) = f(\nxt\ g(b))\)</span>. Applying <span class="arithmatex">\(g\)</span> on both sides
+yields <span class="arithmatex">\(g(\nxt\ b) = \nxt\ g(b)\)</span>. qed.</p>
+<h2 id="generators-and-co-generators">Generators and Co-Generators</h2>
+<p><strong>Definition.</strong> </p>
+<ul>
+<li>For a subset <span class="arithmatex">\(A \subset N\)</span> we denote by <span class="arithmatex">\(P_1(A) = \nxt(A)\)</span> the set of parents of <span class="arithmatex">\(A\)</span>.<ul>
+<li>More generally we set <span class="arithmatex">\(P_k(A) = \nxt^k(A), k\geq 0\)</span> the set of k-th order parents of <span class="arithmatex">\(A\)</span>.</li>
+<li>We set <span class="arithmatex">\(P(A) = \Union_{k \geq 0} P_k(A)\)</span>.</li>
+<li>We call <span class="arithmatex">\(A\)</span> a generator for <span class="arithmatex">\(N\)</span> if <span class="arithmatex">\(P(A) = N\)</span>.</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>For a subset <span class="arithmatex">\(A \subset N\)</span> we denote by <span class="arithmatex">\(C_1(A) = \nxt^{-1}(A)\)</span> the set of children of <span class="arithmatex">\(A\)</span>.<ul>
+<li>More generally we set <span class="arithmatex">\(C_k(A) = \nxt^{-k}(A), k\geq 0\)</span> the set of k-th order children of <span class="arithmatex">\(A\)</span>.</li>
+<li>We set <span class="arithmatex">\(C(A) = \Union_{k \geq 0} C_k(A)\)</span>.</li>
+<li>We call <span class="arithmatex">\(A\)</span> a co-generator for <span class="arithmatex">\(N\)</span> if <span class="arithmatex">\(C(A) = N\)</span>.</li>
+</ul>
+</li>
+</ul>
+<p><strong>Example.</strong> </p>
+<ul>
+<li>The node <span class="arithmatex">\(0 \in L_k\)</span> is a generator. The node <span class="arithmatex">\(k-1 \in L_k\)</span> is a co-generator.</li>
+</ul>
+<ul>
+<li>In <span class="arithmatex">\(C_k\)</span> every node is a generator and a co-generator.</li>
+</ul>
+<p><strong>Proposition.</strong> If <span class="arithmatex">\(a \in N\)</span>, then <span class="arithmatex">\(P(a)\)</span> is isomorphic to either</p>
+<ul>
+<li><span class="arithmatex">\(L_k\)</span> for some <span class="arithmatex">\(k \geq 1\)</span></li>
+<li><span class="arithmatex">\(R_{k,p}\)</span> for some <span class="arithmatex">\(k \geq 0, p \geq 1\)</span>.</li>
+</ul>
+<p><em>Proof.</em> 
+In case <span class="arithmatex">\(\nxt^k\ a = \0\)</span> for some <span class="arithmatex">\(k \geq 1\)</span>, define <span class="arithmatex">\(f: L_k \ra P(a)\)</span> by <span class="arithmatex">\(1 \mapsto a, i \mapsto \nxt^{i-1}\ a\)</span>.
+We claim that <span class="arithmatex">\(f\)</span> is an isomorphism. By the criteria given above, it suffices to show that <span class="arithmatex">\(f\)</span> is a bijection
+and <span class="arithmatex">\(\nxt f(i) \neq \0\)</span> if <span class="arithmatex">\(\nxt i \neq \0\)</span>.</p>
+<ul>
+<li>If <span class="arithmatex">\(\nxt\ i \neq \0\)</span> then <span class="arithmatex">\(i &lt; k\)</span>, hence <span class="arithmatex">\(\nxt^i a = \nxt f(i) \neq \0\)</span> since otherwise <span class="arithmatex">\(\nxt^k\ a\)</span>
+  would not be defined.</li>
+</ul>
+<ul>
+<li>To see that <span class="arithmatex">\(f\)</span> is bijective assume that <span class="arithmatex">\(f(i) = f(j)\)</span> for some <span class="arithmatex">\(i &lt; j \leq k\)</span>, then <span class="arithmatex">\(d = j - i &gt; 0\)</span> 
+  and we see inductively that <span class="arithmatex">\(\nxt^{(i-1)} a = \nxt^{(i-1)+t d}a\)</span> for all <span class="arithmatex">\(t \geq 0\)</span>.
+  This contradicts <span class="arithmatex">\(\nxt^k a = \0\)</span> since we can choose <span class="arithmatex">\(t\)</span> so that <span class="arithmatex">\((i-1)+td &gt; k\)</span>.</li>
+</ul>
+<p>In case <span class="arithmatex">\(\nxt^k\ a \neq \0\)</span> for all <span class="arithmatex">\(k \geq 1\)</span>, we consider the elements <span class="arithmatex">\(a_i = \nxt^i a \in N, i
+\geq 0\)</span>. Since <span class="arithmatex">\(N\)</span> is finite we find <span class="arithmatex">\(i&lt;j\)</span> with <span class="arithmatex">\(a_i = a_j\)</span>. We choose <span class="arithmatex">\(j_0\)</span> minimally with the
+property that there is an <span class="arithmatex">\(i_0 &lt; j_0\)</span> with <span class="arithmatex">\(a_{i_0} = a_{j_0}\)</span>.</p>
+<p>Set <span class="arithmatex">\(k = i_0 \geq 0\)</span> and <span class="arithmatex">\(p = j_0 - i_0 &gt; 0\)</span>, and define <span class="arithmatex">\(f: R_{k,p} \ra N, i \ra \nxt^{i+k}\ a\)</span>, so
+<span class="arithmatex">\(f(-k) = a, f(0) = a_{i_0}\)</span>. To see that <span class="arithmatex">\(f\)</span> is an isomorphism, note that <span class="arithmatex">\(\nxt\ f(p-1) = a_{j_0} =
+a_{i_0} = f( \nxt (p-1))\)</span>. If <span class="arithmatex">\(f(i) = f(j)\)</span> for some <span class="arithmatex">\(i &lt; j \leq (p-1) = j_0 - 1\)</span>, then <span class="arithmatex">\(j &lt; j_0\)</span>
+contradicting the minimal choice of <span class="arithmatex">\(j_0\)</span>. qed.</p>
+<p><strong>Definition.</strong> In the light of the last proposition, we make the following definitions:</p>
+<ul>
+<li>If <span class="arithmatex">\(P(a) \isom R_{k,p}\)</span> we call <span class="arithmatex">\(a\)</span> <em>cyclic</em> with <em>period</em> <span class="arithmatex">\(p\)</span>. We call image <span class="arithmatex">\(T(a) \subset N\)</span> of
+  <span class="arithmatex">\(C_p \subset R_{k,p}\)</span> the <em>terminal cycle</em> associated to <span class="arithmatex">\(a\)</span>.</li>
+<li>If <span class="arithmatex">\(P(a) \isom L_k, k \geq 1\)</span> we call <span class="arithmatex">\(a\)</span> <em>acyclic</em> of <em>length</em> of <span class="arithmatex">\(k\)</span>. We call the last element
+  <span class="arithmatex">\(T(a) = \{ \nxt^{k-1}\ a \}\)</span> the <em>terminal sink</em> associated to <span class="arithmatex">\(a\)</span>.</li>
+</ul>
+<p><strong>Corollary.</strong> Let <span class="arithmatex">\(N\)</span> be a non-empty complete linked structures (i.e. <span class="arithmatex">\(\nxt\)</span> defined everywhere),
+then <span class="arithmatex">\(N\)</span> contains a cycle.</p>
+<p><em>Proof.</em> If <span class="arithmatex">\(a \in N\)</span>, then <span class="arithmatex">\(P(A)\)</span> can't be isomorphic to <span class="arithmatex">\(L_k\)</span> since <span class="arithmatex">\(L_k\)</span> is not complete. So
+<span class="arithmatex">\(P(a) \isom R_{k,p}\)</span>, and the image of <span class="arithmatex">\(C_p \subset R_{k,p}\)</span> is a cycle.</p>
+<h2 id="connected-components">Connected Components</h2>
+<p><strong>Definition.</strong> Let <span class="arithmatex">\(\lr\)</span> be the equivalence relation on <span class="arithmatex">\(N\)</span> induced by <span class="arithmatex">\(a \lr b\)</span> if <span class="arithmatex">\(\nxt(a) = b\)</span>.</p>
+<ul>
+<li><span class="arithmatex">\(N\)</span> is called connected, if all nodes in <span class="arithmatex">\(N\)</span> are equivalent under <span class="arithmatex">\(\lr\)</span>.</li>
+<li>The connected components of <span class="arithmatex">\(N\)</span> are the elements in <span class="arithmatex">\(N/\lr\)</span>.</li>
+</ul>
+<p><strong>Proposition.</strong> If <span class="arithmatex">\(N\)</span> is finite, then <span class="arithmatex">\(a \lr b\)</span> if and only if <span class="arithmatex">\(T(a) = T(b)\)</span>.</p>
+<p><em>Proof.</em> The condition <span class="arithmatex">\(T(a) = T(b)\)</span> clearly defines an equivalence relation. We have to show that
+every other equivalence relation <span class="arithmatex">\(\approx\)</span> that extends <span class="arithmatex">\(a \ra b\)</span> also extends <span class="arithmatex">\(T(a) = T(b)\)</span>. For
+<span class="arithmatex">\(a,b \in N\)</span> with <span class="arithmatex">\(T(a) = T(b)\)</span>, we have <span class="arithmatex">\(a \approx t\)</span> for all <span class="arithmatex">\(t \in T(a)\)</span> since <span class="arithmatex">\(T(a) \subset
+P(a)\)</span>. Since <span class="arithmatex">\(T(a)=T(b)\)</span> is non-empty we find <span class="arithmatex">\(t \in T(a) = T(b)\)</span>, and <span class="arithmatex">\(a \approx t \approx b\)</span>,
+hence <span class="arithmatex">\(a \approx b\)</span>. qed.</p>
+<h2 id="sub-structures">Sub-Structures</h2>
+<p><strong>Definition.</strong> </p>
+<ul>
+<li>A <em>sub-structure</em> of a Linked Structure <span class="arithmatex">\(N\)</span> is a subset <span class="arithmatex">\(A \subset N\)</span>, so that <span class="arithmatex">\(\nxt(a) \in A\)</span> for
+  all <span class="arithmatex">\(a \in A\)</span> with <span class="arithmatex">\(\nxt(a) \neq \0\)</span>.</li>
+</ul>
+<ul>
+<li>A Linked Structure <span class="arithmatex">\(N\)</span> is <em>irreducible</em> if <span class="arithmatex">\(N\)</span> is non-empty and the only sub-structures of <span class="arithmatex">\(N\)</span> are
+  <span class="arithmatex">\(\emptyset\)</span> and <span class="arithmatex">\(N\)</span>.</li>
+</ul>
+<p><strong>Proposition.</strong> If <span class="arithmatex">\(A,B \subset N\)</span> are irreducible sub-structures of <span class="arithmatex">\(N\)</span> finite, then either <span class="arithmatex">\(A = B\)</span> or <span class="arithmatex">\(A \cap B = \emptyset\)</span>.</p>
+<p><em>Proof.</em> <span class="arithmatex">\(C= A \cap B \subset A\)</span> is a sub-structure, so either <span class="arithmatex">\(C = \emptyset\)</span> or <span class="arithmatex">\(C = A\)</span>. In case <span class="arithmatex">\(C =
+A\)</span>, <span class="arithmatex">\(C \subset B\)</span>is a non-empty sub-structure of <span class="arithmatex">\(B\)</span>, so <span class="arithmatex">\(C = B\)</span> as well.</p>
+<p><strong>Proposition.</strong> All Irreducible Linked Structures a finite <span class="arithmatex">\(N\)</span> are isomorphic to either <span class="arithmatex">\(L_1\)</span> or <span class="arithmatex">\(C_p\)</span> for some <span class="arithmatex">\(p \geq 1\)</span>.</p>
+<p><em>Proof.</em>  Clearly <span class="arithmatex">\(L_1\)</span> and <span class="arithmatex">\(C_p\)</span> are irreducible.</p>
+<p>Assume <span class="arithmatex">\(N\)</span> is an irreducible. Take <span class="arithmatex">\(a \in N\)</span>, then <span class="arithmatex">\(P(a) \subset N\)</span> is a non-empty sub-structure,
+hence <span class="arithmatex">\(P(a) = N\)</span>. By the classification result for <span class="arithmatex">\(P(a)\)</span> we either have <span class="arithmatex">\(N \isom L_k, k \geq 1\)</span>, or
+<span class="arithmatex">\(N \isom R_{k,p}, k\geq0, p &gt; 1\)</span>. Now, <span class="arithmatex">\(L_k\)</span> is irreducible if and only if <span class="arithmatex">\(k=1\)</span>. And <span class="arithmatex">\(C_p \subset
+R_{k,p}\)</span> is an irreducible non-empty sub-structure, hence <span class="arithmatex">\(k=0\)</span> and <span class="arithmatex">\(C_p = R_{k,p}\)</span>. qed.</p>
+<p><strong>Corollary.</strong> Let <span class="arithmatex">\(a \in N\)</span>, <span class="arithmatex">\(N\)</span> finite, then <span class="arithmatex">\(T(a)\)</span> is irreducible.</p>
+<p><strong>Theorem.</strong> The connected components of a finite structure <span class="arithmatex">\(N\)</span> are given by <span class="arithmatex">\(C(A)\)</span>, where
+<span class="arithmatex">\(A\)</span> runs through all irreducible sub-structures:</p>
+<ul>
+<li><span class="arithmatex">\(A = \{ s \} \subset N\)</span>, where <span class="arithmatex">\(s\in N\)</span> is a sink, i.e. <span class="arithmatex">\(\nxt\ s = \0\)</span>.</li>
+<li><span class="arithmatex">\(A \isom C_p, p \geq 1\)</span> is a cycle.</li>
+</ul>
+<p><em>Proof.</em> We have to show that <span class="arithmatex">\(C(A)\)</span> are connected, and each element is <span class="arithmatex">\(\lr\)</span>-equivalent to an element in <span class="arithmatex">\(C(A)\)</span>.</p>
+<p><span class="arithmatex">\(C(A)\)</span> is connected since <span class="arithmatex">\(A\)</span> is connected. Let <span class="arithmatex">\(a \in N\)</span>, then <span class="arithmatex">\(T(a)\)</span> is irreducible, so it is in
+the above list. Moreover <span class="arithmatex">\(a \lr t\)</span> for all <span class="arithmatex">\(t \in T(a)\)</span>, since <span class="arithmatex">\(T(a) \subset P(a)\)</span>. qed.</p>
+<h2 id="trees">Trees</h2>
+<p><strong>Definition.</strong> </p>
+<ul>
+<li>A <em>tree</em> is a finite, non-empty, connected, acyclic linked structure.</li>
+<li>A <em>forest</em> is a finite, acyclic, linked structure (not necessarily connected). </li>
+</ul>
+<p><strong>Proposition.</strong> Let <span class="arithmatex">\(T\)</span> be a tree.</p>
+<ul>
+<li>a) There is a unique sink <span class="arithmatex">\(r \in T\)</span> that co-generates <span class="arithmatex">\(T\)</span>: <span class="arithmatex">\(C(r) = T\)</span>. We call <span class="arithmatex">\(r\)</span> the root of <span class="arithmatex">\(T\)</span>.</li>
+<li>b) The set of leaves <span class="arithmatex">\(L = T - \nxt(T)\)</span> is the smallest set that generates <span class="arithmatex">\(T\)</span>: <span class="arithmatex">\(P(L) = T\)</span>.</li>
+</ul>
+<p><em>Proof.</em>  Ad a) Pick <span class="arithmatex">\(a \in T\)</span>, then <span class="arithmatex">\(T(a)\)</span> is irreducible. Since <span class="arithmatex">\(T\)</span> is acyclic, <span class="arithmatex">\(T(a) \isom L_1 = \{ 1
+\}\)</span>. Let <span class="arithmatex">\(r \in T\)</span> be the image of <span class="arithmatex">\(1 \in L_1\)</span>. Let <span class="arithmatex">\(b \in T\)</span> be any other element then
+<span class="arithmatex">\(T(b)=T(a)=\{ r \}\)</span>, since <span class="arithmatex">\(T\)</span> is connected, so <span class="arithmatex">\(r \in P(b)\)</span> which is equivalent to <span class="arithmatex">\(b \in C(r)\)</span>.</p>
+<p>Ad b) Pick <span class="arithmatex">\(a_1 \in T\)</span>. We construct <span class="arithmatex">\(a_i, i \geq 1\)</span> recursively: If <span class="arithmatex">\(a_i\)</span> is a leave, we
+terminate. Otherwise we find a <span class="arithmatex">\(a_{i+1} \in T\)</span>, so that <span class="arithmatex">\(\nxt\ a_{i+1} = a_i\)</span>. By construction <span class="arithmatex">\(a_1 \in P(a_i)\)</span>.
+In case we terminated, we have found a leave node that contains <span class="arithmatex">\(a_1\)</span> as a parent.</p>
+<p>In case we never terminated, we get an infinite sequence <span class="arithmatex">\(a_i \in N\)</span>, hence <span class="arithmatex">\(a_i = a_j\)</span> for some
+<span class="arithmatex">\(i&lt;j\)</span>. And we found a cycle. Contradiction.</p>
+<h2 id="acknowlegements">Acknowlegements</h2>
+<p>Thanks to Cormac Stephenson for sending comments, and pointing out a few typos.</p>
+<h2 id="comments">Comments</h2>
+<p><script src="https://utteranc.es/client.js"
+        repo="HeinrichHartmann/comments"
+        issue-term="title"
+        label="Comment"
+        theme="github-light"
+        crossorigin="anonymous"
+        async>
+</script></p>
+<div class="footnote">
+<hr />
+<ol>
+<li id="fn:1">
+<p>Maybe <em>singles</em> would have been a better name, but we stick to the more traditional terminology established for trees here.&#160;<a class="footnote-backref" href="#fnref:1" title="Jump back to footnote 1 in the text">&#8617;</a></p>
+</li>
+</ol>
+</div>
+                
+              
+              
+                
+
+
+              
+            </article>
+          </div>
+        </div>
+        
+      </main>
+      
+        
+<footer class="md-footer">
+  
+    <nav class="md-footer__inner md-grid" aria-label="Footer">
+      
+        
+        <a href=".." class="md-footer__link md-footer__link--prev" aria-label="Previous: Home" rel="prev">
+          <div class="md-footer__button md-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
+          </div>
+          <div class="md-footer__title">
+            <div class="md-ellipsis">
+              <span class="md-footer__direction">
+                Previous
+              </span>
+              Home
+            </div>
+          </div>
+        </a>
+      
+      
+        
+        <a href="../smooth-functions/" class="md-footer__link md-footer__link--next" aria-label="Next: Local Theory of Smooth Functions" rel="next">
+          <div class="md-footer__title">
+            <div class="md-ellipsis">
+              <span class="md-footer__direction">
+                Next
+              </span>
+              Local Theory of Smooth Functions
+            </div>
+          </div>
+          <div class="md-footer__button md-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11H4z"/></svg>
+          </div>
+        </a>
+      
+    </nav>
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-footer-copyright">
+        
+          <div class="md-footer-copyright__highlight">
+            Copyright &copy; 2021 Heinrich Hartmann
+          </div>
+        
+        Made with
+        <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+          Material for MkDocs
+        </a>
+        
+      </div>
+      
+  <div class="md-footer-social">
+    
+      
+      
+        
+        
+      
+      <a href="https://twitter.com/heinrichhartman" target="_blank" rel="noopener" title="twitter.com" class="md-footer-social__link">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path d="M459.37 151.716c.325 4.548.325 9.097.325 13.645 0 138.72-105.583 298.558-298.558 298.558-59.452 0-114.68-17.219-161.137-47.106 8.447.974 16.568 1.299 25.34 1.299 49.055 0 94.213-16.568 130.274-44.832-46.132-.975-84.792-31.188-98.112-72.772 6.498.974 12.995 1.624 19.818 1.624 9.421 0 18.843-1.3 27.614-3.573-48.081-9.747-84.143-51.98-84.143-102.985v-1.299c13.969 7.797 30.214 12.67 47.431 13.319-28.264-18.843-46.781-51.005-46.781-87.391 0-19.492 5.197-37.36 14.294-52.954 51.655 63.675 129.3 105.258 216.365 109.807-1.624-7.797-2.599-15.918-2.599-24.04 0-57.828 46.782-104.934 104.934-104.934 30.213 0 57.502 12.67 76.67 33.137 23.715-4.548 46.456-13.32 66.599-25.34-7.798 24.366-24.366 44.833-46.132 57.827 21.117-2.273 41.584-8.122 60.426-16.243-14.292 20.791-32.161 39.308-52.628 54.253z"/></svg>
+      </a>
+    
+  </div>
+
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    <script id="__config" type="application/json">{"base": "..", "features": ["search.suggest", "toc.integrate", "navigation.sections"], "translations": {"clipboard.copy": "Copy to clipboard", "clipboard.copied": "Copied to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Search", "search.result.placeholder": "Type to start searching", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.term.missing": "Missing", "select.version.title": "Select version"}, "search": "../assets/javascripts/workers/search.709b4209.min.js", "version": null}</script>
+    
+    
+      <script src="../assets/javascripts/bundle.febc23d1.min.js"></script>
+      
+        <script src="../javascripts/config.js"></script>
+      
+        <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+      
+        <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+      
+    
+  </body>
+</html>

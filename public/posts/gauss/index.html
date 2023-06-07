@@ -1,0 +1,1433 @@
+<!DOCTYPE html>
+<html lang="en-us">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title>Gauss Elimination</title>
+	
+	
+	
+  
+  <link rel="icon" type="image/png" href="/favicon.png">
+  <style>
+    
+   header a {
+  text-align: center;
+  width: 100%;
+  font-family: Helvetica, arial, sans-serif;
+  font-size: 20px;
+  color: #a00;
+  font-weight: bold;
+  margin-top: 2em;
+  text-decoration: none;
+  display: block;
+}
+
+header a {
+  color: #00a;
+}
+
+header a:hover {
+  color: black;
+}
+
+header a:visited {
+  color: #a00;
+}
+
+.sticker {
+  color:red;
+  display: block;
+  border-style:solid !important;
+  border-color:red !important;
+  border-radius:0.2em !important;
+  border-width: 3px !important;
+  padding: 0px !important;
+  text-align: center !important;
+  margin-top: 50px !important;
+  margin-bottom: 50px !important;
+}
+
+    
+   /* Background */ .chroma { background-color: #f8f8f8 }
+/* Other */ .chroma .x { color: #000000 }
+/* Error */ .chroma .err { color: #a40000 }
+/* LineTableTD */ .chroma .lntd { vertical-align: top; padding: 0; margin: 0; border: 0; }
+/* LineTable */ .chroma .lntable { border-spacing: 0; padding: 0; margin: 0; border: 0; width: auto; overflow: auto; display: block; }
+/* LineHighlight */ .chroma .hl { display: block; width: 100%;background-color: #ffffcc }
+/* LineNumbersTable */ .chroma .lnt { margin-right: 0.4em; padding: 0 0.4em 0 0.4em;color: #7f7f7f }
+/* LineNumbers */ .chroma .ln { margin-right: 0.4em; padding: 0 0.4em 0 0.4em;color: #7f7f7f }
+/* Keyword */ .chroma .k { color: #204a87; font-weight: bold }
+/* KeywordConstant */ .chroma .kc { color: #204a87; font-weight: bold }
+/* KeywordDeclaration */ .chroma .kd { color: #204a87; font-weight: bold }
+/* KeywordNamespace */ .chroma .kn { color: #204a87; font-weight: bold }
+/* KeywordPseudo */ .chroma .kp { color: #204a87; font-weight: bold }
+/* KeywordReserved */ .chroma .kr { color: #204a87; font-weight: bold }
+/* KeywordType */ .chroma .kt { color: #204a87; font-weight: bold }
+/* Name */ .chroma .n { color: #000000 }
+/* NameAttribute */ .chroma .na { color: #c4a000 }
+/* NameBuiltin */ .chroma .nb { color: #204a87 }
+/* NameBuiltinPseudo */ .chroma .bp { color: #3465a4 }
+/* NameClass */ .chroma .nc { color: #000000 }
+/* NameConstant */ .chroma .no { color: #000000 }
+/* NameDecorator */ .chroma .nd { color: #5c35cc; font-weight: bold }
+/* NameEntity */ .chroma .ni { color: #ce5c00 }
+/* NameException */ .chroma .ne { color: #cc0000; font-weight: bold }
+/* NameFunction */ .chroma .nf { color: #000000 }
+/* NameFunctionMagic */ .chroma .fm { color: #000000 }
+/* NameLabel */ .chroma .nl { color: #f57900 }
+/* NameNamespace */ .chroma .nn { color: #000000 }
+/* NameOther */ .chroma .nx { color: #000000 }
+/* NameProperty */ .chroma .py { color: #000000 }
+/* NameTag */ .chroma .nt { color: #204a87; font-weight: bold }
+/* NameVariable */ .chroma .nv { color: #000000 }
+/* NameVariableClass */ .chroma .vc { color: #000000 }
+/* NameVariableGlobal */ .chroma .vg { color: #000000 }
+/* NameVariableInstance */ .chroma .vi { color: #000000 }
+/* NameVariableMagic */ .chroma .vm { color: #000000 }
+/* Literal */ .chroma .l { color: #000000 }
+/* LiteralDate */ .chroma .ld { color: #000000 }
+/* LiteralString */ .chroma .s { color: #4e9a06 }
+/* LiteralStringAffix */ .chroma .sa { color: #4e9a06 }
+/* LiteralStringBacktick */ .chroma .sb { color: #4e9a06 }
+/* LiteralStringChar */ .chroma .sc { color: #4e9a06 }
+/* LiteralStringDelimiter */ .chroma .dl { color: #4e9a06 }
+/* LiteralStringDoc */ .chroma .sd { color: #8f5902; font-style: italic }
+/* LiteralStringDouble */ .chroma .s2 { color: #4e9a06 }
+/* LiteralStringEscape */ .chroma .se { color: #4e9a06 }
+/* LiteralStringHeredoc */ .chroma .sh { color: #4e9a06 }
+/* LiteralStringInterpol */ .chroma .si { color: #4e9a06 }
+/* LiteralStringOther */ .chroma .sx { color: #4e9a06 }
+/* LiteralStringRegex */ .chroma .sr { color: #4e9a06 }
+/* LiteralStringSingle */ .chroma .s1 { color: #4e9a06 }
+/* LiteralStringSymbol */ .chroma .ss { color: #4e9a06 }
+/* LiteralNumber */ .chroma .m { color: #0000cf; font-weight: bold }
+/* LiteralNumberBin */ .chroma .mb { color: #0000cf; font-weight: bold }
+/* LiteralNumberFloat */ .chroma .mf { color: #0000cf; font-weight: bold }
+/* LiteralNumberHex */ .chroma .mh { color: #0000cf; font-weight: bold }
+/* LiteralNumberInteger */ .chroma .mi { color: #0000cf; font-weight: bold }
+/* LiteralNumberIntegerLong */ .chroma .il { color: #0000cf; font-weight: bold }
+/* LiteralNumberOct */ .chroma .mo { color: #0000cf; font-weight: bold }
+/* Operator */ .chroma .o { color: #ce5c00; font-weight: bold }
+/* OperatorWord */ .chroma .ow { color: #204a87; font-weight: bold }
+/* Punctuation */ .chroma .p { color: #000000; font-weight: bold }
+/* Comment */ .chroma .c { color: #8f5902; font-style: italic }
+/* CommentHashbang */ .chroma .ch { color: #8f5902; font-style: italic }
+/* CommentMultiline */ .chroma .cm { color: #8f5902; font-style: italic }
+/* CommentSingle */ .chroma .c1 { color: #8f5902; font-style: italic }
+/* CommentSpecial */ .chroma .cs { color: #8f5902; font-style: italic }
+/* CommentPreproc */ .chroma .cp { color: #8f5902; font-style: italic }
+/* CommentPreprocFile */ .chroma .cpf { color: #8f5902; font-style: italic }
+/* Generic */ .chroma .g { color: #000000 }
+/* GenericDeleted */ .chroma .gd { color: #a40000 }
+/* GenericEmph */ .chroma .ge { color: #000000; font-style: italic }
+/* GenericError */ .chroma .gr { color: #ef2929 }
+/* GenericHeading */ .chroma .gh { color: #000080; font-weight: bold }
+/* GenericInserted */ .chroma .gi { color: #00a000 }
+/* GenericOutput */ .chroma .go { color: #000000; font-style: italic }
+/* GenericPrompt */ .chroma .gp { color: #8f5902 }
+/* GenericStrong */ .chroma .gs { color: #000000; font-weight: bold }
+/* GenericSubheading */ .chroma .gu { color: #800080; font-weight: bold }
+/* GenericTraceback */ .chroma .gt { color: #a40000; font-weight: bold }
+/* GenericUnderline */ .chroma .gl { color: #000000; text-decoration: underline }
+/* TextWhitespace */ .chroma .w { color: #f8f8f8; text-decoration: underline }
+
+   
+      
+     .markdown-container {
+  width: 48em;
+  margin-right: auto;
+  margin-left: auto;
+  box-sizing: border-box;
+  padding: 45px 45px 5px 45px;
+}
+
+
+/**
+ * Responsive
+ **/
+@media only screen and (max-width: 48em) {
+    .markdown-container {
+        text-align: left;
+        width: 100%;
+        margin: 0;
+        margin-top: 3em;
+        padding: 0.1em;
+    }
+}
+
+.markdown-container:after {
+  display:table;
+  clear:both;
+}
+.markdown-container:before {
+  display:table;
+  content:" ";
+}
+
+.markdown-body .octicon {
+  display: inline-block;
+  fill: currentColor;
+  vertical-align: text-bottom;
+}
+
+.markdown-body .anchor {
+  float: left;
+  line-height: 1;
+  margin-left: -20px;
+  padding-right: 4px;
+}
+
+.markdown-body .anchor:focus {
+  outline: none;
+}
+
+.markdown-body h1 .octicon-link,
+.markdown-body h2 .octicon-link,
+.markdown-body h3 .octicon-link,
+.markdown-body h4 .octicon-link,
+.markdown-body h5 .octicon-link,
+.markdown-body h6 .octicon-link {
+  color: #1b1f23;
+  vertical-align: middle;
+  visibility: hidden;
+}
+
+.markdown-body h1:hover .anchor,
+.markdown-body h2:hover .anchor,
+.markdown-body h3:hover .anchor,
+.markdown-body h4:hover .anchor,
+.markdown-body h5:hover .anchor,
+.markdown-body h6:hover .anchor {
+  text-decoration: none;
+}
+
+.markdown-body h1:hover .anchor .octicon-link,
+.markdown-body h2:hover .anchor .octicon-link,
+.markdown-body h3:hover .anchor .octicon-link,
+.markdown-body h4:hover .anchor .octicon-link,
+.markdown-body h5:hover .anchor .octicon-link,
+.markdown-body h6:hover .anchor .octicon-link {
+  visibility: visible;
+}
+
+.markdown-body h1:hover .anchor .octicon-link:before,
+.markdown-body h2:hover .anchor .octicon-link:before,
+.markdown-body h3:hover .anchor .octicon-link:before,
+.markdown-body h4:hover .anchor .octicon-link:before,
+.markdown-body h5:hover .anchor .octicon-link:before,
+.markdown-body h6:hover .anchor .octicon-link:before {
+  width: 16px;
+  height: 16px;
+  content: ' ';
+  display: inline-block;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' version='1.1' width='16' height='16' aria-hidden='true'%3E%3Cpath fill-rule='evenodd' d='M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z'%3E%3C/path%3E%3C/svg%3E");
+}.markdown-body {
+  -ms-text-size-adjust: 100%;
+  -webkit-text-size-adjust: 100%;
+  line-height: 1.5;
+  color: #24292e;
+  font-family: -apple-system,BlinkMacSystemFont,Segoe UI,Helvetica,Arial,sans-serif,Apple Color Emoji,Segoe UI Emoji;
+  font-size: 16px;
+  line-height: 1.5;
+  word-wrap: break-word;
+}
+
+.markdown-body details {
+  display: block;
+}
+
+.markdown-body summary {
+  display: list-item;
+}
+
+.markdown-body a {
+  background-color: initial;
+}
+
+.markdown-body a:active,
+.markdown-body a:hover {
+  outline-width: 0;
+}
+
+.markdown-body strong {
+  font-weight: inherit;
+  font-weight: bolder;
+}
+
+.markdown-body h1 {
+  font-size: 2em;
+  margin: .67em 0;
+}
+
+.markdown-body img {
+  border-style: none;
+}
+
+.markdown-body code,
+.markdown-body kbd,
+.markdown-body pre {
+  font-family: monospace,monospace;
+  font-size: 1em;
+}
+
+.markdown-body hr {
+  box-sizing: initial;
+  height: 0;
+  overflow: visible;
+}
+
+.markdown-body input {
+  font: inherit;
+  margin: 0;
+}
+
+.markdown-body input {
+  overflow: visible;
+}
+
+.markdown-body [type=checkbox] {
+  box-sizing: border-box;
+  padding: 0;
+}
+
+.markdown-body * {
+  box-sizing: border-box;
+}
+
+.markdown-body input {
+  font-family: inherit;
+  font-size: inherit;
+  line-height: inherit;
+}
+
+.markdown-body a {
+  color: #0366d6;
+  text-decoration: none;
+}
+
+.markdown-body a:hover {
+  text-decoration: underline;
+}
+
+.markdown-body strong {
+  font-weight: 600;
+}
+
+.markdown-body hr {
+  height: 0;
+  margin: 15px 0;
+  overflow: hidden;
+  background: transparent;
+  border: 0;
+  border-bottom: 1px solid #dfe2e5;
+}
+
+.markdown-body hr:after,
+.markdown-body hr:before {
+  display: table;
+  content: "";
+}
+
+.markdown-body hr:after {
+  clear: both;
+}
+
+.markdown-body table {
+  border-spacing: 0;
+  border-collapse: collapse;
+}
+
+.markdown-body td,
+.markdown-body th {
+  padding: 0;
+}
+
+.markdown-body details summary {
+  cursor: pointer;
+}
+
+.markdown-body kbd {
+  display: inline-block;
+  padding: 3px 5px;
+  font: 11px SFMono-Regular,Consolas,Liberation Mono,Menlo,monospace;
+  line-height: 10px;
+  color: #444d56;
+  vertical-align: middle;
+  background-color: #fafbfc;
+  border: 1px solid #d1d5da;
+  border-radius: 3px;
+  box-shadow: inset 0 -1px 0 #d1d5da;
+}
+
+.markdown-body h1,
+.markdown-body h2,
+.markdown-body h3,
+.markdown-body h4,
+.markdown-body h5,
+.markdown-body h6 {
+  margin-top: 0;
+  margin-bottom: 0;
+}
+
+.markdown-body h1 {
+  font-size: 32px;
+}
+
+.markdown-body h1,
+.markdown-body h2 {
+  font-weight: 600;
+}
+
+.markdown-body h2 {
+  font-size: 24px;
+}
+
+.markdown-body h3 {
+  font-size: 20px;
+}
+
+.markdown-body h3,
+.markdown-body h4 {
+  font-weight: 600;
+}
+
+.markdown-body h4 {
+  font-size: 16px;
+}
+
+.markdown-body h5 {
+  font-size: 14px;
+}
+
+.markdown-body h5,
+.markdown-body h6 {
+  font-weight: 600;
+}
+
+.markdown-body h6 {
+  font-size: 12px;
+}
+
+.markdown-body p {
+  margin-top: 0;
+  margin-bottom: 10px;
+}
+
+.markdown-body blockquote {
+  margin: 0;
+}
+
+.markdown-body ol,
+.markdown-body ul {
+  padding-left: 0;
+  margin-top: 0;
+  margin-bottom: 0;
+}
+
+.markdown-body ol ol,
+.markdown-body ul ol {
+  list-style-type: lower-roman;
+}
+
+.markdown-body ol ol ol,
+.markdown-body ol ul ol,
+.markdown-body ul ol ol,
+.markdown-body ul ul ol {
+  list-style-type: lower-alpha;
+}
+
+.markdown-body dd {
+  margin-left: 0;
+}
+
+.markdown-body code,
+.markdown-body pre {
+  font-family: SFMono-Regular,Consolas,Liberation Mono,Menlo,monospace;
+  font-size: 12px;
+}
+
+.markdown-body pre {
+  margin-top: 0;
+  margin-bottom: 0;
+}
+
+.markdown-body input::-webkit-inner-spin-button,
+.markdown-body input::-webkit-outer-spin-button {
+  margin: 0;
+  -webkit-appearance: none;
+  appearance: none;
+}
+
+.markdown-body :checked+.radio-label {
+  position: relative;
+  z-index: 1;
+  border-color: #0366d6;
+}
+
+.markdown-body .border {
+  border: 1px solid #e1e4e8!important;
+}
+
+.markdown-body .border-0 {
+  border: 0!important;
+}
+
+.markdown-body .border-bottom {
+  border-bottom: 1px solid #e1e4e8!important;
+}
+
+.markdown-body .rounded-1 {
+  border-radius: 3px!important;
+}
+
+.markdown-body .bg-white {
+  background-color: #fff!important;
+}
+
+.markdown-body .bg-gray-light {
+  background-color: #fafbfc!important;
+}
+
+.markdown-body .text-gray-light {
+  color: #6a737d!important;
+}
+
+.markdown-body .mb-0 {
+  margin-bottom: 0!important;
+}
+
+.markdown-body .my-2 {
+  margin-top: 8px!important;
+  margin-bottom: 8px!important;
+}
+
+.markdown-body .pl-0 {
+  padding-left: 0!important;
+}
+
+.markdown-body .py-0 {
+  padding-top: 0!important;
+  padding-bottom: 0!important;
+}
+
+.markdown-body .pl-1 {
+  padding-left: 4px!important;
+}
+
+.markdown-body .pl-2 {
+  padding-left: 8px!important;
+}
+
+.markdown-body .py-2 {
+  padding-top: 8px!important;
+  padding-bottom: 8px!important;
+}
+
+.markdown-body .pl-3,
+.markdown-body .px-3 {
+  padding-left: 16px!important;
+}
+
+.markdown-body .px-3 {
+  padding-right: 16px!important;
+}
+
+.markdown-body .pl-4 {
+  padding-left: 24px!important;
+}
+
+.markdown-body .pl-5 {
+  padding-left: 32px!important;
+}
+
+.markdown-body .pl-6 {
+  padding-left: 40px!important;
+}
+
+.markdown-body .f6 {
+  font-size: 12px!important;
+}
+
+.markdown-body .lh-condensed {
+  line-height: 1.25!important;
+}
+
+.markdown-body .text-bold {
+  font-weight: 600!important;
+}
+
+.markdown-body .pl-c {
+  color: #6a737d;
+}
+
+.markdown-body .pl-c1,
+.markdown-body .pl-s .pl-v {
+  color: #005cc5;
+}
+
+.markdown-body .pl-e,
+.markdown-body .pl-en {
+  color: #6f42c1;
+}
+
+.markdown-body .pl-s .pl-s1,
+.markdown-body .pl-smi {
+  color: #24292e;
+}
+
+.markdown-body .pl-ent {
+  color: #22863a;
+}
+
+.markdown-body .pl-k {
+  color: #d73a49;
+}
+
+.markdown-body .pl-pds,
+.markdown-body .pl-s,
+.markdown-body .pl-s .pl-pse .pl-s1,
+.markdown-body .pl-sr,
+.markdown-body .pl-sr .pl-cce,
+.markdown-body .pl-sr .pl-sra,
+.markdown-body .pl-sr .pl-sre {
+  color: #032f62;
+}
+
+.markdown-body .pl-smw,
+.markdown-body .pl-v {
+  color: #e36209;
+}
+
+.markdown-body .pl-bu {
+  color: #b31d28;
+}
+
+.markdown-body .pl-ii {
+  color: #fafbfc;
+  background-color: #b31d28;
+}
+
+.markdown-body .pl-c2 {
+  color: #fafbfc;
+  background-color: #d73a49;
+}
+
+.markdown-body .pl-c2:before {
+  content: "^M";
+}
+
+.markdown-body .pl-sr .pl-cce {
+  font-weight: 700;
+  color: #22863a;
+}
+
+.markdown-body .pl-ml {
+  color: #735c0f;
+}
+
+.markdown-body .pl-mh,
+.markdown-body .pl-mh .pl-en,
+.markdown-body .pl-ms {
+  font-weight: 700;
+  color: #005cc5;
+}
+
+.markdown-body .pl-mi {
+  font-style: italic;
+  color: #24292e;
+}
+
+.markdown-body .pl-mb {
+  font-weight: 700;
+  color: #24292e;
+}
+
+.markdown-body .pl-md {
+  color: #b31d28;
+  background-color: #ffeef0;
+}
+
+.markdown-body .pl-mi1 {
+  color: #22863a;
+  background-color: #f0fff4;
+}
+
+.markdown-body .pl-mc {
+  color: #e36209;
+  background-color: #ffebda;
+}
+
+.markdown-body .pl-mi2 {
+  color: #f6f8fa;
+  background-color: #005cc5;
+}
+
+.markdown-body .pl-mdr {
+  font-weight: 700;
+  color: #6f42c1;
+}
+
+.markdown-body .pl-ba {
+  color: #586069;
+}
+
+.markdown-body .pl-sg {
+  color: #959da5;
+}
+
+.markdown-body .pl-corl {
+  text-decoration: underline;
+  color: #032f62;
+}
+
+.markdown-body .mb-0 {
+  margin-bottom: 0!important;
+}
+
+.markdown-body .my-2 {
+  margin-bottom: 8px!important;
+}
+
+.markdown-body .my-2 {
+  margin-top: 8px!important;
+}
+
+.markdown-body .pl-0 {
+  padding-left: 0!important;
+}
+
+.markdown-body .py-0 {
+  padding-top: 0!important;
+  padding-bottom: 0!important;
+}
+
+.markdown-body .pl-1 {
+  padding-left: 4px!important;
+}
+
+.markdown-body .pl-2 {
+  padding-left: 8px!important;
+}
+
+.markdown-body .py-2 {
+  padding-top: 8px!important;
+  padding-bottom: 8px!important;
+}
+
+.markdown-body .pl-3 {
+  padding-left: 16px!important;
+}
+
+.markdown-body .pl-4 {
+  padding-left: 24px!important;
+}
+
+.markdown-body .pl-5 {
+  padding-left: 32px!important;
+}
+
+.markdown-body .pl-6 {
+  padding-left: 40px!important;
+}
+
+.markdown-body .pl-7 {
+  padding-left: 48px!important;
+}
+
+.markdown-body .pl-8 {
+  padding-left: 64px!important;
+}
+
+.markdown-body .pl-9 {
+  padding-left: 80px!important;
+}
+
+.markdown-body .pl-10 {
+  padding-left: 96px!important;
+}
+
+.markdown-body .pl-11 {
+  padding-left: 112px!important;
+}
+
+.markdown-body .pl-12 {
+  padding-left: 128px!important;
+}
+
+.markdown-body hr {
+  border-bottom-color: #eee;
+}
+
+.markdown-body kbd {
+  display: inline-block;
+  padding: 3px 5px;
+  font: 11px SFMono-Regular,Consolas,Liberation Mono,Menlo,monospace;
+  line-height: 10px;
+  color: #444d56;
+  vertical-align: middle;
+  background-color: #fafbfc;
+  border: 1px solid #d1d5da;
+  border-radius: 3px;
+  box-shadow: inset 0 -1px 0 #d1d5da;
+}
+
+.markdown-body:after,
+.markdown-body:before {
+  display: table;
+  content: "";
+}
+
+.markdown-body:after {
+  clear: both;
+}
+
+.markdown-body>:first-child {
+  margin-top: 0!important;
+}
+
+.markdown-body>:last-child {
+  margin-bottom: 0!important;
+}
+
+.markdown-body a:not([href]) {
+  color: inherit;
+  text-decoration: none;
+}
+
+.markdown-body blockquote,
+.markdown-body details,
+.markdown-body dl,
+.markdown-body ol,
+.markdown-body p,
+.markdown-body pre,
+.markdown-body table,
+.markdown-body ul {
+  margin-top: 0;
+  margin-bottom: 16px;
+}
+
+.markdown-body hr {
+  height: .25em;
+  padding: 0;
+  margin: 24px 0;
+  background-color: #e1e4e8;
+  border: 0;
+}
+
+.markdown-body blockquote {
+  padding: 0 1em;
+  color: #6a737d;
+  border-left: .25em solid #dfe2e5;
+}
+
+.markdown-body blockquote>:first-child {
+  margin-top: 0;
+}
+
+.markdown-body blockquote>:last-child {
+  margin-bottom: 0;
+}
+
+.markdown-body h1,
+.markdown-body h2,
+.markdown-body h3,
+.markdown-body h4,
+.markdown-body h5,
+.markdown-body h6 {
+  margin-top: 24px;
+  margin-bottom: 16px;
+  font-weight: 600;
+  line-height: 1.25;
+}
+
+.markdown-body h1 {
+  font-size: 2em;
+}
+
+.markdown-body h1,
+.markdown-body h2 {
+  padding-bottom: .3em;
+  border-bottom: 1px solid #eaecef;
+}
+
+.markdown-body h2 {
+  font-size: 1.5em;
+}
+
+.markdown-body h3 {
+  font-size: 1.25em;
+}
+
+.markdown-body h4 {
+  font-size: 1em;
+}
+
+.markdown-body h5 {
+  font-size: .875em;
+}
+
+.markdown-body h6 {
+  font-size: .85em;
+  color: #6a737d;
+}
+
+.markdown-body ol,
+.markdown-body ul {
+  padding-left: 2em;
+}
+
+.markdown-body ol ol,
+.markdown-body ol ul,
+.markdown-body ul ol,
+.markdown-body ul ul {
+  margin-top: 0;
+  margin-bottom: 0;
+}
+
+.markdown-body li {
+  word-wrap: break-all;
+}
+
+.markdown-body li>p {
+  margin-top: 16px;
+}
+
+.markdown-body li+li {
+  margin-top: .25em;
+}
+
+.markdown-body dl {
+  padding: 0;
+}
+
+.markdown-body dl dt {
+  padding: 0;
+  margin-top: 16px;
+  font-size: 1em;
+  font-style: italic;
+  font-weight: 600;
+}
+
+.markdown-body dl dd {
+  padding: 0 16px;
+  margin-bottom: 16px;
+}
+
+.markdown-body table {
+  display: block;
+  width: 100%;
+  overflow: auto;
+}
+
+.markdown-body table th {
+  font-weight: 600;
+}
+
+.markdown-body table td,
+.markdown-body table th {
+  padding: 6px 13px;
+  border: 1px solid #dfe2e5;
+}
+
+.markdown-body table tr {
+  background-color: #fff;
+  border-top: 1px solid #c6cbd1;
+}
+
+.markdown-body table tr:nth-child(2n) {
+  background-color: #f6f8fa;
+}
+
+.markdown-body img {
+  max-width: 100%;
+  box-sizing: initial;
+  background-color: #fff;
+}
+
+.markdown-body img[align=right] {
+  padding-left: 20px;
+}
+
+.markdown-body img[align=left] {
+  padding-right: 20px;
+}
+
+.markdown-body code {
+  padding: .2em .4em;
+  margin: 0;
+  font-size: 85%;
+  background-color: rgba(27,31,35,.05);
+  border-radius: 3px;
+}
+
+.markdown-body pre {
+  word-wrap: normal;
+}
+
+.markdown-body pre>code {
+  padding: 0;
+  margin: 0;
+  font-size: 100%;
+  word-break: normal;
+  white-space: pre;
+  background: transparent;
+  border: 0;
+}
+
+.markdown-body .highlight {
+  margin-bottom: 16px;
+}
+
+.markdown-body .highlight pre {
+  margin-bottom: 0;
+  word-break: normal;
+}
+
+.markdown-body .highlight pre,
+.markdown-body pre {
+  padding: 16px;
+  overflow: auto;
+  font-size: 85%;
+  line-height: 1.45;
+  background-color: #f6f8fa;
+  border-radius: 3px;
+}
+
+.markdown-body pre code {
+  display: inline;
+  max-width: auto;
+  padding: 0;
+  margin: 0;
+  overflow: visible;
+  line-height: inherit;
+  word-wrap: normal;
+  background-color: initial;
+  border: 0;
+}
+
+.markdown-body .commit-tease-sha {
+  display: inline-block;
+  font-family: SFMono-Regular,Consolas,Liberation Mono,Menlo,monospace;
+  font-size: 90%;
+  color: #444d56;
+}
+
+.markdown-body .full-commit .btn-outline:not(:disabled):hover {
+  color: #005cc5;
+  border-color: #005cc5;
+}
+
+.markdown-body .blob-wrapper {
+  overflow-x: auto;
+  overflow-y: hidden;
+}
+
+.markdown-body .blob-wrapper-embedded {
+  max-height: 240px;
+  overflow-y: auto;
+}
+
+.markdown-body .blob-num {
+  width: 1%;
+  min-width: 50px;
+  padding-right: 10px;
+  padding-left: 10px;
+  font-family: SFMono-Regular,Consolas,Liberation Mono,Menlo,monospace;
+  font-size: 12px;
+  line-height: 20px;
+  color: rgba(27,31,35,.3);
+  text-align: right;
+  white-space: nowrap;
+  vertical-align: top;
+  cursor: pointer;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+.markdown-body .blob-num:hover {
+  color: rgba(27,31,35,.6);
+}
+
+.markdown-body .blob-num:before {
+  content: attr(data-line-number);
+}
+
+.markdown-body .blob-code {
+  position: relative;
+  padding-right: 10px;
+  padding-left: 10px;
+  line-height: 20px;
+  vertical-align: top;
+}
+
+.markdown-body .blob-code-inner {
+  overflow: visible;
+  font-family: SFMono-Regular,Consolas,Liberation Mono,Menlo,monospace;
+  font-size: 12px;
+  color: #24292e;
+  word-wrap: normal;
+  white-space: pre;
+}
+
+.markdown-body .pl-token.active,
+.markdown-body .pl-token:hover {
+  cursor: pointer;
+  background: #ffea7f;
+}
+
+.markdown-body .tab-size[data-tab-size="1"] {
+  -moz-tab-size: 1;
+  tab-size: 1;
+}
+
+.markdown-body .tab-size[data-tab-size="2"] {
+  -moz-tab-size: 2;
+  tab-size: 2;
+}
+
+.markdown-body .tab-size[data-tab-size="3"] {
+  -moz-tab-size: 3;
+  tab-size: 3;
+}
+
+.markdown-body .tab-size[data-tab-size="4"] {
+  -moz-tab-size: 4;
+  tab-size: 4;
+}
+
+.markdown-body .tab-size[data-tab-size="5"] {
+  -moz-tab-size: 5;
+  tab-size: 5;
+}
+
+.markdown-body .tab-size[data-tab-size="6"] {
+  -moz-tab-size: 6;
+  tab-size: 6;
+}
+
+.markdown-body .tab-size[data-tab-size="7"] {
+  -moz-tab-size: 7;
+  tab-size: 7;
+}
+
+.markdown-body .tab-size[data-tab-size="8"] {
+  -moz-tab-size: 8;
+  tab-size: 8;
+}
+
+.markdown-body .tab-size[data-tab-size="9"] {
+  -moz-tab-size: 9;
+  tab-size: 9;
+}
+
+.markdown-body .tab-size[data-tab-size="10"] {
+  -moz-tab-size: 10;
+  tab-size: 10;
+}
+
+.markdown-body .tab-size[data-tab-size="11"] {
+  -moz-tab-size: 11;
+  tab-size: 11;
+}
+
+.markdown-body .tab-size[data-tab-size="12"] {
+  -moz-tab-size: 12;
+  tab-size: 12;
+}
+
+.markdown-body .task-list-item {
+  list-style-type: none;
+}
+
+.markdown-body .task-list-item+.task-list-item {
+  margin-top: 3px;
+}
+
+.markdown-body .task-list-item input {
+  margin: 0 .2em .25em -1.6em;
+  vertical-align: middle;
+}
+
+/* Center inline tweets */
+.twitter-tweet {
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.Box-header {
+  display: flex !important;
+  padding: 16px;
+  padding-top: 16px;
+  padding-bottom: 16px;
+  margin: -1px -1px 0;
+  background-color: #f6f8fa;
+  border: 1px solid #d1d5da;
+  border-top-left-radius: 3px;
+  border-top-right-radius: 3px;
+}
+
+.markdown-frame {
+  border: 1px solid #ddd;
+  border-radius: 3px;
+}
+
+   
+  </style>
+</head>
+<body>
+	<header>
+	<a href="/">HeinrichHartmann.com</a>
+</header>
+
+	
+  <main class="markdown-container">
+    <article class="markdown-body">
+      <h1 class="sticker"> UNPUBLISHED DRAFT </h1>
+      <h1>Gauss Elimination</h1>
+      <p class="meta" style="color:#aaa; float:right">
+         Stemwede, 
+        2020-05-27
+        
+      </p>
+      <div style="clear:both">
+	<div style="visibility:hidden; display:none;">
+    $$ 
+\newcommand{\nl}{\\}
+
+\newcommand{\half}{\frac{1}{2}}
+\newcommand{\floor}[1]{\lfloor #1 \rfloor}
+\newcommand{\ceil}[1]{\lceil #1 \rceil}
+\newcommand{\Set}[2]{\left\{\, #1 \;\vert\; #2 \,\right\}}
+\newcommand{\C}{\,\#}
+\newcommand{\CSet}[2]{\#\{\, #1 \;\vert\; #2 \,\}}
+
+\newcommand{\qtext}[1]{\quad\text{#1}\quad}
+\newcommand{\stext}[1]{\;\text{#1}\;}
+
+\newcommand{\IFF}{\Leftrightarrow}
+\newcommand{\inf}{\infty}
+
+\newcommand{\Ind}{\mathbb{1}}
+
+\newcommand{\IR}{\mathbb{R}}
+\newcommand{\IA}{\mathbb{A}}
+\newcommand{\IB}{\mathbb{B}}
+\newcommand{\IC}{\mathbb{C}}
+\newcommand{\ID}{\mathbb{D}}
+\newcommand{\IF}{\mathbb{F}}
+\newcommand{\IH}{\mathbb{H}}
+\newcommand{\II}{\mathbb{I}}
+\newcommand{\IL}{\mathbb{L}}
+\newcommand{\IN}{\mathbb{N}}
+\newcommand{\IP}{\mathbb{P}}
+\newcommand{\IQ}{\mathbb{Q}}
+\newcommand{\IR}{\mathbb{R}}
+\newcommand{\IS}{\mathbb{S}}
+\newcommand{\IV}{\mathbb{V}}
+\newcommand{\IZ}{\mathbb{Z}}
+
+\newcommand{\KR}{\matcal{R}}
+\newcommand{\KA}{\matcal{A}}
+\newcommand{\KB}{\matcal{B}}
+\newcommand{\KC}{\matcal{C}}
+\newcommand{\KD}{\matcal{D}}
+\newcommand{\KF}{\matcal{F}}
+\newcommand{\KH}{\matcal{H}}
+\newcommand{\KI}{\matcal{I}}
+\newcommand{\KL}{\matcal{L}}
+\newcommand{\KN}{\matcal{N}}
+\newcommand{\KP}{\matcal{P}}
+\newcommand{\KQ}{\matcal{Q}}
+\newcommand{\KR}{\matcal{R}}
+\newcommand{\KS}{\matcal{S}}
+\newcommand{\KV}{\matcal{V}}
+\newcommand{\KZ}{\matcal{Z}}
+
+\newcommand{\gc}{\mathfrak{C}}
+\newcommand{\gd}{\mathfrak{D}}
+\newcommand{\gM}{\mathfrak{M}}
+\newcommand{\gm}{\mathfrak{m}}
+\newcommand{\gf}{\mathfrak{f}}
+\newcommand{\gu}{\mathfrak{U}}
+
+\newcommand{\fa}{\mathfrak{a}}
+\newcommand{\fg}{\mathfrak{g}}
+\newcommand{\fn}{\mathfrak{n}}
+\newcommand{\fk}{\mathfrak{k}}
+\newcommand{\fm}{\mathfrak{m}}
+\newcommand{\fp}{\mathfrak{p}}
+
+\newcommand{\curly}[1]{\mathcal{#1}}
+\newcommand{\op}[1]{\mathrm{#1}}
+\newcommand{\Cat}[1]{\mathfrak{#1}}
+\newcommand{\cat}[1]{\mathbf{#1}}
+
+\newcommand{\vphi}{\varphi}
+\newcommand{\sphi}{\phi}
+\newcommand{\eps}{\varepsilon}
+
+\newcommand{\tensor}{\otimes}
+\newcommand{\tensors}{\tensor\dots\tensor}
+\newcommand{\Tensor}{\bigotimes}
+\newcommand{\ra}{\rightarrow}
+\newcommand{\lra}{\longrightarrow}
+\newcommand{\la}{\leftarrow}
+\newcommand{\lla}{\longleftarrow}
+\newcommand{\isom}{\cong}
+\newcommand{\epi}{\twoheadrightarrow}
+\newcommand{\mono}{\hookrightarrow}
+\newcommand{\del}{\partial}
+\newcommand{\union}{\cup}
+\newcommand{\dotcup}{\ensuremath{\mathaccent\cdot\cup}}
+\newcommand{\dunion}{\dotcup}
+\newcommand{\&lt;}{\langle}
+\renewcommand{\&gt;}{\rangle}
+\newcommand{\inpart}[1]{\in\text{\part}(#1)}
+\newcommand{\Vsum}{\bigoplus}
+\newcommand{\vsum}{\oplus}
+
+\renewcommand{\S}{\mathfrak{S}}
+\newcommand{\id}{\mathrm{id}}
+\newcommand{\rk}{\mathrm{rk}}
+\newcommand{\Diff}{\mathrm{Diff}}
+\newcommand{\Hom}{\mathrm{Hom}}
+\newcommand{\Pic}{\mathrm{Pic}}
+\newcommand{\Spec}{\mathrm{Spec}}
+\newcommand{\End}{\mathrm{End}}
+\newcommand{\Ext}{\mathrm{Ext}}
+
+\DeclareMathOperator{\Supp}{\mathrm{Supp}}
+\DeclareMathOperator{\Sym}{Sym}
+\DeclareMathOperator{\Alt}{\Lambda}
+\DeclareMathOperator{\ad}{ad}
+\DeclareMathOperator{\ch}{ch}
+\DeclareMathOperator{\td}{td}
+\DeclareMathOperator{\pr}{pr}
+
+ $$
+</div>
+<p>In this note we are going to study the following question:</p>
+<blockquote>
+<p>Let $A \in Mat(n,m)$ be an $n \times m$ matrix, find an invertible transformation $X$ so that $X
+\cdot A$ has a &ldquo;simpler&rdquo; form.</p>
+</blockquote>
+<p>Here, simple might mean that $A$ has diagonal form, $A$ has diagonal form with 0/1 on the diagonal
+or that or that $A$ has upper/lower triangular form.</p>
+<p>Such a relation will allow us to derive basic properties from $A$ from those of $B = X A$:</p>
+<ol>
+<li>The rank of $A$ is the rank of $B$.</li>
+<li>The image of $A$ is $X \cdot Im(B)$.</li>
+<li>The kernel of $A$ is the kernel of $B$.</li>
+<li>An inverse of $A$ is $B^{-1} \cdot X^{-1}$.</li>
+</ol>
+<p>In general we will not be able to find a transformation, that brings $A$ into diagonal form. The
+best we can get is a special case of upper-triangular matrices called <a href="https://en.wikipedia.org/wiki/Row_echelon_form">row echolon form</a>.
+E.g.</p>
+<p>$$
+B = \begin{bmatrix}
+1 &amp; *  &amp; *   &amp; *   &amp; * &amp; * &amp; * &amp; * \\
+0 &amp; 0  &amp; 1   &amp; *   &amp; * &amp; * &amp; * &amp; * \\
+0 &amp; 0  &amp; 0   &amp; 1   &amp; * &amp; * &amp; * &amp; * \\
+0 &amp; 0  &amp; 0   &amp; 0   &amp; 0 &amp; 1 &amp; * &amp; * \\
+0 &amp; 0  &amp; 0   &amp; 0   &amp; 0 &amp; 0 &amp; 0 &amp; 0 \\
+\end{bmatrix}
+$$</p>
+<h2 id="basic-transformations">Basic Transformations</h2>
+<p>We will construct the matrices $X$ explicitly as a product of basic transformations:</p>
+<ul>
+<li>Shear Matrices (Gauss/Frobenius)</li>
+<li>Rotations (Givens)</li>
+<li>Reflections (Householder)</li>
+<li>Diagonal Matrices</li>
+<li>Permutation Matrices</li>
+</ul>
+<h2 id="geometric-version">Geometric Version</h2>
+<p>This question has a geometric reformulation.</p>
+<blockquote>
+<p>Given m vectors $a_1,\dots,a_m \in \IR^n$, find a transformation such that the transformed vectors
+$X a_1,\dots, X a_m$ have a &ldquo;simple&rdquo; configuration.</p>
+</blockquote>
+<p><strong>Setting:</strong> Let $A \in Mat(m,n)$ be an $m \times n$ matrix, over a field $\kappa=\IQ,\IR,\IC,\dots$.</p>
+<p><strong>Question:</strong> Given $A$ find matrices $X \in Mat(m,m),Y \in Mat(n,n)$ with explicit inverses $X^{-1}, Y^{-1}$,
+so that
+$$ B := X^{-1} \cdot A \cdot Y \quad\Leftrightarrow\quad A = X \cdot B \cdot Y^{-1}  $$
+has a &ldquo;simpler&rdquo; form.</p>
+<p>Such a relation will allow us to derive basic properties from $A$ from those of $B$:</p>
+<ol>
+<li>The rank of $A$ is the rank of $B$.</li>
+<li>The image of $A$ is $X \cdot Im(B)$.</li>
+<li>The kernel of $A$ is $Y \cdot Ker(B)$.</li>
+<li>An inverse of $A$ is $Y \cdot B^{-1} \cdot X^{-1}$.</li>
+</ol>
+<p>In case $B$ is diagonal all those properties can readily be computed.</p>
+<h2 id="results">Results</h2>
+<p><strong>Proposition (Gauss Elimination)</strong>
+There exists $X,Y$ so that $D := X \cdot A \cdot Y^{-1}$ is a diagonal matrix with entries
+$$ D = diag(1\dots,1,0,\dots,0). $$</p>
+<p><strong>Proposition (SVD)</strong>
+Let $\kappa = \IR$.
+There exists orthogonal matrices $X,Y$, so that $D := X \cdot A \cdot Y^{-1}$ is a diagonal matrix with entries
+$$ D = diag(\sigma_1,\dots,\sigma_r,0,\dots,0) $$
+where $\sigma_1 \geq \sigma_2 \dots \geq \sigma_r &gt; 0.$</p>
+<p><strong>Proposition (Reduced Row Echolon Form)</strong>
+There exists $X$, so that $B := X \cdot A$ has <a href="https://en.wikipedia.org/wiki/Row_echelon_form">reduced row echolon form</a>
+E.g.
+$$
+B = \begin{bmatrix}
+1 &amp; *  &amp; 0   &amp; 0   &amp; * &amp; * \\
+0 &amp; 0  &amp; 1   &amp; 0   &amp; * &amp; * \\
+0 &amp; 0  &amp; 0   &amp; 1   &amp; * &amp; * \\
+0 &amp; 0  &amp; 0   &amp; 0   &amp; 0 &amp; 1 \\
+0 &amp; 0  &amp; 0   &amp; 0   &amp; 0 &amp; 0 \\
+\end{bmatrix}
+$$</p>
+<p><strong>Proposition (QR Decomposition)</strong>
+Let $\kappa = \IR$.
+There exists an orthogonal matrix $X$ so that $B = X \cdot A$ is an upper triangular matrix.</p>
+<h2 id="strategy">Strategy</h2>
+<p>We will construct the matrices $X,X^{-1},Y,Y^{-1}$ explicitly as a product of basic transformations:</p>
+<ul>
+<li>Shear Matrices (Gauss/Frobenius)</li>
+<li>Rotations (Givens)</li>
+<li>Reflections (Householder)</li>
+<li>Diagonal Matrices</li>
+<li>Permutation Matrices</li>
+</ul>
+<p>The idea is always the same: We proceed inductively one column of A at a time.  At each step we will
+have a number $k$ of columns already in the desired form.  The next transformation needs to leave
+the span of first $k$ columns invariant, and transform the next column into a better position.</p>
+<h2 id="basic-transformations-1">Basic Transformations</h2>
+<p><strong>Proposition (Shear Transformations)</strong> Let $v,w \in \IR^n$ be two vectors with $w^t v = 0$.
+Then $$T = I + v w^t$$ is an invertible transformation with inverse $T^{-1} = I - v w^t$.</p>
+<p><strong>Proof</strong> $ T \cdot T^{-1} = I - v w^t v w^t = I$, since $w^t v = 0$. ▮</p>
+<p><strong>Example</strong>
+Let $v = [0,a], w=[1, 0]$, then
+$$
+\begin{bmatrix}
+1 &amp; a \\
+0 &amp; 1
+\end{bmatrix}
+$$</p>
+
+      </div>
+    </article>
+  </main>
+
+	<footer style="float:right; margin: 20px auto 20px auto; color:#AAA">&copy; 2023 Heinrich Hartmann. All rights reserved.</footer>
+
+</body>
+
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+    MathJax.Hub.Config({
+      tex2jax: {
+        displayMath: [['$$','$$']],
+        inlineMath: [['$','$']],
+        processEscapes: false
+      }
+    });
+  </script>
+</html>

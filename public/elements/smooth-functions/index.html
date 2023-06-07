@@ -1,0 +1,921 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+      
+      <link rel="icon" href="../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.2.2, mkdocs-material-7.2.4">
+    
+    
+      
+        <title>Local Theory of Smooth Functions - Elements</title>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/main.f7f47774.min.css">
+      
+        
+        <link rel="stylesheet" href="../assets/stylesheets/palette.3f5d1f46.min.css">
+        
+          
+          
+          <meta name="theme-color" content="#000000">
+        
+      
+    
+    
+    
+      
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=source+code+pro:300,400,400i,700%7Csource+code+pro&display=fallback">
+        <style>:root{--md-text-font-family:"source code pro";--md-code-font-family:"source code pro"}</style>
+      
+    
+    
+    
+    
+      
+
+
+    
+    
+  </head>
+  
+  
+    
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="" data-md-color-primary="black" data-md-color-accent="gray">
+  
+    
+    <script>function __prefix(e){return new URL("..",location).pathname+"."+e}function __get(e,t=localStorage){return JSON.parse(t.getItem(__prefix(e)))}</script>
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#local-theory-of-smooth-functions" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+      <header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href=".." title="Elements" class="md-header__button md-logo" aria-label="Elements" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54z"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Elements
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Local Theory of Smooth Functions
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5z"/></svg>
+      </label>
+      
+<div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5z"/></svg>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" aria-label="Clear" tabindex="-1">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+  </nav>
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+<nav class="md-nav md-nav--primary md-nav--integrated" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href=".." title="Elements" class="md-nav__button md-logo" aria-label="Elements" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54z"/></svg>
+
+    </a>
+    Elements
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href=".." class="md-nav__link">
+        Home
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../linked-structures/" class="md-nav__link">
+        Linked structures
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+    
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" data-md-toggle="toc" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          Local Theory of Smooth Functions
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        Local Theory of Smooth Functions
+      </a>
+      
+        
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#abstract" class="md-nav__link">
+    Abstract
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#introduction-and-motivation" class="md-nav__link">
+    Introduction and Motivation
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#setting" class="md-nav__link">
+    Setting
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#taylor-series" class="md-nav__link">
+    Taylor Series
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#commutative-algebra" class="md-nav__link">
+    Commutative Algebra
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#tangent-vectors" class="md-nav__link">
+    Tangent Vectors
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#implicit-functions" class="md-nav__link">
+    Implicit Functions
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#invariant-theory" class="md-nav__link">
+    Invariant Theory
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+          
+          <div class="md-content" data-md-component="content">
+            <article class="md-content__inner md-typeset">
+              
+                
+                
+                <h1 id="local-theory-of-smooth-functions">Local Theory of Smooth Functions</h1>
+<ul>
+<li>Date: 2022-07-09</li>
+<li>Author: Heinrich Hartmann</li>
+<li>Location: Stemwede</li>
+<li>Tags: post, math</li>
+</ul>
+<div style="display:none">
+$$
+  \newcommand{\nl}{\\}
+
+  \newcommand{\half}{\frac{1}{2}}
+  \newcommand{\floor}[1]{\lfloor #1 \rfloor}
+  \newcommand{\ceil}[1]{\lceil #1 \rceil}
+  \newcommand{\Set}[2]{\left\{\, #1 \;\vert\; #2 \,\right\}}
+  \newcommand{\C}{\,\#}
+  \newcommand{\CSet}[2]{\#\{\, #1 \;\vert\; #2 \,\}}
+
+  \newcommand{\qtext}[1]{\quad\text{#1}\quad}
+  \newcommand{\stext}[1]{\;\text{#1}\;}
+
+  \newcommand{\IFF}{\Leftrightarrow}
+  \newcommand{\inf}{\infty}
+
+  \newcommand{\Ind}{\mathbb{1}}
+
+  \newcommand{\IR}{\mathbb{R}}
+  \newcommand{\IA}{\mathbb{A}}
+  \newcommand{\IB}{\mathbb{B}}
+  \newcommand{\IC}{\mathbb{C}}
+  \newcommand{\ID}{\mathbb{D}}
+  \newcommand{\IF}{\mathbb{F}}
+  \newcommand{\IH}{\mathbb{H}}
+  \newcommand{\II}{\mathbb{I}}
+  \newcommand{\IL}{\mathbb{L}}
+  \newcommand{\IN}{\mathbb{N}}
+  \newcommand{\IP}{\mathbb{P}}
+  \newcommand{\IQ}{\mathbb{Q}}
+  \newcommand{\IR}{\mathbb{R}}
+  \newcommand{\IS}{\mathbb{S}}
+  \newcommand{\IV}{\mathbb{V}}
+  \newcommand{\IZ}{\mathbb{Z}}
+
+  \newcommand{\KR}{\matcal{R}}
+  \newcommand{\KA}{\matcal{A}}
+  \newcommand{\KB}{\matcal{B}}
+  \newcommand{\KC}{\matcal{C}}
+  \newcommand{\KD}{\matcal{D}}
+  \newcommand{\KF}{\matcal{F}}
+  \newcommand{\KH}{\matcal{H}}
+  \newcommand{\KI}{\matcal{I}}
+  \newcommand{\KL}{\matcal{L}}
+  \newcommand{\KN}{\matcal{N}}
+  \newcommand{\KP}{\matcal{P}}
+  \newcommand{\KQ}{\matcal{Q}}
+  \newcommand{\KR}{\matcal{R}}
+  \newcommand{\KS}{\matcal{S}}
+  \newcommand{\KV}{\matcal{V}}
+  \newcommand{\KZ}{\matcal{Z}}
+
+  \newcommand{\gc}{\mathfrak{C}}
+  \newcommand{\gd}{\mathfrak{D}}
+  \newcommand{\gM}{\mathfrak{M}}
+  \newcommand{\gm}{\mathfrak{m}}
+  \newcommand{\gf}{\mathfrak{f}}
+  \newcommand{\gu}{\mathfrak{U}}
+
+  \newcommand{\fa}{\mathfrak{a}}
+  \newcommand{\fg}{\mathfrak{g}}
+  \newcommand{\fn}{\mathfrak{n}}
+  \newcommand{\fk}{\mathfrak{k}}
+  \newcommand{\fm}{\mathfrak{m}}
+  \newcommand{\fp}{\mathfrak{p}}
+
+  \newcommand{\curly}[1]{\mathcal{#1}}
+  \newcommand{\op}[1]{\mathrm{#1}}
+  \newcommand{\Cat}[1]{\mathfrak{#1}}
+  \newcommand{\cat}[1]{\mathbf{#1}}
+
+  \newcommand{\vphi}{\varphi}
+  \newcommand{\sphi}{\phi}
+  \newcommand{\eps}{\varepsilon}
+
+  \newcommand{\tensor}{\otimes}
+  \newcommand{\tensors}{\tensor\dots\tensor}
+  \newcommand{\Tensor}{\bigotimes}
+  \newcommand{\ra}{\rightarrow}
+  \newcommand{\lra}{\longrightarrow}
+  \newcommand{\la}{\leftarrow}
+  \newcommand{\lla}{\longleftarrow}
+  \newcommand{\isom}{\cong}
+  \newcommand{\epi}{\twoheadrightarrow}
+  \newcommand{\mono}{\hookrightarrow}
+  \newcommand{\del}{\partial}
+  \newcommand{\union}{\cup}
+  \newcommand{\Union}{\bigcup}
+  \newcommand{\dotcup}{\ensuremath{\mathaccent\cdot\cup}}
+  \newcommand{\dunion}{\dotcup}
+  \newcommand{\<}{\langle}
+  \renewcommand{\>}{\rangle}
+  \newcommand{\inpart}[1]{\in\text{\part}(#1)}
+  \newcommand{\Vsum}{\bigoplus}
+  \newcommand{\vsum}{\oplus}
+
+  \renewcommand{\S}{\mathfrak{S}}
+  \newcommand{\id}{\mathrm{id}}
+  \newcommand{\rk}{\mathrm{rk}}
+  \newcommand{\Diff}{\mathrm{Diff}}
+  \newcommand{\Hom}{\mathrm{Hom}}
+  \newcommand{\Pic}{\mathrm{Pic}}
+  \newcommand{\Spec}{\mathrm{Spec}}
+  \newcommand{\End}{\mathrm{End}}
+  \newcommand{\Ext}{\mathrm{Ext}}
+
+  \DeclareMathOperator{\Supp}{\mathrm{Supp}}
+  \DeclareMathOperator{\Sym}{Sym}
+  \DeclareMathOperator{\Alt}{\Lambda}
+  \DeclareMathOperator{\ad}{ad}
+  \DeclareMathOperator{\ch}{ch}
+  \DeclareMathOperator{\td}{td}
+  \DeclareMathOperator{\pr}{pr}
+
+  \newcommand{\AINF}{A}
+  \newcommand{\CINF}{\mathcal{C}^\infty}
+  \newcommand{\dbrackets}[1]{ [\![ #1 ]\!]}
+$$
+</div>
+
+<h2 id="abstract">Abstract</h2>
+<h2 id="introduction-and-motivation">Introduction and Motivation</h2>
+<p>We study the local theory of <span class="arithmatex">\(C^\infty\)</span> functions.</p>
+<p>One observation that motivates this exercise, is that analysis not helping with
+solving equations <span class="arithmatex">\(a(x) = 0\)</span>, but analyzes the local behavior of functions
+around a given solution. From this perspective, it's natural to fix the point
+<span class="arithmatex">\(x\)</span> first, and then study functions <span class="arithmatex">\(a\)</span> which vanish at <span class="arithmatex">\(x\)</span>. A natural framework
+for this study is the local ring of <span class="arithmatex">\(\CINF\)</span>-functions. Or the category of
+"germs" of spaces (introduced below).</p>
+<p>Another observation that we follow in this study, is that a lot of constructions
+from commutative algebra carry over to the rings of <span class="arithmatex">\(\CINF\)</span>-functions without
+modifications. This was surprising for me, since those rings are violate all
+kinds of finiteness conditions (e.g. notherian), enjoyed by the typical examples
+(polynmial/arithmetic rings).</p>
+<p>Another motivation of this text, is to develop natural notation, that reduces
+the mental overhead one has to carry while performing calculations. Analysis is
+prone to inaccuracies like <span class="arithmatex">\(\frac{\del}{\del x} a(x \cdot t)(0)\)</span>, which could
+mean a lot of things. The order that we perform composition and differentiation,
+and evaluation is important. We use the following notation to clarify the
+semantics in case of ambiguities:</p>
+<ul>
+<li>Function applied to element <span class="arithmatex">\(a(x) = ev_{x}[a]\)</span>.</li>
+<li>If the element is itself a function we sometimes write <span class="arithmatex">\(f[a]\)</span>.</li>
+<li>Anonymous functions are denoted by <span class="arithmatex">\(a = a(\_) = [x \mapsto a(x)]\)</span> elsewhere known as <span class="arithmatex">\(\lambda x . a(x)\)</span>.</li>
+</ul>
+<h2 id="setting">Setting</h2>
+<p><strong>Definition.</strong> 
+The local ring of <span class="arithmatex">\(C^\infty\)</span> functions around <span class="arithmatex">\(0 \in \IR^n\)</span>  is defined as</p>
+<div class="arithmatex">\[ \AINF^n = \lim_\ra \{ \CINF(U,\IR) \,|\, 0 \in U \subset \IR^n \}. \]</div>
+<p>The inductive limit is taken along the restriction maps <span class="arithmatex">\(\rho_V: \CINF(U,\IR)
+\ra \CINF(V,\IR)\)</span> for <span class="arithmatex">\(U \subset V\)</span>.</p>
+<p>More explicitly, an element <span class="arithmatex">\(a \in \AINF\)</span> is hence represented by a pair
+<span class="arithmatex">\((U,a)\)</span>, where <span class="arithmatex">\(U \subset \IR^n\)</span> is an open subset containing <span class="arithmatex">\(0\)</span>, and <span class="arithmatex">\(a \in
+\AINF(U,\IR)\)</span>. Two pairs <span class="arithmatex">\((U,a), (V,b)\)</span> represent the same element in <span class="arithmatex">\(\AINF^n\)</span>
+if there is a <span class="arithmatex">\(W \subset U \cap V, 0 \in W\)</span> so that <span class="arithmatex">\(\rho_W(a) = \rho_W(b)\)</span>.</p>
+<p><strong>Naturality.</strong> Any (<span class="arithmatex">\(C^\infty\)</span>-)differentiable map <span class="arithmatex">\(f: \IR^n \ra \IR^m\)</span> with
+<span class="arithmatex">\(f(0) = 0\)</span> gives rise to a map <span class="arithmatex">\(f^*: \AINF^m \ra \AINF^n\)</span>, which sends <span class="arithmatex">\((b,V)\)</span>
+to <span class="arithmatex">\((b \circ f, f^{-1}(V))\)</span>. We call <span class="arithmatex">\(f^*[a]\)</span> the pullback of a along <span class="arithmatex">\(f\)</span>.</p>
+<p><strong>Evaluation.</strong> For <span class="arithmatex">\(a \in \AINF^n\)</span>, we denote by <span class="arithmatex">\(ev_0[a] := a(0) \in \IR\)</span>, the evaluation of <span class="arithmatex">\(a\)</span> at <span class="arithmatex">\(0 \in \IR^n\)</span>.
+This is operation can be identified with the pullback along the injection <span class="arithmatex">\(0: \IR^0 \ra \IR^n\)</span>, <span class="arithmatex">\(e = 0^*\)</span>.</p>
+<p><strong>Constants.</strong> For <span class="arithmatex">\(\lambda \in \IR\)</span> the constant function <span class="arithmatex">\(\IR^n \ra \IR, x \mapsto \lambda\)</span> by the same letter <span class="arithmatex">\(\lambda \in \AINF^n\)</span>.
+If we want to stress the function character of <span class="arithmatex">\(\lambda\)</span> we may use the symbol <span class="arithmatex">\(\underline{\lambda}\)</span>.
+The resulting linear map <span class="arithmatex">\(c: \IR \ra \AINF^n\)</span> can be identified with <span class="arithmatex">\(c = \pi^*\)</span>, where <span class="arithmatex">\(\pi:\IR^n \ra \IR^0\)</span> is the projection to a point.</p>
+<p><strong>Elementary Operations.</strong>
+Let <span class="arithmatex">\(i \in \{1,\dots,n\}\)</span>. We have the following operations on <span class="arithmatex">\(\AINF^n\)</span>.</p>
+<ul>
+<li>Coordinate fuctions <span class="arithmatex">\(x^i \in \AINF^n\)</span> with <span class="arithmatex">\(x^i(x_1,\dots,x_n) = x_i\)</span> on any <span class="arithmatex">\(0 \in U \subset \IR^n\)</span>,</li>
+<li>Partial derivatives <span class="arithmatex">\(\del_i = \del_i^x = \frac{\del}{\del x^i}\)</span> those are linear operators <span class="arithmatex">\(\AINF^n \ra \AINF^n\)</span>.</li>
+<li>Axis injections <span class="arithmatex">\(x_i: \IR \ra \IR^n\)</span>, giving rise to maps <span class="arithmatex">\(x_i^*: \AINF^n \ra \AINF^1\)</span> via pullback.</li>
+</ul>
+<p>For a multi-index <span class="arithmatex">\(I \in \IN^n, I = (i_1, \dots, i_n)\)</span>, we define:</p>
+<ul>
+<li>The monomial <span class="arithmatex">\(x^I =  (x^1)^{i_1} \cdot \dots \cdot (x^n)^{i_n} \in \AINF^n\)</span> </li>
+<li>The differential operator <span class="arithmatex">\(\del^I = \del_1^{i_1} \cdot \dots \cdot \del_n^{i_n}\)</span></li>
+</ul>
+<p><strong>Elementary Relations.</strong></p>
+<ul>
+<li>Product rule. 
+  $$ \del_i[ a \cdot b ] = \del_i[a] \cdot b + a \cdot \del_i[b]. $$</li>
+<li>Iterated Product Rule.
+  $$
+    \del^I[a \cdot b] = \sum_{J,K \in \IN^n, J+K=I} \frac{I!}{J! K!} \del^J[a] \cdot \del^K[b].
+  $$</li>
+<li>Chain Rule. If <span class="arithmatex">\(f: \IR^n \ra \IR^m\)</span> with <span class="arithmatex">\(f(0) = 0\)</span>, then 
+  $$ 
+    \del_i [f^*[b]] 
+    = \del_i[ b \circ f ] 
+    = \sum_{k=1,\dots,m} \del_k[b] \circ f \cdot \del_i[f^k] 
+    = \sum_{k=1,\dots,m} f^*[ \del_k[b] ] \cdot \del_i[f^k], 
+  $$ 
+  where <span class="arithmatex">\(f^k\)</span> are the components <span class="arithmatex">\(f^k = x^k \circ f = f^* x_k\)</span>.</li>
+<li>Iterated Chain Rule is known as <a href="https://en.wikipedia.org/wiki/Fa%C3%A0_di_Bruno%27s_formula">Faa di Bruno formula</a>.</li>
+</ul>
+<h2 id="taylor-series">Taylor Series</h2>
+<p><strong>Definition.</strong> 
+The taylor series of <span class="arithmatex">\(a \in \AINF^n\)</span> is the formal power series
+$$
+  T[a] 
+  = \sum_{I \in \IN^n} \del^I [a] (0) \cdot \frac{x^I}{I!}
+  \in \IR \dbrackets{ x^1, \dots, x^n },
+$$
+where <span class="arithmatex">\(I! = i_1! \cdot \dots \cdot i_n!\)</span>.
+The degree-k Taylor polyonmial is the degree-k truncation of the taylor series: 
+$$
+    T_k[a] = \sum_{I, |I| \leq k} \del^I[a](0) \cdot \frac{x^I}{I!} \in \IR[x^1, \dots, x^n].
+$$</p>
+<p><strong>Properties.</strong></p>
+<ol>
+<li>For a polynomial <span class="arithmatex">\(p \in \IR[x^1, \dots, x^n]\)</span>, we have <span class="arithmatex">\(T_k[p] = p\)</span> if <span class="arithmatex">\(k \geq deg(p)\)</span>.</li>
+<li>For <span class="arithmatex">\(a,b \in \AINF^n\)</span>, we have 
+   $$ 
+      T(a \cdot b) = T(a) \cdot T(b), \quad\text{and}\quad  T_k(a) \cdot T_k(b).
+   $$</li>
+<li>Let <span class="arithmatex">\(A: \IR^m \ra \IR^n\)</span> be a linear map and <span class="arithmatex">\(a \in \AINF^n\)</span>, then
+   $$
+      T[a \circ A](x) = T[a](A \cdot x)
+   $$</li>
+<li>In particular, for a fixed <span class="arithmatex">\(x \in \IR^n\)</span> the Taylor series of the
+   1-dimensional function <span class="arithmatex">\([t \mapsto a(x \cdot t)]\in \AINF^1\)</span> is the
+   restriction of the full Taylor series of <span class="arithmatex">\(a\)</span>: 
+   $$
+     T[t \mapsto a(x \cdot t)](t) = T[a](x \cdot t) 
+   $$</li>
+</ol>
+<details><summary><strong>Proof</strong></summary>
+All three statements are proved via direct comuptation.
+Statement (2) follows from the iterated product rule stated above.
+To prove (3) one verifies that both sides are equal to:
+$$
+  \sum_{M \in \IN^{n \times m}, \sigma_1(M)=J, \sigma_2(M)=I}  \del^I [a] (0) \cdot \frac{A^M}{M!} \cdot  y^J
+$$
+Here the sum runs over all two-dimensional multi-indices $M \in \IN^{n \times m}$.
+And we denote by $\sigma_i$ the summation of the $i$-th index: $\sigma_1(M) = \sum_i M_{i,j} \in \IN^m$,
+$\sigma_2(M)=\sum_j M_{i,j} \in \IN^n$. Furthermore $A^M = \prod_{i,j}A_{i,j}^{M_{i,j}}$ and $M! = \prod_{i,j} M_{i,j}!$.
+</details>
+
+<p><strong>Theorem (Residuals)</strong>
+For any <span class="arithmatex">\(a \in \AINF\)</span> on any convex set <span class="arithmatex">\(U\)</span> of definition we set <span class="arithmatex">\(R_{k+1} = a - T_k[a].\)</span></p>
+<ol>
+<li>
+<p>(Qualitative Residual). For all <span class="arithmatex">\(I \in \IN^n\)</span> with <span class="arithmatex">\(|I| \leq k\)</span> we have
+   $$
+      \del^I [R_{k+1}] (0) = 0.
+   $$</p>
+</li>
+<li>
+<p>(Integral Residual)<br />
+   $$ 
+      R_{k+1}(x) = (k+1) \sum_{|I| = k+1} \frac{x^I}{I!} \int_0^1 \del^I[a](t \cdot x) \cdot (1-t)^k dt. 
+   $$</p>
+</li>
+<li>
+<p>(Lagrange Residual) For all <span class="arithmatex">\(x \in U\)</span> there exists a <span class="arithmatex">\(t \in [0,1]\)</span> so that<br />
+   $$
+     R_{k+1}(x) = \sum_{|I| = k+1} \frac{x^I}{I!} \del^I[a](x \cdot t).
+   $$</p>
+</li>
+</ol>
+<details><summary><strong>Proof</strong></summary>
+Property (1) follows from $\del^I[x^J](0) = I! \cdot \delta_{I,J}$.
+For (2), (3) we reduce to the one-dimensional case using Property 4 above.
+Let $a_x(t) = a(x \cdot t) \in \AINF^1$.
+We compute the derivatives to
+$$
+  \del [a_x] = \sum_i \del_i [a] (x\cdot t) x_i, \qtext{and}
+  \del^n[a_x] = \sum_{|I|=n} \frac{n!}{I!} \cdot \del^I[a] (x \cdot t) \cdot x^I.
+$$
+
+Then $R_{k+1}(x) = a(x) - T_k [a] (x) = a_x(1) - T_k [a_x] (1)$.
+Now by the 1-dimensional result and iterated chain rule we have:
+$$
+  R_{k+1}(x)
+  = \int_0^1 \del^{k+1} [a_x] (t) \frac{(1-t)^k}{k!} dt 
+  = \sum_{|I| = k+1 } \int_0^1 \del^{I} [a] (x \cdot t) \cdot x^I \cdot \frac{(k+1)!}{I!} \cdot \frac{(1-t)^k}{k!} dt.
+$$
+
+Similarly, by the 1-d Lagrange residual formula, there exists a $t \in [0,1]$ with
+$$ 
+  R_{k+1}(x)
+  = \frac{ \del^{k+1} [a_x]  (t) }{(k+1)!}
+  = \sum_{|I| = k+1 } \del^{I} [a] (x \cdot t) \frac{x^I}{I!} dt.
+$$
+</details>
+
+<p><strong>Theorem (Borel).</strong> 
+For every power series <span class="arithmatex">\(p \in \IR\dbrackets{ x^1, \dots, x^n }\)</span> there exists a <span class="arithmatex">\(C^\infty\)</span> function <span class="arithmatex">\(a \in \AINF^n\)</span>
+with <span class="arithmatex">\(T(a)  = p\)</span>. 
+In other words, the map <span class="arithmatex">\(T : \AINF^n \ra \IR\dbrackets{ x^1, \dots, x^n }\)</span> is surjective,
+and hence <span class="arithmatex">\(\IR\dbrackets{ x^1, \dots, x^n } \isom  \AINF^n / \ker(T)\)</span>.</p>
+<p>For a proof see Ieke Moerdijk, Gonzalo E. Reyes: Models for Smooth Infinitesimal Analysis, p13.
+or <a href="https://ncatlab.org/nlab/show/Borel%27s+theorem#Moerdijk">ncatlab</a>.</p>
+<h2 id="commutative-algebra">Commutative Algebra</h2>
+<p><strong><span class="arithmatex">\(\IR\)</span>-Algebra Structure.</strong> The ring <span class="arithmatex">\(\AINF^n\)</span> inherits the structure of a unital <span class="arithmatex">\(\IR\)</span> algebra form <span class="arithmatex">\(\CINF(U,\IR)\)</span>.
+In other words elements <span class="arithmatex">\(a,b \in \AINF^n\)</span> can be added, multiplied and multiplied by scalars <span class="arithmatex">\(\lambda \in \IR\)</span>,
+so that the usual associativity and distributivity relations hold. The unit element <span class="arithmatex">\(1 \in \AINF^n\)</span> is the 
+constant function <span class="arithmatex">\(1\)</span>.</p>
+<ul>
+<li>The structure maps <span class="arithmatex">\(\rho_0: \CINF(U,\IR) \ra \AINF^n\)</span> are morphisms of <span class="arithmatex">\(\IR\)</span>-algebras.</li>
+<li>The pullback maps <span class="arithmatex">\(f^*\)</span> are morphisms of <span class="arithmatex">\(\IR\)</span>-algebras.</li>
+<li>The "constants map" <span class="arithmatex">\(c\)</span> is a morphism of <span class="arithmatex">\(\IR\)</span>-algebras.</li>
+<li>The evaluation map <span class="arithmatex">\(e\)</span> is a morphism of <span class="arithmatex">\(\IR\)</span>-algebras.</li>
+</ul>
+<p><strong>Locality</strong></p>
+<ul>
+<li>Denote the kernel of the evaluation map by <span class="arithmatex">\(\fm = \ker(e) = \set{ a \in \AINF^n }{ a(0) = 0 } \subset \AINF^n\)</span>.</li>
+<li>It is a maximal ideal in <span class="arithmatex">\(\AINF^n\)</span>.</li>
+<li>There is only one maximal ideal in <span class="arithmatex">\(\AINF^n\)</span>.</li>
+<li>The pullback maps <span class="arithmatex">\(\vphi^*: \AINF^m \ra \AINF^n\)</span> induced by <span class="arithmatex">\(\vphi: \IR^n \ra \IR^m\)</span> are local,
+   in the sense that <span class="arithmatex">\(\vphi^*(\fm_m) \subset \fm_n\)</span> or <a href="https://stacks.math.columbia.edu/tag/07BJ">equivalently</a> <span class="arithmatex">\(\vphi^{-1}(\fm_n) = \fm_m\)</span>.</li>
+</ul>
+<details><summary><strong>Proof</strong></summary>
+The ideal $\fm \subset \AINF^n$ is maximal, since every element not in $\fm$ is a unit.
+
+Let $\fn \subset \AINF^n$ be another maximal ideal. We have $\fn \subset \fm$ since otherwise $\fn$ would contain a unit. Since $\fn$ is maximal it follows that $\fn = \fm$.
+
+If $b(0)$, then $\vphi^*[b](0) = (b \circ \vphi) (0) = 0$, since $\vphi(0) = 0$.
+Conversely if $\vphi^*[b](0) = 0$ then $b(0) = b \circ \vphi(0) = \vphi^*b(0) = 0$. 
+</details>
+
+<p><strong><a href="https://en.wikipedia.org/wiki/Hadamard%27s_lemma">Hadamard Lemma</a>.</strong> 
+The maxiamal <span class="arithmatex">\(\fm\)</span> ideal is generated by the coordinate fuctions <span class="arithmatex">\(x^i\)</span>, i.e. every element <span class="arithmatex">\(a \in \fm\)</span>
+can be written in the form <span class="arithmatex">\(a = \sum_{i=1}^n x^i \cdot a_i\)</span> with <span class="arithmatex">\(a_i \in \AINF^n\)</span>.</p>
+<details><summary><strong>Proof</strong></summary>
+Let $a \in \fm$, and set $a_i(x) = \int_0^1 \del_i[a](t \cdot x) dt$.
+Now $\frac{\del}{\del t} a(t \cdot x) = \sum_{i=1}^n \del_i[a](tx) \cdot x^i(x)$, hence 
+
+$$
+\sum_{i=1}^n x^i \cdot a_i 
+= \int_0^1 \sum_{i=1}^n \del_i[a](tx) \cdot x^i(x) dt 
+= \int_0^1 \frac{\del}{\del t} a(t \cdot x) dt
+= a(x) - a(0) = a(x). qed.
+$$
+</details>
+
+<p><strong>Corollary.</strong></p>
+<ul>
+<li>If <span class="arithmatex">\(a = \sum_{i=1}^n x^i \cdot a_i\)</span> is a Hadamard representation of <span class="arithmatex">\(a \in \fm\)</span>, then <span class="arithmatex">\(a_i(0) = e \del_i[a]\)</span></li>
+<li>The powers <span class="arithmatex">\(\fm^k\)</span> are generated by the monomials <span class="arithmatex">\(x^I, I \in \IN^n, |I| = k\)</span>.</li>
+<li>The intersection <span class="arithmatex">\(\fm^\inf := \cap_{k \geq 0} \fm^k\)</span> is equal to <span class="arithmatex">\(\ker(T) = \set{a}{ \del^I[a] = 0 \stext{for all} I}\)</span>.</li>
+<li>The map <span class="arithmatex">\(\IR[x^1, \dots, x^n] \ra \AINF^n\)</span>, mapping a polyomial to the associated <span class="arithmatex">\(C^\infty\)</span>-function-germ is injective, and induces an isomorphism:
+  $$ \IR[x^1, \dots, x^n] / (x^1, \dots, x^n)^k \lra \AINF^n / \fm^k. $$
+  In particular, the completions are isomorphic <span class="arithmatex">\(\IR\dbrackets{ x^1, \dots, x^n} \isom \hat \AINF^n\)</span>,
+  and we have:
+  $$ \fm^k / \fm^{k+1} = (x^1, \dots, x^n)^k /  (x^1, \dots, x^n)^{k+1} = \IR&lt; x^I \,|\, |I| = k &gt;.$$</li>
+</ul>
+<p><strong>Lemma</strong>
+For an open set <span class="arithmatex">\(0 \in U \subset \IR^n\)</span>, denote the restriction map by <span class="arithmatex">\(\rho: C^\infty(U, \IR) \ra \AINF^n\)</span>, 
+let <span class="arithmatex">\(\fm_0 \subset C^\infty(U, \IR)\)</span> be the kernel of the evaluation map at <span class="arithmatex">\(0\)</span>. Then,</p>
+<ul>
+<li><span class="arithmatex">\(\rho\)</span> is surjective and induces and isomorphism <span class="arithmatex">\(C^\infty(U, \IR) / \ker(\rho) \isom \AINF^n\)</span>.</li>
+<li><span class="arithmatex">\(\rho\)</span> induces an isomophism <span class="arithmatex">\(C^\infty(U, \IR)_{\fm_0} \isom \AINF^n\)</span>.</li>
+</ul>
+<p><strong>Proof.</strong> To prove the first claim choose a representative <span class="arithmatex">\((V, a) \in \AINF^n\)</span>, with <span class="arithmatex">\(V \subset U\)</span>.
+Choose <span class="arithmatex">\(\eps &gt; 0\)</span> small enough so that the ball <span class="arithmatex">\(B_{2\eps}\)</span> lies in <span class="arithmatex">\(V\)</span>.
+Choose a bump function <span class="arithmatex">\(\delta\)</span> with <span class="arithmatex">\(\delta = 1\)</span> on <span class="arithmatex">\(B_{\eps}\)</span> and <span class="arithmatex">\(\delta = 0\)</span> outside of <span class="arithmatex">\(B_{2\eps}\)</span>.
+Then <span class="arithmatex">\(a \cdot \delta\)</span> is defined on <span class="arithmatex">\(V\)</span> and equal to zero outside of <span class="arithmatex">\(B_{2\eps}\)</span>, and hence extends to U.</p>
+<p>To prove the second claim we first note that <span class="arithmatex">\(b(0) \neq 0\)</span> implies that <span class="arithmatex">\(b(x)
+\neq 0\)</span> for <span class="arithmatex">\(x\)</span> in an open subset of <span class="arithmatex">\(0\)</span>, hence <span class="arithmatex">\(b\)</span> is invertible in <span class="arithmatex">\(\AINF^n\)</span>.
+This shows that <span class="arithmatex">\(\rho\)</span> induces a map from the localization.
+The map is surjective by the claim we just proved.
+To show the map is injective, assume that the formal quotient <span class="arithmatex">\((a,b)\)</span> maps to <span class="arithmatex">\(a/b = 0 \in \AINF^n\)</span>.
+This means that <span class="arithmatex">\(a = 0\)</span> in an open neightbourhood <span class="arithmatex">\(V\)</span> of <span class="arithmatex">\(0\)</span>.
+Let <span class="arithmatex">\(\delta\)</span> be a bump function with <span class="arithmatex">\(\delta(1) = 1\)</span> and <span class="arithmatex">\(\delta(x) = 0\)</span> outside of <span class="arithmatex">\(V\)</span>.
+Then <span class="arithmatex">\(\delta \notin \fm_0\)</span> but <span class="arithmatex">\(\delta a = 0 \in  C^\infty(U, \IR)\)</span>, showing that
+<span class="arithmatex">\((a,b) = 0 \in  C^\infty(U, \IR)_{\fm_0}\)</span>.</p>
+<h2 id="tangent-vectors">Tangent Vectors</h2>
+<p>In this section we construct tangent and co-tangent space at the origin <span class="arithmatex">\(0 \in \IR^n\)</span>.
+In order to study higher differentials like <span class="arithmatex">\(\del_i^2\)</span> we will also need to construct tangent modules of vector fields.</p>
+<p><strong>Tangent Space</strong></p>
+<ul>
+<li>For an <span class="arithmatex">\(\AINF^n\)</span>-module <span class="arithmatex">\(M\)</span>, the set of <span class="arithmatex">\(\IR\)</span>-linear derivations  <span class="arithmatex">\(Der_\IR(\AINF^n, M) \subset  Hom_\IR(\AINF^n, M)\)</span>
+  is the set of all <span class="arithmatex">\(\IR\)</span>-linear maps <span class="arithmatex">\(\delta: \AINF^n \ra M\)</span> satisfying the product rule
+  <span class="arithmatex">\(\delta[a \cdot b] = b \cdot_M \delta[a] + a \cdot_M \delta[b]\)</span>.</li>
+</ul>
+<ul>
+<li>Consider <span class="arithmatex">\(\IR\)</span> as asn <span class="arithmatex">\(\AINF^n\)</span> module via <span class="arithmatex">\(e[a] = a(0)\)</span>.
+  The tangent space of <span class="arithmatex">\(\AINF^n\)</span> at <span class="arithmatex">\(0\)</span> is defined as set of derivation 
+  $$ T_0 := T_0^n := T_0 \AINF^n = Der_\IR(\AINF^n, \IR). $$  </li>
+</ul>
+<ul>
+<li>The tangent space is a finite dimensional <span class="arithmatex">\(\IR\)</span> vector space with basis
+  <span class="arithmatex">\(dx_i := e \del_i a \mapsto \del_i[a](0)\)</span>:
+  $$ T_0 = \IR&lt; dx_1, \dots, dx_n&gt;. $$ </li>
+</ul>
+<p><strong>Cotangent Space</strong></p>
+<p>The co-tangent space of <span class="arithmatex">\(\AINF^n\)</span> at <span class="arithmatex">\(0\)</span> is defined as <span class="arithmatex">\(\Omega_0 := \Omega_0^n := \Omega_0 \AINF^n := \fm/\fm^2\)</span>.<br />
+It comes with a canonical map <span class="arithmatex">\(d: \AINF^n \ra \Omega_0, a \mapsto a - a(0) = a - ce[a]\)</span>, called the exterior differential.</p>
+<ul>
+<li>The cotangent space is a finite dimensional <span class="arithmatex">\(\IR\)</span> vector space with basis <span class="arithmatex">\(dx^i = d[x^i]\)</span>.
+  $$ \Omega_0 = \IR&lt; dx^1, \dots, dx^n&gt; $$ </li>
+</ul>
+<ul>
+<li>The exterior differential <span class="arithmatex">\(d: \AINF^n \ra \Omega_0\)</span> is a derivation.</li>
+</ul>
+<ul>
+<li>The cotangent space has the following universal property. For every <span class="arithmatex">\(\IR\)</span>
+  vectors space <span class="arithmatex">\(V\)</span>, the map
+  $$ Hom_\IR(\Omega_0, V) \ra Der_\IR(\AINF^n, V), \alpha \mapsto \alpha \circ d $$
+  is an isomorphism. </li>
+</ul>
+<ul>
+<li>For <span class="arithmatex">\(\omega \in \Omega_0\)</span> and <span class="arithmatex">\(\delta \in T_0\)</span>, we denote the natural pairing
+  between tangent and co-tangent space as: 
+  $$ (\delta, \omega) = \delta[\omega] \in \IR $$</li>
+</ul>
+<p><strong>Proof.</strong> 
+To show that the exterior differential is a derivation, note that
+<span class="arithmatex">\(d[a b] - e[b] d[a] - e[a] d[b] = \dots = - d[a] \cdot d[b] \in \fm^2\)</span>.</p>
+<p>Let <span class="arithmatex">\(\delta\)</span> be a derivation.
+Note that <span class="arithmatex">\(\delta[1] = \delta[1 1] = 2 \delta[1]\)</span>, hence <span class="arithmatex">\(\delta[1] = 0\)</span>.
+For <span class="arithmatex">\(a,b \in \fm\)</span> we have <span class="arithmatex">\(d[a b] = \delta[a]e[b] + e[a] \delta[b] = 0\)</span>, hence <span class="arithmatex">\(\delta = 0\)</span> on <span class="arithmatex">\(\fm^2\)</span>.
+This shows that <span class="arithmatex">\(\delta\)</span> factors through <span class="arithmatex">\(d: \AINF^n \ra \fm/\fm^2\)</span>.</p>
+<p>Conversely, every linear map <span class="arithmatex">\(\alpha: \fm/\fm^2 \ra \IR\)</span> defines a derivation <span class="arithmatex">\(\alpha \circ d\)</span>.
+This shows the universal property of the co-tangent space.</p>
+<p>By Hadamard's lemma we have <span class="arithmatex">\(\Omega_0 = \fm/\fm^2 = \IR&lt;dx^1, \dots, dx^n&gt;.\)</span> </p>
+<p>Hence <span class="arithmatex">\(T_0 \isom Der_\IR(\AINF^n, \IR) \isom Hom_\IR(\Omega_0, \IR)\)</span>.
+Under this identification <span class="arithmatex">\(dx_i\)</span> and <span class="arithmatex">\(dx^i\)</span> are dual to each other:  <span class="arithmatex">\(dx_i[dx^j] = e \del_i[x^j] = \delta_{i,j}\)</span>. QED.</p>
+<p><strong>Naturality.</strong> </p>
+<ul>
+<li>A differentiable map <span class="arithmatex">\(\vphi: \IR^n \lra \IR^m\)</span> with <span class="arithmatex">\(\vphi(0) = 0\)</span> induces a linear map
+  by pre-composition of derivations:
+  $$
+    D_0\vphi = \vphi_* : T_0^n \lra T_0^m, \quad \delta \mapsto \delta \circ \vphi
+  $$
+  and similarly on the cotangent space
+  $$
+    D_0^*\vphi = \vphi^*: \Omega_0^m \lra \Omega^n_0, \quad b \mapsto b \circ \vphi.
+  $$</li>
+</ul>
+<ul>
+<li>Naturality (Chain Rule). If <span class="arithmatex">\(\psi: \IR^m \lra \IR^l\)</span> is a second differentiable map with <span class="arithmatex">\(\psi(0) = 0\)</span>,
+  then 
+  $$ D_0(\psi \circ \vphi) = D_0\psi \circ D_0\vphi, \quad D_0^*(\psi \circ \vphi) = D_0^*\vphi \circ D_0^*\psi, $$
+  This statement is equivalent to the claim that <span class="arithmatex">\(D_0,D_0^*\)</span> are natural transformations, which is obvious 
+  from the definition.</li>
+</ul>
+<ul>
+<li>Those maps are dual/adjoint to each other with regards to the isomorphism <span class="arithmatex">\(T_0 \isom Hom(\Omega_0, \IR)\)</span>.
+  For <span class="arithmatex">\(\omega \in \Omega_0^m\)</span> and <span class="arithmatex">\(\delta \in T_0^n\)</span> we have:
+  $$
+    (\vphi_*(\delta), \omega) = (D_0 \vphi(\delta), \omega) = (\delta, D_0^*\vphi(\omega)) = (\delta,\vphi^* \omega) 
+  $$
+  If <span class="arithmatex">\(\omega = db\)</span> then all those expressions are equal to <span class="arithmatex">\(\delta(b \circ \vphi)\)</span>.</li>
+</ul>
+<ul>
+<li>Linear maps. If <span class="arithmatex">\(A: \IR^n \ra \IR^m\)</span> is a linear map, then
+  $$ 
+    dy^j(D_0 A)(dx_i) = y^j A x_i = A_{ij}.
+  $$
+  Hence "<span class="arithmatex">\(D_0A = A\)</span>" under the identification of <span class="arithmatex">\(T_0^n \isom \IR^n\)</span> given by the canonical basis <span class="arithmatex">\(dx_i\)</span>.</li>
+</ul>
+<ul>
+<li>Coordinate representation. In coordinates <span class="arithmatex">\(x^i,x_i\)</span> on <span class="arithmatex">\(\IR^n\)</span> and <span class="arithmatex">\(y^j,y_j\)</span> on <span class="arithmatex">\(\IR^m\)</span> we have:
+  $$
+    D_0 \vphi 
+    = D_0( (\sum_j y_j \circ y^j) \circ \vphi(  \sum_i x_i \circ x^i ) )
+    = \sum_{j} D_0 y_j \circ D_0(y^j \circ \vphi) \circ D_0( \sum_i x_i \circ x^i )
+  $$
+  $$
+    = \sum_{i,j} D_0 y_j \circ D_0(y^j \circ \vphi \circ x_i) \circ D_0(x^i)
+  $$
+  $$
+    = \sum_{i,j} \frac{\del \vphi^j}{\del x^i}(0) \cdot  dy_j \circ dx^i
+  $$
+  Where we used the canonical identifications <span class="arithmatex">\(dx_i = (D_0 x_i)(e \del_t)\)</span>, <span class="arithmatex">\(dx^i = D_0 x^i\)</span>.
+  Also note that, while <span class="arithmatex">\(\vphi\)</span> is not linear, the derivative <span class="arithmatex">\(D_0 \vphi\)</span> is linear and we can
+  "pull-out" summation in step 3. </li>
+</ul>
+<h2 id="implicit-functions">Implicit Functions</h2>
+<p><strong>Germs of Functions.</strong> The category <span class="arithmatex">\(G\)</span> of germs of <span class="arithmatex">\(C^\infty\)</span>-spaces has objects <span class="arithmatex">\(\IR^n_{,0}\)</span> for <span class="arithmatex">\(n \in \IN_0\)</span> and morphisms germs of <span class="arithmatex">\(C^\infty\)</span>-functions:
+$$ Mor(\IR^n_{,0},\IR^m_{,0}) = \lim_{\lra} \Set{ C^\infty_0(U, \IR^m) }{ 0 \in U \subset \IR^n },  $$
+where <span class="arithmatex">\(C^\infty_0(U, \IR^m)\)</span> is the set of <span class="arithmatex">\(C^\infty\)</span>-functions <span class="arithmatex">\(\IR^n \ra \IR^m\)</span> mapping <span class="arithmatex">\(0\)</span> to <span class="arithmatex">\(0\)</span>.
+Composition of functions descends to an associative composition operations on <span class="arithmatex">\(G\)</span>.</p>
+<ul>
+<li>Every function <span class="arithmatex">\(\vphi: \IR^n \ra \IR^m\)</span> with <span class="arithmatex">\(\vphi(0) = 0\)</span> defines a germ <span class="arithmatex">\(\vphi \in Mor(\IR^n_{,0},\IR^m_{,0})\)</span>.</li>
+</ul>
+<ul>
+<li>Elements in <span class="arithmatex">\(Mor(\IR^n_{,0},\IR^m_{,0})\)</span> are represented by functions <span class="arithmatex">\(\vphi: U \ra \IR^n\)</span> defined in an
+  open neighborhood <span class="arithmatex">\(U\)</span> of <span class="arithmatex">\(0 \in \IR^n\)</span>.</li>
+</ul>
+<ul>
+<li>Germs <span class="arithmatex">\(\vphi \in Mor(\IR^n_{,0},\IR^m_{,0})\)</span> induce algebra morphisms <span class="arithmatex">\(\vphi^*: \AINF^m \ra \AINF^n\)</span>.</li>
+</ul>
+<p><strong>Theorem (Inverese Functions).</strong> If <span class="arithmatex">\(\vphi: \IR^n_{,0} \ra \IR^n_{,0}\)</span> is a function germ, then
+<span class="arithmatex">\(\vphi\)</span> is invertible as a germ if <span class="arithmatex">\(D_0 \vphi\)</span> is invertible as a linear endomorphism of <span class="arithmatex">\(T_0\)</span>. 
+In this case <span class="arithmatex">\(D_0 \vphi^{-1} = (D_0\vphi)^{-1}\)</span>.</p>
+<p><strong>Theorem (Implicit Function).</strong> Let <span class="arithmatex">\(a \in \AINF^n\)</span> is a function with <span class="arithmatex">\(a(0) = 0\)</span> with <span class="arithmatex">\(dx_n \cdot a \neq 0\)</span>, then:</p>
+<ul>
+<li>There exists a function <span class="arithmatex">\(\vphi: \IR_{,0}^{n-1} \ra \IR^n_{,0}\)</span> with <span class="arithmatex">\(a(x_1, \dots, x_n) = 0\)</span> if and only if <span class="arithmatex">\(x_n = \vphi(x_1, \dots, x_{n-1})\)</span>.</li>
+<li><span class="arithmatex">\(\pi: \IR^{n}_{,0} \ra \IR^{n-1}_{,0}, (x_1,\dots,x_n) \mapsto (x_1, \dots, x_{n-1})\)</span> induces an isomorphism <span class="arithmatex">\(\pi^*: \AINF^{n-1} \ra \AINF^n / a\)</span>.</li>
+</ul>
+<h2 id="invariant-theory">Invariant Theory</h2>
+<p><strong>Group Action.</strong> 
+Let <span class="arithmatex">\(\mathrm{Diff}_0^n\)</span> be the group of local diffeomorphisms of <span class="arithmatex">\(\IR^n\)</span>.
+Elements <span class="arithmatex">\(\varphi \in \mathrm{Diff}_0^n\)</span> are represented by diffeomorophisms <span class="arithmatex">\(\varphi: U \ra V\)</span>, with <span class="arithmatex">\(0 \in U, 0 \in V\)</span>.
+Two representatives <span class="arithmatex">\(\varphi: U \ra V, \varphi': U' \ra V'\)</span> are equivalent if they agree on <span class="arithmatex">\(U \cap U'\)</span>.</p>
+<p>Evenry element <span class="arithmatex">\(\varphi \in \mathrm{Diff}_0^n\)</span> gives rise to an liear isomorphism 
+$ \varphi^* $ of <span class="arithmatex">\(\AINF^n\)</span> via the pullback operation.
+In this way we optain a group action <span class="arithmatex">\(\mathrm{Diff}_0^n \ra GL(\AINF^n), \varphi \mapsto \varphi^*\)</span>.</p>
+<p><strong>Question:</strong> For any any natural "structure" <span class="arithmatex">\(F\)</span> on <span class="arithmatex">\(\AINF^n\)</span>, classify elements of <span class="arithmatex">\(F\)</span> up to diffeomorphism.</p>
+<p>Examples: 
+- <span class="arithmatex">\(F = id\)</span>: Classify local functions up to diffeomorphism. In the case <span class="arithmatex">\(n=1\)</span> we claim that <span class="arithmatex">\(\AINF^1 / \mathrm{Diff}_0^n = c(\IR) \union \\{ x^1 \\}\)</span>. For <span class="arithmatex">\(n &gt; 2\)</span>
+- <span class="arithmatex">\(F = T\)</span> tangent space: Classify tangent vectors up to diffeopmorphis. We have <span class="arithmatex">\(T(\AINF^n) / \mathrm{Diff}_0^n = \\{ 0, \del_1 \\}\)</span>, reflecting the fact that two non-zero tangent vector can be transformed into each other via a (linear) diffeomorphism.</p>
+                
+              
+              
+                
+
+
+              
+            </article>
+          </div>
+        </div>
+        
+      </main>
+      
+        
+<footer class="md-footer">
+  
+    <nav class="md-footer__inner md-grid" aria-label="Footer">
+      
+        
+        <a href="../linked-structures/" class="md-footer__link md-footer__link--prev" aria-label="Previous: Linked structures" rel="prev">
+          <div class="md-footer__button md-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
+          </div>
+          <div class="md-footer__title">
+            <div class="md-ellipsis">
+              <span class="md-footer__direction">
+                Previous
+              </span>
+              Linked structures
+            </div>
+          </div>
+        </a>
+      
+      
+    </nav>
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-footer-copyright">
+        
+          <div class="md-footer-copyright__highlight">
+            Copyright &copy; 2021 Heinrich Hartmann
+          </div>
+        
+        Made with
+        <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+          Material for MkDocs
+        </a>
+        
+      </div>
+      
+  <div class="md-footer-social">
+    
+      
+      
+        
+        
+      
+      <a href="https://twitter.com/heinrichhartman" target="_blank" rel="noopener" title="twitter.com" class="md-footer-social__link">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path d="M459.37 151.716c.325 4.548.325 9.097.325 13.645 0 138.72-105.583 298.558-298.558 298.558-59.452 0-114.68-17.219-161.137-47.106 8.447.974 16.568 1.299 25.34 1.299 49.055 0 94.213-16.568 130.274-44.832-46.132-.975-84.792-31.188-98.112-72.772 6.498.974 12.995 1.624 19.818 1.624 9.421 0 18.843-1.3 27.614-3.573-48.081-9.747-84.143-51.98-84.143-102.985v-1.299c13.969 7.797 30.214 12.67 47.431 13.319-28.264-18.843-46.781-51.005-46.781-87.391 0-19.492 5.197-37.36 14.294-52.954 51.655 63.675 129.3 105.258 216.365 109.807-1.624-7.797-2.599-15.918-2.599-24.04 0-57.828 46.782-104.934 104.934-104.934 30.213 0 57.502 12.67 76.67 33.137 23.715-4.548 46.456-13.32 66.599-25.34-7.798 24.366-24.366 44.833-46.132 57.827 21.117-2.273 41.584-8.122 60.426-16.243-14.292 20.791-32.161 39.308-52.628 54.253z"/></svg>
+      </a>
+    
+  </div>
+
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    <script id="__config" type="application/json">{"base": "..", "features": ["search.suggest", "toc.integrate", "navigation.sections"], "translations": {"clipboard.copy": "Copy to clipboard", "clipboard.copied": "Copied to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Search", "search.result.placeholder": "Type to start searching", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.term.missing": "Missing", "select.version.title": "Select version"}, "search": "../assets/javascripts/workers/search.709b4209.min.js", "version": null}</script>
+    
+    
+      <script src="../assets/javascripts/bundle.febc23d1.min.js"></script>
+      
+        <script src="../javascripts/config.js"></script>
+      
+        <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+      
+        <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+      
+    
+  </body>
+</html>

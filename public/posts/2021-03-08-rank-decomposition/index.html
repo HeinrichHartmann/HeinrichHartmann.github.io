@@ -1,0 +1,1836 @@
+<!DOCTYPE html>
+<html lang="en-us">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title>Effective Rank Decomposition of Linear Maps</title>
+	
+	
+	
+  
+  <link rel="icon" type="image/png" href="/favicon.png">
+  <style>
+    
+   header a {
+  text-align: center;
+  width: 100%;
+  font-family: Helvetica, arial, sans-serif;
+  font-size: 20px;
+  color: #a00;
+  font-weight: bold;
+  margin-top: 2em;
+  text-decoration: none;
+  display: block;
+}
+
+header a {
+  color: #00a;
+}
+
+header a:hover {
+  color: black;
+}
+
+header a:visited {
+  color: #a00;
+}
+
+.sticker {
+  color:red;
+  display: block;
+  border-style:solid !important;
+  border-color:red !important;
+  border-radius:0.2em !important;
+  border-width: 3px !important;
+  padding: 0px !important;
+  text-align: center !important;
+  margin-top: 50px !important;
+  margin-bottom: 50px !important;
+}
+
+    
+   /* Background */ .chroma { background-color: #f8f8f8 }
+/* Other */ .chroma .x { color: #000000 }
+/* Error */ .chroma .err { color: #a40000 }
+/* LineTableTD */ .chroma .lntd { vertical-align: top; padding: 0; margin: 0; border: 0; }
+/* LineTable */ .chroma .lntable { border-spacing: 0; padding: 0; margin: 0; border: 0; width: auto; overflow: auto; display: block; }
+/* LineHighlight */ .chroma .hl { display: block; width: 100%;background-color: #ffffcc }
+/* LineNumbersTable */ .chroma .lnt { margin-right: 0.4em; padding: 0 0.4em 0 0.4em;color: #7f7f7f }
+/* LineNumbers */ .chroma .ln { margin-right: 0.4em; padding: 0 0.4em 0 0.4em;color: #7f7f7f }
+/* Keyword */ .chroma .k { color: #204a87; font-weight: bold }
+/* KeywordConstant */ .chroma .kc { color: #204a87; font-weight: bold }
+/* KeywordDeclaration */ .chroma .kd { color: #204a87; font-weight: bold }
+/* KeywordNamespace */ .chroma .kn { color: #204a87; font-weight: bold }
+/* KeywordPseudo */ .chroma .kp { color: #204a87; font-weight: bold }
+/* KeywordReserved */ .chroma .kr { color: #204a87; font-weight: bold }
+/* KeywordType */ .chroma .kt { color: #204a87; font-weight: bold }
+/* Name */ .chroma .n { color: #000000 }
+/* NameAttribute */ .chroma .na { color: #c4a000 }
+/* NameBuiltin */ .chroma .nb { color: #204a87 }
+/* NameBuiltinPseudo */ .chroma .bp { color: #3465a4 }
+/* NameClass */ .chroma .nc { color: #000000 }
+/* NameConstant */ .chroma .no { color: #000000 }
+/* NameDecorator */ .chroma .nd { color: #5c35cc; font-weight: bold }
+/* NameEntity */ .chroma .ni { color: #ce5c00 }
+/* NameException */ .chroma .ne { color: #cc0000; font-weight: bold }
+/* NameFunction */ .chroma .nf { color: #000000 }
+/* NameFunctionMagic */ .chroma .fm { color: #000000 }
+/* NameLabel */ .chroma .nl { color: #f57900 }
+/* NameNamespace */ .chroma .nn { color: #000000 }
+/* NameOther */ .chroma .nx { color: #000000 }
+/* NameProperty */ .chroma .py { color: #000000 }
+/* NameTag */ .chroma .nt { color: #204a87; font-weight: bold }
+/* NameVariable */ .chroma .nv { color: #000000 }
+/* NameVariableClass */ .chroma .vc { color: #000000 }
+/* NameVariableGlobal */ .chroma .vg { color: #000000 }
+/* NameVariableInstance */ .chroma .vi { color: #000000 }
+/* NameVariableMagic */ .chroma .vm { color: #000000 }
+/* Literal */ .chroma .l { color: #000000 }
+/* LiteralDate */ .chroma .ld { color: #000000 }
+/* LiteralString */ .chroma .s { color: #4e9a06 }
+/* LiteralStringAffix */ .chroma .sa { color: #4e9a06 }
+/* LiteralStringBacktick */ .chroma .sb { color: #4e9a06 }
+/* LiteralStringChar */ .chroma .sc { color: #4e9a06 }
+/* LiteralStringDelimiter */ .chroma .dl { color: #4e9a06 }
+/* LiteralStringDoc */ .chroma .sd { color: #8f5902; font-style: italic }
+/* LiteralStringDouble */ .chroma .s2 { color: #4e9a06 }
+/* LiteralStringEscape */ .chroma .se { color: #4e9a06 }
+/* LiteralStringHeredoc */ .chroma .sh { color: #4e9a06 }
+/* LiteralStringInterpol */ .chroma .si { color: #4e9a06 }
+/* LiteralStringOther */ .chroma .sx { color: #4e9a06 }
+/* LiteralStringRegex */ .chroma .sr { color: #4e9a06 }
+/* LiteralStringSingle */ .chroma .s1 { color: #4e9a06 }
+/* LiteralStringSymbol */ .chroma .ss { color: #4e9a06 }
+/* LiteralNumber */ .chroma .m { color: #0000cf; font-weight: bold }
+/* LiteralNumberBin */ .chroma .mb { color: #0000cf; font-weight: bold }
+/* LiteralNumberFloat */ .chroma .mf { color: #0000cf; font-weight: bold }
+/* LiteralNumberHex */ .chroma .mh { color: #0000cf; font-weight: bold }
+/* LiteralNumberInteger */ .chroma .mi { color: #0000cf; font-weight: bold }
+/* LiteralNumberIntegerLong */ .chroma .il { color: #0000cf; font-weight: bold }
+/* LiteralNumberOct */ .chroma .mo { color: #0000cf; font-weight: bold }
+/* Operator */ .chroma .o { color: #ce5c00; font-weight: bold }
+/* OperatorWord */ .chroma .ow { color: #204a87; font-weight: bold }
+/* Punctuation */ .chroma .p { color: #000000; font-weight: bold }
+/* Comment */ .chroma .c { color: #8f5902; font-style: italic }
+/* CommentHashbang */ .chroma .ch { color: #8f5902; font-style: italic }
+/* CommentMultiline */ .chroma .cm { color: #8f5902; font-style: italic }
+/* CommentSingle */ .chroma .c1 { color: #8f5902; font-style: italic }
+/* CommentSpecial */ .chroma .cs { color: #8f5902; font-style: italic }
+/* CommentPreproc */ .chroma .cp { color: #8f5902; font-style: italic }
+/* CommentPreprocFile */ .chroma .cpf { color: #8f5902; font-style: italic }
+/* Generic */ .chroma .g { color: #000000 }
+/* GenericDeleted */ .chroma .gd { color: #a40000 }
+/* GenericEmph */ .chroma .ge { color: #000000; font-style: italic }
+/* GenericError */ .chroma .gr { color: #ef2929 }
+/* GenericHeading */ .chroma .gh { color: #000080; font-weight: bold }
+/* GenericInserted */ .chroma .gi { color: #00a000 }
+/* GenericOutput */ .chroma .go { color: #000000; font-style: italic }
+/* GenericPrompt */ .chroma .gp { color: #8f5902 }
+/* GenericStrong */ .chroma .gs { color: #000000; font-weight: bold }
+/* GenericSubheading */ .chroma .gu { color: #800080; font-weight: bold }
+/* GenericTraceback */ .chroma .gt { color: #a40000; font-weight: bold }
+/* GenericUnderline */ .chroma .gl { color: #000000; text-decoration: underline }
+/* TextWhitespace */ .chroma .w { color: #f8f8f8; text-decoration: underline }
+
+   
+      
+     .markdown-container {
+  width: 48em;
+  margin-right: auto;
+  margin-left: auto;
+  box-sizing: border-box;
+  padding: 45px 45px 5px 45px;
+}
+
+
+/**
+ * Responsive
+ **/
+@media only screen and (max-width: 48em) {
+    .markdown-container {
+        text-align: left;
+        width: 100%;
+        margin: 0;
+        margin-top: 3em;
+        padding: 0.1em;
+    }
+}
+
+.markdown-container:after {
+  display:table;
+  clear:both;
+}
+.markdown-container:before {
+  display:table;
+  content:" ";
+}
+
+.markdown-body .octicon {
+  display: inline-block;
+  fill: currentColor;
+  vertical-align: text-bottom;
+}
+
+.markdown-body .anchor {
+  float: left;
+  line-height: 1;
+  margin-left: -20px;
+  padding-right: 4px;
+}
+
+.markdown-body .anchor:focus {
+  outline: none;
+}
+
+.markdown-body h1 .octicon-link,
+.markdown-body h2 .octicon-link,
+.markdown-body h3 .octicon-link,
+.markdown-body h4 .octicon-link,
+.markdown-body h5 .octicon-link,
+.markdown-body h6 .octicon-link {
+  color: #1b1f23;
+  vertical-align: middle;
+  visibility: hidden;
+}
+
+.markdown-body h1:hover .anchor,
+.markdown-body h2:hover .anchor,
+.markdown-body h3:hover .anchor,
+.markdown-body h4:hover .anchor,
+.markdown-body h5:hover .anchor,
+.markdown-body h6:hover .anchor {
+  text-decoration: none;
+}
+
+.markdown-body h1:hover .anchor .octicon-link,
+.markdown-body h2:hover .anchor .octicon-link,
+.markdown-body h3:hover .anchor .octicon-link,
+.markdown-body h4:hover .anchor .octicon-link,
+.markdown-body h5:hover .anchor .octicon-link,
+.markdown-body h6:hover .anchor .octicon-link {
+  visibility: visible;
+}
+
+.markdown-body h1:hover .anchor .octicon-link:before,
+.markdown-body h2:hover .anchor .octicon-link:before,
+.markdown-body h3:hover .anchor .octicon-link:before,
+.markdown-body h4:hover .anchor .octicon-link:before,
+.markdown-body h5:hover .anchor .octicon-link:before,
+.markdown-body h6:hover .anchor .octicon-link:before {
+  width: 16px;
+  height: 16px;
+  content: ' ';
+  display: inline-block;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' version='1.1' width='16' height='16' aria-hidden='true'%3E%3Cpath fill-rule='evenodd' d='M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z'%3E%3C/path%3E%3C/svg%3E");
+}.markdown-body {
+  -ms-text-size-adjust: 100%;
+  -webkit-text-size-adjust: 100%;
+  line-height: 1.5;
+  color: #24292e;
+  font-family: -apple-system,BlinkMacSystemFont,Segoe UI,Helvetica,Arial,sans-serif,Apple Color Emoji,Segoe UI Emoji;
+  font-size: 16px;
+  line-height: 1.5;
+  word-wrap: break-word;
+}
+
+.markdown-body details {
+  display: block;
+}
+
+.markdown-body summary {
+  display: list-item;
+}
+
+.markdown-body a {
+  background-color: initial;
+}
+
+.markdown-body a:active,
+.markdown-body a:hover {
+  outline-width: 0;
+}
+
+.markdown-body strong {
+  font-weight: inherit;
+  font-weight: bolder;
+}
+
+.markdown-body h1 {
+  font-size: 2em;
+  margin: .67em 0;
+}
+
+.markdown-body img {
+  border-style: none;
+}
+
+.markdown-body code,
+.markdown-body kbd,
+.markdown-body pre {
+  font-family: monospace,monospace;
+  font-size: 1em;
+}
+
+.markdown-body hr {
+  box-sizing: initial;
+  height: 0;
+  overflow: visible;
+}
+
+.markdown-body input {
+  font: inherit;
+  margin: 0;
+}
+
+.markdown-body input {
+  overflow: visible;
+}
+
+.markdown-body [type=checkbox] {
+  box-sizing: border-box;
+  padding: 0;
+}
+
+.markdown-body * {
+  box-sizing: border-box;
+}
+
+.markdown-body input {
+  font-family: inherit;
+  font-size: inherit;
+  line-height: inherit;
+}
+
+.markdown-body a {
+  color: #0366d6;
+  text-decoration: none;
+}
+
+.markdown-body a:hover {
+  text-decoration: underline;
+}
+
+.markdown-body strong {
+  font-weight: 600;
+}
+
+.markdown-body hr {
+  height: 0;
+  margin: 15px 0;
+  overflow: hidden;
+  background: transparent;
+  border: 0;
+  border-bottom: 1px solid #dfe2e5;
+}
+
+.markdown-body hr:after,
+.markdown-body hr:before {
+  display: table;
+  content: "";
+}
+
+.markdown-body hr:after {
+  clear: both;
+}
+
+.markdown-body table {
+  border-spacing: 0;
+  border-collapse: collapse;
+}
+
+.markdown-body td,
+.markdown-body th {
+  padding: 0;
+}
+
+.markdown-body details summary {
+  cursor: pointer;
+}
+
+.markdown-body kbd {
+  display: inline-block;
+  padding: 3px 5px;
+  font: 11px SFMono-Regular,Consolas,Liberation Mono,Menlo,monospace;
+  line-height: 10px;
+  color: #444d56;
+  vertical-align: middle;
+  background-color: #fafbfc;
+  border: 1px solid #d1d5da;
+  border-radius: 3px;
+  box-shadow: inset 0 -1px 0 #d1d5da;
+}
+
+.markdown-body h1,
+.markdown-body h2,
+.markdown-body h3,
+.markdown-body h4,
+.markdown-body h5,
+.markdown-body h6 {
+  margin-top: 0;
+  margin-bottom: 0;
+}
+
+.markdown-body h1 {
+  font-size: 32px;
+}
+
+.markdown-body h1,
+.markdown-body h2 {
+  font-weight: 600;
+}
+
+.markdown-body h2 {
+  font-size: 24px;
+}
+
+.markdown-body h3 {
+  font-size: 20px;
+}
+
+.markdown-body h3,
+.markdown-body h4 {
+  font-weight: 600;
+}
+
+.markdown-body h4 {
+  font-size: 16px;
+}
+
+.markdown-body h5 {
+  font-size: 14px;
+}
+
+.markdown-body h5,
+.markdown-body h6 {
+  font-weight: 600;
+}
+
+.markdown-body h6 {
+  font-size: 12px;
+}
+
+.markdown-body p {
+  margin-top: 0;
+  margin-bottom: 10px;
+}
+
+.markdown-body blockquote {
+  margin: 0;
+}
+
+.markdown-body ol,
+.markdown-body ul {
+  padding-left: 0;
+  margin-top: 0;
+  margin-bottom: 0;
+}
+
+.markdown-body ol ol,
+.markdown-body ul ol {
+  list-style-type: lower-roman;
+}
+
+.markdown-body ol ol ol,
+.markdown-body ol ul ol,
+.markdown-body ul ol ol,
+.markdown-body ul ul ol {
+  list-style-type: lower-alpha;
+}
+
+.markdown-body dd {
+  margin-left: 0;
+}
+
+.markdown-body code,
+.markdown-body pre {
+  font-family: SFMono-Regular,Consolas,Liberation Mono,Menlo,monospace;
+  font-size: 12px;
+}
+
+.markdown-body pre {
+  margin-top: 0;
+  margin-bottom: 0;
+}
+
+.markdown-body input::-webkit-inner-spin-button,
+.markdown-body input::-webkit-outer-spin-button {
+  margin: 0;
+  -webkit-appearance: none;
+  appearance: none;
+}
+
+.markdown-body :checked+.radio-label {
+  position: relative;
+  z-index: 1;
+  border-color: #0366d6;
+}
+
+.markdown-body .border {
+  border: 1px solid #e1e4e8!important;
+}
+
+.markdown-body .border-0 {
+  border: 0!important;
+}
+
+.markdown-body .border-bottom {
+  border-bottom: 1px solid #e1e4e8!important;
+}
+
+.markdown-body .rounded-1 {
+  border-radius: 3px!important;
+}
+
+.markdown-body .bg-white {
+  background-color: #fff!important;
+}
+
+.markdown-body .bg-gray-light {
+  background-color: #fafbfc!important;
+}
+
+.markdown-body .text-gray-light {
+  color: #6a737d!important;
+}
+
+.markdown-body .mb-0 {
+  margin-bottom: 0!important;
+}
+
+.markdown-body .my-2 {
+  margin-top: 8px!important;
+  margin-bottom: 8px!important;
+}
+
+.markdown-body .pl-0 {
+  padding-left: 0!important;
+}
+
+.markdown-body .py-0 {
+  padding-top: 0!important;
+  padding-bottom: 0!important;
+}
+
+.markdown-body .pl-1 {
+  padding-left: 4px!important;
+}
+
+.markdown-body .pl-2 {
+  padding-left: 8px!important;
+}
+
+.markdown-body .py-2 {
+  padding-top: 8px!important;
+  padding-bottom: 8px!important;
+}
+
+.markdown-body .pl-3,
+.markdown-body .px-3 {
+  padding-left: 16px!important;
+}
+
+.markdown-body .px-3 {
+  padding-right: 16px!important;
+}
+
+.markdown-body .pl-4 {
+  padding-left: 24px!important;
+}
+
+.markdown-body .pl-5 {
+  padding-left: 32px!important;
+}
+
+.markdown-body .pl-6 {
+  padding-left: 40px!important;
+}
+
+.markdown-body .f6 {
+  font-size: 12px!important;
+}
+
+.markdown-body .lh-condensed {
+  line-height: 1.25!important;
+}
+
+.markdown-body .text-bold {
+  font-weight: 600!important;
+}
+
+.markdown-body .pl-c {
+  color: #6a737d;
+}
+
+.markdown-body .pl-c1,
+.markdown-body .pl-s .pl-v {
+  color: #005cc5;
+}
+
+.markdown-body .pl-e,
+.markdown-body .pl-en {
+  color: #6f42c1;
+}
+
+.markdown-body .pl-s .pl-s1,
+.markdown-body .pl-smi {
+  color: #24292e;
+}
+
+.markdown-body .pl-ent {
+  color: #22863a;
+}
+
+.markdown-body .pl-k {
+  color: #d73a49;
+}
+
+.markdown-body .pl-pds,
+.markdown-body .pl-s,
+.markdown-body .pl-s .pl-pse .pl-s1,
+.markdown-body .pl-sr,
+.markdown-body .pl-sr .pl-cce,
+.markdown-body .pl-sr .pl-sra,
+.markdown-body .pl-sr .pl-sre {
+  color: #032f62;
+}
+
+.markdown-body .pl-smw,
+.markdown-body .pl-v {
+  color: #e36209;
+}
+
+.markdown-body .pl-bu {
+  color: #b31d28;
+}
+
+.markdown-body .pl-ii {
+  color: #fafbfc;
+  background-color: #b31d28;
+}
+
+.markdown-body .pl-c2 {
+  color: #fafbfc;
+  background-color: #d73a49;
+}
+
+.markdown-body .pl-c2:before {
+  content: "^M";
+}
+
+.markdown-body .pl-sr .pl-cce {
+  font-weight: 700;
+  color: #22863a;
+}
+
+.markdown-body .pl-ml {
+  color: #735c0f;
+}
+
+.markdown-body .pl-mh,
+.markdown-body .pl-mh .pl-en,
+.markdown-body .pl-ms {
+  font-weight: 700;
+  color: #005cc5;
+}
+
+.markdown-body .pl-mi {
+  font-style: italic;
+  color: #24292e;
+}
+
+.markdown-body .pl-mb {
+  font-weight: 700;
+  color: #24292e;
+}
+
+.markdown-body .pl-md {
+  color: #b31d28;
+  background-color: #ffeef0;
+}
+
+.markdown-body .pl-mi1 {
+  color: #22863a;
+  background-color: #f0fff4;
+}
+
+.markdown-body .pl-mc {
+  color: #e36209;
+  background-color: #ffebda;
+}
+
+.markdown-body .pl-mi2 {
+  color: #f6f8fa;
+  background-color: #005cc5;
+}
+
+.markdown-body .pl-mdr {
+  font-weight: 700;
+  color: #6f42c1;
+}
+
+.markdown-body .pl-ba {
+  color: #586069;
+}
+
+.markdown-body .pl-sg {
+  color: #959da5;
+}
+
+.markdown-body .pl-corl {
+  text-decoration: underline;
+  color: #032f62;
+}
+
+.markdown-body .mb-0 {
+  margin-bottom: 0!important;
+}
+
+.markdown-body .my-2 {
+  margin-bottom: 8px!important;
+}
+
+.markdown-body .my-2 {
+  margin-top: 8px!important;
+}
+
+.markdown-body .pl-0 {
+  padding-left: 0!important;
+}
+
+.markdown-body .py-0 {
+  padding-top: 0!important;
+  padding-bottom: 0!important;
+}
+
+.markdown-body .pl-1 {
+  padding-left: 4px!important;
+}
+
+.markdown-body .pl-2 {
+  padding-left: 8px!important;
+}
+
+.markdown-body .py-2 {
+  padding-top: 8px!important;
+  padding-bottom: 8px!important;
+}
+
+.markdown-body .pl-3 {
+  padding-left: 16px!important;
+}
+
+.markdown-body .pl-4 {
+  padding-left: 24px!important;
+}
+
+.markdown-body .pl-5 {
+  padding-left: 32px!important;
+}
+
+.markdown-body .pl-6 {
+  padding-left: 40px!important;
+}
+
+.markdown-body .pl-7 {
+  padding-left: 48px!important;
+}
+
+.markdown-body .pl-8 {
+  padding-left: 64px!important;
+}
+
+.markdown-body .pl-9 {
+  padding-left: 80px!important;
+}
+
+.markdown-body .pl-10 {
+  padding-left: 96px!important;
+}
+
+.markdown-body .pl-11 {
+  padding-left: 112px!important;
+}
+
+.markdown-body .pl-12 {
+  padding-left: 128px!important;
+}
+
+.markdown-body hr {
+  border-bottom-color: #eee;
+}
+
+.markdown-body kbd {
+  display: inline-block;
+  padding: 3px 5px;
+  font: 11px SFMono-Regular,Consolas,Liberation Mono,Menlo,monospace;
+  line-height: 10px;
+  color: #444d56;
+  vertical-align: middle;
+  background-color: #fafbfc;
+  border: 1px solid #d1d5da;
+  border-radius: 3px;
+  box-shadow: inset 0 -1px 0 #d1d5da;
+}
+
+.markdown-body:after,
+.markdown-body:before {
+  display: table;
+  content: "";
+}
+
+.markdown-body:after {
+  clear: both;
+}
+
+.markdown-body>:first-child {
+  margin-top: 0!important;
+}
+
+.markdown-body>:last-child {
+  margin-bottom: 0!important;
+}
+
+.markdown-body a:not([href]) {
+  color: inherit;
+  text-decoration: none;
+}
+
+.markdown-body blockquote,
+.markdown-body details,
+.markdown-body dl,
+.markdown-body ol,
+.markdown-body p,
+.markdown-body pre,
+.markdown-body table,
+.markdown-body ul {
+  margin-top: 0;
+  margin-bottom: 16px;
+}
+
+.markdown-body hr {
+  height: .25em;
+  padding: 0;
+  margin: 24px 0;
+  background-color: #e1e4e8;
+  border: 0;
+}
+
+.markdown-body blockquote {
+  padding: 0 1em;
+  color: #6a737d;
+  border-left: .25em solid #dfe2e5;
+}
+
+.markdown-body blockquote>:first-child {
+  margin-top: 0;
+}
+
+.markdown-body blockquote>:last-child {
+  margin-bottom: 0;
+}
+
+.markdown-body h1,
+.markdown-body h2,
+.markdown-body h3,
+.markdown-body h4,
+.markdown-body h5,
+.markdown-body h6 {
+  margin-top: 24px;
+  margin-bottom: 16px;
+  font-weight: 600;
+  line-height: 1.25;
+}
+
+.markdown-body h1 {
+  font-size: 2em;
+}
+
+.markdown-body h1,
+.markdown-body h2 {
+  padding-bottom: .3em;
+  border-bottom: 1px solid #eaecef;
+}
+
+.markdown-body h2 {
+  font-size: 1.5em;
+}
+
+.markdown-body h3 {
+  font-size: 1.25em;
+}
+
+.markdown-body h4 {
+  font-size: 1em;
+}
+
+.markdown-body h5 {
+  font-size: .875em;
+}
+
+.markdown-body h6 {
+  font-size: .85em;
+  color: #6a737d;
+}
+
+.markdown-body ol,
+.markdown-body ul {
+  padding-left: 2em;
+}
+
+.markdown-body ol ol,
+.markdown-body ol ul,
+.markdown-body ul ol,
+.markdown-body ul ul {
+  margin-top: 0;
+  margin-bottom: 0;
+}
+
+.markdown-body li {
+  word-wrap: break-all;
+}
+
+.markdown-body li>p {
+  margin-top: 16px;
+}
+
+.markdown-body li+li {
+  margin-top: .25em;
+}
+
+.markdown-body dl {
+  padding: 0;
+}
+
+.markdown-body dl dt {
+  padding: 0;
+  margin-top: 16px;
+  font-size: 1em;
+  font-style: italic;
+  font-weight: 600;
+}
+
+.markdown-body dl dd {
+  padding: 0 16px;
+  margin-bottom: 16px;
+}
+
+.markdown-body table {
+  display: block;
+  width: 100%;
+  overflow: auto;
+}
+
+.markdown-body table th {
+  font-weight: 600;
+}
+
+.markdown-body table td,
+.markdown-body table th {
+  padding: 6px 13px;
+  border: 1px solid #dfe2e5;
+}
+
+.markdown-body table tr {
+  background-color: #fff;
+  border-top: 1px solid #c6cbd1;
+}
+
+.markdown-body table tr:nth-child(2n) {
+  background-color: #f6f8fa;
+}
+
+.markdown-body img {
+  max-width: 100%;
+  box-sizing: initial;
+  background-color: #fff;
+}
+
+.markdown-body img[align=right] {
+  padding-left: 20px;
+}
+
+.markdown-body img[align=left] {
+  padding-right: 20px;
+}
+
+.markdown-body code {
+  padding: .2em .4em;
+  margin: 0;
+  font-size: 85%;
+  background-color: rgba(27,31,35,.05);
+  border-radius: 3px;
+}
+
+.markdown-body pre {
+  word-wrap: normal;
+}
+
+.markdown-body pre>code {
+  padding: 0;
+  margin: 0;
+  font-size: 100%;
+  word-break: normal;
+  white-space: pre;
+  background: transparent;
+  border: 0;
+}
+
+.markdown-body .highlight {
+  margin-bottom: 16px;
+}
+
+.markdown-body .highlight pre {
+  margin-bottom: 0;
+  word-break: normal;
+}
+
+.markdown-body .highlight pre,
+.markdown-body pre {
+  padding: 16px;
+  overflow: auto;
+  font-size: 85%;
+  line-height: 1.45;
+  background-color: #f6f8fa;
+  border-radius: 3px;
+}
+
+.markdown-body pre code {
+  display: inline;
+  max-width: auto;
+  padding: 0;
+  margin: 0;
+  overflow: visible;
+  line-height: inherit;
+  word-wrap: normal;
+  background-color: initial;
+  border: 0;
+}
+
+.markdown-body .commit-tease-sha {
+  display: inline-block;
+  font-family: SFMono-Regular,Consolas,Liberation Mono,Menlo,monospace;
+  font-size: 90%;
+  color: #444d56;
+}
+
+.markdown-body .full-commit .btn-outline:not(:disabled):hover {
+  color: #005cc5;
+  border-color: #005cc5;
+}
+
+.markdown-body .blob-wrapper {
+  overflow-x: auto;
+  overflow-y: hidden;
+}
+
+.markdown-body .blob-wrapper-embedded {
+  max-height: 240px;
+  overflow-y: auto;
+}
+
+.markdown-body .blob-num {
+  width: 1%;
+  min-width: 50px;
+  padding-right: 10px;
+  padding-left: 10px;
+  font-family: SFMono-Regular,Consolas,Liberation Mono,Menlo,monospace;
+  font-size: 12px;
+  line-height: 20px;
+  color: rgba(27,31,35,.3);
+  text-align: right;
+  white-space: nowrap;
+  vertical-align: top;
+  cursor: pointer;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+.markdown-body .blob-num:hover {
+  color: rgba(27,31,35,.6);
+}
+
+.markdown-body .blob-num:before {
+  content: attr(data-line-number);
+}
+
+.markdown-body .blob-code {
+  position: relative;
+  padding-right: 10px;
+  padding-left: 10px;
+  line-height: 20px;
+  vertical-align: top;
+}
+
+.markdown-body .blob-code-inner {
+  overflow: visible;
+  font-family: SFMono-Regular,Consolas,Liberation Mono,Menlo,monospace;
+  font-size: 12px;
+  color: #24292e;
+  word-wrap: normal;
+  white-space: pre;
+}
+
+.markdown-body .pl-token.active,
+.markdown-body .pl-token:hover {
+  cursor: pointer;
+  background: #ffea7f;
+}
+
+.markdown-body .tab-size[data-tab-size="1"] {
+  -moz-tab-size: 1;
+  tab-size: 1;
+}
+
+.markdown-body .tab-size[data-tab-size="2"] {
+  -moz-tab-size: 2;
+  tab-size: 2;
+}
+
+.markdown-body .tab-size[data-tab-size="3"] {
+  -moz-tab-size: 3;
+  tab-size: 3;
+}
+
+.markdown-body .tab-size[data-tab-size="4"] {
+  -moz-tab-size: 4;
+  tab-size: 4;
+}
+
+.markdown-body .tab-size[data-tab-size="5"] {
+  -moz-tab-size: 5;
+  tab-size: 5;
+}
+
+.markdown-body .tab-size[data-tab-size="6"] {
+  -moz-tab-size: 6;
+  tab-size: 6;
+}
+
+.markdown-body .tab-size[data-tab-size="7"] {
+  -moz-tab-size: 7;
+  tab-size: 7;
+}
+
+.markdown-body .tab-size[data-tab-size="8"] {
+  -moz-tab-size: 8;
+  tab-size: 8;
+}
+
+.markdown-body .tab-size[data-tab-size="9"] {
+  -moz-tab-size: 9;
+  tab-size: 9;
+}
+
+.markdown-body .tab-size[data-tab-size="10"] {
+  -moz-tab-size: 10;
+  tab-size: 10;
+}
+
+.markdown-body .tab-size[data-tab-size="11"] {
+  -moz-tab-size: 11;
+  tab-size: 11;
+}
+
+.markdown-body .tab-size[data-tab-size="12"] {
+  -moz-tab-size: 12;
+  tab-size: 12;
+}
+
+.markdown-body .task-list-item {
+  list-style-type: none;
+}
+
+.markdown-body .task-list-item+.task-list-item {
+  margin-top: 3px;
+}
+
+.markdown-body .task-list-item input {
+  margin: 0 .2em .25em -1.6em;
+  vertical-align: middle;
+}
+
+/* Center inline tweets */
+.twitter-tweet {
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.Box-header {
+  display: flex !important;
+  padding: 16px;
+  padding-top: 16px;
+  padding-bottom: 16px;
+  margin: -1px -1px 0;
+  background-color: #f6f8fa;
+  border: 1px solid #d1d5da;
+  border-top-left-radius: 3px;
+  border-top-right-radius: 3px;
+}
+
+.markdown-frame {
+  border: 1px solid #ddd;
+  border-radius: 3px;
+}
+
+   
+  </style>
+</head>
+<body>
+	<header>
+	<a href="/">HeinrichHartmann.com</a>
+</header>
+
+	
+  <main class="markdown-container">
+    <article class="markdown-body">
+      
+      <h1>Effective Rank Decomposition of Linear Maps</h1>
+      <p class="meta" style="color:#aaa; float:right">
+         Stemwede, 
+        2021-03-08
+        
+      </p>
+      <div style="clear:both">
+	<style>
+.markdown-container {
+ width: 60em;
+}
+@media only screen and (max-width: 60em) {
+    .markdown-container {
+        text-align: left;
+        width: 100%;
+        margin: 0;
+        margin-top: 3em;
+        padding: 0.1em;
+    }
+}
+.center {
+    display: block;
+    margin:auto
+}
+</style>
+<div style="display:none">
+$$
+  
+  \newcommand{\nl}{\\}
+  
+  \newcommand{\half}{\frac{1}{2}}
+  \newcommand{\floor}[1]{\lfloor #1 \rfloor}
+  \newcommand{\ceil}[1]{\lceil #1 \rceil}
+  \newcommand{\Set}[2]{\left\{\, #1 \;\vert\; #2 \,\right\}}
+  \newcommand{\C}{\,\#}
+  \newcommand{\CSet}[2]{\#\{\, #1 \;\vert\; #2 \,\}}
+  
+  \newcommand{\qtext}[1]{\quad\text{#1}\quad}
+  \newcommand{\stext}[1]{\;\text{#1}\;}
+  
+  \newcommand{\IFF}{\Leftrightarrow}
+  \newcommand{\inf}{\infty}
+  
+  \newcommand{\Ind}{\mathbb{1}}
+  
+  \newcommand{\IR}{\mathbb{R}}
+  \newcommand{\IA}{\mathbb{A}}
+  \newcommand{\IB}{\mathbb{B}}
+  \newcommand{\IC}{\mathbb{C}}
+  \newcommand{\ID}{\mathbb{D}}
+  \newcommand{\IF}{\mathbb{F}}
+  \newcommand{\IH}{\mathbb{H}}
+  \newcommand{\II}{\mathbb{I}}
+  \newcommand{\IL}{\mathbb{L}}
+  \newcommand{\IN}{\mathbb{N}}
+  \newcommand{\IP}{\mathbb{P}}
+  \newcommand{\IQ}{\mathbb{Q}}
+  \newcommand{\IR}{\mathbb{R}}
+  \newcommand{\IS}{\mathbb{S}}
+  \newcommand{\IV}{\mathbb{V}}
+  \newcommand{\IZ}{\mathbb{Z}}
+  
+  \newcommand{\KR}{\matcal{R}}
+  \newcommand{\KA}{\matcal{A}}
+  \newcommand{\KB}{\matcal{B}}
+  \newcommand{\KC}{\matcal{C}}
+  \newcommand{\KD}{\matcal{D}}
+  \newcommand{\KF}{\matcal{F}}
+  \newcommand{\KH}{\matcal{H}}
+  \newcommand{\KI}{\matcal{I}}
+  \newcommand{\KL}{\matcal{L}}
+  \newcommand{\KN}{\matcal{N}}
+  \newcommand{\KP}{\matcal{P}}
+  \newcommand{\KQ}{\matcal{Q}}
+  \newcommand{\KR}{\matcal{R}}
+  \newcommand{\KS}{\matcal{S}}
+  \newcommand{\KV}{\matcal{V}}
+  \newcommand{\KZ}{\matcal{Z}}
+  
+  \newcommand{\gc}{\mathfrak{C}}
+  \newcommand{\gd}{\mathfrak{D}}
+  \newcommand{\gM}{\mathfrak{M}}
+  \newcommand{\gm}{\mathfrak{m}}
+  \newcommand{\gf}{\mathfrak{f}}
+  \newcommand{\gu}{\mathfrak{U}}
+  
+  \newcommand{\fa}{\mathfrak{a}}
+  \newcommand{\fg}{\mathfrak{g}}
+  \newcommand{\fn}{\mathfrak{n}}
+  \newcommand{\fk}{\mathfrak{k}}
+  \newcommand{\fm}{\mathfrak{m}}
+  \newcommand{\fp}{\mathfrak{p}}
+  
+  \newcommand{\curly}[1]{\mathcal{#1}}
+  \newcommand{\op}[1]{\mathrm{#1}}
+  \newcommand{\Cat}[1]{\mathfrak{#1}}
+  \newcommand{\cat}[1]{\mathbf{#1}}
+  
+  \newcommand{\vphi}{\varphi}
+  \newcommand{\sphi}{\phi}
+  \newcommand{\eps}{\varepsilon}
+  
+  \newcommand{\tensor}{\otimes}
+  \newcommand{\tensors}{\tensor\dots\tensor}
+  \newcommand{\Tensor}{\bigotimes}
+  \newcommand{\ra}{\rightarrow}
+  \newcommand{\lra}{\longrightarrow}
+  \newcommand{\la}{\leftarrow}
+  \newcommand{\lla}{\longleftarrow}
+  \newcommand{\isom}{\cong}
+  \newcommand{\epi}{\twoheadrightarrow}
+  \newcommand{\mono}{\hookrightarrow}
+  \newcommand{\del}{\partial}
+  \newcommand{\union}{\cup}
+  \newcommand{\dotcup}{\ensuremath{\mathaccent\cdot\cup}}
+  \newcommand{\dunion}{\dotcup}
+  \newcommand{\&lt;}{\langle}
+  \renewcommand{\&gt;}{\rangle}
+  \newcommand{\inpart}[1]{\in\text{\part}(#1)}
+  \newcommand{\Vsum}{\bigoplus}
+  \newcommand{\vsum}{\oplus}
+  
+  \renewcommand{\S}{\mathfrak{S}}
+  \newcommand{\id}{\mathrm{id}}
+  \newcommand{\rk}{\mathrm{rk}}
+  \newcommand{\Diff}{\mathrm{Diff}}
+  \newcommand{\Hom}{\mathrm{Hom}}
+  \newcommand{\Pic}{\mathrm{Pic}}
+  \newcommand{\Spec}{\mathrm{Spec}}
+  \newcommand{\End}{\mathrm{End}}
+  \newcommand{\Ext}{\mathrm{Ext}}
+  
+  \DeclareMathOperator{\Supp}{\mathrm{Supp}}
+  \DeclareMathOperator{\Sym}{Sym}
+  \DeclareMathOperator{\Alt}{\Lambda}
+  \DeclareMathOperator{\ad}{ad}
+  \DeclareMathOperator{\ch}{ch}
+  \DeclareMathOperator{\td}{td}
+  \DeclareMathOperator{\pr}{pr}
+  
+
+  \newcommand{\id}{\mathbb{1}}
+  \newcommand{\oo}{\mathbb{0}}
+  \newcommand{\iff}{\;\Leftrightarrow\;}
+$$
+</div>
+<img src="./teaser.png"/>
+<p>The rank decomposition of a $m \times n$ matrix $A$ is an fundamental result in Linear Algebra, that
+tells us that &ldquo;up to choice of bases $A$ is equivalent to a diagonal matrix with $rk(A)$ ones on the
+diagonal&rdquo;. This result is of great value for both theoretical development and practical computations
+in linear algebra. When performing calculations by hand, the rank decomposition is easily derived
+using Gauss Elimination.  Curiously, introductory treatments of Numerical Linear Algebra that I am
+aware of do not use or mention this result early on, but focus instead on Matrix Decompositions (LU,
+QR, Cholesky, etc.), which use the same methods, look very similar but do not quite yield a rank
+decomposition.</p>
+<p>In this note we are going to study the rank decomposition from the theoretical and practical
+perspective.  We give a short proof of the abstract result, and sketch a number of applications.
+We continue to explain how to derive a rank decomposition using three different numeric methods:</p>
+<ol>
+<li>LU-Decomposition with total pivoting (Gauss Elimination)</li>
+<li>QR-Decomposition with column pivoting</li>
+<li>Singular Value Decomposition (SVD)</li>
+</ol>
+<p>It turns out, that computing the rank of a matrix in a correct, stable and efficient way is a quite
+subtle problem, that has a whole body of literature behind it. We provide implementations of all
+three methods in the Python/NumPy ecosystem as part of a small library
+<a href="https://github.com/HeinrichHartmann/libla">libla</a> that is available on GitHub, and compare their
+performance.</p>
+<h2 id="abstract-rank-decomposition">Abstract Rank Decomposition</h2>
+<div style="padding:10px 20px 1px 20px; margin-bottom:16px; background-color:#EFEFEF">
+<p><strong>Proposition (Rank Decomposition).</strong> For every matrix $m \times n$ matrix $A \in M(m,n)$ over a field,
+there exists invertible matrices $X \in M(m), Y\in M(n)$ so that</p>
+<p>$$
+A = X \cdot D \cdot Y,
+\qtext{where}
+D =
+\begin{bmatrix}
+\id_r &amp; 0   \\
+0 &amp; 0 \\
+\end{bmatrix}
+$$
+So $D$ is the $m \times n$ matrix with $r$-diagonal entries $1$ and remaining entries $0$.</p>
+<p>The number $r$ is uniquely determined by $A$ and is called the <strong>rank</strong> of $A$.</p>
+</div>
+<p>This result can be found in various forms in the literature, e.g. <a href="https://en.wikipedia.org/wiki/Matrix_equivalence">Matrix
+Equivalence</a>, <a href="https://en.wikipedia.org/wiki/Smith_normal_form">Smith Normal Form</a> on Wikipedia, [Gantmacher1961, Chapter 5]. I personally learned this from [Kowalsky1972, Theorem 16.1].</p>
+<p><strong>Proof.</strong>
+Let $c_1,\dots,c_r$ be a basis of $Im(A)$.
+Choose pre-images $b_i$ of $c_i$. The vectors $b_i$ are linearly independent, since they
+map to linearly independent vectors under $A$. Furthermore $b_i$ do not lie in $Ker(A)$,
+since $c_i = A*b_i$ are non-zero. By the
+<a href="https://en.wikipedia.org/wiki/Linear_map#Kernel,_image_and_the_rank%E2%80%93nullity_theorem">dimension formula</a>,
+$dim(Ker(A)) = m-r$ and we can complete $b_i$ to a basis of $\IR^n$ with
+vectors from $Ker(A)$. Complete $c_i$ to a basis of $\IR^m$ in an arbitrary way.
+Then $A b_i =c_i$ for $i\leq r$ and $A b_i = 0$ for $i &gt; r$.
+Let $Y$ be the inverse of the matrix with columns $b_i$, and $X$ the matrix with columns $c_i$.
+Then $X D Y b_i = X D e_i = X e_i = c_i$ for $i \leq r$ and $X D Y b_i = 0$ otherwise.
+QED.</p>
+<p><strong>Applications.</strong>
+Once such a representation is established, many linear algebra constructions become trivial.
+Using the transformations $X,X^{-1},Y,Y^{-1}$ we can translate problems between $A$ and
+$D$
+back and forth. Since $D$ is a diagonal matrix, most questions are readily solvable:</p>
+<ol>
+<li>Solving Linear Systems. The following equations are equivalent:
+$$
+A x = b \iff D x&rsquo; = b&rsquo; \iff
+\begin{Bmatrix}
+x&rsquo;[i] = b&rsquo;[i] &amp; i\leq r \\
+0 = b&rsquo;[i] &amp; i &gt; r
+\end{Bmatrix}
+$$
+where $x&rsquo;=Y x$ and $b&rsquo;=X^{-1} b$.</li>
+<li>The image of $A$ is spanned by the first r columns of $X$.</li>
+<li>The kernel of $A$ is spanned by the last $n-r$ columns of $Y^{-1}$.</li>
+<li>A complement of $Im(A)$ is spanned by the last $m-r$ columns of $X$.</li>
+<li>A complement of $Ker(A)$ is spanned by the first $r$ columns of $Y^{-1}$.</li>
+<li>A projection operator to $Im(A)$ is given by $X D X^{-1}$.</li>
+<li>A projection operator to $Ker(A)$ is given by $Y^{-1} (\id_n - D) Y$.</li>
+</ol>
+<p>This list of applications should convince the reader that such a decomposition is of high practical value.</p>
+<p><strong>References</strong></p>
+<ul>
+<li>
+<p>[Kowalsky1972] H.‐J. Kowalsky, Lineare Algebra. Walter de Gruyter (1972)<br>
+<a href="https://www.amazon.com/Lineare-Algebra-H-J-Kowalsky/dp/3110179636/ref=sr_1_1?dchild=1&amp;keywords=Kowalsky+Lineare+Algebra&amp;qid=1615119813&amp;s=books&amp;sr=1-1">https://www.amazon.com/Lineare-Algebra-H-J-Kowalsky/dp/3110179636/ref=sr_1_1?dch&hellip;</a></p>
+</li>
+<li>
+<p>[Gantmacher1961] Gantmacher et.al &ndash; The Theory of Matrices (1961)<br>
+<a href="https://api.semanticscholar.org/126123922">https://api.semanticscholar.org/126123922</a> <a href="https://dx.doi.org/10.2307/3612823">https://dx.doi.org/10.2307/3612823</a></p>
+</li>
+</ul>
+<h2 id="rank-decomposition-algorithms">Rank Decomposition Algorithms</h2>
+<p>In order to see that the popular <a href="https://en.wikipedia.org/wiki/LU_decomposition">LU-</a> and
+<a href="https://en.wikipedia.org/wiki/QR_decomposition">QR-Decomposition</a> methods are not sufficient to
+derive a rank decomposition consider a block-matrix $A \in M(2n,2n)$ of the form</p>
+<p>$$
+A = \begin{bmatrix}
+0 &amp; B \\
+0 &amp; 0 \\
+\end{bmatrix}.
+$$</p>
+<p>with $B \in M(n)$. This is a already upper triangular matrix, so the LU and QR decompositions are trivial.
+Also note that the diagonal of $A$ has only zero entries, so we might be tempted to conclude that $rk(A) = 0$.
+However, we clearly have $rk(A) = rk(B)$. So depending on $R$ this matrix may have any rank between in $0$ and $n$.</p>
+<p>This example shows, that:</p>
+<ul>
+<li>The vanilla LU and QR decomposition methods can not be used directly to compute a rank decomposition</li>
+<li>The rank of a triangular matrix is <em>NOT</em> determined by it&rsquo;s diagonal entries</li>
+</ul>
+<p>Instead, we need to consider &ldquo;rank revealing&rdquo; variants of those algorithms, that further reduce a
+matrix that is already triangular. In this note, we will visit the following three approaches that
+follow this approach:</p>
+<ol>
+<li>LU-Decomposition with total pivoting (Gauss Elimination)</li>
+<li>QR-Decomposition with column pivoting</li>
+<li>Singular Value Decomposition (SVD)</li>
+</ol>
+<h3 id="numeric-instabilities">Numeric Instabilities</h3>
+<p>The principal difficulty that we face when numerically computing a rank decomposition are numeric
+instabilities. As a small perturbation of any matrix has full rank, we must be careful not to
+misinterpret &ldquo;accidental&rdquo; linear independence, and allow for some &ldquo;slack&rdquo; when deriving the rank.</p>
+<p>It turns out, that there is a significant amount of literature that is devoted to stable numeric
+algorithms to determine the rank of a matrix. Keywords to search are &ldquo;rank revealing&rdquo; matrix
+decomposition, &ldquo;rank deficit problems&rdquo;. Here are some pointers to the literature:</p>
+<ul>
+<li>
+<p>[Hansen1987] P. Hansen &ndash; Rank-Deficient and Discrete Ill-Posed Problems (1987)<br>
+<a href="https://api.semanticscholar.org/CorpusID:122731599">https://api.semanticscholar.org/CorpusID:122731599</a> <a href="https://dx.doi.org/10.1137/1.9780898719697">https://dx.doi.org/10.1137/1.9780898719697</a></p>
+</li>
+<li>
+<p>[Golub1983] G. Golub &ndash; Matrix computations (1983) / Chapter 5.4.2<br>
+<a href="https://api.semanticscholar.org/CorpusID:126299280">https://api.semanticscholar.org/CorpusID:126299280</a> <a href="https://dx.doi.org/10.2307/3621013">https://dx.doi.org/10.2307/3621013</a></p>
+</li>
+</ul>
+<h3 id="1-rank-decomposition-via-lu-decomposition-gauss-elimination">1. Rank Decomposition via LU Decomposition (Gauss Elimination)</h3>
+<div style="padding:10px 20px 1px 20px; margin-bottom:16px; background-color:#EFEFEF">
+<p><strong>Theorem (LDU decomposition with total pivoting)</strong>
+For every matrix $A \in M(m,n)$, we will construct</p>
+<ol>
+<li>a (row) permutation matrix $P \in M(m)$</li>
+<li>a (column) permutation matrix $Q \in M(n)$</li>
+<li>an invertible lower-triangular matrix $L \in M(m)$ with unit diagonal</li>
+<li>an invertible upper-triangular matrix $U \in M(n)$ with unit diagonal</li>
+<li>an invertible diagonal matrix $D_r \in M(r,r)$</li>
+</ol>
+<p>so that:</p>
+<p>$$
+A = P \cdot L \cdot D \cdot U \cdot Q,
+\qtext{where}
+D = \begin{bmatrix}
+D_r &amp; 0   \\
+0 &amp; \oo_{m-r,n-r} \\
+\end{bmatrix}.
+$$</p>
+</div>
+<p><strong>Corollary.</strong>
+Given $P,Q,L,D_r,U$ as above, a rank decomposition is given by $Y = (P L)^{-1}$, $X = Q U^{-1} (D_r \vsum \id)^{-1}$.</p>
+<p><strong>Elimination Matrix.</strong> Gauss Elimination makes use of elimination matrices, that geometrically
+correspond to <a href="https://en.wikipedia.org/wiki/Shear_mapping">shear transformations</a>:  For vectors
+$a,b$ with $(a,a)=1$ and $(a,b) = 0$, we consider the $E_{a,b}: x \mapsto x + (a,x) b$. This is map
+defines a linear isomorphism with inverse $E_{a,-b}$.  In case $a = e_r$ and $b[r]=1$ we call
+$E_{a,b}$ the elimination matrix $E^r_b$.</p>
+<p><strong>Algorithm.</strong> We only give a sketch of the Algorithm here since the ideas are well known. More
+details can be found e.g. in [Trefethen1997, Lecture 20], [Golub1983, p.132],</p>
+<ol>
+<li>We proceed recursively. If either $m = 0$ or $n = 0$ we are done.</li>
+<li>Select the element $p = A[i,j]$ with largest absolute value as pivot element, and apply
+permutation matrices from left and right, so that $p = A[1,1]$ after permutation.</li>
+<li>Terminate if the $|p|$ is too small e.g. $&lt; 10^{-10}$, to ensure numeric stability.</li>
+<li>Eliminate the first column using an elimination matrix $E^1_b$ acting on the left.</li>
+<li>Eliminate the first row using a transposed elimination matrix $E^{1t}_c$ acting on the right.</li>
+<li>The reduced matrix has block-diagonal form $A = p \vsum B$.  Recursively we can assume that we have
+a decomposition for $B$ that can be easily be extended to a decomposition of the reduced $A$.</li>
+<li>To arrive at a decomposition of the original matrix from here, we exploit the fact that that for an
+elimination matrix $E$ and a permutation matrix $P$, we have $E P = P&rsquo; E&rsquo;$ for another elimination
+matrix $E&rsquo;$ and permutation matrix $P&rsquo;$.</li>
+</ol>
+<p>FIN.</p>
+<p><strong>Complexity.</strong> For a square matrix the presented algorithm requires $2/3 n^3 = 0.66 n^3$ floating
+point operations [Golub1983, p.132].  The global search for a pivot element involves a significant
+overhead of $O(n^3)$ comparisons.</p>
+<p><strong>Discussion.</strong> The described algorithm computes a rank decomposition under exact arithmetic and
+straight forward and allows efficient implementation.</p>
+<p>By choosing the largest element in the matrix as pivot, obvious error amplifications are avoided.
+However, it turns out that even with this conservative approach numeric stability is not guaranteed.
+An example of a numeric instability was published in [Peters Wilkinson1970].
+A good summary of the situation can be found in the introduction of [Pan2000].
+A pivoting strategy that is numerically stable was first constructed by [Chan1984] and [Hwang1992].</p>
+<p>On the positive side it looks like the numeric instabilities of LDU with total pivot search are
+do only very rarely occur in practice:</p>
+<blockquote>
+<p>These conditions also show that matrices which are nearly singular but which the commonly used
+pivoting strategies do not produce a small [residual matrix] all have a very special pattern to their
+inversesand their smallest singular vectors. Moreover, simple permutations of these matrices will
+produce small pivots with the usual pivoting strategies. Therefore, they are insome sense rare and
+relatively harmless. &ndash; [Chan1984]</p>
+</blockquote>
+<p><strong>Implementation.</strong>
+Unfortunately LU decomposition with total pivoting is not implemented in LAPACK, and hence not
+available in Python/NumPy.  Similarly, I am not aware of an implementation of Rank-Revealing LU
+decomposition that can be effectively used from Python.</p>
+<p><strong>References</strong></p>
+<ul>
+<li>
+<p>[Peters1970] G. Peters,  Wilkinson - The least-squares  problem  and  pseudo-inverses (1970)<br>
+<a href="https://api.semanticscholar.org/CorpusID:44974854">https://api.semanticscholar.org/CorpusID:44974854</a></p>
+</li>
+<li>
+<p>[Chan1984] Chan, T. (1984). On the existence and computation of $LU$-factorizations with small pivots (1984)<br>
+<a href="https://api.semanticscholar.org/CorpusID:121539458">https://api.semanticscholar.org/CorpusID:121539458</a></p>
+</li>
+<li>
+<p>[Hwang1992] Hwang, T., Lin, W., &amp; Yang, E.K. (1992). Rank revealing LU factorizations (1992)<br>
+<a href="https://api.semanticscholar.org/CorpusID:122859959">https://api.semanticscholar.org/CorpusID:122859959</a></p>
+</li>
+<li>
+<p>[Pan2000] Pan. On the existence and computation of rank-revealing LU factorizations (2000)<br>
+<a href="https://api.semanticscholar.org/CorpusID:121188547">https://api.semanticscholar.org/CorpusID:121188547</a></p>
+</li>
+</ul>
+<h3 id="2-rank-decomposition-via-qr-decomposition-qr">2. Rank Decomposition via QR-Decomposition (QR)</h3>
+<div style="padding:10px 20px 1px 20px; margin-bottom:16px; background-color:#EFEFEF">
+<p><strong>Theorem (QR decomposition with Column Pivoting, [Golub83,5.4.2])</strong>
+For every matrix $A \in M(m,n)$ there is</p>
+<ol>
+<li>a (column) permutation matrix $P \in M(n)$</li>
+<li>an orthogonal matrix $Q \in M(m)$</li>
+<li>an invertible upper-triangular matrix $R_{11} \in M(r, r)$</li>
+<li>a matrix $R_{12} \in M(m-r, n)$</li>
+</ol>
+<p>so that:</p>
+<p>$$
+A = Q \cdot R \cdot P,
+\qtext{where}
+R = \begin{bmatrix}
+R_{11} &amp; R_{12}   \\
+0 &amp; 0 \\
+\end{bmatrix}
+$$</p>
+</div>
+<p><strong>Corollary:</strong>
+Get rank decomposition via $X = Q^t$, $Y = P^t \cdot
+\begin{bmatrix}
+R_{11}^{-1} &amp; -R_{11}^{-1} R_{12}   \\
+0 &amp; \id_{n-r} \\
+\end{bmatrix}$.
+As $R_{11}$ is an upper-triangular matrix, the inverse can be computed with $O(n^2)$ operations using backward substitution.</p>
+<p><strong>Householder Reflections.</strong> Similar to the &ldquo;shear&rdquo; transformations used in Gauss Elimination, QR
+Decomposition can be constructed using simple rank-1 modifications to the identity matrix.  For a
+vector $a \in \IR^n$ with $(a,a) = 1$ the map $R_a(x) = x - 2(x,a)a$ reflects a vector $x$ at the
+hyperplane $a^{\perp}$. Householders [Householder1958] observation was, that for any given vector
+$v$ it is rather easy to construct a reflection $a$ so that $R_a(v)$ is a multiple of $e_1$. The
+corresponding reflection matrix is called Householder matrix $H^1_v$, and has the property that
+$H^1_v(v) = |v| e_1$.</p>
+<p><strong>Algorithm.</strong> The construction is similar to the Gauss Elimination process described above.  We
+again give a sketch of the construction, for more details see [Golub1983, Chapter 5].</p>
+<ol>
+<li>We proceed recursively. If $n=0$ or $m=0$ we are done.</li>
+<li>Identify a column $v = A[:,i]$ with maximal norm $|v|^2 = (v, v)$.
+Use a permutation $P$ matrix to bring $a$ to the front (so $v = (AP)[:,1]$ has maximal norm).</li>
+<li>If $|a|^2$ is too small, terminate the process.</li>
+<li>Use a Householder reflection to transform $v$ into a multiple of $e_1$.
+The matrix $H_v^1$ is orthogonal, and the transformed column vector $w = H_v^1AP[:,1]$ has
+only a single entry $w[1] = |v|$.</li>
+<li>The reduced matrix has block-diagonal form $p \vsum B$.  Recursively we can assume that we have
+a decomposition for $B = Q&rsquo; R&rsquo; P&rsquo;$. This decomposition can be easily extended to $p \vsum B$.</li>
+<li>The decomposition of the original matrix is obtained by composition $A = H^t Q&rsquo; R&rsquo; P&rsquo; P^t$.</li>
+</ol>
+<p>FIN.</p>
+<p><strong>Complexity.</strong>
+The presented algorithm requires $4mnr-2r^2(m+n)+4r^3/3$ floating point operations (flops) [Golub1983, p.278],
+where $r = rk(A)$. For the case of a square matrix of rank $n/2$, we get $7/6 n^3 = 1.16 n^3$ flops.</p>
+<p><strong>Remark:</strong> The geometry behind the QR decomposition is quite beautiful. There are three different
+constructions, which are all numerically effective and geometrically interesting: (1) Householder
+Reflections (described above) (2) Givens Rotations (3) Gram Schmidt Orthogonalization Process.
+While methods 1,2 pursue the strategy of &ldquo;orthogonal triangularization&rdquo;, method 3 proceeds in the
+reverse direction of &ldquo;triangular orthogonalization&rdquo;.</p>
+<p><strong>Discussion</strong> The described algorithm computes a rank decomposition under exact arithmetic and
+straight forward and allows efficient implementation.</p>
+<p>By choosing the largest column for elimination, we avoid the most obvious cases of error
+amplification are avoided.  Again, it turns out that there are cases, where numeric instabilities
+lead to cases where the residual matrices do not get small once the rank is exhausted.  The most
+famous example is the &ldquo;Kahn&rdquo; matrix presented in [Lawson1998, p.31].</p>
+<p>[Chan1987] demonstrated, that it is possible modify the algorithm to select columns that avoid those
+numeric instabilities, and give a true &ldquo;rank revealing QR decomposition&rdquo;.</p>
+<p>On the positive side it looks like the numeric instabilities do only very rarely occur in practice:</p>
+<blockquote>
+<p>Nevertheless, in practice, small trailing R-submatrices almost always emerge that correlate well
+with the underlying rank. In other words, it is almost always the case that R_k is small if A has
+rank k. [Golub1983, p.279]</p>
+</blockquote>
+<p><strong>Implementation.</strong>  QR factorization with column pivoting is implemented in LAPACK, and available in
+Python/NumPy.  I am not aware of an implementation of Rank-Revealing QR factorization [Chan1987]
+that can be effectively used from python. Is it also not clear that such an implementation would be
+desirable to use in practice, since it is much more expensive to compute and has little practical
+advantage.</p>
+<ul>
+<li>
+<p>LAPACK - xGEQP3 Implementation<br>
+<a href="http://www.netlib.org/lapack/explore-html/dd/d9a/group__double_g_ecomputational_ga1b0500f49e03d2771b797c6e88adabbb.html#ga1b0500f49e03d2771b797c6e88adabbb">http://www.netlib.org/lapack/explore-html/dd/d9a/group__double_g_ecomputational_&hellip;</a></p>
+</li>
+<li>
+<p>SciPy Documentation - scipy.linalg.qr<br>
+<a href="https://docs.scipy.org/doc/scipy/reference/generated/scipy.linalg.qr.html">https://docs.scipy.org/doc/scipy/reference/generated/scipy.linalg.qr.html</a></p>
+</li>
+</ul>
+<p><strong>References.</strong></p>
+<ul>
+<li>
+<p>[Householder1958] A. Householder &ndash; Unitary Triangularization of a Nonsymmetric Matrix (1958)<br>
+<a href="https://api.semanticscholar.org/CorpusID:9858625">https://api.semanticscholar.org/CorpusID:9858625</a> <a href="https://dx.doi.org/10.1145/320941.320947">https://dx.doi.org/10.1145/320941.320947</a><br>
+Comment: Short classic (3p). Worth checking out.</p>
+</li>
+<li>
+<p>[Lawson1995] C. Lawson, R. Hanson &ndash; Solving least squares problems (1995)<br>
+<a href="https://api.semanticscholar.org/CorpusID:122862057">https://api.semanticscholar.org/CorpusID:122862057</a> <a href="https://dx.doi.org/10.1137/1.9781611971217">https://dx.doi.org/10.1137/1.9781611971217</a></p>
+</li>
+<li>
+<p>[Chan1987] T. Chan &ndash; Rank revealing QR factorizations (1987)<br>
+<a href="https://api.semanticscholar.org/CorpusID:119431073">https://api.semanticscholar.org/CorpusID:119431073</a> <a href="https://dx.doi.org/10.1016/0024-3795(87)90103-0">https://dx.doi.org/10.1016/0024-3795(87)90103-0</a></p>
+</li>
+</ul>
+<h3 id="3-rank-decomposition-via-singular-value-decomposition-svd">3. Rank Decomposition via Singular Value Decomposition (SVD)</h3>
+<div style="padding:10px 20px 1px 20px; margin-bottom:16px; background-color:#EFEFEF">
+<p><strong>Proposition (Singular Value Decomposition)</strong>
+For every matrix $X \in M(m,n)$ with entries in the real numbers $\IR$,
+there are orthogonal matrices $U \in M(n), V \in M(m)$ so that</p>
+<p>$$
+A = U \cdot \Sigma \cdot V
+$$
+Where $\Sigma \in M(m,n)$ is a matrix with diagonal entries $\sigma_1 \geq \sigma_2, \dots, \sigma_r &gt; 0$
+and $\sigma_i = 0$ for $i &gt; r$, $r = rk(A)$ and entries $0$ outside of the diagonal.</p>
+</div>
+<p><strong>Proof.</strong> A quick proof of this result can be obtained by studying the images of the
+$n$-dimensional unit-sphere under the linear defined by $A$, and applying the real-analytical
+<a href="https://en.wikipedia.org/wiki/Lagrange_multiplier">Lagrange Multiplier Criterion</a> criterion. See
+<a href="https://en.wikipedia.org/wiki/Singular_value_decomposition">wikipedia</a> for more details.</p>
+<p><strong>Corollary.</strong> Given matrices $U,\Sigma,V$ as above, we obtain a rank-decomposition as $X = U^t, Y = V^t D$,
+where $D$ is a diagonal $m \times m$ matrix with diagonal entries $\sigma^{-1}_i, i&lt;r$ and $1$ else.</p>
+<p><strong>Algorithm.</strong> A numeric calculation of the SVD is rather involved and makes use of iterative methods and
+eigenvalue calculations.  The necessity of these complications is plausible, since in addition to a
+rank decomposition, the SVD also calculates the eigenvalues of $A A^t$ and $A^t A$.</p>
+<p><strong>Complexity.</strong>
+The &ldquo;Golub-Reinsch&rdquo; SVD algorithm presented in [Golub1983, p.492], has complexity $4m^2n + 8mn^2 + 9n^3$,
+which in the case of a square matrix reduces to $21 n^3$.</p>
+<p><strong>Implementation</strong> SVD is implemented in LAPACK, and available in NumPy/SciPy.  SciPy&rsquo;s linalg.svd
+makes use of the LAPACK DGSDD function by default. It is not clear to me which abstract SVD
+algorithm is implemented by this function.</p>
+<ul>
+<li>
+<p>SciPy &ndash; scipy.linalg.svd<br>
+<a href="https://docs.scipy.org/doc/scipy/reference/generated/scipy.linalg.svd.html#scipy.linalg.svd">https://docs.scipy.org/doc/scipy/reference/generated/scipy.linalg.svd.html#scipy.linalg.svd</a></p>
+</li>
+<li>
+<p>LAPACK DGESDD Implementation<br>
+<a href="http://www.netlib.org/lapack/explore-html/d1/d7e/group__double_g_esing_gad8e0f1c83a78d3d4858eaaa88a1c5ab1.html#gad8e0f1c83a78d3d4858eaaa88a1c5ab1">http://www.netlib.org/lapack/explore-html/d1/d7e/group__double_g_esing_gad8e0f1c&hellip;</a></p>
+</li>
+<li>
+<p>LAPACK Manual &ndash; Singular Value Decomposition<br>
+<a href="http://www.netlib.org/lapack/lug/node53.html">http://www.netlib.org/lapack/lug/node53.html</a></p>
+</li>
+</ul>
+<p><strong>Discussion</strong> The SVD of a matrix is a very powerful decomposition that yields a rank decomposition
+and much more (orthogonal bases, eigenvalues of $A^*A$). SVD implementations are numerically stable
+readily available, and in the same complexity class as Gauss Elimination and QR factorization $O(n^3)$.</p>
+<p>The price we have to pay for additional nice properties and guaranteed numeric stability is more
+complicated algorithm (that I personally do not understand) that is less performant.</p>
+<h2 id="rank-decomposition-implementations-for-python">Rank Decomposition Implementations for Python</h2>
+<p>Implementations of all three Rank Decomposition algorithms in the Python/NumPy environment
+are provided as part of the new <a href="https://github.com/HeinrichHartmann/libla/">libla</a> library.
+Pointers:</p>
+<ul>
+<li>
+<p><a href="https://github.com/HeinrichHartmann/libla/blob/v0.0.2/libla/rank_decomposition.py#L8">Rank Decomposition via LU Decomposition</a>, using a manual
+implementation of Gauss Elimination.</p>
+</li>
+<li>
+<p><a href="https://github.com/HeinrichHartmann/libla/blob/v0.0.2/libla/rank_decomposition.py#L95">Rank Decomposition via QR Decomposition</a>, based on <code>scipy.linalg.qr</code>.</p>
+</li>
+<li>
+<p><a href="https://github.com/HeinrichHartmann/libla/blob/v0.0.2/libla/rank_decomposition.py#L133">Rank Decomposition via SVD</a>, based on <code>scipy.linalg.svd</code>.</p>
+</li>
+</ul>
+<p><strong>Numeric Example</strong>
+The following illustration shows plots of the rank decomposition of a random $20 \times 50$ matrix of rank 10.</p>
+<img src="./rd.png" style="width: 80%" class="center"/>
+<p>In all three cases we see that $X$ has large diagonal components, reminding us that $X$ was
+constructed as modification of the identity matrix. In case (1) we can see that $X,Y$ are products
+of permutation matrices and triangular matrices. The same holds true for $Y$ in case (2).</p>
+<h3 id="performance">Performance</h3>
+<p>The performance of the three Rank Decomposition methods are compared in this graph.</p>
+<img src="./bench.png" class="center">
+<p>The code for this benchmark can be found <a href="https://github.com/HeinrichHartmann/libla/blob/master/examples/Benchmark.ipynb">here</a>.
+We ran each method 5 times for each selected n and report the fastest run.</p>
+<ul>
+<li>
+<p>The run-time of Rank Decomposition via LU Factorization explodes right away. We stopped measuring
+at n=150 since it already took over a second to complete. The reason for this is, that we had
+to roll our own Gauss Elimination algorithm in Python. A C/Fortran implementation would be much faster.</p>
+</li>
+<li>
+<p>The QR method is about twice as fast as SVD in our implementation. We checked with a profiler,
+that &gt;90% of the run-time is spent inside the QR/SVD calls. Based on the theoretical complexity
+estimations, we would have expected the run-time advantage of QR to be more pronounced.</p>
+</li>
+</ul>
+<h2 id="summary">Summary</h2>
+<table>
+<thead>
+<tr>
+<th>#</th>
+<th>Method</th>
+<th style="text-align:right">Complexity*</th>
+<th style="text-align:right">Perf. (n=1000)</th>
+<th>Stability</th>
+<th style="text-align:right">Implementation</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>RD via LU</td>
+<td style="text-align:right">$0.66 n^3$</td>
+<td style="text-align:right">?</td>
+<td>stable in practice</td>
+<td style="text-align:right">not available in LAPACK</td>
+</tr>
+<tr>
+<td>2</td>
+<td>RD via QR</td>
+<td style="text-align:right">$1.16 n^3$</td>
+<td style="text-align:right">~2.0s</td>
+<td>stable in practice</td>
+<td style="text-align:right">available</td>
+</tr>
+<tr>
+<td>3</td>
+<td>RD via SVD</td>
+<td style="text-align:right">$23 n^3$</td>
+<td style="text-align:right">~3.3s</td>
+<td>stable</td>
+<td style="text-align:right">available</td>
+</tr>
+</tbody>
+</table>
+<p>*) For the case $n = m$ with $rk(A) = n/2$.</p>
+<p>It turns out that determining the most fundamental invariant of a matrix, it&rsquo;s rank, is actually a
+numerically challenging problem, that can not be directly derived from the basic matrix
+factorization algorithms (LU, QR) in their common form. Instead we have to either resort to
+strengthened variants, which still have theoretical deficits, or to the much more advanced Singular
+Value Decomposition.</p>
+<p>Of the three studied methods QR (with column pivoting) and SVD give practical ways to calculate a
+rank decomposition in the Python/NumPy ecosystem. The performance of the QR method is better by a
+factor of two, compared to the SVD variant.  The latter has the advantage of yielding a more
+powerful decomposition, and more convenience since the vanilla SciPy/SVD can be used, without
+configuration or post-processing steps.</p>
+<p>From the theoretical perspective, LU factorization with total pivoting would be better fit, since it
+is much faster simple and should be well suited for practical applications. However, since the
+NumPy/LAPACK does not come with a suitable LU implementation we don&rsquo;t have a competitive
+implementation at hand.</p>
+<h2 id="literature">Literature</h2>
+<ul>
+<li>
+<p>[Trefethen1997] L. Trefethen, David Bau &ndash; Numerical Linear Algebra (1997)<br>
+<a href="https://api.semanticscholar.org/CorpusID:221907318">https://api.semanticscholar.org/CorpusID:221907318</a> <a href="https://dx.doi.org/10.1201/9781315273693-7">https://dx.doi.org/10.1201/9781315273693-7</a><br>
+Comment: Excellent introductory book!</p>
+</li>
+<li>
+<p>[Golub1983] G. Golub &ndash; Matrix computations (1983)<br>
+<a href="https://api.semanticscholar.org/CorpusID:126299280">https://api.semanticscholar.org/CorpusID:126299280</a> <a href="https://dx.doi.org/10.2307/3621013">https://dx.doi.org/10.2307/3621013</a><br>
+Comment: Advanced reference with lot&rsquo;s of pointers to the literature.</p>
+</li>
+<li>
+<p>[Hansen1987] P. Hansen &ndash; Rank-Deficient and Discrete Ill-Posed Problems (1987)<br>
+<a href="https://api.semanticscholar.org/CorpusID:122731599">https://api.semanticscholar.org/CorpusID:122731599</a> <a href="https://dx.doi.org/10.1137/1.9780898719697">https://dx.doi.org/10.1137/1.9780898719697</a><br>
+Comment: A whole text-book on the larger topic.</p>
+</li>
+</ul>
+<h2 id="comments">Comments</h2>
+<script src="https://utteranc.es/client.js"
+        repo="HeinrichHartmann/comments"
+        issue-term="title"
+        label="Comment"
+        theme="github-light"
+        crossorigin="anonymous"
+        async>
+</script>
+
+      </div>
+    </article>
+  </main>
+
+	<footer style="float:right; margin: 20px auto 20px auto; color:#AAA">&copy; 2023 Heinrich Hartmann. All rights reserved.</footer>
+
+</body>
+
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+    MathJax.Hub.Config({
+      tex2jax: {
+        displayMath: [['$$','$$']],
+        inlineMath: [['$','$']],
+        processEscapes: false
+      }
+    });
+  </script>
+</html>

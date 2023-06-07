@@ -1,0 +1,1385 @@
+<!DOCTYPE html>
+<html lang="en-us">
+<head>
+	<meta name="generator" content="Hugo 0.108.0">
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title></title>
+	
+	
+	<link rel="alternate" type="application/rss+xml" href="/index.xml" title="HeinrichHartmann.com">
+  
+  <link rel="icon" type="image/png" href="/favicon.png">
+  <style>
+    
+   header a {
+  text-align: center;
+  width: 100%;
+  font-family: Helvetica, arial, sans-serif;
+  font-size: 20px;
+  color: #a00;
+  font-weight: bold;
+  margin-top: 2em;
+  text-decoration: none;
+  display: block;
+}
+
+header a {
+  color: #00a;
+}
+
+header a:hover {
+  color: black;
+}
+
+header a:visited {
+  color: #a00;
+}
+
+.sticker {
+  color:red;
+  display: block;
+  border-style:solid !important;
+  border-color:red !important;
+  border-radius:0.2em !important;
+  border-width: 3px !important;
+  padding: 0px !important;
+  text-align: center !important;
+  margin-top: 50px !important;
+  margin-bottom: 50px !important;
+}
+
+    
+   /* Background */ .chroma { background-color: #f8f8f8 }
+/* Other */ .chroma .x { color: #000000 }
+/* Error */ .chroma .err { color: #a40000 }
+/* LineTableTD */ .chroma .lntd { vertical-align: top; padding: 0; margin: 0; border: 0; }
+/* LineTable */ .chroma .lntable { border-spacing: 0; padding: 0; margin: 0; border: 0; width: auto; overflow: auto; display: block; }
+/* LineHighlight */ .chroma .hl { display: block; width: 100%;background-color: #ffffcc }
+/* LineNumbersTable */ .chroma .lnt { margin-right: 0.4em; padding: 0 0.4em 0 0.4em;color: #7f7f7f }
+/* LineNumbers */ .chroma .ln { margin-right: 0.4em; padding: 0 0.4em 0 0.4em;color: #7f7f7f }
+/* Keyword */ .chroma .k { color: #204a87; font-weight: bold }
+/* KeywordConstant */ .chroma .kc { color: #204a87; font-weight: bold }
+/* KeywordDeclaration */ .chroma .kd { color: #204a87; font-weight: bold }
+/* KeywordNamespace */ .chroma .kn { color: #204a87; font-weight: bold }
+/* KeywordPseudo */ .chroma .kp { color: #204a87; font-weight: bold }
+/* KeywordReserved */ .chroma .kr { color: #204a87; font-weight: bold }
+/* KeywordType */ .chroma .kt { color: #204a87; font-weight: bold }
+/* Name */ .chroma .n { color: #000000 }
+/* NameAttribute */ .chroma .na { color: #c4a000 }
+/* NameBuiltin */ .chroma .nb { color: #204a87 }
+/* NameBuiltinPseudo */ .chroma .bp { color: #3465a4 }
+/* NameClass */ .chroma .nc { color: #000000 }
+/* NameConstant */ .chroma .no { color: #000000 }
+/* NameDecorator */ .chroma .nd { color: #5c35cc; font-weight: bold }
+/* NameEntity */ .chroma .ni { color: #ce5c00 }
+/* NameException */ .chroma .ne { color: #cc0000; font-weight: bold }
+/* NameFunction */ .chroma .nf { color: #000000 }
+/* NameFunctionMagic */ .chroma .fm { color: #000000 }
+/* NameLabel */ .chroma .nl { color: #f57900 }
+/* NameNamespace */ .chroma .nn { color: #000000 }
+/* NameOther */ .chroma .nx { color: #000000 }
+/* NameProperty */ .chroma .py { color: #000000 }
+/* NameTag */ .chroma .nt { color: #204a87; font-weight: bold }
+/* NameVariable */ .chroma .nv { color: #000000 }
+/* NameVariableClass */ .chroma .vc { color: #000000 }
+/* NameVariableGlobal */ .chroma .vg { color: #000000 }
+/* NameVariableInstance */ .chroma .vi { color: #000000 }
+/* NameVariableMagic */ .chroma .vm { color: #000000 }
+/* Literal */ .chroma .l { color: #000000 }
+/* LiteralDate */ .chroma .ld { color: #000000 }
+/* LiteralString */ .chroma .s { color: #4e9a06 }
+/* LiteralStringAffix */ .chroma .sa { color: #4e9a06 }
+/* LiteralStringBacktick */ .chroma .sb { color: #4e9a06 }
+/* LiteralStringChar */ .chroma .sc { color: #4e9a06 }
+/* LiteralStringDelimiter */ .chroma .dl { color: #4e9a06 }
+/* LiteralStringDoc */ .chroma .sd { color: #8f5902; font-style: italic }
+/* LiteralStringDouble */ .chroma .s2 { color: #4e9a06 }
+/* LiteralStringEscape */ .chroma .se { color: #4e9a06 }
+/* LiteralStringHeredoc */ .chroma .sh { color: #4e9a06 }
+/* LiteralStringInterpol */ .chroma .si { color: #4e9a06 }
+/* LiteralStringOther */ .chroma .sx { color: #4e9a06 }
+/* LiteralStringRegex */ .chroma .sr { color: #4e9a06 }
+/* LiteralStringSingle */ .chroma .s1 { color: #4e9a06 }
+/* LiteralStringSymbol */ .chroma .ss { color: #4e9a06 }
+/* LiteralNumber */ .chroma .m { color: #0000cf; font-weight: bold }
+/* LiteralNumberBin */ .chroma .mb { color: #0000cf; font-weight: bold }
+/* LiteralNumberFloat */ .chroma .mf { color: #0000cf; font-weight: bold }
+/* LiteralNumberHex */ .chroma .mh { color: #0000cf; font-weight: bold }
+/* LiteralNumberInteger */ .chroma .mi { color: #0000cf; font-weight: bold }
+/* LiteralNumberIntegerLong */ .chroma .il { color: #0000cf; font-weight: bold }
+/* LiteralNumberOct */ .chroma .mo { color: #0000cf; font-weight: bold }
+/* Operator */ .chroma .o { color: #ce5c00; font-weight: bold }
+/* OperatorWord */ .chroma .ow { color: #204a87; font-weight: bold }
+/* Punctuation */ .chroma .p { color: #000000; font-weight: bold }
+/* Comment */ .chroma .c { color: #8f5902; font-style: italic }
+/* CommentHashbang */ .chroma .ch { color: #8f5902; font-style: italic }
+/* CommentMultiline */ .chroma .cm { color: #8f5902; font-style: italic }
+/* CommentSingle */ .chroma .c1 { color: #8f5902; font-style: italic }
+/* CommentSpecial */ .chroma .cs { color: #8f5902; font-style: italic }
+/* CommentPreproc */ .chroma .cp { color: #8f5902; font-style: italic }
+/* CommentPreprocFile */ .chroma .cpf { color: #8f5902; font-style: italic }
+/* Generic */ .chroma .g { color: #000000 }
+/* GenericDeleted */ .chroma .gd { color: #a40000 }
+/* GenericEmph */ .chroma .ge { color: #000000; font-style: italic }
+/* GenericError */ .chroma .gr { color: #ef2929 }
+/* GenericHeading */ .chroma .gh { color: #000080; font-weight: bold }
+/* GenericInserted */ .chroma .gi { color: #00a000 }
+/* GenericOutput */ .chroma .go { color: #000000; font-style: italic }
+/* GenericPrompt */ .chroma .gp { color: #8f5902 }
+/* GenericStrong */ .chroma .gs { color: #000000; font-weight: bold }
+/* GenericSubheading */ .chroma .gu { color: #800080; font-weight: bold }
+/* GenericTraceback */ .chroma .gt { color: #a40000; font-weight: bold }
+/* GenericUnderline */ .chroma .gl { color: #000000; text-decoration: underline }
+/* TextWhitespace */ .chroma .w { color: #f8f8f8; text-decoration: underline }
+
+   
+      
+     /*****************************************************************************/
+/*
+/* Common
+/*
+/*****************************************************************************/
+
+/* Global Reset */
+
+* {
+  margin: 0;
+  padding: 0;
+}
+
+html, body {
+  height: 100%;
+}
+
+body {
+  font-family: Helvetica, arial, sans-serif;
+  font-size: 16px;
+  line-height: 1.5;
+  background-color: white;
+  padding: 10px 30px 10px 30px;
+}
+
+h1 {
+  font-size: 1em;
+  text-transform: uppercase;
+  text-alig: left;
+  font-size: 1em;
+  margin-bottom: 1em;
+  margin-top: 2em;
+}
+h2 {
+  font-size: 1em;
+  /* margin-bottom: 0em; */
+  margin-top: 2em;
+}
+
+a {
+  color: #00a;
+}
+
+a:hover {
+  color: black;
+}
+
+a:visited {
+  color: #a0a;
+}
+
+table {
+  font-size: inherit;
+  font: 100%;
+}
+
+pre {
+  text-align: left;
+  overflow-y: auto;
+}
+
+.box {
+  border: 1px solid #ddd;
+  background-color: #f5f5f5;
+  padding: 3px 5px 3px;
+  margin: 5px 0 5px 0;
+}
+
+
+/*****************************************************************************/
+/*
+/* Home
+/*
+/*****************************************************************************/
+
+ul.posts {
+  list-style-type: none;
+  margin-bottom: 2em;
+}
+
+ul.posts li {
+  line-height: 1.75em;
+}
+
+ul.posts span {
+  color: #aaa;
+  font-family: Monaco, "Courier New", monospace;
+  font-size: 75%;
+}
+
+
+.date {
+  color: #aaa;
+  font-family: Monaco, Courier New, monospace;
+  font-size: 75%;
+  font-weight: normal;
+  float:right;
+}
+
+.quo {
+  position:relative; top:-1px;
+}
+
+#banner {
+  margin-bottom: 1em;
+}
+
+/*****************************************************************************/
+/*
+/* Site
+/*
+/*****************************************************************************/
+
+.site {
+  text-align: justify;
+  width: 60em;
+  margin: 3em auto 2em auto;
+  line-height: 1.5em;
+}
+
+.site .headline a {
+    color: #a00;
+    font-weight: bold;
+    margin-bottom: 2em;
+    margin-top: 2em;
+    text-decoration: none;
+}
+
+.title {
+  color: #a00;
+  font-weight: bold;
+  margin-bottom: 2em;
+  margin-top: 2em;
+}
+
+.site .title a {
+  color: #a00;
+  text-decoration: none;
+}
+
+.site .title a:hover {
+  color: black;
+}
+
+.site .title a.extra {
+  color: #aaa;
+  text-decoration: none;
+  margin-right: 1em;
+}
+
+.site .title a.extra:hover {
+  color: black;
+}
+
+.site .meta {
+  color: #aaa;
+}
+
+.site .footer {
+  font-size: 80%;
+  color: #666;
+  border-top: 4px solid #eee;
+  margin-top: 2em;
+  overflow: hidden;
+}
+
+.site .footer .contact {
+  float: left;
+  margin-right: 1em;
+}
+
+.site .footer .contact a {
+  color: #8085C1;
+}
+
+.site .footer .rss {
+  float: right;
+}
+
+.site .footer .rss img {
+  border: 0;
+}
+
+/*****************************************************************************/
+/*
+/* Posts
+/*
+/*****************************************************************************/
+
+#markdown-toc li {
+    line-height: 1;
+}
+
+.abstract p {
+    width: 80%;
+    margin-left: auto;
+    margin-top: 3em;
+    margin-bottom: 3em;
+}
+
+#post h1 {
+  font-size: 2em;
+  text-transform: uppercase;
+  text-align: center;
+  margin: 2em 0 1.5em 0;
+  line-height: 1.5em;
+}
+#post h2, h3, h4, h5, h6 {
+  font-size: 1em;
+  margin-top: 2em;
+  margin-bottom: .1em;
+  /* border-bottom: 1px solid #cccccc; */
+}
+#post h2:before { content: "# "; }
+#post h3:before { content: "## "; }
+#post h4:before { content: "### "; }
+
+/* standard */
+
+#post pre {
+  border: 1px solid #ddd;
+  background-color: #f5f5f5;
+  padding: 3px 5px 3px;
+  margin: 5px 0 5px 0;
+  font-family: Consolas, "Liberation Mono", Menlo, Courier, monospace;
+  font-size: 12px;
+  line-height: 16.79px;
+  word-wrap: normal;
+}
+
+#post ul,
+#post ol {
+  margin-left: 1.35em;
+}
+
+/* extra space for list elements  */
+#post li {
+  margin: .3em 0 .3em;
+}
+#post li li { /* ... but not for nested ones */
+  margin: .1em 0;
+}
+
+#post pre code {
+  border: none;
+}
+
+#post blockquote {
+  border-left: 4px solid #e8e8e8;
+  padding-left: 20px;
+  background-color: #f9f9f9;
+  margin: 30px 0;
+}
+
+.pullquote {
+  font-family: Georgia, serif;
+  font-size: 18px;
+  font-style: italic;
+  margin: 0.25em 0;
+  padding: 0.25em 40px;
+  line-height: 1.45;
+  position: relative;
+  color: #383838;
+}
+
+.pullquote:before {
+  display: block;
+  content: "\201C";
+  font-size: 80px;
+  position: absolute;
+  left: 0;
+  top: -20px;
+  color: #7a7a7a;
+}
+
+
+#post .credits {
+  text-align: right;
+  font-size: 70%;
+  color: #aaa;
+}
+
+/* terminal */
+
+#post pre.terminal {
+  border: 1px solid black;
+  background-color: #333;
+  color: white;
+}
+
+#post pre.terminal code {
+  background-color: #333;
+}
+
+#related {
+  border-top: 4px solid #eee;
+  margin-top: 2em;
+}
+
+#related h2 {
+  margin-bottom: 1em;
+}
+
+#disqus_thread {
+  border-top: 4px solid #eee;
+  margin-top: 2em;
+  padding-top: 1em;
+}
+
+#post img {
+  max-width: 100%;
+}
+
+/**
+ * Figure Plugin: https://github.com/lmullen/jekyll_figure
+ **/
+
+figure img {
+  border: 1px solid #ccc;
+  padding: 5px;
+  border-radius: 5px;
+  max-width : 100%;
+}
+
+figure {
+  text-align: center;
+}
+
+figure figcaption {
+  font-style: italic;
+  text-align: center;
+}
+
+.pdflink {
+  float: right;
+}
+
+/**
+ * GITHUB TABLE STYLES: https://github.com/alampros/Docter/blob/master/ghf_marked.css
+ **/
+
+table
+{
+  border-collapse:collapse;
+  margin:20px auto auto;
+  padding:0;
+}
+
+table tr
+{
+  border-top:1px solid #ccc;
+  background-color:#fff;
+  margin:0;
+  padding:0;
+}
+
+table tr:nth-child(2n)
+{
+  background-color:#f8f8f8;
+}
+table tr th[align="center"], table tr td[align="center"] {
+  text-align:center;
+}
+table tr th, table tr td
+{
+  border:1px solid #ccc;
+  text-align:left;
+  margin:0;
+  padding:6px 13px;
+}
+
+/**
+ * Responsive
+ **/
+@media only screen and (max-width: 60em) {
+  .site {
+    text-align: left;
+    width: 100%;
+    margin: 0;
+  }
+  body {
+    padding: 2%;
+  }
+}
+
+@media only screen and (max-width: 30em) {
+  .site {
+    font-size: 20px;
+    line-height: 2.5em;
+  }
+}
+
+.sticker {
+  color:red;
+  border-style:solid;
+  border-color:red;
+  border-radius:0.2em;
+  margin:50px;
+}
+
+@media only print {
+  .splash {
+    visibility: hidden;
+  }
+}
+
+.hookin {
+  float: left;
+  font-size: 2.5em;
+  font-weight: 700;
+  padding-top: 0.2em;
+  margin-right: 0.4em;
+  color: #a00;
+  color: #EC9F2E;
+  font-family: "franklin-gothic-urw",Verdana,Geneva,sans-serif;
+}
+
+.dropcaps::first-letter {
+  font-size: 4.8em;
+  color: #a00;
+  font-family: Georgia;
+  font-weight: 500;
+  line-height: 0.9em;
+  float: left;
+  margin-right: 0.1em;
+}
+
+   
+  </style>
+</head>
+<body>
+	<header>
+	<a href="/">HeinrichHartmann.com</a>
+</header>
+
+	
+<script src="/js/jquery-3.4.1.min.js"></script>
+<script>
+  function sort() {
+    var ul = $("#posts");
+    var arr = $.makeArray(ul.children("li"));
+    arr.sort(function(a, b) {
+      var textA = $(a).find("span")[0].textContent
+      var textB = $(b).find("span")[0].textContent
+      if (textA > textB) return -1;
+      if (textA < textB) return 1;
+      return 0;
+    });
+    ul.empty();
+    $.each(arr, function() {
+      ul.append(this);
+    });
+  }
+  function filter() {
+    const pattern = $("#filter").val().toLowerCase()
+    
+    const fragments = pattern.split(/[ ]+/);
+    $("#posts").children().each((i, li) => {
+      var text = li.textContent.toLowerCase();
+      fragments.every(function(pat){
+        if (!~text.indexOf(pat)) { 
+          li.hidden = true
+          return 0;
+        } else {
+          li.hidden = false
+          return 1
+        }
+      })
+    });
+    sort();
+  }
+  $(function() {
+    $('#filter').keyup(() => {filter();});
+    $('#filter').val(window.location.hash.substr(1))
+    filter();
+    $(document).keydown(function(e){
+      if (e.key == "Enter") {
+        var li = $("#posts").children().filter((i, li) => {
+          console.log(li);
+          console.log(li.hidden);
+          console.log(!li.hidden);
+          return !li.hidden
+        }).first();
+        var a = li.find("a");
+        var href = a.attr("href");
+        window.location = href;
+      }
+    });
+    $("a.nav").on("click", (e) => {
+      var f = e.target.attributes['href'].value.substr(2) 
+      console.log(f)
+      $('#filter').val(f)
+      filter()
+    })
+
+  });
+</script>
+<style>
+  #filter {
+      margin: 0 auto;
+      display: block;
+      width: 100%;
+      margin-top: 3em;
+      margin-bottom: 3em;
+      font-size: 100%;
+      background: transparent;
+      border: none;
+      border-bottom: 1px solid #AAA;
+  }
+  #filter:focus {
+      border: none;
+      border-bottom: 1px solid #AAA;
+      outline: none;
+  }
+</style>
+<main>
+  <div class="site">
+  <div class="title">
+    <a class="extra nav" href="/#">home</a>
+    <a class="extra nav" href="/#post">posts</a>
+    <a class="extra nav" href="/#talk">talks</a>
+    <a class="extra nav" href="/#math">math</a>
+    <a class="extra nav" href="/#paper">paper</a>
+    <div class="social" style='float:right'>
+    <a class="extra" href="/about/index.html">about</a>
+      <div style='float:right'>
+        <a href="http://twitter.com/intent/follow?screen_name=HeinrichHartman"><img src="/images/twitter_icon.svg" width="25px" style="margin: 0 10px 0 0;"></a>
+      </div>
+      <div style='float:right'>
+        <a href="https://github.com/HeinrichHartmann/"><img src="/images/github_icon.svg" width="25px" style="margin: 0 10px 0 0;"></a>
+      </div>
+      <div style='float:right'>
+         <a href="https://groups.google.com/g/heinrichhartmann/"><img src="/images/mail_icon.svg" width="25px" style="margin: 0 10px 0 0;"/></a>
+      </div>
+    </div>
+  </div>
+  <blockquote style="text-align:right; margin: 50px 0 50px 0;">Schreiben, nur schreiben macht selig! -- D. Stuhrmann</blockquote>
+    <div id="home">
+    <input type="search" id="filter" placeholder="Filter" autofocus="autofocus">
+  <ul class="posts" id="posts">
+    
+    
+    <li><span>2022-04-15 </span> &raquo;&nbsp;
+      <a href="/posts/writing/">Writing for Engineers</a>
+      <small>
+      </small>
+      <span style="float:right">post</span>
+    </li>
+    
+    
+    
+    <li><span>2021-08-08 </span> &raquo;&nbsp;
+      <a href="/posts/2021-08-08-nix-emacs/">First Steps with Nix - Building emacs</a>
+      <small>
+      </small>
+      <span style="float:right">nix, post</span>
+    </li>
+    
+    
+    
+    <li><span>2021-03-08 </span> &raquo;&nbsp;
+      <a href="/posts/2021-03-08-rank-decomposition/">Effective Rank Decomposition of Linear Maps</a>
+      <small>
+      </small>
+      <span style="float:right">post, math</span>
+    </li>
+    
+    
+    
+    
+    
+    <li><span>2021-02-09 </span> &raquo;&nbsp;
+      <a href="/posts/blog-reboot/">Blog Reboot</a>
+      <small>
+      </small>
+      <span style="float:right">post</span>
+    </li>
+    
+    
+    
+    <li><span>2021-02-09 </span> &raquo;&nbsp;
+      <a href="/pdf/Hartmann%20-%20Natural%20Operators%20in%20Linear%20Alebgra%20%282021%29.pdf">Natural Operators in Linear Algebra</a>
+      <small>(pdf)
+      </small>
+      <span style="float:right">math</span>
+    </li>
+    
+    
+    
+    <li><span>2020-05-27 </span> &raquo;&nbsp;
+      <a href="/posts/crash/">Better Crash Reporting</a>
+      <small>
+      </small>
+      <span style="float:right">post</span>
+    </li>
+    
+    
+    
+    
+    
+    
+    <li><span>2022-06-26 </span> &raquo;&nbsp;
+      <a href="/percentile-explorer">Percentile Explorer</a>
+      <small>
+      </small>
+      <span style="float:right">tool, mon, calc</span></li>
+      
+    
+    
+    <li><span>2022-06-22 </span> &raquo;&nbsp;
+      <a href="https://devopscon.io/monitoring-observability/zalandos-quest-for-operating-10k-micro-services-without-loosing-sleep/">DevOpsCon (Berlin)</a> &mdash; Zalando&#39;s Quest for Operating 10K Micro Services<small> <a href="/pdf/Hartmann%20-%20Zalando%20Quest%20-%20DevOpsCon%20Berlin.pdf">[slides]</a>
+      </small>
+      <span style="float:right">mon, talk</span></li>
+    
+    
+    
+    <li><span>2022-05-29 </span> &raquo;&nbsp;
+      <a href="/sampling">Sampling Calculator</a>
+      <small>
+      </small>
+      <span style="float:right">tool, mon, calc</span></li>
+      
+    
+    
+    <li><span>2021-10-19 </span> &raquo;&nbsp;
+      <a href="https://www.p99conf.io/session/how-to-measure-latency/">P99 Conf (remote)</a> &mdash; How to Measure Latency<small>
+      </small>
+      <span style="float:right">mon, talk</span></li>
+    
+    
+    
+    <li><span>2021-09-01 </span> &raquo;&nbsp;
+      <a href="/elements/linked-structures">Linked Structures</a>
+      <small>
+      </small>
+      <span style="float:right">post, math, elements</span></li>
+      
+    
+    
+    <li><span>2021-05-17 </span> &raquo;&nbsp;
+      <a href="https://www.sloconf.com/speakers/heinrichhartman">SLOConf 2021</a> &mdash; The State of the Histogram<small> <a href="/pdf/Heinrich%20Hartmann%20-%20The%20State%20of%20the%20Histogram%20%28SLOConf,%202021%29.pdf">[slides]</a> <a href="https://www.youtube.com/watch?v=Z-5PNlv8eK0&amp;feature=youtu.be">[video]</a>
+      </small>
+      <span style="float:right">talk</span></li>
+    
+    
+    
+    <li><span>2020-02-15 </span> &raquo;&nbsp;
+      <a href="/archive/Thuringen.html">Landtagswahl Thüringen</a>
+      <small>&nbsp;Kommentar
+      </small>
+      <span style="float:right">opinion, GER, post</span></li>
+      
+    
+    
+    <li style="clear:both"><span>2020-01-17 </span> &raquo;&nbsp;
+      Circllhist - A Log-Linear Histogram Data Structure...
+      <small> with Theo Schlossnagle, <em><a href="https://arxiv.org/abs/2001.06561">arxiv/CS</a></em>
+      </small>
+      <span style="float:right">mon, paper</span></li>
+    
+    
+    
+    <li><span>2019-10-04 </span> &raquo;&nbsp;
+      <a href="/archive/quantiles.html">Quantiles</a>
+      <small>
+      </small>
+      <span style="float:right">math, post</span></li>
+      
+    
+    
+    <li><span>2019-10-03 </span> &raquo;&nbsp;
+      <a href="https://www.usenix.org/conference/srecon19emea/presentation/hartmann-statistics">SRECon18Europe (Duesseldorf)</a> &mdash; Statistics for Engineers<small> <a href="https://github.com/HeinrichHartmann/Statistics-for-Engineers">[notes]</a>
+      </small>
+      <span style="float:right">talk</span></li>
+    
+    
+    
+    <li><span>2019-10-02 </span> &raquo;&nbsp;
+      <a href="https://www.usenix.org/conference/srecon19emea/presentation/hartmann-latency">SRECon19Europe (Dublin)</a> &mdash; Latency SLOs done right<small>
+      </small>
+      <span style="float:right">talk</span></li>
+    
+    
+    
+    <li><span>2019-02-03 </span> &raquo;&nbsp;
+      <a href="https://archive.fosdem.org/2019/schedule/event/latency_slos_done_right/">FOSDEM 2019 (Brussels)</a> &mdash; Latency SLOs done right<small> <a href="/pdf/Heinrich%20Hartmann%20-%20Latency%20SLOs%20Done%20Right%20%28FOSDEM,%202019%29.pdf">[slides]</a> <a href="https://video.fosdem.org/2019/UB2.252A/latency_slos_done_right.mp4">[video]</a>
+      </small>
+      <span style="float:right">mon, talk</span></li>
+    
+    
+    
+    <li><span>2018-10-12 </span> &raquo;&nbsp;
+      <a href="/archive/problem-lisp.html">The Problem with Lisp</a>
+      <small>
+      </small>
+      <span style="float:right">post</span></li>
+      
+    
+    
+    <li><span>2018-09-15 </span> &raquo;&nbsp;
+      <a href="/archive/data-science.html">From Academia to Data Science</a>
+      <small>, <a href="/pdf/Heinrich%20Hartmann%20-%20From%20Academia%20to%20Data%20Science%20%282018%29.pdf">[pdf]</a>
+      </small>
+      <span style="float:right">post</span></li>
+      
+    
+    
+    <li><span>2018-09-02 </span> &raquo;&nbsp;
+      <a href="/archive/Latency-SLOs.html">Latency SLOs done right</a>
+      <small>
+      </small>
+      <span style="float:right">monitoring, post</span></li>
+      
+    
+    
+    <li><span>2018-05-29 </span> &raquo;&nbsp;
+      <a href="/archive/more-toil-less-coil.html">Less Toil, More Coil: Telemetry analysis with Python</a>
+      <small>&nbsp;on circonus.com, <a href="https://web.archive.org/web/20200926022915/https://www.circonus.com/2018/05/less-toil-more-coil-telemetry-analysis-with-python/">[archive]</a>
+      </small>
+      <span style="float:right">post</span></li>
+      
+    
+    
+    <li><span>2018-05-03 </span> &raquo;&nbsp;
+      <a href="https://devopsdays.org/events/2018-zurich/program/ignite-talk-by-heinrich-hartmann">DevOps Days (Zurich)</a> &mdash; Advanced Linux Performance Monitoring With eBPF<small> <a href="/pdf/Heinrich%20Hartmann%20-%20Linux%20System%20Monitoring%20with%20eBPF.pdf">[slides]</a> <a href="https://vimeo.com/272537603">[video]</a>
+      </small>
+      <span style="float:right">talk</span></li>
+    
+    
+    
+    <li><span>2018-04-29 </span> &raquo;&nbsp;
+      <a href="/archive/linux-monitoring-with-ebpf.html">Linux System Monitoring with eBPF</a>
+      <small>&nbsp;on circonus.com, <a href="https://web.archive.org/web/20201109030908/https://www.circonus.com/2018/05/linux-system-monitoring-with-ebpf/">[archive]</a>
+      </small>
+      <span style="float:right">monitoring, post</span></li>
+      
+    
+    
+    <li><span>2018-03-23 </span> &raquo;&nbsp;
+      <a href="/archive/quality-time.html">Quality Time</a>
+      <small>
+      </small>
+      <span style="float:right">post</span></li>
+      
+    
+    
+    <li><span>2018-03-12 </span> &raquo;&nbsp;
+      <a href="/archive/VCB.html">Virtual Coffee Break</a>
+      <small>
+      </small>
+      <span style="float:right">culture, post</span></li>
+      
+    
+    
+    <li><span>2018-03-11 </span> &raquo;&nbsp;
+      <a href="/archive/all-is-loss.html">All is loss</a>
+      <small>
+      </small>
+      <span style="float:right">dsci, math, post</span></li>
+      
+    
+    
+    <li><span>2018-02-13 </span> &raquo;&nbsp;
+      <a href="/archive/Circonus-on-RPI.html">Circonus on the Raspberry Pi</a>
+      <small>
+      </small>
+      <span style="float:right">diy, post</span></li>
+      
+    
+    
+    <li><span>2018-02-05 </span> &raquo;&nbsp;
+      <a href="/archive/Monitoring-Dropbox.html">Monitoring Dropbox</a>
+      <small>
+      </small>
+      <span style="float:right">mon, post</span></li>
+      
+    
+    
+    <li><span>2018-01-01 </span> &raquo;&nbsp;
+      <a href="https://www.usenix.org/conference/srecon18europe/presentation/schlossnagle">SRECon18Europe (Duesseldorf)</a> &mdash; Circonus: Design (Failures) Case Study<small> Keynote <a href="https://www.youtube.com/watch?v=6utuaw0zCp8">[video]</a>
+      </small>
+      <span style="float:right">talk</span></li>
+    
+    
+    
+    <li><span>2018-01-01 </span> &raquo;&nbsp;
+      <a href="https://www.usenix.org/conference/srecon18europe/presentation/schlossnagle">SRECon18Europe (Duesseldorf)</a> &mdash; Statistics for Engineers<small> <a href="https://github.com/HeinrichHartmann/Statistics-for-Engineers">[notes]</a>
+      </small>
+      <span style="float:right">talk</span></li>
+    
+    
+    
+    <li><span>2017-12-29 </span> &raquo;&nbsp;
+      <a href="/archive/Quitting-Facebook.html">Quitting Facebook</a>
+      <small>
+      </small>
+      <span style="float:right">culture, post</span></li>
+      
+    
+    
+    <li><span>2017-09-01 </span> &raquo;&nbsp;
+      <a href="https://srecon17emea.sched.com/event/Bzv4/statistics-for-engineers">SRECon17Europe (Duesseldorf)</a> &mdash; Workshop: Statistics for Engineers<small> <a href="https://github.com/HeinrichHartmann/Statistics-for-Engineers">[notes]</a>
+      </small>
+      <span style="float:right">talk</span></li>
+    
+    
+    
+    <li><span>2017-08-21 </span> &raquo;&nbsp;
+      <a href="/archive/Use-Dashboard.html">System Monitoring With The Use Dashboard</a>
+      <small>&nbsp;on circonus.com, <a href="https://web.archive.org/web/20201111235247/https://www.circonus.com/2017/08/system-monitoring-with-the-use-dashboard/">[archive]</a>
+      </small>
+      <span style="float:right">mon, post</span></li>
+      
+    
+    
+    <li><span>2016-11-29 </span> &raquo;&nbsp;
+      <a href="https://www.netways.de/en/events_trainings/osmc/">OSMC 2016 (Nürnberg)</a> &mdash; Friends and foes in API Monitoring<small> <a href="https://www.youtube.com/watch?v=DdNYat2CLQ4">[video]</a>
+      </small>
+      <span style="float:right">mon, talk</span></li>
+    
+    
+    
+    <li><span>2016-11-19 </span> &raquo;&nbsp;
+      <a href="/archive/The-Electoral-College.html">The Electoral College</a>
+      <small>
+      </small>
+      <span style="float:right">dsci, post</span></li>
+      
+    
+    
+    <li><span>2016-11-17 </span> &raquo;&nbsp;
+      <a href="/archive/B-rgerversicherung-Bedroht-Arbeitspl-tze.html">Buergerversicherung bedroht Arbeitsplaetze</a>
+      <small>
+      </small>
+      <span style="float:right">opinion, GER, post</span></li>
+      
+    
+    
+    <li><span>2016-11-15 </span> &raquo;&nbsp;
+      <a href="/archive/A-Digital-Passport-for-Digital-Citizens.html">A-Digital-Passport-for-Digital-Citizens</a>
+      <small>
+      </small>
+      <span style="float:right">opinion, post</span></li>
+      
+    
+    
+    <li><span>2016-11-01 </span> &raquo;&nbsp;
+      <a href="https://web.archive.org/web/20191004015025/https://www.circonus.com/customer-stories/monitoring-touchtunes-streaming-media-kpis-with-circonus/">Outlier Detection At Touchtunes</a>
+      <small>&nbsp;with Hugo Lafleur on circonus.com, <a href="https://web.archive.org/web/20191004015025/https://www.circonus.com/customer-stories/monitoring-touchtunes-streaming-media-kpis-with-circonus/">[archive]</a>
+      </small>
+      <span style="float:right">mon, post</span></li>
+      
+    
+    
+    <li><span>2016-07-12 </span> &raquo;&nbsp;
+      <a href="https://srecon16europe.sched.org/event/7VkQ/statistics-for-engineers">SRECon16Europe (Dublin)</a> &mdash; Workshop: Statistics for Engineers<small> <a href="https://github.com/HeinrichHartmann/Statistics-for-Engineers">[notes]</a>
+      </small>
+      <span style="float:right">mon, talk</span></li>
+    
+    
+    
+    <li style="clear:both"><span>2016-07-01 </span> &raquo;&nbsp;
+      Statistics for Engineers
+      <small>, <em><a href="http://cacm.acm.org/magazines/2016/7/204029-statistics-for-engineers/abstract">CACM Vol. 59 No. 7</a></em>
+      </small>
+      <span style="float:right">mon, paper</span></li>
+    
+    
+    
+    <li><span>2016-06-30 </span> &raquo;&nbsp;
+      <a href="/archive/Percentiles-can%27t-be-aggregated.html">Percentiles Can&#39;t Be Aggregated</a>
+      <small>&nbsp;- a letter to John Rauser (on twitter)
+      </small>
+      <span style="float:right">mon, post</span></li>
+      
+    
+    
+    <li><span>2016-06-27 </span> &raquo;&nbsp;
+      <a href="http://monitorama.com">Monitorama PDX 2016</a> &mdash; A Tale of API Monitoring<small> <a href="http://www.slideshare.net/HeinrichHartmann/statistics-for-engineers-63589022">[slides]</a> <a href="https://vimeo.com/173610069">[video]</a>
+      </small>
+      <span style="float:right">mon, talk</span></li>
+    
+    
+    
+    <li><span>2016-06-12 </span> &raquo;&nbsp;
+      <a href="/archive/Box-Counting-Arithmetic.html">Box Counting Arithmetic</a>
+      <small>
+      </small>
+      <span style="float:right">math, post</span></li>
+      
+    
+    
+    <li style="clear:both"><span>2016-04-19 </span> &raquo;&nbsp;
+      A Privacy Aware Mobile Sensor Application
+      <small> with Wambach, Meffert, Grimm, <em><a href="https://www.uni-koblenz-landau.de/de/koblenz/fb4/publikationen/reports/pdfs/arbeitsberichte_3_2016.pdf">ABFBI 2016</a></em>, <a href="/pdf/Hartmann,%20Wambach,%20Meffert,%20Grimm%20-%20A%20Privacy%20Aware%20Mobile%20Sensor%20Application.pdf">[pdf]</a> 
+      </small>
+      <span style="float:right">mon, paper</span></li>
+    
+    
+    
+    <li><span>2016-04-03 </span> &raquo;&nbsp;
+      <a href="/archive/Dijkstra%27s-Prime-Number-Algorithm.html">Dijkstra&#39;s Prime Number Algorithm</a>
+      <small>, <a href="https://news.ycombinator.com/item?id=11429163">[hn]</a>
+      </small>
+      <span style="float:right">prog, post</span></li>
+      
+    
+    
+    <li style="clear:both"><span>2016-03-11 </span> &raquo;&nbsp;
+      Statistics for Engineers
+      <small>, <em><a href="https://queue.acm.org/detail.cfm?id=2903468">ACM Queue 14/1</a></em>
+      </small>
+      <span style="float:right">mon, paper</span></li>
+    
+    
+    
+    <li><span>2016-01-28 </span> &raquo;&nbsp;
+      <a href="/archive/The-Emacs-Key-Bindings.html">The Emacs Key Bindings</a>
+      <small>
+      </small>
+      <span style="float:right">post</span></li>
+      
+    
+    
+    <li><span>2016-01-15 </span> &raquo;&nbsp;
+      <a href="/archive/Spike-Erosion.html">Spike Erosion</a>
+      <small>&nbsp;(on circonus.com), <a href="https://web.archive.org/web/20201203201939/https://www.circonus.com/2016/01/spike-erosion/">[archive]</a>
+      </small>
+      <span style="float:right">mon, post</span></li>
+      
+    
+    
+    <li><span>2016-01-01 </span> &raquo;&nbsp;
+      <a href="https://excite.informatik.uni-stuttgart.de/index.html">Excite - Extraction of Citations from PDF Documents</a>
+      <small>&nbsp;Founder, <a href="https://github.com/exciteproject">[code]</a> 
+      </small>
+      <span style="float:right">project</span></li>
+      
+    
+    
+    <li><span>2015-11-13 </span> &raquo;&nbsp;
+      <a href="https://www.usenix.org/conference/lisa15/conference-program/presentation/hartmann">LISA15 (Washington D.C.)</a> &mdash; Scalable Online Analytics for Monitoring<small> <a href="http://www.slideshare.net/HeinrichHartmann/scalable-online-analytics-for-monitoring">[slides]</a>
+      </small>
+      <span style="float:right">mon, talk</span></li>
+    
+    
+    
+    <li><span>2015-10-23 </span> &raquo;&nbsp;
+      <a href="http://velocityconf.com/devops-web-performance-eu-2015/public/schedule/detail/45241">Velocity 2015 (Amsterdam)</a> &mdash; Statistics for Engineers<small>
+      </small>
+      <span style="float:right">mon, talk</span></li>
+    
+    
+    
+    <li><span>2015-08-01 </span> &raquo;&nbsp;
+      DSA Torgelow 2015 - Academy Manager
+      <small>, <a href="https://secure.bildung-und-begabung.de/dsa/empfehlung/download/2015/DSA-Programm_2015.pdf#page=67">[pdf]</a>
+      </small>
+      <span style="float:right">post</span></li>
+      
+    
+    
+    <li><span>2015-06-30 </span> &raquo;&nbsp;
+      <a href="http://www.statscraft.org.il/">StatsCraft (Tel-Aviv, Israel)</a> &mdash; Workshop: Statistics for Engineers<small>
+      </small>
+      <span style="float:right">mon, talk</span></li>
+    
+    
+    
+    <li><span>2015-05-17 </span> &raquo;&nbsp;
+      <a href="/archive/Using-the-Google-Drive-Spreadsheet-API.html">Using The Google Drive Spreadsheet Api</a>
+      <small>
+      </small>
+      <span style="float:right">prog, post</span></li>
+      
+    
+    
+    <li><span>2015-05-14 </span> &raquo;&nbsp;
+      <a href="https://github.com/HeinrichHartmann/Statistics-for-Engineers">Statistics for Engineers. Tutorial notes and datasets.</a>
+      <small>
+      </small>
+      <span style="float:right">github</span></li>
+      
+    
+    
+    <li><span>2015-05-14 </span> &raquo;&nbsp;
+      <a href="https://www.usenix.org/conference/srecon15europe">SRECon15Europe (Dublin)</a> &mdash; Workshop: Statistics for Engineers<small> <a href="https://github.com/HeinrichHartmann/Statistics-for-Engineers">[notes]</a>
+      </small>
+      <span style="float:right">mon, talk</span></li>
+    
+    
+    
+    <li style="clear:both"><span>2015-03-26 </span> &raquo;&nbsp;
+      A study of Liquid Feedback in the German Pirate Party
+      <small> with Kling, Junegis, Strohmaier, <em><a href="http://www.icwsm.org/2015">ICWSM 2015</a></em>, <a href="http://arxiv.org/abs/1503.07723">arxiv</a> 
+      </small>
+      <span style="float:right">paper</span></li>
+    
+    
+    
+    <li><span>2015-03-11 </span> &raquo;&nbsp;
+      <a href="https://archive.fosdem.org/2013/">FOSDEM 2015 (Brussels)</a> &mdash; related-work.net -- A neo4j powered discussion platform<small> <a href="/pdf/Pickhardt,%20Hartmann%20-%20Related-Work.net%20%28FOSDEM%202015%29.pdf">[slides]</a> <a href="https://www.youtube.com/watch?v=GnJZUOpY91Q">[video]</a>
+      </small>
+      <span style="float:right">mon, talk</span></li>
+    
+    
+    
+    <li><span>2015-03-01 </span> &raquo;&nbsp;
+      <a href="/archive/Deutsche-Schuelerakademie.html">Deutsche Schülerakademie</a>
+      <small>
+      </small>
+      <span style="float:right">opinion, post</span></li>
+      
+    
+    
+    <li><span>2014-12-14 </span> &raquo;&nbsp;
+      <a href="/archive/Sensor-Monitoring-with-RaspberryPi-and-Circonus.html">Sensor Monitoring With Raspberrypi And Circonus</a>
+      <small>
+      </small>
+      <span style="float:right">diy, post</span></li>
+      
+    
+    
+    <li><span>2014-12-11 </span> &raquo;&nbsp;
+      <a href="/archive/Generative-Models-for-Time-Series.html">Generative Models For Time Series</a>
+      <small>
+      </small>
+      <span style="float:right">math, post</span></li>
+      
+    
+    
+    <li><span>2014-12-08 </span> &raquo;&nbsp;
+      <a href="/archive/A-categorical-perspective-on-Covariance.html">A Categorical Perspective On Covariance</a>
+      <small>
+      </small>
+      <span style="float:right">math, post</span></li>
+      
+    
+    
+    <li><span>2014-11-22 </span> &raquo;&nbsp;
+      <a href="/archive/Raspberry-Pi-SunFounder-GPIO-Layout.html">Raspberry Pi Sunfounder Gpio Layout</a>
+      <small>
+      </small>
+      <span style="float:right">diy, post</span></li>
+      
+    
+    
+    <li><span>2014-11-16 </span> &raquo;&nbsp;
+      <a href="/archive/Secure-Email-Communication.html">Secure Email Communication</a>
+      <small>
+      </small>
+      <span style="float:right">post</span></li>
+      
+    
+    
+    <li><span>2014-10-31 </span> &raquo;&nbsp;
+      <a href="https://cordis.europa.eu/docs/projects/cnect/5/288815/080/deliverables/001-D13.pdf">Privacy Aware Sensor Data Storage and Miner</a>
+      <small>&nbsp;UKoblenz / Live&#43;Gov Project, <a href="/pdf/LiveGov-D1.3.pdf">[pdf]</a>
+      </small>
+      <span style="float:right">deliverable</span></li>
+      
+    
+    
+    <li><span>2014-10-22 </span> &raquo;&nbsp;
+      <a href="/archive/Privacy-Protection-for-Mobile-Sensor-Data.html">Privacy Protection For Mobile Sensor Data</a>
+      <small>
+      </small>
+      <span style="float:right">post</span></li>
+      
+    
+    
+    <li><span>2014-07-10 </span> &raquo;&nbsp;
+      <a href="/archive/Anomaly-Detection.html">Anomaly Detection</a>
+      <small>
+      </small>
+      <span style="float:right">math, post</span></li>
+      
+    
+    
+    <li><span>2014-06-01 </span> &raquo;&nbsp;
+      Completionary: auto-completion as a service.
+      <small>&nbsp;Founder, <a href="https://github.com/Completionary/">[code]</a> 
+      </small>
+      <span style="float:right">project</span></li>
+      
+    
+    
+    <li><span>2014-04-14 </span> &raquo;&nbsp;
+      <a href="/archive/Digging-into-R.html">Digging Into R</a>
+      <small>
+      </small>
+      <span style="float:right">prog, post</span></li>
+      
+    
+    
+    <li><span>2014-04-14 </span> &raquo;&nbsp;
+      <a href="https://github.com/HeinrichHartmann/RequestDispatcher">Request Dispatcher</a>
+      <small>&nbsp;asynchronus callback framework for Java using ZeroMQ
+      </small>
+      <span style="float:right">code</span></li>
+      
+    
+    
+    <li><span>2014-03-27 </span> &raquo;&nbsp;
+      <a href="https://cordis.europa.eu/docs/projects/cnect/5/288815/080/deliverables/001-D121.pdf">Mobile Sensor App with Mining Functionality</a>
+      <small>&nbsp;UKoblenz / Live&#43;Gov Project, <a href="/pdf/LiveGov-D1.2.pdf">[pdf]</a>, <a href="https://github.com/Institute-Web-Science-and-Technologies/LiveGovWP1">[code]</a> 
+      </small>
+      <span style="float:right">deliverable</span></li>
+      
+    
+    
+    <li><span>2014-02-01 </span> &raquo;&nbsp;
+      <a href="https://github.com/HeinrichHartmann/zmqdump">zmqdump -- tcpdump for ZeorMQ</a>
+      <small>
+      </small>
+      <span style="float:right">code</span></li>
+      
+    
+    
+    <li><span>2014-01-15 </span> &raquo;&nbsp;
+      <a href="/archive/Distributed-scraper-design.html">Distributed Scraper Design</a>
+      <small>
+      </small>
+      <span style="float:right">prog, post</span></li>
+      
+    
+    
+    <li><span>2014-01-01 </span> &raquo;&nbsp;
+      <a href="/archive/Monitoring-with-Ganglia.html">Monitoring With Ganglia</a>
+      <small>
+      </small>
+      <span style="float:right">mon, post</span></li>
+      
+    
+    
+    <li><span>2013-12-25 </span> &raquo;&nbsp;
+      <a href="/archive/Setting-up-a-Virtual-Cluster.html">Setting Up A Virtual Cluster</a>
+      <small>
+      </small>
+      <span style="float:right">prog, post</span></li>
+      
+    
+    
+    <li><span>2013-08-01 </span> &raquo;&nbsp;
+      DJA Meisenheim 2013 - Academy Manager
+      <small>, <a href="http://www.deutsche-juniorakademien.de/download/2013/DJA_Rheinland-Pfalz_2013.pdf#page=12">[pdf]</a>
+      </small>
+      <span style="float:right">post</span></li>
+      
+    
+    
+    <li><span>2013-04-13 </span> &raquo;&nbsp;
+      <a href="https://web.archive.org/web/20130915181534/http://rigourandopenness.org/">Rigour and Openness Conference (Oxford University)</a> &mdash; Organizer<small> <a href="https://www.youtube.com/user/RigourAndOpenness/videos">[video]</a>
+      </small>
+      <span style="float:right">mon, talk</span></li>
+    
+    
+    
+    <li><span>2013-01-17 </span> &raquo;&nbsp;
+      <a href="/archive/Why-Openness-benefitts-research.html">Why Openness Benefitts Research</a>
+      <small>
+      </small>
+      <span style="float:right">culture, post</span></li>
+      
+    
+    
+    <li><span>2012-09-10 </span> &raquo;&nbsp;
+      <a href="/archive/Dissecting-Hello-World.html">Dissecting Hello World</a>
+      <small>
+      </small>
+      <span style="float:right">prog, post</span></li>
+      
+    
+    
+    <li><span>2012-08-01 </span> &raquo;&nbsp;
+      DJA Meisenheim 2012 - Course: Efficient algorithms
+      <small>&nbsp;Prof. Johann Baumeistet, <a href="http://www.deutsche-juniorakademien.de/download/2012/DJA_Rheinland-Pfalz_2012.pdf">[pdf]</a>
+      </small>
+      <span style="float:right">post</span></li>
+      
+    
+    
+    <li><span>2012-03-01 </span> &raquo;&nbsp;
+      <a href="https://web.archive.org/web/20160323083651/http://blog.related-work.net/">Related-Work.net - Paper Network and Discussion Platform</a>
+      <small>&nbsp;Founder, <a href="https://github.com/exciteproject/related-work.net">[code]</a> 
+      </small>
+      <span style="float:right">project</span></li>
+      
+    
+    
+    <li><span>2011-08-01 </span> &raquo;&nbsp;
+      DSA Schulpforte 2011 - Course: Web Applications
+      <small>&nbsp;with Rene Pickhardt, <a href="http://www.deutsche-schuelerakademie.de/download/dsa-programm-2011">[pdf]</a>
+      </small>
+      <span style="float:right">post</span></li>
+      
+    
+    
+    <li style="clear:both"><span>2011-05-14 </span> &raquo;&nbsp;
+      Mirror symmetry and stability conditions on K3 surfaces
+      <small>, <em><a href="https://bonndoc.ulb.uni-bonn.de/xmlui/handle/20.500.11811/5012">Uni-Bonn</a></em>, <a href="/pdf/Heinrich%20Hartmann%20-%20Mirror%20symmetry%20and%20stability%20conditions%20on%20K3%20surfaces%20%28PhD%20Thesis,%20Bonn%202011%29.pdf">[pdf]</a> 
+      </small>
+      <span style="float:right">phd-thesis</span></li>
+    
+    
+    
+    <li style="clear:both"><span>2011-01-14 </span> &raquo;&nbsp;
+      Period and Mirror Maps for the Quartic K3
+      <small>, <em><a href="">Man. Math.</a></em>, <a href="http://dx.doi.org/10.1007/s00229-012-0577-7">[doi]</a> , <a href="http://arxiv.org/abs/1101.4601">arxiv</a> 
+      </small>
+      <span style="float:right">math, paper</span></li>
+    
+    
+    
+    <li style="clear:both"><span>2010-12-14 </span> &raquo;&nbsp;
+      Cusps of the Kähler moduli space
+      <small>, <em><a href="https://link.springer.com/article/10.1007/s00208-011-0719-3">Math. Ann.</a></em>, <a href="http://dx.doi.org/10.1007/s00208-011-0719-3">[doi]</a> , <a href="http://arxiv.org/abs/1012.3121">arxiv</a> 
+      </small>
+      <span style="float:right">math, paper</span></li>
+    
+    
+    
+    <li style="clear:both"><span>2007-05-14 </span> &raquo;&nbsp;
+      Nodale Kurven und Hilbertschemata
+      <small>, Uni-Mainz, <a href="/pdf/Heinrich%20Hartmann%20-%20Nodale%20Kurven%20und%20Hilbertschemata%20%28Diplomarbeit,%20Mainz%202007%29.pdf">[pdf]</a> 
+      </small>
+      <span style="float:right">diplom</span></li>
+    
+    
+    
+    <li><span>1999-02-16 </span> &raquo;&nbsp;
+      <a href="http://www.google.com/patents/DE19906459A1?cl=de">DE19906459 Butterbrotschmiermaschine</a>
+      <small>
+      </small>
+      <span style="float:right">patent</span></li>
+      
+    
+  </ul>
+  
+</div>
+</main>
+
+	<footer style="float:right; margin: 20px auto 20px auto; color:#AAA">&copy; 2023 Heinrich Hartmann. All rights reserved.</footer>
+
+</body>
+
+</html>

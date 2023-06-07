@@ -1,0 +1,810 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en-us">
+<head>
+   <meta http-equiv="content-type" content="text/html; charset=utf-8"/>
+   <title>Monitoring Dropbox</title>
+   <meta name="author" content="Heinrich Hartmann"/>
+   
+   </head>
+<body>
+  <div class="site">
+    <div class="headline"><a href="/">Heinrich Hartmann</a></div>
+    <div id="post">
+  <h1 id="h1-title"> Monitoring Dropbox</h1>
+  
+  
+  <p class="meta">
+    Written on 2018-02-05
+     in Stemwede, Germany 
+    
+  </p>
+
+  <!-- Splash -->
+  
+  <div class="splash">
+    <a href="/assets/capture_1517430553.png">
+      <img src="/assets/capture_1517430553.png" width="100%"/>
+    </a>
+     <p class="credits">click to enlarge</p> 
+  </div>
+  
+
+  <!-- Abstract -->
+  
+
+  
+
+
+  <!-- Post content -->
+  <p>I keep a cheap little server in my basement.
+Amongst other things it contains a full checkout of my dropbox.
+In this way, I always have a copy of all my data inside of my walls.
+The content lies in the trusted hands of a <a href="https://wiki.ubuntu.com/ZFS">zfs</a> file system, which allows me to take regular snapshots, so I don’t loose data by accidentally deleting stuff on one of my devices.
+I just sleep better this way.</p>
+
+<p>Working for a <a href="http://circonus.com">monitoring vendor</a>, monitoring the server is not optional.
+Especially for this box.
+It has a surprisingly low availability, since I manage to trigger my <a href="https://en.wikipedia.org/wiki/Residual-current_device">circuit breaker</a> (“FI Sicherung”) twice a week while working “fixing” my lights, heating, garage doors, etc. 🤷.
+So I want to make sure, it comes up as expected and keeps on doing what it should.
+In this case this boils down to:</p>
+
+<ol>
+  <li>Is the dropbox daemon running?</li>
+  <li>How many files are left to sync?</li>
+</ol>
+
+<p>And in case we there are a ton of files left:</p>
+
+<ol start="3">
+  <li>How long will it take until everything is synced up?</li>
+</ol>
+
+<p>I made a little dashboard for this purpose over the weekend and posted it on twitter:</p>
+
+<blockquote class="twitter-tweet" data-lang="en"><p lang="en" dir="ltr">Created a little <a href="https://twitter.com/circonus?ref_src=twsrc%5Etfw">@circonus</a> dashboard to monitor dropbox syncing my 1TB drive. Pretty neat, and straightforward:<br />0: Get an account (<a href="https://t.co/LsBRpSA6JC">https://t.co/LsBRpSA6JC</a>)<br />1: Add your host<br />2: Drop this into cron <a href="https://t.co/u9OxUSQSqv">https://t.co/u9OxUSQSqv</a><br />3: Tweak the USE Dashboard <a href="https://t.co/QzMBcusHte">https://t.co/QzMBcusHte</a> <a href="https://t.co/IfHLuUNHB5">pic.twitter.com/IfHLuUNHB5</a></p>&mdash; Heinrich Hartmann (@heinrichhartman) <a href="https://twitter.com/heinrichhartman/status/958339041191133184?ref_src=twsrc%5Etfw">January 30, 2018</a></blockquote>
+<script async="" src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+
+<p>Since people asked, I am going to elaborate a little here on what I did, and how you can do that, too, if you like.
+Of course, I will be using <a href="http://circonus.com">circonus</a> for this, because I am most familiar with this tool.
+Everything I show here, can be done with a free-tier account, or mutatis mutandis with other tools as well.</p>
+
+<h2 id="system-metrics">System Metrics</h2>
+
+<p>First things first.
+Every box deserves system-level monitoring.
+With Circonus this is a <a href="https://github.com/circonus-labs/circonus-one-step-install#quickstart">single command</a> which you can copy past from the Integrations page:</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>curl -sSL https://onestep.circonus.com/install | sudo bash -s -- --key ...
+</code></pre></div></div>
+
+<p>Now you will say “curl | sudo bash”, that’s <a href="https://www.idontplaydarts.com/2016/04/detecting-curl-pipe-bash-server-side/">a bad idea</a>.
+I know I know. But … it just works. And it’s HTTPS. And I know who wrote that code.
+So we are all good.</p>
+
+<p>This command will install a monitoring agent (nad) on your system and publish a good set of system metrics, which are presented conveniently as <a href="https://www.circonus.com/2017/08/system-monitoring-with-the-use-dashboard/">USE Dashboard</a> for you.</p>
+
+<figure id="figure-1"><a href="/assets/capture_1517435990.png"><img src="/assets/capture_1517435990.png" alt="A generic USE Dashboard" /></a><figcaption>Figure 1: A generic USE Dashboard [<a href="/assets/capture_1517435990.png">PNG</a>]</figcaption></figure>
+
+<p>Looks pretty neat, eh?
+With this, I know if my system is up, and how the basic resources (CPU, memory, network, disks) are doing. Later we will add some dropbox graphs to this dashboard.</p>
+
+<h2 id="gathering-dropbox-statistics">Gathering Dropbox Statistics</h2>
+
+<p>The main hero of this blog entry is the dropbox daemon.
+Unfortunately dropbox does not offer machine-readable statistics (<em>sigh</em>).
+We are left with the <code class="highlighter-rouge">dropbox.py status</code> command, which returns stuff like:</p>
+
+<ul>
+  <li>
+    <div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Dropbox isn't running!
+</code></pre></div>    </div>
+  </li>
+  <li>
+    <div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Starting
+</code></pre></div>    </div>
+  </li>
+  <li>
+    <div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Dropbox isn't responding!
+</code></pre></div>    </div>
+  </li>
+  <li>
+    <div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Syncing (51,938 files remaining, 2 mins left)
+Downloading 51,938 files (3,069 KB/sec, 2 mins left)
+</code></pre></div>    </div>
+  </li>
+  <li>Or occasionally:
+    <div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Up to date
+</code></pre></div>    </div>
+  </li>
+</ul>
+
+<p>So we need to parse out the information we are interested in.
+My first shot at this looked like this:</p>
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code>dropbox.py status <span class="se">\</span>
+  | <span class="nb">grep </span>remaining <span class="se">\</span>
+  | sed <span class="nt">-e</span> <span class="s1">'s/remaining.*//'</span> <span class="nt">-e</span> <span class="s1">'s/[^0-9]//g'</span>
+</code></pre></div></div>
+<p>This will pick out the “files remaining” line if there is any, then delete everything starting from the string “remaining” to get rid of the time estimate “2 mins left”.
+Finally we delete all non numeric content and are left with a number: <code class="highlighter-rouge">N=51938</code>.
+Tada! Good enough for a fist version.</p>
+
+<p>After a few interatons, the script ended up looking like this:</p>
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c">#!/bin/bash</span>
+<span class="nv">socat</span><span class="o">=</span>/usr/bin/socat
+<span class="nb">grep</span><span class="o">=</span>/bin/grep
+<span class="nv">sed</span><span class="o">=</span>/bin/sed
+<span class="nv">dbx</span><span class="o">=</span><span class="nv">$HOME</span>/bin/dropbox.py
+<span class="nv">logger</span><span class="o">=</span>/usr/bin/logger
+
+<span class="c"># $1 metric name</span>
+<span class="c"># $2 value</span>
+<span class="k">function </span>METRIC <span class="o">{</span>
+  logger <span class="nt">-t</span> dropbox-mon <span class="s2">"metric </span><span class="nv">$1</span><span class="s2">: </span><span class="nv">$2</span><span class="s2">"</span>
+  <span class="nb">printf</span> <span class="s1">'dropbox`%s:%d|g'</span> <span class="s2">"</span><span class="nv">$1</span><span class="s2">"</span> <span class="s2">"</span><span class="nv">$2</span><span class="s2">"</span> | <span class="nv">$socat</span> <span class="nt">-t</span> 0 STDIN UDP:localhost:8125
+<span class="o">}</span>
+
+METRIC <span class="s2">"count"</span> <span class="s2">"</span><span class="k">$(</span>pgrep <span class="nt">-c</span> dropbox<span class="k">)</span><span class="s2">"</span>
+
+<span class="nv">STATUS</span><span class="o">=</span><span class="s2">"</span><span class="k">$(</span><span class="nv">$dbx</span> status<span class="k">)</span><span class="s2">"</span>
+<span class="k">case</span> <span class="s2">"</span><span class="nv">$STATUS</span><span class="s2">"</span> <span class="k">in</span>
+  <span class="k">*</span><span class="s2">"Up to date"</span><span class="k">*</span><span class="p">)</span>
+    METRIC <span class="s2">"remaining"</span> 0<span class="p">;</span>
+    <span class="nb">exit </span>0<span class="p">;</span>
+    <span class="p">;;</span>
+  <span class="k">*</span><span class="s2">"files remaining"</span><span class="k">*</span><span class="p">)</span>
+    <span class="nv">N</span><span class="o">=</span><span class="k">$(</span><span class="nb">echo</span> <span class="nv">$STATUS</span> <span class="se">\</span>
+        | <span class="nv">$grep</span> remaining <span class="se">\</span>
+        | <span class="nv">$sed</span> <span class="nt">-e</span> <span class="s1">'s/remaining.*//g'</span> <span class="nt">-e</span> <span class="s1">'s/[^0-9]//g'</span><span class="k">)</span>
+    METRIC <span class="s2">"remaining"</span> <span class="s2">"</span><span class="nv">$N</span><span class="s2">"</span>
+    <span class="nb">exit </span>0
+    <span class="p">;;</span>
+  <span class="k">*</span><span class="p">)</span>
+    <span class="nb">exit </span>1
+<span class="k">esac</span>
+</code></pre></div></div>
+
+<p>Comments:</p>
+
+<ul>
+  <li>
+    <p>We will run this script via <a href="http://man7.org/linux/man-pages/man5/crontab.5.html">crontab(5)</a>, which is famous for invoking arcane shells and not setting up the environment (Thanks cron 🤐).
+So let’s be explicit about where to find the programs we use.</p>
+  </li>
+  <li>
+    <p>We want to send out the data we found as a metric, so we create a function for it.
+The implementation is explained below.</p>
+  </li>
+  <li>
+    <p>We use <a href="http://man7.org/linux/man-pages/man1/pgrep.1.html">pgrep(1)</a> to count the number of dropbox processes that are currently running (should be 0 or 1) and publish the result as a metric “count”.</p>
+  </li>
+  <li>
+    <p>Finally we parse the output of <code class="highlighter-rouge">dropbox.py status</code> in a more formal manner:</p>
+    <ol>
+      <li>If we are up to date, we emit 0 as value for the “remaining” metric.</li>
+      <li>If we have files remaining, we do as before.</li>
+      <li>Otherwise, we don’t emit anything, and exit with RC=1 signaling an error condition.</li>
+    </ol>
+  </li>
+</ul>
+
+<h2 id="sending-custom-metrics-to-circonus">Sending Custom Metrics to Circonus</h2>
+
+<p>There are many ways to send metrics to Circonus. Two of my favorite ones are:</p>
+
+<ol>
+  <li>Push JSON documents to a <a href="https://hartmann.circonus.com/resources/docs/user/Data/CheckTypes/HTTPTrap.html">HTTP Trap</a>.</li>
+  <li>Send <a href="https://github.com/b/statsd_spec">statsd</a> metrics to the monitoring agent (nad).</li>
+</ol>
+
+<p>Option 1 is certainly a good one, and I might go for it next time.
+We will follow option 2 here.
+Since a while ago nad has an integrated statsd server, that allows you to submit metrics via UDP  in statsd format.
+In our case the payload we want to send looks like this:</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>dropbox`count:1|g
+dropbox`remaining:5122|g
+</code></pre></div></div>
+
+<p>The usual way to do this from the command line would be using <a href="https://linux.die.net/man/1/nc">nc(1)</a></p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>echo "dropbox`count:1|g" | nc -u localhost 8125
+echo "dropbox`remaining:5122|g" | nc -u localhost 8125
+</code></pre></div></div>
+
+<p>Unfortunately nc has the bad habbit of hanging occasionally in this situation.
+<a href="https://serverfault.com/questions/498880/nc-netcat-hangs-waiting-for-more-data-in-udp-mode">Others</a> have solved that by using <a href="https://linux.die.net/man/1/socat">socat(1)</a> instead.
+So I copy pasted their code and went with it 😛.
+This is how I arrived at that function listed above:</p>
+
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c"># $1 metric name</span>
+<span class="c"># $2 value</span>
+<span class="k">function </span>METRIC <span class="o">{</span>
+  logger <span class="nt">-t</span> dropbox-mon <span class="s2">"metric </span><span class="nv">$1</span><span class="s2">: </span><span class="nv">$2</span><span class="s2">"</span>
+  <span class="nb">printf</span> <span class="s1">'dropbox`%s:%d|g'</span> <span class="s2">"</span><span class="nv">$1</span><span class="s2">"</span> <span class="s2">"</span><span class="nv">$2</span><span class="s2">"</span> | <span class="nv">$socat</span> <span class="nt">-t</span> 0 STDIN UDP:localhost:8125
+<span class="o">}</span>
+</code></pre></div></div>
+
+<p>Right. We actually write out some system logs as well, mainly for debugging purposes.
+It takes a while until metrics show up on graphs.
+Log lines become visible much more quickly.</p>
+
+<p>We test this script by running it from the shell.</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$ ./cron/dropbox.sh
+</code></pre></div></div>
+
+<p>You should then see log messages appearing in syslog:</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>tail -n2 /var/log/syslog
+Jan 31 18:13:20 HomeFX dropbox-mon: metric count: 1
+Jan 31 18:13:20 HomeFX dropbox-mon: metric remaining: 51222
+</code></pre></div></div>
+
+<p>If it does, type in <code class="highlighter-rouge">crontab -e</code> as your local user and add a line:</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>* * * * * ~/cron/dropbox.sh
+</code></pre></div></div>
+<p>This should run dropbox.sh every minute.
+Check syslog again, to see if this worked.</p>
+
+<h2 id="configuring-the-dashboard">Configuring The Dashboard</h2>
+
+<p>You will need to activate the metric in order for Circonus to collect data from it,
+on the checks page (Integrations &gt; Checks &gt; (select check) &gt; details &gt; [Changes brokers and Metrics])</p>
+<figure id="figure-2"><a href="/assets/capture_1517420969.png"><img src="/assets/capture_1517420969.png" alt="" /></a><figcaption>Figure 2:  [<a href="/assets/capture_1517420969.png">PNG</a>]</figcaption></figure>
+<p>After you did that you should see data flowing into the metric on the check’s page.</p>
+
+<p>Then add the metric to a new graph (Analytics &gt; Graphs &gt; Add Metric).
+Finally add the graph to the USE dashboard.
+I expanded the size of the dashboard a little and re-organized the graphs a little.</p>
+
+<p>Finally I also added a forecasting widget to the dashboard.</p>
+
+<figure id="figure-3"><a href="/assets/capture_1517444961.png"><img src="/assets/capture_1517444961.png" alt="Forecasting Widget: Time until synced" /></a><figcaption>Figure 3: Forecasting Widget: Time until synced [<a href="/assets/capture_1517444961.png">PNG</a>]</figcaption></figure>
+
+<p>This usually tracks the time until we run out disk space (etc.), but it can be used to track the “time until we are fully synced” as well.
+Just put in the “dropbox remainig` metric under “usage” and 0 as resource limit.
+The resulting widget will show the time until you are fully synced (or “Out of Resources” if you are up to date.)</p>
+
+<h2 id="alerting">Alerting</h2>
+
+<p>Like every decent sys-admin, I have one alerting setup to notify me, when the box is down for more than an hour. With Circonus you can also alert on more subtle stuff like: <em>Is dropbox stalled?</em></p>
+
+<p>The stalled condition can be reformulated as:</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>(Is there stuff left to sync?) and (Is it not downloading stuff?)
+</code></pre></div></div>
+
+<p>Roughly translated into <a href="https://login.circonus.com/resources/docs/user/caql_reference.html">CAQL</a> this is:</p>
+<pre><code class="language-CAQL">( // stuff left to sync?
+  metric:average("b6266779-c835-4341-a71b-a250e68d2347",
+                 "statsd`dropbox`remaining") &gt; 0
+)
+and
+( // not downloading stuff?
+  metric:counter("b6266779-c835-4341-a71b-a250e68d2347",
+                 "if`enp2s0`in_bytes") // download rate in byte/sec
+  | rolling:mean(1h) // 1h average
+  | op:lt(1000) // less-than 1.000
+)
+</code></pre>
+<p>I created a <a href="https://login.circonus.com/resources/docs/user/Data/CheckTypes/CAQLCheck.html">CAQL Check</a> for this query, and setup an email alert for it.
+I’ll admit, this is probably a little over the top, but I just like to know directly when my stuff is not doing stuff.</p>
+
+<h2 id="conclusion">Conclusion</h2>
+
+<p>It’s still amazing to me with how little effort, you can arrive at a pretty sophisticated monitoring setup if you know your way around Circonus.
+Also not that the method illustrated here is in pretty universal.
+If you can extract the numerical digest from any tool on the command line you can follow the steps and get your stuff monitored.</p>
+
+<p>For the specific case in point, the files remaining metric really benefited from taking it into the context of the whole system resource usage.
+In many cases, dropbox is the one who is using the resources.
+And it actually uses all of them: network, disks, CPU (to calculate all that checksums) and memory!
+It’s interesting to know where are the bottlenecks.</p>
+
+<p>The tweet above shows just how much information you can get form a glance at the board.
+Using the dashboard I discovered, already that</p>
+
+<ul>
+  <li>Drobox has a long time average download rate is about 10Mbit. Not too bad given my shitty internet connection.</li>
+  <li>The download stalled after ~24h. So, I added a cron-job to restart it every day.</li>
+  <li>I should add more memory to the box. The system is already swapping.</li>
+</ul>
+
+<p>I hope you enjoyed reading this.
+If you like to be informed about future posts, please consider singing up for the <a href="http://eepurl.com/ccmH-T">newsletter</a>.</p>
+
+
+  <!-- Include Mathjax if needed -->
+  
+
+</div>
+
+  </div>
+</body>
+<style>
+  ody/*****************************************************************************/
+/*
+/* Common
+/*
+/*****************************************************************************/
+
+/* Global Reset */
+
+* {
+  margin: 0;
+  padding: 0;
+}
+
+html, body {
+  height: 100%;
+}
+
+body {
+  font-family: Helvetica, arial, sans-serif;
+  font-size: 14px;
+  line-height: 1.6;
+  background-color: white;
+  padding: 10px 30px 10px 30px;
+}
+
+h1 {
+  font-size: 1em;
+  text-transform: uppercase;
+  text-alig: left;
+  font-size: 1em;
+  margin-bottom: 1em;
+  margin-top: 2em;
+}
+h2 {
+  font-size: 1em;
+  margin-bottom: 1em;
+  margin-top: 2em;
+}
+p {
+  margin: 1em 0;
+}
+
+a {
+  color: #00a;
+}
+
+a:hover {
+  color: black;
+}
+
+a:visited {
+  color: #a0a;
+}
+
+table {
+  font-size: inherit;
+  font: 100%;
+}
+
+pre {
+  text-align: left;
+  overflow-y: auto;
+}
+
+/*****************************************************************************/
+/*
+/* Home
+/*
+/*****************************************************************************/
+
+ul.posts {
+  list-style-type: none;
+  margin-bottom: 2em;
+}
+
+ul.posts li {
+  line-height: 1.75em;
+}
+
+ul.posts span {
+  color: #aaa;
+  font-family: Monaco, "Courier New", monospace;
+  font-size: 75%;
+}
+
+
+.date {
+  color: #aaa;
+  font-family: Monaco, Courier New, monospace;
+  font-size: 75%;
+  font-weight: normal;
+  float:right;
+}
+
+.quo {
+  position:relative; top:-1px;
+}
+
+#banner {
+  margin-bottom: 1em;
+}
+
+/*****************************************************************************/
+/*
+/* Site
+/*
+/*****************************************************************************/
+
+.site {
+  text-align: justify;
+  width: 48em;
+  margin: 3em auto 2em auto;
+  line-height: 1.5em;
+  margin-bottom: 200px;
+}
+
+.site .headline a {
+    color: #a00;
+    font-weight: bold;
+    margin-bottom: 2em;
+    margin-top: 2em;
+    text-decoration: none;
+}
+
+.title {
+  color: #a00;
+  font-weight: bold;
+  margin-bottom: 2em;
+  margin-top: 2em;
+}
+
+.site .title a {
+  color: #a00;
+  text-decoration: none;
+}
+
+.site .title a:hover {
+  color: black;
+}
+
+.site .title a.extra {
+  color: #aaa;
+  text-decoration: none;
+  margin-right: 1em;
+}
+
+.site .title a.extra:hover {
+  color: black;
+}
+
+.site .meta {
+  color: #aaa;
+}
+
+.site .footer {
+  font-size: 80%;
+  color: #666;
+  border-top: 4px solid #eee;
+  margin-top: 2em;
+  overflow: hidden;
+}
+
+.site .footer .contact {
+  float: left;
+  margin-right: 1em;
+}
+
+.site .footer .contact a {
+  color: #8085C1;
+}
+
+.site .footer .rss {
+  float: right;
+}
+
+.site .footer .rss img {
+  border: 0;
+}
+
+/*****************************************************************************/
+/*
+/* Posts
+/*
+/*****************************************************************************/
+
+#markdown-toc li {
+    line-height: 1;
+}
+
+.abstract p {
+    width: 80%;
+    margin-left: auto;
+    margin-top: 3em;
+    margin-bottom: 3em;
+}
+
+#post h1 {
+  font-size: 2em;
+  text-transform: uppercase;
+  text-align: center;
+  margin: 2em 0 1.5em 0;
+  line-height: 1.5em;
+}
+#post h2, h3, h4, h5, h6 {
+  font-size: 1em;
+  margin-bottom: 1em;
+  margin-top: 2em;
+  border-bottom: 1px solid #cccccc;
+}
+#post h2:before { content: "# "; }
+#post h3:before { content: "## "; }
+#post h4:before { content: "### "; }
+
+/* standard */
+
+#post pre {
+  border: 1px solid #ddd;
+  background-color: #f5f5f5;
+  padding: 3px 5px 3px;
+  margin: 5px 0 5px 0;
+  font-family: Consolas, "Liberation Mono", Menlo, Courier, monospace;
+  font-size: 12px;
+  line-height: 16.79px;
+  word-wrap: normal;
+}
+
+#post ul,
+#post ol {
+  margin-left: 1.35em;
+}
+
+/* extra space for list elements  */
+#post li {
+  margin: 1em 0;
+}
+#post li li { /* ... but not for nested ones */
+  margin: .5em 0;
+}
+
+#post pre code {
+  border: none;
+}
+
+#post blockquote {
+  border-left: 4px solid #e8e8e8;
+  padding-left: 20px;
+  background-color: #f9f9f9;
+  margin: 30px 0;
+}
+
+.pullquote {
+  font-family: Georgia, serif;
+  font-size: 18px;
+  font-style: italic;
+  margin: 0.25em 0;
+  padding: 0.25em 40px;
+  line-height: 1.45;
+  position: relative;
+  color: #383838;
+}
+
+.pullquote:before {
+  display: block;
+  content: "\201C";
+  font-size: 80px;
+  position: absolute;
+  left: 0;
+  top: -20px;
+  color: #7a7a7a;
+}
+
+
+#post .credits {
+  text-align: right;
+  font-size: 70%;
+  color: #aaa;
+}
+
+/* terminal */
+
+#post pre.terminal {
+  border: 1px solid black;
+  background-color: #333;
+  color: white;
+}
+
+#post pre.terminal code {
+  background-color: #333;
+}
+
+#related {
+  border-top: 4px solid #eee;
+  margin-top: 2em;
+}
+
+#related h2 {
+  margin-bottom: 1em;
+}
+
+#disqus_thread {
+  border-top: 4px solid #eee;
+  margin-top: 2em;
+  padding-top: 1em;
+}
+
+#post img {
+  max-width: 100%;
+}
+
+/**
+ * Figure Plugin: https://github.com/lmullen/jekyll_figure
+ **/
+
+figure img {
+  border: 1px solid #ccc;
+  padding: 5px;
+  border-radius: 5px;
+  max-width : 100%;
+}
+
+figure {
+  text-align: center;
+}
+
+figure figcaption {
+  font-style: italic;
+  text-align: center;
+}
+
+.pdflink {
+  float: right;
+}
+
+/**
+ * GITHUB TABLE STYLES: https://github.com/alampros/Docter/blob/master/ghf_marked.css
+ **/
+
+table
+{
+  border-collapse:collapse;
+  margin:20px auto auto;
+  padding:0;
+}
+
+table tr
+{
+  border-top:1px solid #ccc;
+  background-color:#fff;
+  margin:0;
+  padding:0;
+}
+
+table tr:nth-child(2n)
+{
+  background-color:#f8f8f8;
+}
+table tr th[align="center"], table tr td[align="center"] {
+  text-align:center;
+}
+table tr th, table tr td
+{
+  border:1px solid #ccc;
+  text-align:left;
+  margin:0;
+  padding:6px 13px;
+}
+
+/**
+ * Responsive
+ **/
+@media only screen and (max-width: 50em) {
+  .site {
+    text-align: left;
+    width: 100%;
+    margin: 0;
+  }
+  body {
+    padding: 15px;
+  }
+}
+
+@media only screen and (max-width: 30em) {
+  .site {
+    font-size: 20px;
+    line-height: 2.5em;
+  }
+}
+
+.sticker {
+  color:red;
+  border-style:solid;
+  border-color:red;
+  border-radius:0.2em;
+  margin:50px;
+}
+
+@media only print {
+  .splash {
+    visibility: hidden;
+  }
+}
+
+.hookin {
+  float: left;
+  font-size: 2.5em;
+  font-weight: 700;
+  padding-top: 0.2em;
+  margin-right: 0.4em;
+  color: #a00;
+  color: #EC9F2E;
+  font-family: "franklin-gothic-urw",Verdana,Geneva,sans-serif;
+}
+
+.dropcaps::first-letter {
+  font-size: 4.8em;
+  color: #a00;
+  font-family: Georgia;
+  font-weight: 500;
+  line-height: 0.9em;
+  float: left;
+  margin-right: 0.1em;
+}
+
+</style>
+<style>
+  .highlight  { background: #ffffff; }
+.highlight .c { color: #999988; font-style: italic } /* Comment */
+.highlight .err { color: #a61717; background-color: #e3d2d2 } /* Error */
+.highlight .k { font-weight: bold } /* Keyword */
+.highlight .o { font-weight: bold } /* Operator */
+.highlight .cm { color: #999988; font-style: italic } /* Comment.Multiline */
+.highlight .cp { color: #999999; font-weight: bold } /* Comment.Preproc */
+.highlight .c1 { color: #999988; font-style: italic } /* Comment.Single */
+.highlight .cs { color: #999999; font-weight: bold; font-style: italic } /* Comment.Special */
+.highlight .gd { color: #000000; background-color: #ffdddd } /* Generic.Deleted */
+.highlight .gd .x { color: #000000; background-color: #ffaaaa } /* Generic.Deleted.Specific */
+.highlight .ge { font-style: italic } /* Generic.Emph */
+.highlight .gr { color: #aa0000 } /* Generic.Error */
+.highlight .gh { color: #999999 } /* Generic.Heading */
+.highlight .gi { color: #000000; background-color: #ddffdd } /* Generic.Inserted */
+.highlight .gi .x { color: #000000; background-color: #aaffaa } /* Generic.Inserted.Specific */
+.highlight .go { color: #888888 } /* Generic.Output */
+.highlight .gp { color: #555555 } /* Generic.Prompt */
+.highlight .gs { font-weight: bold } /* Generic.Strong */
+.highlight .gu { color: #aaaaaa } /* Generic.Subheading */
+.highlight .gt { color: #aa0000 } /* Generic.Traceback */
+.highlight .kc { font-weight: bold } /* Keyword.Constant */
+.highlight .kd { font-weight: bold } /* Keyword.Declaration */
+.highlight .kp { font-weight: bold } /* Keyword.Pseudo */
+.highlight .kr { font-weight: bold } /* Keyword.Reserved */
+.highlight .kt { color: #445588; font-weight: bold } /* Keyword.Type */
+.highlight .m { color: #009999 } /* Literal.Number */
+.highlight .s { color: #d14 } /* Literal.String */
+.highlight .na { color: #008080 } /* Name.Attribute */
+.highlight .nb { color: #0086B3 } /* Name.Builtin */
+.highlight .nc { color: #445588; font-weight: bold } /* Name.Class */
+.highlight .no { color: #008080 } /* Name.Constant */
+.highlight .ni { color: #800080 } /* Name.Entity */
+.highlight .ne { color: #990000; font-weight: bold } /* Name.Exception */
+.highlight .nf { color: #990000; font-weight: bold } /* Name.Function */
+.highlight .nn { color: #555555 } /* Name.Namespace */
+.highlight .nt { color: #000080 } /* Name.Tag */
+.highlight .nv { color: #008080 } /* Name.Variable */
+.highlight .ow { font-weight: bold } /* Operator.Word */
+.highlight .w { color: #bbbbbb } /* Text.Whitespace */
+.highlight .mf { color: #009999 } /* Literal.Number.Float */
+.highlight .mh { color: #009999 } /* Literal.Number.Hex */
+.highlight .mi { color: #009999 } /* Literal.Number.Integer */
+.highlight .mo { color: #009999 } /* Literal.Number.Oct */
+.highlight .sb { color: #d14 } /* Literal.String.Backtick */
+.highlight .sc { color: #d14 } /* Literal.String.Char */
+.highlight .sd { color: #d14 } /* Literal.String.Doc */
+.highlight .s2 { color: #d14 } /* Literal.String.Double */
+.highlight .se { color: #d14 } /* Literal.String.Escape */
+.highlight .sh { color: #d14 } /* Literal.String.Heredoc */
+.highlight .si { color: #d14 } /* Literal.String.Interpol */
+.highlight .sx { color: #d14 } /* Literal.String.Other */
+.highlight .sr { color: #009926 } /* Literal.String.Regex */
+.highlight .s1 { color: #d14 } /* Literal.String.Single */
+.highlight .ss { color: #990073 } /* Literal.String.Symbol */
+.highlight .bp { color: #999999 } /* Name.Builtin.Pseudo */
+.highlight .vc { color: #008080 } /* Name.Variable.Class */
+.highlight .vg { color: #008080 } /* Name.Variable.Global */
+.highlight .vi { color: #008080 } /* Name.Variable.Instance */
+.highlight .il { color: #009999 } /* Literal.Number.Integer.Long */
+
+</style>
+</html>

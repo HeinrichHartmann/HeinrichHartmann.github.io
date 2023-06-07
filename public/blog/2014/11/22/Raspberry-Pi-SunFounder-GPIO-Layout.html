@@ -1,0 +1,834 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en-us">
+<head>
+   <meta http-equiv="content-type" content="text/html; charset=utf-8"/>
+   <title>Raspberry Pi Sunfounder Gpio Layout</title>
+   <meta name="author" content="Heinrich Hartmann"/>
+   
+   </head>
+<body>
+  <div class="site">
+    <div class="headline"><a href="/">Heinrich Hartmann</a></div>
+    <div id="post">
+  <h1 id="h1-title"> Raspberry Pi Sunfounder Gpio Layout</h1>
+  
+  
+  <p class="meta">
+    Written on 2014-11-22
+    
+    
+  </p>
+
+  <!-- Splash -->
+  
+
+  <!-- Abstract -->
+  
+
+  
+
+
+  <!-- Post content -->
+  <!-- # Raspberry Pi SunFounder GPIO Layout -->
+
+<p>I have recently bought a <a href="http://www.raspberrypi.org/">Raspberry Pi</a>
+together with a <a href="http://www.sunfounder.com/index.php?c=show&amp;id=21&amp;model=LCD%20Starter%20Kit">SunFounder LCD Starter
+Kit</a>
+in order to do some experiments.  Of special interest are the GPIO
+pins that enable communication with electroinc components like LEDs,
+buttons, all kinds of sensors and even simple LED screens.</p>
+
+<p>These pins can be addressed from a python program using a simple
+syntax. An example is provided <a href="http://www.thirdeyevis.com/pi-page-2.php">here</a>:</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>import RPi.GPIO as GPIO  ## Import GPIO library
+GPIO.setmode(GPIO.BOARD) ## Use board pin numbering
+GPIO.setup(7, GPIO.OUT)  ## Setup GPIO Pin 7 to OUT
+GPIO.output(7,True)      ## Turn on GPIO pin 7
+</code></pre></div></div>
+
+<p>This will turn on GPIO pin no. 7. But which one is it?  It turns out
+this question is surprisingly hard to anwser. There are several
+subtilities in the pin referencing:</p>
+
+<ol>
+  <li>There are two different referencing schemes: <code class="highlighter-rouge">BCM</code> and <code class="highlighter-rouge">BOARD</code></li>
+  <li>The BCM reference schemes differes for different Raspberry Pi versions</li>
+  <li>The SunFounder extension board (see below) mixes up the
+pins again and is neither consistent with <code class="highlighter-rouge">BCM</code> nor with <code class="highlighter-rouge">BOARD</code>
+referencing.</li>
+</ol>
+
+<p>As you might imagine, this is more than enough complexity to cause a
+lot of errors. In this note I am going to explain how to get a
+thorough grip on the referencing scheme.</p>
+
+<h1 id="setup-a-led-probe">Setup a LED Probe</h1>
+
+<p>Grab a 3.3V LED, a 1K OHM resistor and some wires and connect them
+like described in this document <a href="https://projects.drogon.net/raspberry-pi/gpio-examples/tux-crossing/gpio-examples-1-a-single-led/">here</a>.
+The top right pin of the Raspberry Pi board is always connected to 3.3V.
+The lower right pin is always connected to the ground.
+The connected LED is shown below:</p>
+
+<figure id="figure-1"><a href="/assets/GPIO_files/LED_probe.jpg"><img src="/assets/GPIO_files/LED_probe.jpg" alt="LED Probe" /></a><figcaption>Figure 1: LED Probe [<a href="/assets/GPIO_files/LED_probe.jpg">JPG</a>]</figcaption></figure>
+
+<p>Once you have completed this setup, you can disconnect the wire from
+the ground pin (white wire) and use the free wire as a probe.</p>
+
+<p>Now we want to identify pin “No 7” in the above example. By probing
+along the with our white wire we find several pins that are also
+connected to a ground (LED on) or a potential of 3.3V or 5V (LED off).
+But which on is the right one?</p>
+
+<p>To simplify this task, we can set pin “No 7” to an alternating
+signal. The following
+<a href="https://gist.github.com/HeinrichHartmann/4affce9f06368d946e9d">script</a>
+does the trick:</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>sudo python blink.py BOARD 7
+</code></pre></div></div>
+
+<p>Now we can find the correct pin by watching out for a blinking LED.
+(Solution: 4th pin counting from the black wire downwards.)</p>
+
+<p>In a similar fashing we can go on and find all pin references in the
+<code class="highlighter-rouge">BOARD</code> and <code class="highlighter-rouge">BCM</code> schemes. The full table for my RPi looks
+like that:</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>BCM</th>
+      <th>BOARD</th>
+      <th>BOARD</th>
+      <th>BCM</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>3.3V</td>
+      <td>(1)</td>
+      <td>2</td>
+      <td>5V</td>
+    </tr>
+    <tr>
+      <td>2</td>
+      <td>3</td>
+      <td>4</td>
+      <td>5V</td>
+    </tr>
+    <tr>
+      <td>3</td>
+      <td>5</td>
+      <td>(6)</td>
+      <td>GND</td>
+    </tr>
+    <tr>
+      <td>4</td>
+      <td>7</td>
+      <td>8</td>
+      <td>14</td>
+    </tr>
+    <tr>
+      <td>GND</td>
+      <td>(9)</td>
+      <td>10</td>
+      <td>15</td>
+    </tr>
+    <tr>
+      <td>17</td>
+      <td>11</td>
+      <td>12</td>
+      <td>18</td>
+    </tr>
+    <tr>
+      <td>27</td>
+      <td>13</td>
+      <td>(14)</td>
+      <td>GND</td>
+    </tr>
+    <tr>
+      <td>22</td>
+      <td>15</td>
+      <td>16</td>
+      <td>23</td>
+    </tr>
+    <tr>
+      <td>3.3V</td>
+      <td>(17)</td>
+      <td>18</td>
+      <td>24</td>
+    </tr>
+    <tr>
+      <td>10</td>
+      <td>19</td>
+      <td>(20)</td>
+      <td>GND</td>
+    </tr>
+    <tr>
+      <td>9</td>
+      <td>21</td>
+      <td>22</td>
+      <td>25</td>
+    </tr>
+    <tr>
+      <td>11</td>
+      <td>23</td>
+      <td>24</td>
+      <td>8</td>
+    </tr>
+    <tr>
+      <td>GND</td>
+      <td>(25)</td>
+      <td>26</td>
+      <td>7</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>The numbers in parantheses correspond to pins, that are not available
+via the GPIO api but have a special meaning. E.g. the pins 1 and 25 used
+in the above examples are always wired to 3.3V and ground (GND).</p>
+
+<h1 id="meltwaters-gpio-layout-script">Meltwaters GPIO Layout Script</h1>
+
+<p>Thankfully, you do not have to repeat this exercise above for your every
+RPi again. <a href="http://pihw.wordpress.com/2013/01/30/sometimes-it-can-be-simple/">Meltwaters</a> has published a script that finds the precise Raspberry Pi version and
+prints out the <code class="highlighter-rouge">BCM</code> pin layount on the console.</p>
+
+<p>The script can be used as follows:</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>curl http://pastebin.com/raw.php?i=T43HpgYp &gt; iolayout.py
+less iolayout.py
+</code></pre></div></div>
+
+<p>Check carefully, that you downloaded the right code. Then run as root:</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>sudo python iolayout.py
+</code></pre></div></div>
+
+<p>You should see an output that resembles the above tables but might
+differ slightly.</p>
+
+<h1 id="monks--raspberry-pi-leaf">Monks  Raspberry Pi leaf</h1>
+
+<p>If you want to make sure you do remember the <code class="highlighter-rouge">BCM</code> labeling of the pins,
+you can us the following brilliant “Raspberry PI leaf” by <a href="http://doctormonk.com">Dr. Monk</a>:</p>
+
+<figure id="figure-2"><a href="/assets/GPIO_files/pi_leaf.jpg"><img src="/assets/GPIO_files/pi_leaf.jpg" alt="Rasperry PI IO Leaf" /></a><figcaption>Figure 2: Rasperry PI IO Leaf [<a href="/assets/GPIO_files/pi_leaf.jpg">JPG</a>]</figcaption></figure>
+
+<p>It can be obtained
+<a href="http://www.doctormonk.com/2013/02/raspberry-pi-and-breadboard-raspberry.html">here</a>
+make sure to downlaod the right one by comparing with the output of <code class="highlighter-rouge">iolayout.py</code>.</p>
+
+<h1 id="sunfounder-extension-board-referencing">SunFounder Extension Board Referencing</h1>
+
+<p>The SunFounder starter kit comes with an ribbon-cable and an extension
+board that grately simplifys access to the pins.</p>
+
+<figure id="figure-3"><a href="/assets/GPIO_files/extension_board.jpg"><img src="/assets/GPIO_files/extension_board.jpg" alt="GPIO Extension Board" /></a><figcaption>Figure 3: GPIO Extension Board [<a href="/assets/GPIO_files/extension_board.jpg">JPG</a>]</figcaption></figure>
+
+<p>Surprisingly the lables on the SunFounder extension board do not match
+the BCM, nor the BOARD referencing scheme.  Manuall checking 
+with the LED Probe reveals the following table:</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>BCM</th>
+      <th>BOARD</th>
+      <th>EXT.</th>
+      <th>EXT.</th>
+      <th>BOARD</th>
+      <th>BCM</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>7</td>
+      <td>26</td>
+      <td>CE1</td>
+      <td>P0</td>
+      <td>11</td>
+      <td>17</td>
+    </tr>
+    <tr>
+      <td>8</td>
+      <td>24</td>
+      <td>CE0</td>
+      <td>P1</td>
+      <td>12</td>
+      <td>18</td>
+    </tr>
+    <tr>
+      <td>11</td>
+      <td>23</td>
+      <td>SCLK</td>
+      <td>P2</td>
+      <td>13</td>
+      <td>27</td>
+    </tr>
+    <tr>
+      <td>9</td>
+      <td>21</td>
+      <td>MSOP</td>
+      <td>P3</td>
+      <td>15</td>
+      <td>22</td>
+    </tr>
+    <tr>
+      <td>10</td>
+      <td>19</td>
+      <td>MOSP</td>
+      <td>P4</td>
+      <td>16</td>
+      <td>23</td>
+    </tr>
+    <tr>
+      <td>15</td>
+      <td>10</td>
+      <td>RXD</td>
+      <td>P5</td>
+      <td>18</td>
+      <td>24</td>
+    </tr>
+    <tr>
+      <td>14</td>
+      <td>8</td>
+      <td>TXD</td>
+      <td>P6</td>
+      <td>22</td>
+      <td>25</td>
+    </tr>
+    <tr>
+      <td>3</td>
+      <td>5</td>
+      <td>SCL</td>
+      <td>P7</td>
+      <td>7</td>
+      <td>4</td>
+    </tr>
+    <tr>
+      <td>2</td>
+      <td>3</td>
+      <td>SDA</td>
+      <td>GND</td>
+      <td>-</td>
+      <td>-</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>The wiring of the LED probe on the extension board is much easier to handle,
+and with the above table the pin referencing can easily be translated to the
+SunFounder extension board labels.</p>
+
+<figure id="figure-4"><a href="/assets/GPIO_files/LED_extension.jpg"><img src="/assets/GPIO_files/LED_extension.jpg" alt="LED on extension board" /></a><figcaption>Figure 4: LED on extension board [<a href="/assets/GPIO_files/LED_extension.jpg">JPG</a>]</figcaption></figure>
+
+<h1 id="further-reading">Further Reading</h1>
+
+<ul>
+  <li><a href="http://elinux.org/RPi_Low-level_peripherals">elinux - RPi Low Level Peripherals</a></li>
+  <li><a href="http://elinux.org/RPi_BCM2835_GPIOs">elinux - BCM datasheet</a></li>
+  <li><a href="http://www.thebox.myzen.co.uk/Raspberry/Understanding_Outputs.html">Understanding Outputs</a></li>
+  <li><a href="http://makezine.com/projects/tutorial-raspberry-pi-gpio-pins-and-python/">GPIO Input Tuturial</a></li>
+</ul>
+
+
+  <!-- Include Mathjax if needed -->
+  
+
+</div>
+
+  </div>
+</body>
+<style>
+  ody/*****************************************************************************/
+/*
+/* Common
+/*
+/*****************************************************************************/
+
+/* Global Reset */
+
+* {
+  margin: 0;
+  padding: 0;
+}
+
+html, body {
+  height: 100%;
+}
+
+body {
+  font-family: Helvetica, arial, sans-serif;
+  font-size: 14px;
+  line-height: 1.6;
+  background-color: white;
+  padding: 10px 30px 10px 30px;
+}
+
+h1 {
+  font-size: 1em;
+  text-transform: uppercase;
+  text-alig: left;
+  font-size: 1em;
+  margin-bottom: 1em;
+  margin-top: 2em;
+}
+h2 {
+  font-size: 1em;
+  margin-bottom: 1em;
+  margin-top: 2em;
+}
+p {
+  margin: 1em 0;
+}
+
+a {
+  color: #00a;
+}
+
+a:hover {
+  color: black;
+}
+
+a:visited {
+  color: #a0a;
+}
+
+table {
+  font-size: inherit;
+  font: 100%;
+}
+
+pre {
+  text-align: left;
+  overflow-y: auto;
+}
+
+/*****************************************************************************/
+/*
+/* Home
+/*
+/*****************************************************************************/
+
+ul.posts {
+  list-style-type: none;
+  margin-bottom: 2em;
+}
+
+ul.posts li {
+  line-height: 1.75em;
+}
+
+ul.posts span {
+  color: #aaa;
+  font-family: Monaco, "Courier New", monospace;
+  font-size: 75%;
+}
+
+
+.date {
+  color: #aaa;
+  font-family: Monaco, Courier New, monospace;
+  font-size: 75%;
+  font-weight: normal;
+  float:right;
+}
+
+.quo {
+  position:relative; top:-1px;
+}
+
+#banner {
+  margin-bottom: 1em;
+}
+
+/*****************************************************************************/
+/*
+/* Site
+/*
+/*****************************************************************************/
+
+.site {
+  text-align: justify;
+  width: 48em;
+  margin: 3em auto 2em auto;
+  line-height: 1.5em;
+  margin-bottom: 200px;
+}
+
+.site .headline a {
+    color: #a00;
+    font-weight: bold;
+    margin-bottom: 2em;
+    margin-top: 2em;
+    text-decoration: none;
+}
+
+.title {
+  color: #a00;
+  font-weight: bold;
+  margin-bottom: 2em;
+  margin-top: 2em;
+}
+
+.site .title a {
+  color: #a00;
+  text-decoration: none;
+}
+
+.site .title a:hover {
+  color: black;
+}
+
+.site .title a.extra {
+  color: #aaa;
+  text-decoration: none;
+  margin-right: 1em;
+}
+
+.site .title a.extra:hover {
+  color: black;
+}
+
+.site .meta {
+  color: #aaa;
+}
+
+.site .footer {
+  font-size: 80%;
+  color: #666;
+  border-top: 4px solid #eee;
+  margin-top: 2em;
+  overflow: hidden;
+}
+
+.site .footer .contact {
+  float: left;
+  margin-right: 1em;
+}
+
+.site .footer .contact a {
+  color: #8085C1;
+}
+
+.site .footer .rss {
+  float: right;
+}
+
+.site .footer .rss img {
+  border: 0;
+}
+
+/*****************************************************************************/
+/*
+/* Posts
+/*
+/*****************************************************************************/
+
+#markdown-toc li {
+    line-height: 1;
+}
+
+.abstract p {
+    width: 80%;
+    margin-left: auto;
+    margin-top: 3em;
+    margin-bottom: 3em;
+}
+
+#post h1 {
+  font-size: 2em;
+  text-transform: uppercase;
+  text-align: center;
+  margin: 2em 0 1.5em 0;
+  line-height: 1.5em;
+}
+#post h2, h3, h4, h5, h6 {
+  font-size: 1em;
+  margin-bottom: 1em;
+  margin-top: 2em;
+  border-bottom: 1px solid #cccccc;
+}
+#post h2:before { content: "# "; }
+#post h3:before { content: "## "; }
+#post h4:before { content: "### "; }
+
+/* standard */
+
+#post pre {
+  border: 1px solid #ddd;
+  background-color: #f5f5f5;
+  padding: 3px 5px 3px;
+  margin: 5px 0 5px 0;
+  font-family: Consolas, "Liberation Mono", Menlo, Courier, monospace;
+  font-size: 12px;
+  line-height: 16.79px;
+  word-wrap: normal;
+}
+
+#post ul,
+#post ol {
+  margin-left: 1.35em;
+}
+
+/* extra space for list elements  */
+#post li {
+  margin: 1em 0;
+}
+#post li li { /* ... but not for nested ones */
+  margin: .5em 0;
+}
+
+#post pre code {
+  border: none;
+}
+
+#post blockquote {
+  border-left: 4px solid #e8e8e8;
+  padding-left: 20px;
+  background-color: #f9f9f9;
+  margin: 30px 0;
+}
+
+.pullquote {
+  font-family: Georgia, serif;
+  font-size: 18px;
+  font-style: italic;
+  margin: 0.25em 0;
+  padding: 0.25em 40px;
+  line-height: 1.45;
+  position: relative;
+  color: #383838;
+}
+
+.pullquote:before {
+  display: block;
+  content: "\201C";
+  font-size: 80px;
+  position: absolute;
+  left: 0;
+  top: -20px;
+  color: #7a7a7a;
+}
+
+
+#post .credits {
+  text-align: right;
+  font-size: 70%;
+  color: #aaa;
+}
+
+/* terminal */
+
+#post pre.terminal {
+  border: 1px solid black;
+  background-color: #333;
+  color: white;
+}
+
+#post pre.terminal code {
+  background-color: #333;
+}
+
+#related {
+  border-top: 4px solid #eee;
+  margin-top: 2em;
+}
+
+#related h2 {
+  margin-bottom: 1em;
+}
+
+#disqus_thread {
+  border-top: 4px solid #eee;
+  margin-top: 2em;
+  padding-top: 1em;
+}
+
+#post img {
+  max-width: 100%;
+}
+
+/**
+ * Figure Plugin: https://github.com/lmullen/jekyll_figure
+ **/
+
+figure img {
+  border: 1px solid #ccc;
+  padding: 5px;
+  border-radius: 5px;
+  max-width : 100%;
+}
+
+figure {
+  text-align: center;
+}
+
+figure figcaption {
+  font-style: italic;
+  text-align: center;
+}
+
+.pdflink {
+  float: right;
+}
+
+/**
+ * GITHUB TABLE STYLES: https://github.com/alampros/Docter/blob/master/ghf_marked.css
+ **/
+
+table
+{
+  border-collapse:collapse;
+  margin:20px auto auto;
+  padding:0;
+}
+
+table tr
+{
+  border-top:1px solid #ccc;
+  background-color:#fff;
+  margin:0;
+  padding:0;
+}
+
+table tr:nth-child(2n)
+{
+  background-color:#f8f8f8;
+}
+table tr th[align="center"], table tr td[align="center"] {
+  text-align:center;
+}
+table tr th, table tr td
+{
+  border:1px solid #ccc;
+  text-align:left;
+  margin:0;
+  padding:6px 13px;
+}
+
+/**
+ * Responsive
+ **/
+@media only screen and (max-width: 50em) {
+  .site {
+    text-align: left;
+    width: 100%;
+    margin: 0;
+  }
+  body {
+    padding: 15px;
+  }
+}
+
+@media only screen and (max-width: 30em) {
+  .site {
+    font-size: 20px;
+    line-height: 2.5em;
+  }
+}
+
+.sticker {
+  color:red;
+  border-style:solid;
+  border-color:red;
+  border-radius:0.2em;
+  margin:50px;
+}
+
+@media only print {
+  .splash {
+    visibility: hidden;
+  }
+}
+
+.hookin {
+  float: left;
+  font-size: 2.5em;
+  font-weight: 700;
+  padding-top: 0.2em;
+  margin-right: 0.4em;
+  color: #a00;
+  color: #EC9F2E;
+  font-family: "franklin-gothic-urw",Verdana,Geneva,sans-serif;
+}
+
+.dropcaps::first-letter {
+  font-size: 4.8em;
+  color: #a00;
+  font-family: Georgia;
+  font-weight: 500;
+  line-height: 0.9em;
+  float: left;
+  margin-right: 0.1em;
+}
+
+</style>
+<style>
+  .highlight  { background: #ffffff; }
+.highlight .c { color: #999988; font-style: italic } /* Comment */
+.highlight .err { color: #a61717; background-color: #e3d2d2 } /* Error */
+.highlight .k { font-weight: bold } /* Keyword */
+.highlight .o { font-weight: bold } /* Operator */
+.highlight .cm { color: #999988; font-style: italic } /* Comment.Multiline */
+.highlight .cp { color: #999999; font-weight: bold } /* Comment.Preproc */
+.highlight .c1 { color: #999988; font-style: italic } /* Comment.Single */
+.highlight .cs { color: #999999; font-weight: bold; font-style: italic } /* Comment.Special */
+.highlight .gd { color: #000000; background-color: #ffdddd } /* Generic.Deleted */
+.highlight .gd .x { color: #000000; background-color: #ffaaaa } /* Generic.Deleted.Specific */
+.highlight .ge { font-style: italic } /* Generic.Emph */
+.highlight .gr { color: #aa0000 } /* Generic.Error */
+.highlight .gh { color: #999999 } /* Generic.Heading */
+.highlight .gi { color: #000000; background-color: #ddffdd } /* Generic.Inserted */
+.highlight .gi .x { color: #000000; background-color: #aaffaa } /* Generic.Inserted.Specific */
+.highlight .go { color: #888888 } /* Generic.Output */
+.highlight .gp { color: #555555 } /* Generic.Prompt */
+.highlight .gs { font-weight: bold } /* Generic.Strong */
+.highlight .gu { color: #aaaaaa } /* Generic.Subheading */
+.highlight .gt { color: #aa0000 } /* Generic.Traceback */
+.highlight .kc { font-weight: bold } /* Keyword.Constant */
+.highlight .kd { font-weight: bold } /* Keyword.Declaration */
+.highlight .kp { font-weight: bold } /* Keyword.Pseudo */
+.highlight .kr { font-weight: bold } /* Keyword.Reserved */
+.highlight .kt { color: #445588; font-weight: bold } /* Keyword.Type */
+.highlight .m { color: #009999 } /* Literal.Number */
+.highlight .s { color: #d14 } /* Literal.String */
+.highlight .na { color: #008080 } /* Name.Attribute */
+.highlight .nb { color: #0086B3 } /* Name.Builtin */
+.highlight .nc { color: #445588; font-weight: bold } /* Name.Class */
+.highlight .no { color: #008080 } /* Name.Constant */
+.highlight .ni { color: #800080 } /* Name.Entity */
+.highlight .ne { color: #990000; font-weight: bold } /* Name.Exception */
+.highlight .nf { color: #990000; font-weight: bold } /* Name.Function */
+.highlight .nn { color: #555555 } /* Name.Namespace */
+.highlight .nt { color: #000080 } /* Name.Tag */
+.highlight .nv { color: #008080 } /* Name.Variable */
+.highlight .ow { font-weight: bold } /* Operator.Word */
+.highlight .w { color: #bbbbbb } /* Text.Whitespace */
+.highlight .mf { color: #009999 } /* Literal.Number.Float */
+.highlight .mh { color: #009999 } /* Literal.Number.Hex */
+.highlight .mi { color: #009999 } /* Literal.Number.Integer */
+.highlight .mo { color: #009999 } /* Literal.Number.Oct */
+.highlight .sb { color: #d14 } /* Literal.String.Backtick */
+.highlight .sc { color: #d14 } /* Literal.String.Char */
+.highlight .sd { color: #d14 } /* Literal.String.Doc */
+.highlight .s2 { color: #d14 } /* Literal.String.Double */
+.highlight .se { color: #d14 } /* Literal.String.Escape */
+.highlight .sh { color: #d14 } /* Literal.String.Heredoc */
+.highlight .si { color: #d14 } /* Literal.String.Interpol */
+.highlight .sx { color: #d14 } /* Literal.String.Other */
+.highlight .sr { color: #009926 } /* Literal.String.Regex */
+.highlight .s1 { color: #d14 } /* Literal.String.Single */
+.highlight .ss { color: #990073 } /* Literal.String.Symbol */
+.highlight .bp { color: #999999 } /* Name.Builtin.Pseudo */
+.highlight .vc { color: #008080 } /* Name.Variable.Class */
+.highlight .vg { color: #008080 } /* Name.Variable.Global */
+.highlight .vi { color: #008080 } /* Name.Variable.Instance */
+.highlight .il { color: #009999 } /* Literal.Number.Integer.Long */
+
+</style>
+</html>

@@ -1,0 +1,1056 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en-us">
+<head>
+   <meta http-equiv="content-type" content="text/html; charset=utf-8"/>
+   <title>Digging Into R</title>
+   <meta name="author" content="Heinrich Hartmann"/>
+   
+   </head>
+<body>
+  <div class="site">
+    <div class="headline"><a href="/">Heinrich Hartmann</a></div>
+    <div id="post">
+  <h1 id="h1-title"> Digging Into R</h1>
+  
+  
+  <p class="meta">
+    Written on 2014-04-14
+    
+    
+  </p>
+
+  <!-- Splash -->
+  
+
+  <!-- Abstract -->
+  
+
+  
+
+
+  <!-- Post content -->
+  <!-- EMACS PREAMBLE: -->
+<!-- (global-set-key (kbd "C-c C-e") 'ess-eval-paragraph) -->
+
+<!-- # Digging into R -->
+
+<p>I was advised to use
+<a href="http://cran.r-project.org/doc/manuals/r-release/R-lang.html">R</a> for
+statistical analysis of time series data. This post documents my
+endeavor into the world of R from the very beginning until the first
+experiments with time series data.</p>
+
+<h2 id="installation">Installation</h2>
+
+<p>Under Ubuntu Linux it was very simple to install R using <code class="highlighter-rouge">apt-get</code>
+cf. <a href="http://www.personal.psu.edu/mar36/blogs/the_ubuntu_r_blog/installing-r.html">blog</a>.
+Soon I decided to install the GUI <a href="http://www.rstudio.com/">RStudio</a>,
+whose installation was also unproblematic.</p>
+
+<p>Building from sources is also possible. First I used a <a href="https://github.com/wch/r-source">GitHub
+clone</a> of the <a href="https://svn.r-project.org/R">SVN
+repository</a>, but the build failed due to
+a missing <code class="highlighter-rouge">.svn</code> dir. Very strange. However the following the
+<a href="http://cran.r-project.org/doc/manuals/R-admin.html#Building-from-source">official
+docs</a>
+worked for me on Ubuntu 12.04:</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code># install dependencies
+sudo apt-get install libx11-dev libxt-dev x11proto-core-dev
+
+svn checkout https://svn.r-project.org/R/trunk/ r-source
+cd r-source
+
+# download recommended packages
+./tools/rsync-recommended
+
+./configure --enable-R-shlib # shlib is used by RStudio
+make
+make info
+sudo make install
+</code></pre></div></div>
+
+<h2 id="first-impression">First impression</h2>
+
+<p>I am used to programming in python and java so I started with reading
+<a href="http://www.johndcook.com/R_language_for_programmers.html">R programming for
+programmers</a>. The
+first thing to notice is that, the most important feature of any IDE:
+<em>tab-completion</em> is indeed suported by the R shell. However, the
+function oriented language design</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>a &lt;- c(1,2,3)    # creates a `vector`
+length(a)        # returns 3
+</code></pre></div></div>
+
+<p>makes interactive exploration of libraries very-hard. How do I know
+which of the hundreds of available function is applicable to the
+variable <code class="highlighter-rouge">a</code>?</p>
+
+<p>On the plus side, I love that variable assignments have proper syntax.
+As a mathematician using <code class="highlighter-rouge">=</code> as an assigment operator has always felt
+utterly wrong. This sentiment is shared e.g. by
+<a href="http://en.wikipedia.org/wiki/Donald_Knuth">D. Knuth</a>, who also uses
+<code class="highlighter-rouge">&lt;-</code> in his books.</p>
+
+<p>A thing I found quiet amusing about R is that there seem to be equaly
+many articles describing flaws in the R language [2,3], than
+introductions and guides to the language. Of course I started reading
+flaws first.</p>
+
+<p>One of the mayor differences of R to other programming languages is
+the absence of scalar data types. <strong>Everything is a vector</strong>.</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>typeof(1)        # &gt; [1] "double", i.e. double vector
+typeof(c(1))     # &gt; [1] "double", i.e. double vector
+1 == c(1)        # &gt; TRUE
+</code></pre></div></div>
+
+<p>Another curiosity is the (ab)-use of the vector generation operator <code class="highlighter-rouge">:</code></p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>1:5             # &gt; [1] 1 2 3 4 5, a list with 5 elements
+</code></pre></div></div>
+
+<p>So lists start with <code class="highlighter-rouge">1</code> and the end is inclusive. Seems good at first,
+but then the basic lentgh relation becomes a bit wired:</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>length(a:b) == b - a + 1
+</code></pre></div></div>
+
+<p>So in order to produce an empty list one has to use <code class="highlighter-rouge">a:a-1</code>, right? No:</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>1:1             # &gt; [1] 1
+1:0             # &gt; [1] 1 0
+1:-1            # &gt; [1] 1 0 -1
+</code></pre></div></div>
+
+<p>When the sencond index is less than the first one, then the iteration
+goes backwards. So the length relation fails in edge cases. Lets make
+a test, and calculate:</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>length(0:a) for a = -5 .. 5
+</code></pre></div></div>
+
+<p>How do you do that using R? My first idea is to generate a list of
+lists, which contains <code class="highlighter-rouge">0:a</code> for varying <code class="highlighter-rouge">a</code>. Is this possible in R?
+Can we have vectors of vectors?</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>c(c(1,2,3), c(4,5,6))  # &gt; [1] 1 2 3 4 5 6
+</code></pre></div></div>
+
+<p>No. Nested vectors are flattend out! Ok, next try, lets use a function:</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>lengthOfArray &lt;- function(a) { length(0:a) }
+lengthOfArray(0)
+# &gt; [0] 1
+</code></pre></div></div>
+
+<p>Good. Now lets map it to a vector:</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>sapply(-2:2, lengthOfArray)   # &gt; [1] 3 2 1 2 3
+</code></pre></div></div>
+
+<p>Ok. This is not as bad as I would had thought. At least the length
+function has a simple regularity:</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>length(a:b) == abs(b - a) + 1
+</code></pre></div></div>
+
+<p>One problem with the approach is that <code class="highlighter-rouge">sapply</code> stands for simplified
+apply, and performes some simplifications which might depend on the
+input data, and can lead to subtle bugs.</p>
+
+<p>As we have seen the sequence operator ‘:’ is problematic to use
+in programs and loops. The recommended pattern in this case is using
+the <code class="highlighter-rouge">seq</code> function:</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>seq(length=5)    # &gt; [1] 1 2 3 4 5
+seq(length=0)    # &gt; [1] integer(0)  i.e. length 0 sequence
+seq(0,length=5)  # &gt; [1] 0 1 2 3 4   i.e. good ol C/Java arrays
+</code></pre></div></div>
+
+<p>Maybe an abreviation would be convenient:</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>iter &lt;- function(n) seq(0,length=n)
+</code></pre></div></div>
+
+<h2 id="under-the-hood">Under the hood</h2>
+
+<p>We are following [6, Chap. 13].</p>
+
+<p>R is an interpreted language using a <strong>read</strong>, <strong>parse</strong>, <strong>evaluate</strong>
+loop to evaluate expressions read from stdin.  In R an expression is
+parsed into an <strong>object</strong>, which is then passed to the <code class="highlighter-rouge">eval()</code>
+function. The eval function returns the result of the evaluation as an
+object with is then printed to the output stream.</p>
+
+<p>Evaluation and parsing can be separated using the <code class="highlighter-rouge">quote</code> and <code class="highlighter-rouge">eval</code>
+functions:</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>a &lt;- 0
+X =	quote(a &lt;- 3)        # R object representation of expression
+a                        # &gt; [1] 0
+eval(X)                  # Evaluate object
+a                        # &gt; [1] 3
+</code></pre></div></div>
+
+<p>So everyhing in R comes down to evalating <strong>objects</strong>.  But what are
+objects?</p>
+
+<p>Ideally I would like to have some lower level, detail about
+implementations of objects. Howver, lets look at some examples first:</p>
+
+<ul>
+  <li>
+    <p>Constants := “Objects that evaluate to themselves.”
+This means a statement xxx represents an constant object iff</p>
+
+    <div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  eval(quote(xxx)) == quote(xxx)
+</code></pre></div>    </div>
+
+    <p>Examples:</p>
+
+  	eval(quote(3)) == quote(3)          # TRUE =&gt; constant
+    <div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  eval(quote("hi")) == quote("hi")    # TRUE =&gt; constant
+  	eval(quote(a)) == quote(a)          # FALSE
+  	eval(quote(-1)) == quote(-1)        # FALSE -&gt; function call
+</code></pre></div>    </div>
+
+    <p>The statement <code class="highlighter-rouge">-1</code> represents the function call object <code class="highlighter-rouge">-(1)</code>.
+Question: Can we turn the rule for constants into a function?</p>
+
+  	isConst &lt;- function(x) { eval(quote(x)) == quote(x) }
+    <div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  isConst(3) # &gt; [1] FALSE
+</code></pre></div>    </div>
+
+    <p>So the naive approach does not work. How can we debug this?  RStudio
+comes with a debugger. Setting a breakpoint inside the function
+reveals that <code class="highlighter-rouge">x</code> is of type <strong>promise</strong>, which is never constant. We
+have to look closer into function calls to understand this
+behavior.</p>
+  </li>
+  <li>
+    <p>Names := “Expressions that identify objects”</p>
+
+    <p>Statements expressing names have to pass the following regular expression:</p>
+
+    <div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  ^[.[:alpha:]][._[:alnum:]]*$
+</code></pre></div>    </div>
+
+    <p>Backticks allow arbitrary character strings to act as names:</p>
+
+    <div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  class(quote(`&lt;-`)) # [1] "name"
+</code></pre></div>    </div>
+
+    <p>Using backticks it is also possible to expose the functional
+internals of R, e.g.</p>
+
+    <div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  `&lt;-`(a, 3) # is identical to "a &lt;- 3"
+  `if`(a == 3, "is three", "not three")  # &gt; [1] "is three"
+</code></pre></div>    </div>
+  </li>
+  <li>
+    <p>Promises. Internally used object type to implement lazy evaluation.
+We have seen promises, when we were debugging a function. The
+creation of promise objects is discuraged by the R API. Nevertheless,
+the user can create promise objects using the <code class="highlighter-rouge">delayedAssign</code> function.</p>
+
+    <div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  delayedAssign("x", 3)
+</code></pre></div>    </div>
+
+    <p>RStudio, now shows a name “x” of type “promise” in its environment
+ view.  However, I could not find a way to print the class “promise”
+ on the scrren. All of <code class="highlighter-rouge">class(quote(z))</code>, <code class="highlighter-rouge">class(z)</code>, <code class="highlighter-rouge">typeof(z)</code>,
+ <code class="highlighter-rouge">typeof(quote(z))</code> show something else.</p>
+
+    <p>For further inormation see [7].</p>
+  </li>
+  <li>
+    <p>Function calls. This class covers everything else.</p>
+  </li>
+</ul>
+
+<h1 id="r-data-structrures">R Data Structrures</h1>
+
+<h2 id="working-with-vectors">Working with vectors</h2>
+
+<p>Let’s generate a vector with some numbers in it:</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>x &lt;- -3:3
+</code></pre></div></div>
+
+<p>We can access individual parts of it via <code class="highlighter-rouge">x[i]</code> or to select ranges
+<code class="highlighter-rouge">x[c(1,2)]</code> or <code class="highlighter-rouge">x[3:5]</code>. We can filter <code class="highlighter-rouge">x</code> by boolean vectors:</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>x[c(F,T,F,T,F,T,F)]  # &gt; [1] -2 0 2
+</code></pre></div></div>
+
+<p>If the index vector is shorter than the length of <code class="highlighter-rouge">x</code> than the
+vector indexing vector is repeated as often as necessary:</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>(0:9)[c(T,F)]            # &gt; [1] 0 2 4 6 8
+</code></pre></div></div>
+
+<p>This is particularly powerful in combination with vectorized
+application of comparisons:</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>x &gt; 0    # &gt; [1] FALSE FALSE FALSE FALSE TRUE TRUE TRUE
+</code></pre></div></div>
+
+<p>So that <code class="highlighter-rouge">x[x &gt; 0]</code> selects the positive parts of the vector</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>x[x &gt; 0] # &gt; [1] 1 2 3.
+</code></pre></div></div>
+
+<p>The following examples shows all values that are far away from the
+average:</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>y &lt;- x*x
+y[y - mean(y) &gt; sd(y)]
+</code></pre></div></div>
+
+<h2 id="data-frames">Data Frames</h2>
+
+<p>Data frame (<code class="highlighter-rouge">data.frame</code>) objects are essentially a list of vectors of the same
+length. It is the equivalent of a spreadsheet or database table in the
+R language. A predefined <code class="highlighter-rouge">data.frame</code> object is <code class="highlighter-rouge">mtcars</code>, containing information
+about a number of cars:</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>mtcars                    # shows a table view of the data.frame
+class(mtcars)             # &gt; [1] "data.frame"
+colnames(mtcars)          # lists names of cloums
+rownames(mtcars)          # list row names
+mtcars$mpg                # vector containing mpg values
+</code></pre></div></div>
+
+<p>Data frames can be indexed like a matrix:</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>mtcars[1]                 # data.frame containing only first cloumn ('mpg')
+mtcars[c('mpg','gear')]   # data.frame containing only two colums
+mtcars['Valiant',]        # single row
+mtcars[1:10,]             # slice of rows
+</code></pre></div></div>
+
+<p>Let’s create our own data frame:</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>df &lt;- data.frame(x=1:3, y=c('a','b','c'), z=c(T,T,F))
+with(df, x[z])            # load df into environment
+</code></pre></div></div>
+
+<h1 id="time-series-analysis-with-r">Time Series Analysis with R</h1>
+
+<h2 id="importing-data">Importing data</h2>
+
+<p>Before we can start lets import some data. I have prepared
+some accelerometer data from my smartphone as tab separated values</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>x	y	z
+-4.9433208	6.552774	5.5564456
+-2.8357031	6.361172	6.935977
+-2.9889846	6.591094	7.089258
+-3.027305	6.246211	6.6677346
+-3.2189064	6.361172	6.552774
+</code></pre></div></div>
+
+<p>Now let us import this file into R, by running:</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>ACC &lt;- read.csv(file="acc.tsv", header=TRUE, sep="\t")
+</code></pre></div></div>
+
+<p>This gives us an <strong>data.frame</strong> object <code class="highlighter-rouge">ACC</code> in the environment. Let’s
+see what is in there: <code class="highlighter-rouge">plot(ACC)</code> give us a 3x3 matrix of plots.</p>
+
+<p>Data frame objects are essentially a list of vectors of the same length.</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>colnames(ACC) # &gt; [1] "x" "y" "z"
+</code></pre></div></div>
+
+<p>We can access the individual colums by their names <code class="highlighter-rouge">ACC$x</code>.</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>library(lattice)
+xyplot(x ~ y, data=ACC)
+</code></pre></div></div>
+
+<p>The <code class="highlighter-rouge">with</code> statement allows us to treat the colums as usual variables
+in arbitrary expressions:</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>with(ACC, {
+	plot(c(0,length(x)), range(x,y,z) , type='n')  # no plotting
+	lines(x, col='green');
+	lines(y, col='blue');
+	lines(z, col='red')
+})
+</code></pre></div></div>
+
+<h2 id="reading-from-a-database">Reading from a database</h2>
+
+<p>We want to access more data stored on a local Postgres database.
+To do this we first install the <a href="https://code.google.com/p/rpostgresql/">R-postgres package</a></p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>install.packages("RPostgreSQL")
+</code></pre></div></div>
+
+<p>and connect to the the database</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>library(RPostgreSQL)
+drv &lt;- dbDriver("PostgreSQL")
+con &lt;- dbConnect(drv, host="localhost", port="5432",
+	             dbname="test", user="test", password="test"
+				 )
+dbGetInfo(drv)  # no of db connections
+summary(con)    # list basic info.
+</code></pre></div></div>
+
+<p>Now lets query some data from the connection:</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>rs &lt;- dbSendQuery(con,"SELECT * FROM sensor_accelerometer WHERE trip_id = 209")
+first_row &lt;- fetch(rs, n=1)
+class(first_row) # &gt; [1] "data.frame"
+ACC &lt;- fetch(rs,n= -1)
+</code></pre></div></div>
+
+<p>Let’s write a convenience function to automate this process.</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>getACC &lt;- function(id) {
+	rs &lt;- dbSendQuery(
+	        con,
+            paste("SELECT * FROM sensor_accelerometer WHERE trip_id = ",id)
+			)
+	fetch(rs, n=-1)
+}
+ACC &lt;- getACC(863)
+</code></pre></div></div>
+
+<p>How much data did we fetch?</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>dim(ACC)  # &gt; [1] 6356 5
+nrow(ACC) # &gt; [1] 6356
+ncol(ACC) # &gt; [1] 5
+</code></pre></div></div>
+
+<p>Lets do some subsampling before we plot the data:</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>SubACC &lt;- ACC[c(T,F),]   # selects every second data point
+dim(SubACC)              # &gt; [1] 3178 5
+with(SubACC, plot(x, type='l'))
+
+# Random subsampling
+SubACC &lt;- ACC[sort(sample(nrow(ACC),50)),]
+with(SubACC,plot(x, type='l'))
+</code></pre></div></div>
+
+<p>Lets plot the first few data points:</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>with(ACC[1:500,], plot(x), type='l'))
+</code></pre></div></div>
+
+<h2 id="quality-control">Quality control</h2>
+
+<p>How regular is our data sampled?</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>diff(ACC$ts)      # computes differences between time stamps
+</code></pre></div></div>
+
+<p>We see a bunch of numbers most of them are -5, this means our time
+series runs actually backwards.  Moreover, we have several outliers
+with very big deviations going in both directions:</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>plot(diff(ACC$ts))
+</code></pre></div></div>
+
+<p>While this problem can actually be resolved in our db query,
+lets solve it here as well.</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>BCC &lt;- ACC[order(ACC$ts),]
+</code></pre></div></div>
+
+<p>Furthermore, we see deviations from the expected value of 5:</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>with(BCC,hist(diff(ts)[diff(ts)&gt;5]))
+</code></pre></div></div>
+
+<p>We see a few data points with 20 and a maximal deviation of 50, this
+is not too bad, but we should apply some interploation to make up for
+this:</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>sample_count &lt;- (max(BCC$ts) - min(BCC$ts))/5
+interp &lt;- function(v) approx(BCC$ts,v,n=sample_count)$y
+
+CCC &lt;- data.frame(ts=1:sample_count)
+CCC$x &lt;- interp(BCC$x)
+CCC$y &lt;- interp(BCC$y)
+CCC$z &lt;- interp(BCC$z)
+</code></pre></div></div>
+
+<h2 id="series-operations">Series operations</h2>
+
+<p>Lets prepare our data</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>s2 &lt;- function(DF) with(DF, sqrt(x^2 + y^2 + z^2))
+L &lt;- s2(CCC) # length of ACC vector
+</code></pre></div></div>
+
+<p>Differencing and integration are readily defined</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>diff(L)
+int &lt;- diffinv
+diff(int(L)) - L
+</code></pre></div></div>
+
+<p>Application of linear filters is easy as well:</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>plot_filter &lt;- function(L,weights) {
+	plot(
+		cbind(L,filter(L,weights)),
+	    plot.type='single',
+		col=c('black','red'))
+}
+
+norm &lt;- function(a) {a / sum(a)}
+
+# smooth signal with average of 100 values
+plot_filter(L[1:1000],norm(rep(1,100)))
+
+# smooth signal with average of 100 values
+plot_filter(L[1:1000],norm(dnorm(seq(-2,2,0.1))))
+</code></pre></div></div>
+
+<p>Now lets compute the auto correlation to detect regularities</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>ACF &lt;- acf(L,3000)
+
+# find local maxima by chcking sing changes of the first derivative
+lmax &lt;- which(diff(sign(diff(ACF$acf)))==-2)
+# &gt; 253  502  752  868  884 1001
+</code></pre></div></div>
+
+<h2 id="time-series-objects">Time Series Objects</h2>
+
+<p>Now lets convert the data into a multivariate time series object</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>M &lt;- with(CCC, cbind(x,y,z,L)) # matrix representation of CCC
+TL &lt;- ts(M,frequency=50)
+
+plot(TL, plot.type='single', col=c('blue','green','red','grey'))
+</code></pre></div></div>
+
+<p>Now lets do a seasonal decomposistion of the time series</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>plot(stl(ts(L,frequency=253), s.window=1, t.window=100))
+
+plot(stl(TL[,"L"], s.window=10, t.window=100))
+</code></pre></div></div>
+
+<h1 id="references">References</h1>
+
+<ol>
+  <li><a href="http://www.johndcook.com/R_language_for_programmers.html">R programming for programmers</a></li>
+  <li><a href="http://radfordneal.wordpress.com/2008/08/06/design-flaws-in-r-1-reversing-sequences/">Design flaws in R</a></li>
+  <li>Patrick Burns - The R Inferno</li>
+  <li><a href="http://www.ats.ucla.edu/stat/r/">List of Ressources</a></li>
+  <li><a href="http://tryr.codeschool.com/">Online course for beginners.</a></li>
+  <li>John Chambers - Software for Data Analysis</li>
+  <li><a href="http://adv-r.had.co.nz/Computing-on-the-language.html">http://adv-r.had.co.nz/Computing-on-the-language.html</a></li>
+  <li><a href="http://a-little-book-of-r-for-time-series.readthedocs.org/en/latest/src/timeseries.html">Little Book: R time series</a></li>
+  <li><a href="http://www.statmethods.net/advstats/timeseries.html">http://www.statmethods.net/advstats/timeseries.html</a></li>
+  <li><a href="http://cran.r-project.org/doc/manuals/r-release/R-lang.html">Official docs</a></li>
+  <li><a href="https://www.harding.edu/fmccown/r/">Plotting guide</a></li>
+</ol>
+
+
+  <!-- Include Mathjax if needed -->
+  
+
+</div>
+
+  </div>
+</body>
+<style>
+  ody/*****************************************************************************/
+/*
+/* Common
+/*
+/*****************************************************************************/
+
+/* Global Reset */
+
+* {
+  margin: 0;
+  padding: 0;
+}
+
+html, body {
+  height: 100%;
+}
+
+body {
+  font-family: Helvetica, arial, sans-serif;
+  font-size: 14px;
+  line-height: 1.6;
+  background-color: white;
+  padding: 10px 30px 10px 30px;
+}
+
+h1 {
+  font-size: 1em;
+  text-transform: uppercase;
+  text-alig: left;
+  font-size: 1em;
+  margin-bottom: 1em;
+  margin-top: 2em;
+}
+h2 {
+  font-size: 1em;
+  margin-bottom: 1em;
+  margin-top: 2em;
+}
+p {
+  margin: 1em 0;
+}
+
+a {
+  color: #00a;
+}
+
+a:hover {
+  color: black;
+}
+
+a:visited {
+  color: #a0a;
+}
+
+table {
+  font-size: inherit;
+  font: 100%;
+}
+
+pre {
+  text-align: left;
+  overflow-y: auto;
+}
+
+/*****************************************************************************/
+/*
+/* Home
+/*
+/*****************************************************************************/
+
+ul.posts {
+  list-style-type: none;
+  margin-bottom: 2em;
+}
+
+ul.posts li {
+  line-height: 1.75em;
+}
+
+ul.posts span {
+  color: #aaa;
+  font-family: Monaco, "Courier New", monospace;
+  font-size: 75%;
+}
+
+
+.date {
+  color: #aaa;
+  font-family: Monaco, Courier New, monospace;
+  font-size: 75%;
+  font-weight: normal;
+  float:right;
+}
+
+.quo {
+  position:relative; top:-1px;
+}
+
+#banner {
+  margin-bottom: 1em;
+}
+
+/*****************************************************************************/
+/*
+/* Site
+/*
+/*****************************************************************************/
+
+.site {
+  text-align: justify;
+  width: 48em;
+  margin: 3em auto 2em auto;
+  line-height: 1.5em;
+  margin-bottom: 200px;
+}
+
+.site .headline a {
+    color: #a00;
+    font-weight: bold;
+    margin-bottom: 2em;
+    margin-top: 2em;
+    text-decoration: none;
+}
+
+.title {
+  color: #a00;
+  font-weight: bold;
+  margin-bottom: 2em;
+  margin-top: 2em;
+}
+
+.site .title a {
+  color: #a00;
+  text-decoration: none;
+}
+
+.site .title a:hover {
+  color: black;
+}
+
+.site .title a.extra {
+  color: #aaa;
+  text-decoration: none;
+  margin-right: 1em;
+}
+
+.site .title a.extra:hover {
+  color: black;
+}
+
+.site .meta {
+  color: #aaa;
+}
+
+.site .footer {
+  font-size: 80%;
+  color: #666;
+  border-top: 4px solid #eee;
+  margin-top: 2em;
+  overflow: hidden;
+}
+
+.site .footer .contact {
+  float: left;
+  margin-right: 1em;
+}
+
+.site .footer .contact a {
+  color: #8085C1;
+}
+
+.site .footer .rss {
+  float: right;
+}
+
+.site .footer .rss img {
+  border: 0;
+}
+
+/*****************************************************************************/
+/*
+/* Posts
+/*
+/*****************************************************************************/
+
+#markdown-toc li {
+    line-height: 1;
+}
+
+.abstract p {
+    width: 80%;
+    margin-left: auto;
+    margin-top: 3em;
+    margin-bottom: 3em;
+}
+
+#post h1 {
+  font-size: 2em;
+  text-transform: uppercase;
+  text-align: center;
+  margin: 2em 0 1.5em 0;
+  line-height: 1.5em;
+}
+#post h2, h3, h4, h5, h6 {
+  font-size: 1em;
+  margin-bottom: 1em;
+  margin-top: 2em;
+  border-bottom: 1px solid #cccccc;
+}
+#post h2:before { content: "# "; }
+#post h3:before { content: "## "; }
+#post h4:before { content: "### "; }
+
+/* standard */
+
+#post pre {
+  border: 1px solid #ddd;
+  background-color: #f5f5f5;
+  padding: 3px 5px 3px;
+  margin: 5px 0 5px 0;
+  font-family: Consolas, "Liberation Mono", Menlo, Courier, monospace;
+  font-size: 12px;
+  line-height: 16.79px;
+  word-wrap: normal;
+}
+
+#post ul,
+#post ol {
+  margin-left: 1.35em;
+}
+
+/* extra space for list elements  */
+#post li {
+  margin: 1em 0;
+}
+#post li li { /* ... but not for nested ones */
+  margin: .5em 0;
+}
+
+#post pre code {
+  border: none;
+}
+
+#post blockquote {
+  border-left: 4px solid #e8e8e8;
+  padding-left: 20px;
+  background-color: #f9f9f9;
+  margin: 30px 0;
+}
+
+.pullquote {
+  font-family: Georgia, serif;
+  font-size: 18px;
+  font-style: italic;
+  margin: 0.25em 0;
+  padding: 0.25em 40px;
+  line-height: 1.45;
+  position: relative;
+  color: #383838;
+}
+
+.pullquote:before {
+  display: block;
+  content: "\201C";
+  font-size: 80px;
+  position: absolute;
+  left: 0;
+  top: -20px;
+  color: #7a7a7a;
+}
+
+
+#post .credits {
+  text-align: right;
+  font-size: 70%;
+  color: #aaa;
+}
+
+/* terminal */
+
+#post pre.terminal {
+  border: 1px solid black;
+  background-color: #333;
+  color: white;
+}
+
+#post pre.terminal code {
+  background-color: #333;
+}
+
+#related {
+  border-top: 4px solid #eee;
+  margin-top: 2em;
+}
+
+#related h2 {
+  margin-bottom: 1em;
+}
+
+#disqus_thread {
+  border-top: 4px solid #eee;
+  margin-top: 2em;
+  padding-top: 1em;
+}
+
+#post img {
+  max-width: 100%;
+}
+
+/**
+ * Figure Plugin: https://github.com/lmullen/jekyll_figure
+ **/
+
+figure img {
+  border: 1px solid #ccc;
+  padding: 5px;
+  border-radius: 5px;
+  max-width : 100%;
+}
+
+figure {
+  text-align: center;
+}
+
+figure figcaption {
+  font-style: italic;
+  text-align: center;
+}
+
+.pdflink {
+  float: right;
+}
+
+/**
+ * GITHUB TABLE STYLES: https://github.com/alampros/Docter/blob/master/ghf_marked.css
+ **/
+
+table
+{
+  border-collapse:collapse;
+  margin:20px auto auto;
+  padding:0;
+}
+
+table tr
+{
+  border-top:1px solid #ccc;
+  background-color:#fff;
+  margin:0;
+  padding:0;
+}
+
+table tr:nth-child(2n)
+{
+  background-color:#f8f8f8;
+}
+table tr th[align="center"], table tr td[align="center"] {
+  text-align:center;
+}
+table tr th, table tr td
+{
+  border:1px solid #ccc;
+  text-align:left;
+  margin:0;
+  padding:6px 13px;
+}
+
+/**
+ * Responsive
+ **/
+@media only screen and (max-width: 50em) {
+  .site {
+    text-align: left;
+    width: 100%;
+    margin: 0;
+  }
+  body {
+    padding: 15px;
+  }
+}
+
+@media only screen and (max-width: 30em) {
+  .site {
+    font-size: 20px;
+    line-height: 2.5em;
+  }
+}
+
+.sticker {
+  color:red;
+  border-style:solid;
+  border-color:red;
+  border-radius:0.2em;
+  margin:50px;
+}
+
+@media only print {
+  .splash {
+    visibility: hidden;
+  }
+}
+
+.hookin {
+  float: left;
+  font-size: 2.5em;
+  font-weight: 700;
+  padding-top: 0.2em;
+  margin-right: 0.4em;
+  color: #a00;
+  color: #EC9F2E;
+  font-family: "franklin-gothic-urw",Verdana,Geneva,sans-serif;
+}
+
+.dropcaps::first-letter {
+  font-size: 4.8em;
+  color: #a00;
+  font-family: Georgia;
+  font-weight: 500;
+  line-height: 0.9em;
+  float: left;
+  margin-right: 0.1em;
+}
+
+</style>
+<style>
+  .highlight  { background: #ffffff; }
+.highlight .c { color: #999988; font-style: italic } /* Comment */
+.highlight .err { color: #a61717; background-color: #e3d2d2 } /* Error */
+.highlight .k { font-weight: bold } /* Keyword */
+.highlight .o { font-weight: bold } /* Operator */
+.highlight .cm { color: #999988; font-style: italic } /* Comment.Multiline */
+.highlight .cp { color: #999999; font-weight: bold } /* Comment.Preproc */
+.highlight .c1 { color: #999988; font-style: italic } /* Comment.Single */
+.highlight .cs { color: #999999; font-weight: bold; font-style: italic } /* Comment.Special */
+.highlight .gd { color: #000000; background-color: #ffdddd } /* Generic.Deleted */
+.highlight .gd .x { color: #000000; background-color: #ffaaaa } /* Generic.Deleted.Specific */
+.highlight .ge { font-style: italic } /* Generic.Emph */
+.highlight .gr { color: #aa0000 } /* Generic.Error */
+.highlight .gh { color: #999999 } /* Generic.Heading */
+.highlight .gi { color: #000000; background-color: #ddffdd } /* Generic.Inserted */
+.highlight .gi .x { color: #000000; background-color: #aaffaa } /* Generic.Inserted.Specific */
+.highlight .go { color: #888888 } /* Generic.Output */
+.highlight .gp { color: #555555 } /* Generic.Prompt */
+.highlight .gs { font-weight: bold } /* Generic.Strong */
+.highlight .gu { color: #aaaaaa } /* Generic.Subheading */
+.highlight .gt { color: #aa0000 } /* Generic.Traceback */
+.highlight .kc { font-weight: bold } /* Keyword.Constant */
+.highlight .kd { font-weight: bold } /* Keyword.Declaration */
+.highlight .kp { font-weight: bold } /* Keyword.Pseudo */
+.highlight .kr { font-weight: bold } /* Keyword.Reserved */
+.highlight .kt { color: #445588; font-weight: bold } /* Keyword.Type */
+.highlight .m { color: #009999 } /* Literal.Number */
+.highlight .s { color: #d14 } /* Literal.String */
+.highlight .na { color: #008080 } /* Name.Attribute */
+.highlight .nb { color: #0086B3 } /* Name.Builtin */
+.highlight .nc { color: #445588; font-weight: bold } /* Name.Class */
+.highlight .no { color: #008080 } /* Name.Constant */
+.highlight .ni { color: #800080 } /* Name.Entity */
+.highlight .ne { color: #990000; font-weight: bold } /* Name.Exception */
+.highlight .nf { color: #990000; font-weight: bold } /* Name.Function */
+.highlight .nn { color: #555555 } /* Name.Namespace */
+.highlight .nt { color: #000080 } /* Name.Tag */
+.highlight .nv { color: #008080 } /* Name.Variable */
+.highlight .ow { font-weight: bold } /* Operator.Word */
+.highlight .w { color: #bbbbbb } /* Text.Whitespace */
+.highlight .mf { color: #009999 } /* Literal.Number.Float */
+.highlight .mh { color: #009999 } /* Literal.Number.Hex */
+.highlight .mi { color: #009999 } /* Literal.Number.Integer */
+.highlight .mo { color: #009999 } /* Literal.Number.Oct */
+.highlight .sb { color: #d14 } /* Literal.String.Backtick */
+.highlight .sc { color: #d14 } /* Literal.String.Char */
+.highlight .sd { color: #d14 } /* Literal.String.Doc */
+.highlight .s2 { color: #d14 } /* Literal.String.Double */
+.highlight .se { color: #d14 } /* Literal.String.Escape */
+.highlight .sh { color: #d14 } /* Literal.String.Heredoc */
+.highlight .si { color: #d14 } /* Literal.String.Interpol */
+.highlight .sx { color: #d14 } /* Literal.String.Other */
+.highlight .sr { color: #009926 } /* Literal.String.Regex */
+.highlight .s1 { color: #d14 } /* Literal.String.Single */
+.highlight .ss { color: #990073 } /* Literal.String.Symbol */
+.highlight .bp { color: #999999 } /* Name.Builtin.Pseudo */
+.highlight .vc { color: #008080 } /* Name.Variable.Class */
+.highlight .vg { color: #008080 } /* Name.Variable.Global */
+.highlight .vi { color: #008080 } /* Name.Variable.Instance */
+.highlight .il { color: #009999 } /* Literal.Number.Integer.Long */
+
+</style>
+</html>

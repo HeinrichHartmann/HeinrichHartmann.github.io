@@ -1,0 +1,992 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en-us">
+<head>
+   <meta http-equiv="content-type" content="text/html; charset=utf-8"/>
+   <title>All is loss</title>
+   <meta name="author" content="Heinrich Hartmann"/>
+   
+   </head>
+<body>
+  <div class="site">
+    <div class="headline"><a href="/">Heinrich Hartmann</a></div>
+    <div id="post">
+  <h1 id="h1-title"> All is loss</h1>
+  
+  
+  <p class="meta">
+    Written on 2018-03-11
+     in Stemwede, Germany 
+    
+  </p>
+
+  <!-- Splash -->
+  
+
+  <!-- Abstract -->
+  
+
+  
+     <!-- Mathjax preamble -->
+     <div style="visibility:hidden; display:none;">$$\newcommand{\nl}{\\}
+
+\newcommand{\half}{\frac{1}{2}}
+\newcommand{\floor}[1]{\lfloor #1 \rfloor}
+\newcommand{\ceil}[1]{\lceil #1 \rceil}
+\newcommand{\Set}[2]{\left\{\, #1 \;\vert\; #2 \,\right\}}
+\newcommand{\C}{\,\#}
+\newcommand{\CSet}[2]{\#\{\, #1 \;\vert\; #2 \,\}}
+
+\newcommand{\qtext}[1]{\quad\text{#1}\quad}
+\newcommand{\stext}[1]{\;\text{#1}\;}
+
+\newcommand{\IFF}{\Leftrightarrow}
+\newcommand{\inf}{\infty}
+
+\newcommand{\Ind}{\mathbb{1}}
+
+\newcommand{\IR}{\mathbb{R}}
+\newcommand{\IA}{\mathbb{A}}
+\newcommand{\IB}{\mathbb{B}}
+\newcommand{\IC}{\mathbb{C}}
+\newcommand{\ID}{\mathbb{D}}
+\newcommand{\IF}{\mathbb{F}}
+\newcommand{\IH}{\mathbb{H}}
+\newcommand{\II}{\mathbb{I}}
+\newcommand{\IL}{\mathbb{L}}
+\newcommand{\IN}{\mathbb{N}}
+\newcommand{\IP}{\mathbb{P}}
+\newcommand{\IQ}{\mathbb{Q}}
+\newcommand{\IR}{\mathbb{R}}
+\newcommand{\IS}{\mathbb{S}}
+\newcommand{\IV}{\mathbb{V}}
+\newcommand{\IZ}{\mathbb{Z}}
+
+\newcommand{\KR}{\matcal{R}}
+\newcommand{\KA}{\matcal{A}}
+\newcommand{\KB}{\matcal{B}}
+\newcommand{\KC}{\matcal{C}}
+\newcommand{\KD}{\matcal{D}}
+\newcommand{\KF}{\matcal{F}}
+\newcommand{\KH}{\matcal{H}}
+\newcommand{\KI}{\matcal{I}}
+\newcommand{\KL}{\matcal{L}}
+\newcommand{\KN}{\matcal{N}}
+\newcommand{\KP}{\matcal{P}}
+\newcommand{\KQ}{\matcal{Q}}
+\newcommand{\KR}{\matcal{R}}
+\newcommand{\KS}{\matcal{S}}
+\newcommand{\KV}{\matcal{V}}
+\newcommand{\KZ}{\matcal{Z}}
+
+\newcommand{\gc}{\mathfrak{C}}
+\newcommand{\gd}{\mathfrak{D}}
+\newcommand{\gM}{\mathfrak{M}}
+\newcommand{\gm}{\mathfrak{m}}
+\newcommand{\gf}{\mathfrak{f}}
+\newcommand{\gu}{\mathfrak{U}}
+
+\newcommand{\fa}{\mathfrak{a}}
+\newcommand{\fg}{\mathfrak{g}}
+\newcommand{\fn}{\mathfrak{n}}
+\newcommand{\fk}{\mathfrak{k}}
+\newcommand{\fm}{\mathfrak{m}}
+\newcommand{\fp}{\mathfrak{p}}
+
+\newcommand{\curly}[1]{\mathcal{#1}}
+\newcommand{\op}[1]{\mathrm{#1}}
+\newcommand{\Cat}[1]{\mathfrak{#1}}
+\newcommand{\cat}[1]{\mathbf{#1}}
+
+\newcommand{\vphi}{\varphi}
+\newcommand{\sphi}{\phi}
+\newcommand{\eps}{\varepsilon}
+
+\newcommand{\tensor}{\otimes}
+\newcommand{\tensors}{\tensor\dots\tensor}
+\newcommand{\Tensor}{\bigotimes}
+\newcommand{\ra}{\rightarrow}
+\newcommand{\lra}{\longrightarrow}
+\newcommand{\la}{\leftarrow}
+\newcommand{\lla}{\longleftarrow}
+\newcommand{\isom}{\cong}
+\newcommand{\epi}{\twoheadrightarrow}
+\newcommand{\mono}{\hookrightarrow}
+\newcommand{\del}{\partial}
+\newcommand{\union}{\cup}
+\newcommand{\dotcup}{\ensuremath{\mathaccent\cdot\cup}}
+\newcommand{\dunion}{\dotcup}
+\newcommand{\<}{\langle}
+\renewcommand{\>}{\rangle}
+\newcommand{\inpart}[1]{\in\text{\part}(#1)}
+\newcommand{\Vsum}{\bigoplus}
+\newcommand{\vsum}{\oplus}
+
+\renewcommand{\S}{\mathfrak{S}}
+\newcommand{\id}{\mathrm{id}}
+\newcommand{\rk}{\mathrm{rk}}
+\newcommand{\Diff}{\mathrm{Diff}}
+\newcommand{\Hom}{\mathrm{Hom}}
+\newcommand{\Pic}{\mathrm{Pic}}
+\newcommand{\Spec}{\mathrm{Spec}}
+\newcommand{\End}{\mathrm{End}}
+\newcommand{\Ext}{\mathrm{Ext}}
+
+\DeclareMathOperator{\Supp}{\mathrm{Supp}}
+\DeclareMathOperator{\Sym}{Sym}
+\DeclareMathOperator{\Alt}{\Lambda}
+\DeclareMathOperator{\ad}{ad}
+\DeclareMathOperator{\ch}{ch}
+\DeclareMathOperator{\td}{td}
+\DeclareMathOperator{\pr}{pr}
+$$</div>
+  
+
+
+  <!-- Post content -->
+  <p>You might have heard, that most supervised Machine Learning methods boil down to <em>minimizing a loss function</em> over a set of parameters.
+I for myself was somewhat aware of this for a long time, but it was not until recently that I realized how powerfull this observation really is.</p>
+
+<ol>
+  <li>
+    <p><strong>Generality</strong>. Literally the same ideas apply to linear regressions, also used for training neural networks and SVMs.</p>
+  </li>
+  <li>
+    <p><strong>Effectivity</strong>. The above minimization can be performed with general numeric methods.
+This works in practice.
+While there shortcuts for some cases in most cases this the only thing you can do.</p>
+  </li>
+  <li>
+    <p><strong>Geometry</strong>. Being a trained as an algebraic geometer, I enjoy geometric approaches to problems.
+We will take a geometric view in this article, and draw some pretty pictures of paramters and model values.</p>
+  </li>
+</ol>
+
+<p>In this blog post we will first introduce the general machinery of loss minimization,
+and then visit a number of different machine learning models in this context.</p>
+
+<h2 id="the-general-loss-function">The General Loss Function</h2>
+
+<p>In a supervised learning setup, we commonly consider a free variable $x$ and a target variable $y$.
+(We are purposefully vague about the nature of $x$ and $y$ here, they can take one-dimensional, vector, or discrete values).
+For a given $x$ we want to determine the likely value of $y$.
+To do so, we introduce a modeling step.
+We consider a family of possible relations $f:x \mapsto y$ that are parametrized by a parameter $w$:</p>
+
+<script type="math/tex; mode=display">f(x, w) = y</script>
+
+<p>The question becomes, which model parameter $w$, will give us a good model?</p>
+
+<figure id="figure-1"><a href="/assets/capture_1520367784.png"><img src="/assets/capture_1520367784.png" alt="A parametrized data model" /></a><figcaption>Figure 1: A parametrized data model [<a href="/assets/capture_1520367784.png">PNG</a>]</figcaption></figure>
+
+<p>In order to settle for some parameter $w$, we need some evidence encoded in a training dataset $D=(x_i,y_i)_i, i=1,\dots,N$.
+This gives us some examples of the relation $x \mapsto y$ that we seek to generalize.
+The training objective is now to find a parameter $w=\hat{w}$, so that a</p>
+
+<script type="math/tex; mode=display">f(x_i, \hat{w}) \text{  is close to  } y_i</script>
+
+<p>for $x_i,y_i$ in the training dataset $D$.</p>
+
+<p>A common mathematical measure of “closeness” is the absolute distance $|a-b|$ in case that $y$ takes value in $\mathbb{R}$.
+More generally, we can consider a distance function $d(a,b)$ with $d(a,b) \geq 0$ and $d(a,a)=0$ to quantify the distance.
+Given such a distance $d$, we can then define a loss function as</p>
+
+<script type="math/tex; mode=display">Loss_D(w) = \sum_i d(f(x_i,w), y_i).</script>
+
+<p>Note that the loss function, only depends on the model parameter $w$, and on the training dataset.
+There is no dependency on $x$ and $y$ anymore.</p>
+
+<!-- <figure id='figure-2'><a  href='/assets/capture_1520369462.png'><img src='/assets/capture_1520369462.png' alt='Loss function over the parameter space'></a><figcaption>Figure 2: Loss function over the parameter space [<a  href="/assets/capture_1520369462.png">PNG</a>]</figcaption></figure> -->
+
+<p>The task of fitting the model to the training data can now be formulated as a minimization problem.
+Find a parameter $\hat{w}$, so that $Loss_D(w)$ is minimal:</p>
+
+<script type="math/tex; mode=display">\hat{w} = \mathrm{argmin}_w \; Loss_D(w)</script>
+
+<p>Once we have found $\hat{w}$, we can estimate the target variable $y$ from a given $x$:</p>
+
+<script type="math/tex; mode=display">\hat{y} = f(x,\hat{w})</script>
+
+<p>How good this model turns out to preform in practice depends heavily on the training data and the family of models we have been taking into consideration.
+However, the training procedure is always the same.</p>
+
+<h2 id="effectivity-a-implementation-in-python">Effectivity: A implementation in Python</h2>
+
+<p>To implement a supervised machine learning model in python, one only needs to implement two functions:</p>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">def</span> <span class="nf">f</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">w</span><span class="p">):</span>    <span class="c"># model function, e.g. w[0] + w[1]*x[0]</span>
+<span class="k">def</span> <span class="nf">dist</span><span class="p">(</span><span class="n">a</span><span class="p">,</span><span class="n">b</span><span class="p">):</span> <span class="c"># distance function, e.g (a-b)^2</span>
+</code></pre></div></div>
+
+<p>The rest is general machinery:</p>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">def</span> <span class="nf">Loss</span><span class="p">(</span><span class="n">w</span><span class="p">,</span><span class="n">D</span><span class="p">):</span>
+    <span class="n">loss</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">D</span><span class="p">[</span><span class="s">'x'</span><span class="p">])):</span>
+        <span class="n">x</span> <span class="o">=</span> <span class="n">D</span><span class="p">[</span><span class="s">'x'</span><span class="p">][</span><span class="n">i</span><span class="p">]</span>
+        <span class="n">y</span> <span class="o">=</span> <span class="n">D</span><span class="p">[</span><span class="s">'y'</span><span class="p">][</span><span class="n">i</span><span class="p">]</span>
+        <span class="n">loss</span> <span class="o">+=</span> <span class="n">dist</span><span class="p">(</span><span class="n">f</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">w</span><span class="p">),</span><span class="n">y</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">loss</span>
+
+<span class="kn">from</span> <span class="nn">scipy.optimize</span> <span class="kn">import</span> <span class="n">minimize</span>
+<span class="n">w0</span> <span class="o">=</span> <span class="p">[</span><span class="o">...</span><span class="p">]</span>                            <span class="c"># initiailization parameter</span>
+<span class="n">M</span> <span class="o">=</span> <span class="n">minimize</span><span class="p">(</span><span class="k">lambda</span> <span class="n">w</span><span class="p">:</span> <span class="n">Loss</span><span class="p">(</span><span class="n">w</span><span class="p">,</span><span class="n">D</span><span class="p">),</span> <span class="n">w0</span><span class="p">)</span> <span class="c"># Numeric minimization</span>
+<span class="k">print</span><span class="p">(</span><span class="n">M</span><span class="o">.</span><span class="n">x</span><span class="p">)</span>                            <span class="c"># print results</span>
+</code></pre></div></div>
+
+<p>Strikingly simple! No?</p>
+
+<p>Granted, this will not give the most effective minimizer in most cases, but as we will see this already works quite well.
+State of the art methods, only differ in the minimization method that is used.
+In particular information about gradient and Hessian matrix of the loss function might be available, and can be exploited.</p>
+
+<h2 id="an-example-dataset">An example Dataset</h2>
+
+<p>To make things fun an concrete we consider a (totally made up) dataset for some machine parts.</p>
+
+<table>
+  <thead>
+    <tr>
+      <th style="text-align: right">Current</th>
+      <th style="text-align: right">Voltage</th>
+      <th style="text-align: right">Vibration</th>
+      <th style="text-align: right"> </th>
+      <th style="text-align: right">Error-rate</th>
+      <th>Faulty</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="text-align: right">0.61</td>
+      <td style="text-align: right">9.9</td>
+      <td style="text-align: right">24.7</td>
+      <td style="text-align: right"> </td>
+      <td style="text-align: right">0.02</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <td style="text-align: right">0.53</td>
+      <td style="text-align: right">14.9</td>
+      <td style="text-align: right">26.2</td>
+      <td style="text-align: right"> </td>
+      <td style="text-align: right">0.01</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <td style="text-align: right">0.45</td>
+      <td style="text-align: right">15.9</td>
+      <td style="text-align: right">22.7</td>
+      <td style="text-align: right"> </td>
+      <td style="text-align: right">0.01</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <td style="text-align: right">0.32</td>
+      <td style="text-align: right">15.8</td>
+      <td style="text-align: right">234.1</td>
+      <td style="text-align: right"> </td>
+      <td style="text-align: right">6.51</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <td style="text-align: right">0.38</td>
+      <td style="text-align: right">11.8</td>
+      <td style="text-align: right">254.3</td>
+      <td style="text-align: right"> </td>
+      <td style="text-align: right">6.24</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <td style="text-align: right">…</td>
+      <td style="text-align: right"> </td>
+      <td style="text-align: right"> </td>
+      <td style="text-align: right"> </td>
+      <td style="text-align: right"> </td>
+      <td> </td>
+    </tr>
+  </tbody>
+</table>
+
+<p>Each part comes with three sensor readings “current”, “voltage” and “vibration” that act as free variables.
+The remaining two variables “error-rate” and “faulty” are the target variables we seek to predict.</p>
+
+<h2 id="method-0-manual-examination">Method 0: Manual Examination</h2>
+
+<p>Looking at the data it’s pretty clear that error-rate faulty can be determined from the vibration reading.
+The first two variables are uncorrelated.
+Here is a scatterplot that visualizes the relation between “vibration” and “error-rate”.</p>
+
+<figure id="figure-3"><a href="/assets/loss-ve.png"><img src="/assets/loss-ve.png" alt="Vibration vs Error-rate" /></a><figcaption>Figure 3: Vibration vs Error-rate [<a href="/assets/loss-ve.png">PNG</a>]</figcaption></figure>
+
+<p>If the vibration parameter goes above ~100 we expect a high error rate and a faulty part.
+This is what the learning methods below should show as well.</p>
+
+<h2 id="method-1-linear-regression">Method 1: Linear Regression</h2>
+
+<p>The first model we consider is the linear regression model.
+To apply the above procedure, we must only specify a model function $f(x,w)$ and a distance $d$.
+For linear regressions we put:</p>
+
+<script type="math/tex; mode=display">f(x,w) = w_0 + x_1 w_1 + x_2 w_2 + ... + x_N w_N</script>
+
+<script type="math/tex; mode=display">d(a,b) = (a-b)^2</script>
+
+<p>Here N would be the number of free variables (3 in our case) and $x_1,\dots,x_N$ the values of a single row of data in the table.
+E.g. $(x_1,x_2,x_3)=(0.61,9.9,24.7)$.</p>
+
+<p>To make things even more simple, we consider the one-dimensional case here (N=1) and consider only the “vibration” variable.</p>
+
+<script type="math/tex; mode=display">f(x,w) = w_0 + x w_1.</script>
+
+<p>As distance function we will take the squared difference $d(a,b) = (a-b)^2$, so</p>
+
+<script type="math/tex; mode=display">Loss_D(w_0,w_1) = \sum_i d(f(x_i,w),y_i) = \sum_i (w_0 - x_i w_1 - y_i)^2</script>
+
+<p>With the dataset at hand we can now make this concrete.
+Let’s choose some arbitrary parameters $(w_0,w_1)=(-3,1)$ then we compute:</p>
+
+<script type="math/tex; mode=display">Loss_D(3,.01) = 3850.60</script>
+
+<p>The corresponding model looks clearly terrible:</p>
+
+<figure id="figure-4"><a href="/assets/loss-lreg-example.png"><img src="/assets/loss-lreg-example.png" alt="Example regression model, with parameters -3,1" /></a><figcaption>Figure 4: Example regression model, with parameters -3,1 [<a href="/assets/loss-lreg-example.png">PNG</a>]</figcaption></figure>
+
+<p>We can visualize the loss function over a whole range of parameters using a heatmap:</p>
+
+<figure id="figure-5"><a href="/assets/loss-lreg.png"><img src="/assets/loss-lreg.png" alt="Loss function for a linear regression" /></a><figcaption>Figure 5: Loss function for a linear regression [<a href="/assets/loss-lreg.png">PNG</a>]</figcaption></figure>
+
+<p>Each point in the plane, corresponds to choice of parameters $w_0,w_1$.
+The color indicates the value of the loss function $Loss_D(w_0,w_1)$.
+Dark/blue colors correspond to low values, red colors correspond to large values.</p>
+
+<p>The minimal loss is realized by the choice of parameters:</p>
+
+<script type="math/tex; mode=display">w_0=-0.345, w_1=0.0217</script>
+
+<p>The corresponding model looks already much better:</p>
+
+<figure id="figure-6"><a href="/assets/loss-lreg-model.png"><img src="/assets/loss-lreg-model.png" alt="The optimal linear regression model" /></a><figcaption>Figure 6: The optimal linear regression model [<a href="/assets/loss-lreg-model.png">PNG</a>]</figcaption></figure>
+
+<h2 id="method-2-variation-on-linear-regression">Method 2: Variation on Linear Regression</h2>
+
+<p>With the general machinery in place, we can play around with the model and distance function to arrive at different regression model.
+For example we could change the distance function, to be the absolute value and not the square difference.
+Also we might, just for fun, cap the maximal loss-contribution of a single sample at one, so:</p>
+
+<script type="math/tex; mode=display">d(a,b) = \min(|a-b|,1)</script>
+
+<p>The model function remains the same as for linear regression above.
+The resulting loss function looks as follows:</p>
+
+<figure id="figure-7"><a href="/assets/loss-vreg.png"><img src="/assets/loss-vreg.png" alt="Loss function for a variant of linear regression" /></a><figcaption>Figure 7: Loss function for a variant of linear regression [<a href="/assets/loss-vreg.png">PNG</a>]</figcaption></figure>
+
+<p>This time python’s minimizer get’s stuck in a local minimum $(w_0,w_1)=(-0.24, 0.01)$ (represented by a dot in the above figure) and
+the fitted model looks less then ideal:</p>
+
+<figure id="figure-8"><a href="/assets/loss-vreg-model.png"><img src="/assets/loss-vreg-model.png" alt="The fitted regression model variant" /></a><figcaption>Figure 8: The fitted regression model variant [<a href="/assets/loss-vreg-model.png">PNG</a>]</figcaption></figure>
+
+<p>Apparently this very distance function is not very suited for practical applications.</p>
+
+<h2 id="method-3-logistic-regression">Method 3: Logistic Regression</h2>
+
+<p>The logistic regression model predicts a binary variable $y=0,1$ from a continuous input $x$.
+It uses the following model function:</p>
+
+<script type="math/tex; mode=display">f(x,w) = \sigma(w_0 + x w_1)</script>
+
+<p>where $\sigma(x) = 1/(1+\exp(-x))$ is the <a href="https://en.wikipedia.org/wiki/Sigmoid_function">sigmoid function</a>.
+The distance function is given by:</p>
+
+<script type="math/tex; mode=display">d(a,b) = - b ln(a) - (1-b) ln(1-a).</script>
+
+<p>These choices may seem a bit unnatural.
+Instead of motivating them here, we just note that $\sigma(x)$ is an “S”-shaped function with values in $[0,1]$,
+and that d(a,b) is a distance measure that makes complete mispredictions very expensive ($d(1,0) = \infty$).</p>
+
+<p>Fitting a logistic regression model to the “vibration” and “error rate” examples looks as follows:</p>
+
+<figure id="figure-9"><a href="/assets/loss-log.png"><img src="/assets/loss-log.png" alt="Loss function for the logistic regression" /></a><figcaption>Figure 9: Loss function for the logistic regression [<a href="/assets/loss-log.png">PNG</a>]</figcaption></figure>
+
+<p>Note that there is a large sector of parameters, where the loss function is near constant (zero).
+It turns out that the loss function does not have a global minimum in this case.
+One can further decrease the loss by moving further “out” along this sector.
+At some point Python’s minimizer just stops to care and returns a value.</p>
+
+<p>The resulting model looks like this:</p>
+
+<figure id="figure-10"><a href="/assets/loss-log-model.png"><img src="/assets/loss-log-model.png" alt="The fitted logistic regression model" /></a><figcaption>Figure 10: The fitted logistic regression model [<a href="/assets/loss-log-model.png">PNG</a>]</figcaption></figure>
+
+<p>We can enforce the existence of a minimum by adding a so called regularization term to the loss function, e.g.</p>
+
+<script type="math/tex; mode=display">\tilde{Loss}_D(w) = Loss_D(w) + w_1^2</script>
+
+<p>This will penalize sharp ascends, and least to the following loss and model functions:</p>
+
+<figure id="figure-11"><a href="/assets/loss-logr.png"><img src="/assets/loss-logr.png" alt="Loss function for the regularized logistic regression" /></a><figcaption>Figure 11: Loss function for the regularized logistic regression [<a href="/assets/loss-logr.png">PNG</a>]</figcaption></figure>
+
+<figure id="figure-12"><a href="/assets/loss-logr-model.png"><img src="/assets/loss-logr-model.png" alt="The fitted regularized logistic regression model" /></a><figcaption>Figure 12: The fitted regularized logistic regression model [<a href="/assets/loss-logr-model.png">PNG</a>]</figcaption></figure>
+
+<p>Ahh, that’s much better.
+There is a global unique minimum that the Python mimimizer had no trouble finding.
+Also the resulting model is less extreme than before.
+It looks well adapted to the training data, but not overfitted.</p>
+
+<h2 id="method-4-neural-nets">Method 4: Neural Nets</h2>
+
+<p>You might be shocked to hear that neural networks are just stacked logistic regressions.
+So the model looks like this</p>
+
+<script type="math/tex; mode=display">f(x,w) = \tau(w_2 + w_3 \sigma(w_0 + w_1 x))</script>
+
+<p>Since we want to apply this network to a regression problem, will chose a “ReLU” activation function as output transformation:</p>
+
+<script type="math/tex; mode=display">\tau(x) = max(x,0)</script>
+
+<p>In this way we will have a chance to fit data that is not confined to the $[0,1]$ range.
+For the distance function we chose the squared difference:</p>
+
+<script type="math/tex; mode=display">d(a,b) = (a-b)^2.</script>
+
+<p>Since the model has more than two parameters, we need to fix all but two of them before we can
+visualize the Loss function.
+The following images illustrates the Loss functions in the variables $w_0$,$w_3$, with $w_1=0.14,w_2-1.6$.</p>
+
+<figure id="figure-13"><a href="/assets/loss-nn.png"><img src="/assets/loss-nn.png" alt="Loss function for the neural networkwidth=&quot;600px&quot;" /></a><figcaption>Figure 13: Loss function for the neural networkwidth="600px" [<a href="/assets/loss-nn.png">PNG</a>]</figcaption></figure>
+
+<p>The resulting model looks like this:</p>
+
+<figure id="figure-14"><a href="/assets/loss-nn-model.png"><img src="/assets/loss-nn-model.png" alt="The fitted neural network model" /></a><figcaption>Figure 14: The fitted neural network model [<a href="/assets/loss-nn-model.png">PNG</a>]</figcaption></figure>
+
+<p>Clearly visible are the ReLU cutoff just before x=100, and the scaled sigmoid function in the $x&gt;100$ region.
+The resulting models is very sensitive to the chosen initial parameters for the minimization.</p>
+
+<h2 id="conclusion">Conclusion</h2>
+
+<p>We have seen how the loss minimizations gives a general and effective framework to approach a number of different supervised learning methods.
+We only ended up treating one-dimensional examples, the general case is not conceptually more difficult, just harder to visualize.</p>
+
+<p>One thing I took away while writing this is how the complexity of the distance and model function can affect the performance of the minimizer.
+It’s easy to end up with loss functions that have lot’s of local minima, and the fitted model is heavily dependent on the initial parameters.
+There is certainly an art in choosing those functions in such a way that the minimization can be performed effectively while making the model rich and robust enough for applications.</p>
+
+<h2 id="epilogue">Epilogue</h2>
+
+<p>The jupyter notebooks used to generated the graphics are available <a href="https://github.com/HeinrichHartmann/all-is-loss-notebooks">here</a>.</p>
+
+<p>If you liked this post, you migh also find <a href="https://imgur.com/a/Hqolp">these visuaulzations</a> of differet optimization algorithms by Alac Radford interesting.</p>
+
+<p>This post drew some inspiration from a <a href="https://www.coursera.org/learn/ai/lecture/kfTED/deep-feed-forward-neural-networks">video lecture</a> by <a href="https://twitter.com/RomeoKienzler">Romeo Kienzler</a>.</p>
+
+<p>Thanks to <a href="https://twitter.com/renepickhardt">Rene Pickhardt</a> and <a href="https://martin-thoma.com">Martin Thoma</a> for their feedback on earlier versions of this article.</p>
+
+
+  <!-- Include Mathjax if needed -->
+  
+  <script type="text/javascript" async
+          src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-AMS_SVG">
+  </script>
+  <script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+      tex2jax: {
+        inlineMath: [['$','$']],
+        displayMath: [['$$','$$'], ["BEGIN_MATH","END_MATH"]]
+      }
+    });
+    MathJax.Hub.Register.MessageHook("Math Processing Error", function(message)
+                                     {
+                                       console.log("MathJax error:");
+                                       console.log(message);
+                                     });
+  </script>
+  
+
+</div>
+
+  </div>
+</body>
+<style>
+  ody/*****************************************************************************/
+/*
+/* Common
+/*
+/*****************************************************************************/
+
+/* Global Reset */
+
+* {
+  margin: 0;
+  padding: 0;
+}
+
+html, body {
+  height: 100%;
+}
+
+body {
+  font-family: Helvetica, arial, sans-serif;
+  font-size: 14px;
+  line-height: 1.6;
+  background-color: white;
+  padding: 10px 30px 10px 30px;
+}
+
+h1 {
+  font-size: 1em;
+  text-transform: uppercase;
+  text-alig: left;
+  font-size: 1em;
+  margin-bottom: 1em;
+  margin-top: 2em;
+}
+h2 {
+  font-size: 1em;
+  margin-bottom: 1em;
+  margin-top: 2em;
+}
+p {
+  margin: 1em 0;
+}
+
+a {
+  color: #00a;
+}
+
+a:hover {
+  color: black;
+}
+
+a:visited {
+  color: #a0a;
+}
+
+table {
+  font-size: inherit;
+  font: 100%;
+}
+
+pre {
+  text-align: left;
+  overflow-y: auto;
+}
+
+/*****************************************************************************/
+/*
+/* Home
+/*
+/*****************************************************************************/
+
+ul.posts {
+  list-style-type: none;
+  margin-bottom: 2em;
+}
+
+ul.posts li {
+  line-height: 1.75em;
+}
+
+ul.posts span {
+  color: #aaa;
+  font-family: Monaco, "Courier New", monospace;
+  font-size: 75%;
+}
+
+
+.date {
+  color: #aaa;
+  font-family: Monaco, Courier New, monospace;
+  font-size: 75%;
+  font-weight: normal;
+  float:right;
+}
+
+.quo {
+  position:relative; top:-1px;
+}
+
+#banner {
+  margin-bottom: 1em;
+}
+
+/*****************************************************************************/
+/*
+/* Site
+/*
+/*****************************************************************************/
+
+.site {
+  text-align: justify;
+  width: 48em;
+  margin: 3em auto 2em auto;
+  line-height: 1.5em;
+  margin-bottom: 200px;
+}
+
+.site .headline a {
+    color: #a00;
+    font-weight: bold;
+    margin-bottom: 2em;
+    margin-top: 2em;
+    text-decoration: none;
+}
+
+.title {
+  color: #a00;
+  font-weight: bold;
+  margin-bottom: 2em;
+  margin-top: 2em;
+}
+
+.site .title a {
+  color: #a00;
+  text-decoration: none;
+}
+
+.site .title a:hover {
+  color: black;
+}
+
+.site .title a.extra {
+  color: #aaa;
+  text-decoration: none;
+  margin-right: 1em;
+}
+
+.site .title a.extra:hover {
+  color: black;
+}
+
+.site .meta {
+  color: #aaa;
+}
+
+.site .footer {
+  font-size: 80%;
+  color: #666;
+  border-top: 4px solid #eee;
+  margin-top: 2em;
+  overflow: hidden;
+}
+
+.site .footer .contact {
+  float: left;
+  margin-right: 1em;
+}
+
+.site .footer .contact a {
+  color: #8085C1;
+}
+
+.site .footer .rss {
+  float: right;
+}
+
+.site .footer .rss img {
+  border: 0;
+}
+
+/*****************************************************************************/
+/*
+/* Posts
+/*
+/*****************************************************************************/
+
+#markdown-toc li {
+    line-height: 1;
+}
+
+.abstract p {
+    width: 80%;
+    margin-left: auto;
+    margin-top: 3em;
+    margin-bottom: 3em;
+}
+
+#post h1 {
+  font-size: 2em;
+  text-transform: uppercase;
+  text-align: center;
+  margin: 2em 0 1.5em 0;
+  line-height: 1.5em;
+}
+#post h2, h3, h4, h5, h6 {
+  font-size: 1em;
+  margin-bottom: 1em;
+  margin-top: 2em;
+  border-bottom: 1px solid #cccccc;
+}
+#post h2:before { content: "# "; }
+#post h3:before { content: "## "; }
+#post h4:before { content: "### "; }
+
+/* standard */
+
+#post pre {
+  border: 1px solid #ddd;
+  background-color: #f5f5f5;
+  padding: 3px 5px 3px;
+  margin: 5px 0 5px 0;
+  font-family: Consolas, "Liberation Mono", Menlo, Courier, monospace;
+  font-size: 12px;
+  line-height: 16.79px;
+  word-wrap: normal;
+}
+
+#post ul,
+#post ol {
+  margin-left: 1.35em;
+}
+
+/* extra space for list elements  */
+#post li {
+  margin: 1em 0;
+}
+#post li li { /* ... but not for nested ones */
+  margin: .5em 0;
+}
+
+#post pre code {
+  border: none;
+}
+
+#post blockquote {
+  border-left: 4px solid #e8e8e8;
+  padding-left: 20px;
+  background-color: #f9f9f9;
+  margin: 30px 0;
+}
+
+.pullquote {
+  font-family: Georgia, serif;
+  font-size: 18px;
+  font-style: italic;
+  margin: 0.25em 0;
+  padding: 0.25em 40px;
+  line-height: 1.45;
+  position: relative;
+  color: #383838;
+}
+
+.pullquote:before {
+  display: block;
+  content: "\201C";
+  font-size: 80px;
+  position: absolute;
+  left: 0;
+  top: -20px;
+  color: #7a7a7a;
+}
+
+
+#post .credits {
+  text-align: right;
+  font-size: 70%;
+  color: #aaa;
+}
+
+/* terminal */
+
+#post pre.terminal {
+  border: 1px solid black;
+  background-color: #333;
+  color: white;
+}
+
+#post pre.terminal code {
+  background-color: #333;
+}
+
+#related {
+  border-top: 4px solid #eee;
+  margin-top: 2em;
+}
+
+#related h2 {
+  margin-bottom: 1em;
+}
+
+#disqus_thread {
+  border-top: 4px solid #eee;
+  margin-top: 2em;
+  padding-top: 1em;
+}
+
+#post img {
+  max-width: 100%;
+}
+
+/**
+ * Figure Plugin: https://github.com/lmullen/jekyll_figure
+ **/
+
+figure img {
+  border: 1px solid #ccc;
+  padding: 5px;
+  border-radius: 5px;
+  max-width : 100%;
+}
+
+figure {
+  text-align: center;
+}
+
+figure figcaption {
+  font-style: italic;
+  text-align: center;
+}
+
+.pdflink {
+  float: right;
+}
+
+/**
+ * GITHUB TABLE STYLES: https://github.com/alampros/Docter/blob/master/ghf_marked.css
+ **/
+
+table
+{
+  border-collapse:collapse;
+  margin:20px auto auto;
+  padding:0;
+}
+
+table tr
+{
+  border-top:1px solid #ccc;
+  background-color:#fff;
+  margin:0;
+  padding:0;
+}
+
+table tr:nth-child(2n)
+{
+  background-color:#f8f8f8;
+}
+table tr th[align="center"], table tr td[align="center"] {
+  text-align:center;
+}
+table tr th, table tr td
+{
+  border:1px solid #ccc;
+  text-align:left;
+  margin:0;
+  padding:6px 13px;
+}
+
+/**
+ * Responsive
+ **/
+@media only screen and (max-width: 50em) {
+  .site {
+    text-align: left;
+    width: 100%;
+    margin: 0;
+  }
+  body {
+    padding: 15px;
+  }
+}
+
+@media only screen and (max-width: 30em) {
+  .site {
+    font-size: 20px;
+    line-height: 2.5em;
+  }
+}
+
+.sticker {
+  color:red;
+  border-style:solid;
+  border-color:red;
+  border-radius:0.2em;
+  margin:50px;
+}
+
+@media only print {
+  .splash {
+    visibility: hidden;
+  }
+}
+
+.hookin {
+  float: left;
+  font-size: 2.5em;
+  font-weight: 700;
+  padding-top: 0.2em;
+  margin-right: 0.4em;
+  color: #a00;
+  color: #EC9F2E;
+  font-family: "franklin-gothic-urw",Verdana,Geneva,sans-serif;
+}
+
+.dropcaps::first-letter {
+  font-size: 4.8em;
+  color: #a00;
+  font-family: Georgia;
+  font-weight: 500;
+  line-height: 0.9em;
+  float: left;
+  margin-right: 0.1em;
+}
+
+</style>
+<style>
+  .highlight  { background: #ffffff; }
+.highlight .c { color: #999988; font-style: italic } /* Comment */
+.highlight .err { color: #a61717; background-color: #e3d2d2 } /* Error */
+.highlight .k { font-weight: bold } /* Keyword */
+.highlight .o { font-weight: bold } /* Operator */
+.highlight .cm { color: #999988; font-style: italic } /* Comment.Multiline */
+.highlight .cp { color: #999999; font-weight: bold } /* Comment.Preproc */
+.highlight .c1 { color: #999988; font-style: italic } /* Comment.Single */
+.highlight .cs { color: #999999; font-weight: bold; font-style: italic } /* Comment.Special */
+.highlight .gd { color: #000000; background-color: #ffdddd } /* Generic.Deleted */
+.highlight .gd .x { color: #000000; background-color: #ffaaaa } /* Generic.Deleted.Specific */
+.highlight .ge { font-style: italic } /* Generic.Emph */
+.highlight .gr { color: #aa0000 } /* Generic.Error */
+.highlight .gh { color: #999999 } /* Generic.Heading */
+.highlight .gi { color: #000000; background-color: #ddffdd } /* Generic.Inserted */
+.highlight .gi .x { color: #000000; background-color: #aaffaa } /* Generic.Inserted.Specific */
+.highlight .go { color: #888888 } /* Generic.Output */
+.highlight .gp { color: #555555 } /* Generic.Prompt */
+.highlight .gs { font-weight: bold } /* Generic.Strong */
+.highlight .gu { color: #aaaaaa } /* Generic.Subheading */
+.highlight .gt { color: #aa0000 } /* Generic.Traceback */
+.highlight .kc { font-weight: bold } /* Keyword.Constant */
+.highlight .kd { font-weight: bold } /* Keyword.Declaration */
+.highlight .kp { font-weight: bold } /* Keyword.Pseudo */
+.highlight .kr { font-weight: bold } /* Keyword.Reserved */
+.highlight .kt { color: #445588; font-weight: bold } /* Keyword.Type */
+.highlight .m { color: #009999 } /* Literal.Number */
+.highlight .s { color: #d14 } /* Literal.String */
+.highlight .na { color: #008080 } /* Name.Attribute */
+.highlight .nb { color: #0086B3 } /* Name.Builtin */
+.highlight .nc { color: #445588; font-weight: bold } /* Name.Class */
+.highlight .no { color: #008080 } /* Name.Constant */
+.highlight .ni { color: #800080 } /* Name.Entity */
+.highlight .ne { color: #990000; font-weight: bold } /* Name.Exception */
+.highlight .nf { color: #990000; font-weight: bold } /* Name.Function */
+.highlight .nn { color: #555555 } /* Name.Namespace */
+.highlight .nt { color: #000080 } /* Name.Tag */
+.highlight .nv { color: #008080 } /* Name.Variable */
+.highlight .ow { font-weight: bold } /* Operator.Word */
+.highlight .w { color: #bbbbbb } /* Text.Whitespace */
+.highlight .mf { color: #009999 } /* Literal.Number.Float */
+.highlight .mh { color: #009999 } /* Literal.Number.Hex */
+.highlight .mi { color: #009999 } /* Literal.Number.Integer */
+.highlight .mo { color: #009999 } /* Literal.Number.Oct */
+.highlight .sb { color: #d14 } /* Literal.String.Backtick */
+.highlight .sc { color: #d14 } /* Literal.String.Char */
+.highlight .sd { color: #d14 } /* Literal.String.Doc */
+.highlight .s2 { color: #d14 } /* Literal.String.Double */
+.highlight .se { color: #d14 } /* Literal.String.Escape */
+.highlight .sh { color: #d14 } /* Literal.String.Heredoc */
+.highlight .si { color: #d14 } /* Literal.String.Interpol */
+.highlight .sx { color: #d14 } /* Literal.String.Other */
+.highlight .sr { color: #009926 } /* Literal.String.Regex */
+.highlight .s1 { color: #d14 } /* Literal.String.Single */
+.highlight .ss { color: #990073 } /* Literal.String.Symbol */
+.highlight .bp { color: #999999 } /* Name.Builtin.Pseudo */
+.highlight .vc { color: #008080 } /* Name.Variable.Class */
+.highlight .vg { color: #008080 } /* Name.Variable.Global */
+.highlight .vi { color: #008080 } /* Name.Variable.Instance */
+.highlight .il { color: #009999 } /* Literal.Number.Integer.Long */
+
+</style>
+</html>
