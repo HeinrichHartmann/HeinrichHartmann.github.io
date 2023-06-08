@@ -1,12 +1,13 @@
+// https://facelessuser.github.io/pymdown-extensions/extensions/arithmatex/#loading-mathjax
 window.MathJax = {
   tex: {
-    inlineMath: [["\\(", "\\)"]],
-    displayMath: [["\\[", "\\]"]],
+    inlineMath: [ ["\\(","\\)"] ],
+    displayMath: [ ["\\[","\\]"] ],
     processEscapes: true,
     processEnvironments: true
   },
   options: {
-    ignoreHtmlClass: ".*|",
+    ignoreHtmlClass: ".*",
     processHtmlClass: "arithmatex"
   }
 };

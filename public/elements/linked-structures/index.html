@@ -279,20 +279,6 @@
   
 </li>
       
-        <li class="md-nav__item">
-  <a href="#acknowlegements" class="md-nav__link">
-    Acknowlegements
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#comments" class="md-nav__link">
-    Comments
-  </a>
-  
-</li>
-      
     </ul>
   
 </nav>
@@ -310,7 +296,7 @@
   
     <li class="md-nav__item">
       <a href="../smooth-functions/" class="md-nav__link">
-        Local Theory of Smooth Functions
+        The Calculus of Local Smooth Functions
       </a>
     </li>
   
@@ -452,6 +438,7 @@ $$
   \newcommand{\nxt}{{\rm nxt}} 
   \newcommand{\lr}{\leftrightarrow} 
   \DeclareMathOperator{\mod}{mod}
+
 $$
 </div>
 
@@ -460,10 +447,10 @@ $$
 <p>In this note we will formalize and study a straight-forward mathematical model, for a simple C
 structure, that can be used to represent linked list and trees:</p>
 <div class="highlight"><pre><span></span><code><span class="k">typedef</span><span class="w"> </span><span class="k">struct</span> <span class="p">{</span><span class="w"></span>
-<span class="w">    </span><span class="k">struct</span> <span class="nc">node</span><span class="w"> </span><span class="o">*</span><span class="n">nxt</span><span class="p">;</span><span class="w"></span>
+<span class="w">   </span><span class="n">node</span><span class="w"> </span><span class="o">*</span><span class="n">nxt</span><span class="p">;</span><span class="w"></span>
 <span class="p">}</span><span class="w"> </span><span class="n">node</span><span class="p">;</span><span class="w"></span>
 </code></pre></div>
-<p>We are deliberately verbose with giving full proofs even for rather trivial statements. In fact, the
+<p>We are deliberately verbose with giving full proofs even for rather trivial statements. Infact, the
 main result, the classification of all finite linked structures up to isomorphy is fairly intuitive
 and may be regarded by many as rather obvious. By building the theory step by step, we make
 reasonably sure, we are on safe footing (i.e. correct) and explore the full width of the concept.</p>
@@ -487,17 +474,17 @@ reasonably sure, we are on safe footing (i.e. correct) and explore the full widt
 <li>A (deterministic) Markov Chain.</li>
 <li>If <span class="arithmatex">\(N\)</span> is complete, then <span class="arithmatex">\((N, \nxt)\)</span> is discrete dynamical system.</li>
 </ol>
-<p>This observation gives us several new angles to study linked structures. </p>
+<p>This observation gives us several new angles to study linked strucrtures. </p>
 <p><strong>Example.</strong></p>
 <ul>
 <li>A set <span class="arithmatex">\(A\)</span> can be regarded as a Linked Structure with <span class="arithmatex">\(\nxt(a) = \\0\)</span> for all <span class="arithmatex">\(a \in A\)</span>.</li>
 </ul>
 <ul>
-<li>The <em>linked-list</em> of length <span class="arithmatex">\(k \geq 0\)</span> is given by <span class="arithmatex">\(L_k = \{ 1, \dots, k \}\)</span>, with <span class="arithmatex">\(\nxt(i) = i+1\)</span> for
+<li>The <em>linked-list</em> of lenght <span class="arithmatex">\(k \geq 0\)</span> is given by <span class="arithmatex">\(L_k = \{ 1, \dots, k \}\)</span>, with <span class="arithmatex">\(\nxt(i) = i+1\)</span> for
   <span class="arithmatex">\(i &lt; k\)</span>, <span class="arithmatex">\(\nxt(k) = \0\)</span>.</li>
 </ul>
 <ul>
-<li>The <em>cyclic-linked-list</em> of length <span class="arithmatex">\(p \geq 1\)</span> is given by <span class="arithmatex">\(C_p = \{ 0, \dots, p-1\}\)</span>, 
+<li>The <em>cyclic-linked-list</em> of lenght <span class="arithmatex">\(p \geq 1\)</span> is given by <span class="arithmatex">\(C_p = \{ 0, \dots, p-1\}\)</span>, 
   with <span class="arithmatex">\(\nxt(i) = i + 1 \mod p\)</span>.</li>
 </ul>
 <ul>
@@ -570,7 +557,7 @@ yields <span class="arithmatex">\(g(\nxt\ b) = \nxt\ g(b)\)</span>. qed.</p>
 </ul>
 <ul>
 <li>For a subset <span class="arithmatex">\(A \subset N\)</span> we denote by <span class="arithmatex">\(C_1(A) = \nxt^{-1}(A)\)</span> the set of children of <span class="arithmatex">\(A\)</span>.<ul>
-<li>More generally we set <span class="arithmatex">\(C_k(A) = \nxt^{-k}(A), k\geq 0\)</span> the set of k-th order children of <span class="arithmatex">\(A\)</span>.</li>
+<li>More generally we set <span class="arithmatex">\(C_k(A) = \nxt^{-k}(A), k\geq 0\)</span> the set of k-th order chidren of <span class="arithmatex">\(A\)</span>.</li>
 <li>We set <span class="arithmatex">\(C(A) = \Union_{k \geq 0} C_k(A)\)</span>.</li>
 <li>We call <span class="arithmatex">\(A\)</span> a co-generator for <span class="arithmatex">\(N\)</span> if <span class="arithmatex">\(C(A) = N\)</span>.</li>
 </ul>
@@ -612,7 +599,7 @@ contradicting the minimal choice of <span class="arithmatex">\(j_0\)</span>. qed
 <ul>
 <li>If <span class="arithmatex">\(P(a) \isom R_{k,p}\)</span> we call <span class="arithmatex">\(a\)</span> <em>cyclic</em> with <em>period</em> <span class="arithmatex">\(p\)</span>. We call image <span class="arithmatex">\(T(a) \subset N\)</span> of
   <span class="arithmatex">\(C_p \subset R_{k,p}\)</span> the <em>terminal cycle</em> associated to <span class="arithmatex">\(a\)</span>.</li>
-<li>If <span class="arithmatex">\(P(a) \isom L_k, k \geq 1\)</span> we call <span class="arithmatex">\(a\)</span> <em>acyclic</em> of <em>length</em> of <span class="arithmatex">\(k\)</span>. We call the last element
+<li>If <span class="arithmatex">\(P(a) \isom L_k, k \geq 1\)</span> we call <span class="arithmatex">\(a\)</span> <em>acyclic</em> of <em>lenght</em> of <span class="arithmatex">\(k\)</span>. We call the last element
   <span class="arithmatex">\(T(a) = \{ \nxt^{k-1}\ a \}\)</span> the <em>terminal sink</em> associated to <span class="arithmatex">\(a\)</span>.</li>
 </ul>
 <p><strong>Corollary.</strong> Let <span class="arithmatex">\(N\)</span> be a non-empty complete linked structures (i.e. <span class="arithmatex">\(\nxt\)</span> defined everywhere),
@@ -623,7 +610,7 @@ then <span class="arithmatex">\(N\)</span> contains a cycle.</p>
 <p><strong>Definition.</strong> Let <span class="arithmatex">\(\lr\)</span> be the equivalence relation on <span class="arithmatex">\(N\)</span> induced by <span class="arithmatex">\(a \lr b\)</span> if <span class="arithmatex">\(\nxt(a) = b\)</span>.</p>
 <ul>
 <li><span class="arithmatex">\(N\)</span> is called connected, if all nodes in <span class="arithmatex">\(N\)</span> are equivalent under <span class="arithmatex">\(\lr\)</span>.</li>
-<li>The connected components of <span class="arithmatex">\(N\)</span> are the elements in <span class="arithmatex">\(N/\lr\)</span>.</li>
+<li>The connected componenbts of <span class="arithmatex">\(N\)</span> are the elements in <span class="arithmatex">\(N/\lr\)</span>.</li>
 </ul>
 <p><strong>Proposition.</strong> If <span class="arithmatex">\(N\)</span> is finite, then <span class="arithmatex">\(a \lr b\)</span> if and only if <span class="arithmatex">\(T(a) = T(b)\)</span>.</p>
 <p><em>Proof.</em> The condition <span class="arithmatex">\(T(a) = T(b)\)</span> clearly defines an equivalence relation. We have to show that
@@ -647,12 +634,12 @@ A\)</span>, <span class="arithmatex">\(C \subset B\)</span>is a non-empty sub-st
 <p><strong>Proposition.</strong> All Irreducible Linked Structures a finite <span class="arithmatex">\(N\)</span> are isomorphic to either <span class="arithmatex">\(L_1\)</span> or <span class="arithmatex">\(C_p\)</span> for some <span class="arithmatex">\(p \geq 1\)</span>.</p>
 <p><em>Proof.</em>  Clearly <span class="arithmatex">\(L_1\)</span> and <span class="arithmatex">\(C_p\)</span> are irreducible.</p>
 <p>Assume <span class="arithmatex">\(N\)</span> is an irreducible. Take <span class="arithmatex">\(a \in N\)</span>, then <span class="arithmatex">\(P(a) \subset N\)</span> is a non-empty sub-structure,
-hence <span class="arithmatex">\(P(a) = N\)</span>. By the classification result for <span class="arithmatex">\(P(a)\)</span> we either have <span class="arithmatex">\(N \isom L_k, k \geq 1\)</span>, or
+hence <span class="arithmatex">\(P(a) = N\)</span>. By the classfication result for <span class="arithmatex">\(P(a)\)</span> we either have <span class="arithmatex">\(N \isom L_k, k \geq 1\)</span>, or
 <span class="arithmatex">\(N \isom R_{k,p}, k\geq0, p &gt; 1\)</span>. Now, <span class="arithmatex">\(L_k\)</span> is irreducible if and only if <span class="arithmatex">\(k=1\)</span>. And <span class="arithmatex">\(C_p \subset
 R_{k,p}\)</span> is an irreducible non-empty sub-structure, hence <span class="arithmatex">\(k=0\)</span> and <span class="arithmatex">\(C_p = R_{k,p}\)</span>. qed.</p>
 <p><strong>Corollary.</strong> Let <span class="arithmatex">\(a \in N\)</span>, <span class="arithmatex">\(N\)</span> finite, then <span class="arithmatex">\(T(a)\)</span> is irreducible.</p>
 <p><strong>Theorem.</strong> The connected components of a finite structure <span class="arithmatex">\(N\)</span> are given by <span class="arithmatex">\(C(A)\)</span>, where
-<span class="arithmatex">\(A\)</span> runs through all irreducible sub-structures:</p>
+<span class="arithmatex">\(A\)</span> runs throught all irreducible sub-structures:</p>
 <ul>
 <li><span class="arithmatex">\(A = \{ s \} \subset N\)</span>, where <span class="arithmatex">\(s\in N\)</span> is a sink, i.e. <span class="arithmatex">\(\nxt\ s = \0\)</span>.</li>
 <li><span class="arithmatex">\(A \isom C_p, p \geq 1\)</span> is a cycle.</li>
@@ -664,7 +651,7 @@ the above list. Moreover <span class="arithmatex">\(a \lr t\)</span> for all <sp
 <p><strong>Definition.</strong> </p>
 <ul>
 <li>A <em>tree</em> is a finite, non-empty, connected, acyclic linked structure.</li>
-<li>A <em>forest</em> is a finite, acyclic, linked structure (not necessarily connected). </li>
+<li>A <em>forrest</em> is a finite, acyclic, linked structure (not necessarily connected). </li>
 </ul>
 <p><strong>Proposition.</strong> Let <span class="arithmatex">\(T\)</span> be a tree.</p>
 <ul>
@@ -677,19 +664,8 @@ the above list. Moreover <span class="arithmatex">\(a \lr t\)</span> for all <sp
 <p>Ad b) Pick <span class="arithmatex">\(a_1 \in T\)</span>. We construct <span class="arithmatex">\(a_i, i \geq 1\)</span> recursively: If <span class="arithmatex">\(a_i\)</span> is a leave, we
 terminate. Otherwise we find a <span class="arithmatex">\(a_{i+1} \in T\)</span>, so that <span class="arithmatex">\(\nxt\ a_{i+1} = a_i\)</span>. By construction <span class="arithmatex">\(a_1 \in P(a_i)\)</span>.
 In case we terminated, we have found a leave node that contains <span class="arithmatex">\(a_1\)</span> as a parent.</p>
-<p>In case we never terminated, we get an infinite sequence <span class="arithmatex">\(a_i \in N\)</span>, hence <span class="arithmatex">\(a_i = a_j\)</span> for some
+<p>In case we never terminated, we get an infiite sequence <span class="arithmatex">\(a_i \in N\)</span>, hence <span class="arithmatex">\(a_i = a_j\)</span> for some
 <span class="arithmatex">\(i&lt;j\)</span>. And we found a cycle. Contradiction.</p>
-<h2 id="acknowlegements">Acknowlegements</h2>
-<p>Thanks to Cormac Stephenson for sending comments, and pointing out a few typos.</p>
-<h2 id="comments">Comments</h2>
-<p><script src="https://utteranc.es/client.js"
-        repo="HeinrichHartmann/comments"
-        issue-term="title"
-        label="Comment"
-        theme="github-light"
-        crossorigin="anonymous"
-        async>
-</script></p>
 <div class="footnote">
 <hr />
 <ol>
@@ -733,13 +709,13 @@ In case we terminated, we have found a leave node that contains <span class="ari
       
       
         
-        <a href="../smooth-functions/" class="md-footer__link md-footer__link--next" aria-label="Next: Local Theory of Smooth Functions" rel="next">
+        <a href="../smooth-functions/" class="md-footer__link md-footer__link--next" aria-label="Next: The Calculus of Local Smooth Functions" rel="next">
           <div class="md-footer__title">
             <div class="md-ellipsis">
               <span class="md-footer__direction">
                 Next
               </span>
-              Local Theory of Smooth Functions
+              The Calculus of Local Smooth Functions
             </div>
           </div>
           <div class="md-footer__button md-icon">
@@ -790,11 +766,11 @@ In case we terminated, we have found a leave node that contains <span class="ari
     
       <script src="../assets/javascripts/bundle.febc23d1.min.js"></script>
       
-        <script src="../javascripts/config.js"></script>
-      
         <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
       
         <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+      
+        <script src="../javascript/config.js"></script>
       
     
   </body>

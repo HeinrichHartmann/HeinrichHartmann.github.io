@@ -6,7 +6,16 @@
     <description>Recent content on HeinrichHartmann.com</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Fri, 15 Apr 2022 00:00:00 +0000</lastBuildDate><atom:link href="/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Wed, 07 Jun 2023 00:00:00 +0000</lastBuildDate><atom:link href="/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>The Calculus of Local Smooth Functions</title>
+      <link>/posts/post-16/</link>
+      <pubDate>Wed, 07 Jun 2023 00:00:00 +0000</pubDate>
+      
+      <guid>/posts/post-16/</guid>
+      <description></description>
+    </item>
+    
     <item>
       <title>Writing for Engineers</title>
       <link>/posts/writing/</link>
@@ -77,6 +86,19 @@ Impressum dieser Website erstellt über den Generator der Deutschen Anwaltshotli
 Angaben gem. § 5 TMG
 Betreiber und Kontakt:
 Dr. Heinrich Hartmann Am Bökel 3 32351 Stemwede Telefonnummer: +49 1525 3638134 E-Mail-Adresse: heinrich@heinrichhartmann.com USt-IdNr.: DE295519544 Die Europäische Kommission stellt eine Plattform zur Online-Streitbeilegung (OS) bereit, die Sie hier finden.</description>
+    </item>
+    
+    <item>
+      <title>Consulting</title>
+      <link>/consulting/</link>
+      <pubDate>Fri, 01 Jan 2021 00:00:00 +0000</pubDate>
+      
+      <guid>/consulting/</guid>
+      <description>Services Consulting on SRE and Observability Topics
+Establishing SRE Practices including SLOs, PostMortems &amp;amp; running WORMS.
+Training “Statistics for Engineers”, teaching best practices in analyzing telemetry data.
+Improvement of existing infrastructure and applications and infrastructure to improve observability.
+Credentials 7 years+ of experience in the SRE Space &amp;amp; Observability space PhD in Mathematics Talks and Publications CACM Vol. 59 No. 7 – Statistics for Engineers - Applying statistical techniques to operations data Monitorama PDX, 2016 – A Tale of API Monitoring Keynote SRECon EMEA 2018 – Circonus Design (Failures) Case Study Training Statistics for Engineers at various conferences including SRECon 22, 19, 18, 17, 16, 15.</description>
     </item>
     
     <item>
