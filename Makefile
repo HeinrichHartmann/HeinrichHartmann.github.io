@@ -1,5 +1,6 @@
 SHELL = /bin/bash
-.PHONY: build publish
+
+export AWS_SHARED_CREDENTIALS_FILE = ~/box/secrets/aws-credentials-hhcom
 
 checkout:
 	# git checkout stages the checked-out files, we need undow this with git reset
@@ -7,21 +8,20 @@ checkout:
 
 build:
 	date > ./public/last-update.txt
-	cp ./CNAME public
 	cd hugo && make build
-	cd latency && make build
+	# Rebuilds of the individual sub-projects are not necessary, as the content of public is chcekd in
 	cd elements && make build
+	# cd latency && make build
 
 serve:
 	cd public; python3 -m http.server
 
-publish:
-	date > ./public/last-update.txt
-	git diff --quiet || exit 1 # Check if tree is ditry
-	git symbolic-ref HEAD refs/heads/master
-	git reset
-	git --work-tree ./public add .
-	git --work-tree ./public commit -m "publish"
-	git symbolic-ref HEAD refs/heads/source
-	git reset
-	git push origin master
+deploy:
+	aws s3 cp ./public 's3://heinrichhartmann.com' --recursive
+	aws cloudfront create-invalidation --distribution-id E3VQL5EKZQ85E0 --paths "/*"
+
+nix-build:
+	nix-shell --command 'make build'
+
+nix-serve:
+	nix-shell --command 'make serve'

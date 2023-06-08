@@ -109,27 +109,28 @@
 \]
 </div>
 
-We study the local theory of $C^\infty$ functions.
+## Abstract
 
-One observation that motivates this exercise, is that analysis is not really helping solving equations $a(x) = 0$, 
-but instead analyzes the local behavior of the functions around a given point.
-From this perspective, it's natural to fix the point $x$ first, and then study functions $a$ which vanish at.
-A natural framework for this study is the local ring of $C^\infty$-functions. 
-(Or the category of "germs" of spaces introduced below).
+In this note, we develop the classical analysis in the context of "local" $C^\infty$ functions in $n$ variables.
 
-Another observation that we follow in this study, is that a lot of constructions from commutative algebra carry over to the rings of $C^\infty$ functions without modifications. 
-This was surprising for me, since those rings are violate all kinds of finiteness conditions enjoyed by the typical examples (polynmial/arithmetic rings).
+Local functions are functions that are only defined on the neighborhood of the origing, and equalities between
+local functions are only required to hold after possibly shrinking the neighbourhood further.
 
-Another motivation of this text, is to develop natural notation, that reduces the mental overhead one has to carry while performing calculations. 
-Classical analysis is packed to ambiguities like $\frac{\del}{\del x} a(x \cdot t)(0)$, which could mean a lot of things. 
-The order that we perform composition and differentiation, and evaluation is important. 
-We use the following notation to clarify the exact semantics, in case of ambiguities:
+In this setting, statements can be formulated more concisely, as we don't need to include choices of $\eps$ at
+every step. One example is the theorem of inverse functions, which states that $\phi$ is invertible as local
+function if and only if $D_0 \phi$ is invertible as linear map (i.e. $n \times n$ matrix).
 
-- Function evaluated at a point $a(x) = ev_x[a]$ 
-- Function applied to a function $f[a]$
-- Anonymous functions are denoted by $a = a(\_) = [x \mapsto a(x)]$.
+Local functions are frequently studied the in context of commutative algebra (cf. [localisation](https://en.wikipedia.org/wiki/Localization_(commutative_algebra))), i.e. when studying polynomial functions or integres.
+We prove that local $C^\infty$ functions are indeed a localisation in the sense of commutative algebra.
+Somewhat surprisingly, they are at the same time a [quotient ring](https://en.wikipedia.org/wiki/Quotient_ring) of the ring of $C^\infty$ functions.
+The Taylor series give us a linar map from local functions to another classical commutative algebra concept, the ring of [formal power series](https://en.wikipedia.org/wiki/Formal_power_series).
+A highly surprising theorem of Borel shows, this map is surjective, i.e. all formal power series can be realized as taylor series of smooth local functions.
 
-## Setting
+This is a living document that may be expanded in the future.
+At the time of this writing, the study introduces consisten notations for (differential) operators on local functions,
+and coveres Taylor Series, Hadamard Lemma, Tangent and Cotangent spaces and the Theorem of implicit functions.
+
+## Local $C^\infty$ functions
 
 **Definition.** 
 The local ring of $C^\infty$ functions around $0 \in \IR^n$  is defined as
@@ -138,9 +139,8 @@ $$ \AINF^n = \lim_\ra \{ \CINF(U,\IR) \,|\, 0 \in U \subset \IR^n \}. $$
 
 The inductive limit is taken along the restriction maps $\rho_V: \CINF(U,\IR) \ra \CINF(V,\IR)$ for $U \subset V$.
 
-More explicitly, an element $a \in \AINF$ is hence represented by a pair $(U,a)$, where $U \subset \IR^n$ is an open subset containing $0$, and $a \in \AINF(U,\IR)$.
-Two pairs $(U,a), (V,b)$ represent the same element in $\AINF^n$ if there is a $W \subset U \cap V, 0 \in W$
-so that $\rho_W(a) = \rho_W(b)$.
+This means elements $a \in \AINF$ are represented by a pairs $(U,a)$, where $U \subset \IR^n$ is an open subset containing $0$, and $a \in \AINF(U,\IR)$.
+Two pairs $(U,a), (V,b)$ represent the same element in $\AINF^n$ if there is a $W \subset U \cap V, 0 \in W$ so that $\rho_W(a) = \rho_W(b)$.
 
 **Naturality.** 
 Any ($C^\infty$-)differentiable map $f: \IR^n \ra \IR^m$ with $f(0) = 0$ gives rise to a map $f^*: \AINF^m \ra \AINF^n$, which sends $(b,V)$ to $(b \circ f, f^{-1}(V))$. We call $f^*[a]$ the pullback of a along $f$.
@@ -287,6 +287,7 @@ For any $a \in \AINF$ on any convex set $U$ of definition we set $R_{k+1} = a - 
 
 For a proof see Ieke Moerdijk, Gonzalo E. Reyes: Models for Smooth Infinitesimal Analysis, p13. or [ncatlab](https://ncatlab.org).
 
+
 ## Commutative Algebra
 
 **$\IR$-Algebra Structure.** The ring $\AINF^n$ inherits the structure of a unital $\IR$ algebra form $\CINF(U,\IR)$.
@@ -317,8 +318,13 @@ constant function $1$.
     Conversely if $\vphi^*[b](0) = 0$ then $b(0) = b \circ \vphi(0) = \vphi^*b(0) = 0$. 
 
 **[Hadamard Lemma](https://en.wikipedia.org/wiki/Hadamard%27s_lemma).** 
-The maxiamal $\fm$ ideal is generated by the coordinate fuctions $x^i$, i.e. every element $a \in \fm$
-can be written in the form $a = \sum_{i=1}^n x^i \cdot a_i$ with $a_i \in \AINF^n$.
+The maxiamal $\fm$ ideal is generated by the coordinate fuctions $x^i$:
+
+$$
+    \fm = (x_1, \dots, x_n) \subset \AINF^n.
+$$
+
+In other words, every element $a \in \fm$ can be written in the form $a = \sum_{i=1}^n x^i \cdot a_i$ with $a_i \in \AINF^n$.
 
 ??? note "Proof"
 
@@ -336,14 +342,27 @@ can be written in the form $a = \sum_{i=1}^n x^i \cdot a_i$ with $a_i \in \AINF^
 
 * If $a = \sum_{i=1}^n x^i \cdot a_i$ is a Hadamard representation of $a \in \fm$, then $a_i(0) = e \del_i[a]$
 * The powers $\fm^k$ are generated by the monomials $x^I, I \in \IN^n, |I| = k$.
-* The intersection $\fm^\inf := \cap_{k \geq 0} \fm^k$ is equal to $\ker(T) = \set{a}{ \del^I[a] = 0 \stext{for all} I}$.
-* The map $\IR[x^1, \dots, x^n] \ra \AINF^n$, mapping a polyomial to the associated $C^\infty$-function-germ is injective, and induces an isomorphism:
-  $$ \IR[x^1, \dots, x^n] / (x^1, \dots, x^n)^k \lra \AINF^n / \fm^k. $$
-  In particular, the completions are isomorphic $\IR\dbrackets{ x^1, \dots, x^n} \isom \hat \AINF^n$,
-  and we have:
-  $$ \fm^k / \fm^{k+1} = (x^1, \dots, x^n)^k /  (x^1, \dots, x^n)^{k+1} = \IR< x^I \,|\, |I| = k >.$$
+* The map $\IR[x^1, \dots, x^n] \ra \AINF^n$, mapping a polyomial to the associated $C^\infty$-function-germ induces a map:
+  $$
+  \IR[x^1, \dots, x^n] / (x^1, \dots, x^n)^k \lra \AINF^n / \fm^k. 
+  $$
 
-**Lemma**
+
+**Conjecture**
+
+The following statements look quite obvious to me, but I was not able to find a quick proof
+
+* The power $\fm^k$ is equal to $\set{a}{ e \del^I[a] = 0 \stext{for all} |I| \leq k }$.
+
+* The intersection $\fm^\inf := \cap_{k \geq 0} \fm^k$ is equal to $\ker(T) = \set{a}{ e \del^I[a] = 0 \stext{for all} I}$.
+
+* The completion $\hat \AINF^n$ of $\AINF^n$ at $\fm_0$ is isomorphic to $\IR\dbrackets{ x^1, \dots, x^n}$:
+  $$
+  \hat \AINF^n \isom \IR\dbrackets{ x^1, \dots, x^n}.
+  $$
+
+**Proposition**
+
 For an open set $0 \in U \subset \IR^n$, denote the restriction map by $\rho: C^\infty(U, \IR) \ra \AINF^n$, 
 let $\fm_0 \subset C^\infty(U, \IR)$ be the kernel of the evaluation map at $0$. Then,
 
@@ -369,8 +388,7 @@ let $\fm_0 \subset C^\infty(U, \IR)$ be the kernel of the evaluation map at $0$.
 
 ## Tangent Vectors
 
-In this section we construct tangent and co-tangent space at the origin $0 \in \IR^n$.
-In order to study higher differentials like $\del_i^2$ we will also need to construct tangent modules of vector fields.
+In this section we construct tangent and co-tangent vectors spaces at the origin $0 \in \IR^n$.
 
 **Tangent Space**
 
@@ -385,7 +403,6 @@ In order to study higher differentials like $\del_i^2$ we will also need to cons
 * The tangent space is a finite dimensional $\IR$ vector space with basis
   $dx_i := e \del_i a \mapsto \del_i[a](0)$:
   $$ T_0 = \IR< dx_1, \dots, dx_n>. $$ 
-
 
 We will prove the last statement in the next paragraph.
 
