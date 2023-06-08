@@ -17,8 +17,9 @@ serve:
 	cd public; python3 -m http.server
 
 deploy:
-	aws s3 cp ./public 's3://heinrichhartmann.com' --recursive
+	aws s3 sync ./public 's3://heinrichhartmann.com'
 	aws cloudfront create-invalidation --distribution-id E3VQL5EKZQ85E0 --paths "/*"
+	git add -f ./public && git commit -m "Deployment $$(date -Is)" && git push
 
 nix-build:
 	nix-shell --command 'make build'
