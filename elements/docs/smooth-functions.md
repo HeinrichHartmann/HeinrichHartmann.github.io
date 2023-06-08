@@ -1,16 +1,7 @@
-# Local Theory of Smooth Functions
+# The Calculus of Local Smooth Functions
 
-- Date: 2022-07-09
-- Author: Heinrich Hartmann
-- Location: Stemwede
-- Tags: post, math
-
-## Abstract
-
-...
-
-<div style="display:none">
-$$
+<div class="arithmatex" style="display:none">
+\[
 \newcommand{\ra}{\rightarrow}
 \newcommand{\kC}{\mathcal{C}}
 \newcommand{\IR}{\mathbb{R}}
@@ -115,10 +106,28 @@ $$
 \DeclareMathOperator{\ch}{ch}
 \DeclareMathOperator{\td}{td}
 \DeclareMathOperator{\pr}{pr}
-$$
+\]
 </div>
 
-## Germs of Maps
+We study the local theory of $C^\infty$ functions.
+
+One observation that motivates this exercise, is that analysis is not really helping solving equations $a(x) = 0$, 
+but instead analyzes the local behavior of the functions around a given point.
+From this perspective, it's natural to fix the point $x$ first, and then study functions $a$ which vanish at.
+A natural framework for this study is the local ring of $C^\infty$-functions. 
+(Or the category of "germs" of spaces introduced below).
+
+Another observation that we follow in this study, is that a lot of constructions from commutative algebra carry over to the rings of $C^\infty$ functions without modifications. 
+This was surprising for me, since those rings are violate all kinds of finiteness conditions enjoyed by the typical examples (polynmial/arithmetic rings).
+
+Another motivation of this text, is to develop natural notation, that reduces the mental overhead one has to carry while performing calculations. 
+Classical analysis is packed to ambiguities like $\frac{\del}{\del x} a(x \cdot t)(0)$, which could mean a lot of things. 
+The order that we perform composition and differentiation, and evaluation is important. 
+We use the following notation to clarify the exact semantics, in case of ambiguities:
+
+- Function evaluated at a point $a(x) = ev_x[a]$ 
+- Function applied to a function $f[a]$
+- Anonymous functions are denoted by $a = a(\_) = [x \mapsto a(x)]$.
 
 ## Setting
 
@@ -139,9 +148,9 @@ Any ($C^\infty$-)differentiable map $f: \IR^n \ra \IR^m$ with $f(0) = 0$ gives r
 **Evaluation.** For $a \in \AINF^n$, we denote by $e[a] := ev_0[a] := a(0) \in \IR$, the evaluation of $a$ at $0 \in \IR^n$.
 This is operation can be identified with the pullback along the injection $0: \IR^0 \ra \IR^n$, $e = 0^*$.
 
-**Constants.** For $\lambda \in \IR$ the constant function $\IR^n \ra \IR, x \mapsto \lambda$ by the same letter $\lambda \in \AINF^n$.
-If we want to stress the function character of $\lambda$ we may use the symbol $\underline{\lambda}$.
-The resulting linear map $c: \IR \ra \AINF^n$ can be identified with $c = \pi^*$, where $\pi:\IR^n \ra \IR^0$ is the projection to a point.
+**Constants.** For $\lambda \in \IR$ the constant function $\IR^n \ra \IR, x \mapsto \lambda$ by $\underline{\lambda} \in \AINF^n$ or simply $\lambda$ when there is no risk of confusion.
+
+The linear map $\IR \ra \AINF^n, \lambda \mapsto \underline{\lambda}$ can be identified with $\pi^*$, where $\pi:\IR^n \ra \IR^0$ is the projection to a point.
 
 **Elementary Operations.**
 Let $i \in \{1,\dots,n\}$. We have the following operations on $\AINF^n$.
@@ -159,47 +168,124 @@ For a multi-index $I \in \IN^n, I = (i_1, \dots, i_n)$, we define:
 
 * Product rule. $\del_i[ a \cdot b ] = \del_i[a] \cdot b + a \cdot \del_i[b]$.
 * Iterated Product Rule.
+
   $$
     \del^I[a \cdot b] = \sum_{J,K \in \IN^n, J+K=I} \frac{I!}{J! K!} \del^J[a] \cdot \del^K[b].
   $$
-* Chain Rule. $\del_j f^*[b] = \sum_k f^*\del_k[b] \cdot \del_i[f^k]$, where $f^k$ are
+
+* Chain Rule. 
+
+  $$
+  \del_i [f^*[b]] 
+    = \del_i[ b \circ f ] 
+    = \sum_{k=1,\dots,m} \del_k[b] \circ f \cdot \del_i[f^k] 
+    = \sum_{k=1,\dots,m} f^*[ \del_k[b] ] \cdot \del_i[f^k],
+  $$
+  
   the components $f^k = x^k \circ f$.
 
 ## Taylor Series
 
-**Definition.** 
-The taylor series of $a \in \AINF^n$ is the formal power series
+**Definition.** The taylor series of $a \in \AINF^n$ is the formal power series 
+
 $$
-T[a] 
-= \sum_{I \in \IN^n} e \del^I [a] \cdot \frac{x^I}{I!} 
-= \sum_{I \in \IN^n} \frac{\del^I a}{\del x^I}(0) \frac{x^I}{I!}
-\in \IR \dbrackets{ x^1, \dots, x^n },
+T[a] = \sum_{I \in \IN^n} \del^I [a] (0) \cdot \frac{x^I}{I!} \in \IR \dbrackets{ x^1, \dots, x^n }, 
 $$
-where $I! = i_1! \cdot \dots \cdot i_n!$.
-The degree-k taylor polyonmial is the degree-k truncation of the taylor series: 
-$$
-    T_k[a] = \sum_{I, |I| \leq k} e \del^I [a] \cdot \frac{x^I}{I!} \in \IR[x^1, \dots, x^n].
+
+where $I! = i_1! \cdot \dots \cdot i_n!$. The degree-k Taylor polyonmial is the degree-k truncation of the taylor series:
+
+$$ 
+T_k[a] = \sum_{I, |I| \leq k} \del^I[a](0) \cdot \frac{x^I}{I!} \in \IR[x^1, \dots, x^n].
 $$
 
 **Properties.**
 
-* For a polynomial $p \in \IR[x^1, \dots, x^n]$, we have $T_k[p] = p$ if $k \geq deg(p)$.
-* For $a,b \in \AINF^n$, we have 
-  $$ 
-    T(a \cdot b) = T(a) \cdot T(b), \quad\text{and}\quad  T_k(a) \cdot T_k(b).
-  $$
+1. For a polynomial $p \in \IR[x^1, \dots, x^n]$, we have $T_k[p] = p$ if $k \geq deg(p)$.
 
-**Proof** The first property follows from the observation that $e \del^I[x^J] = I!$ if $I = J$ and zero otherwise.
-The second and third property follow from the iterated product rule.
+2. For $a,b \in \AINF^n$, we have
 
-**Theorem (Borel).** 
-For every power series $p \in \IR\dbrackets{ x^1, \dots, x^n }$ there exists a $C^\infty$ function $a \in \AINF^n$
-with $T(a)  = p$. 
-In other words, the map $T : \AINF^n \ra \IR\dbrackets{ x^1, \dots, x^n }$ is surjective,
-and hence $\IR\dbrackets{ x^1, \dots, x^n } \isom  \AINF^n / \ker(T)$.
+   $$
+   T(a \cdot b) = T(a) \cdot T(b), \quad\text{and}\quad T_k(a) \cdot T_k(b).
+   $$
 
-For a proof see Ieke Moerdijk, Gonzalo E. Reyes: Models for Smooth Infinitesimal Analysis, p13.
-or [ncatlab](https://ncatlab.org/nlab/show/Borel%27s+theorem#Moerdijk).
+3. Let $A: \IR^m \ra \IR^n$ be a linear map and $a \in \AINF^n$, then 
+
+   $$
+   % need spaces here to avoid Mardown parsing as links 
+   T[a \circ A] (x) = T[a] (A \cdot x).
+   $$
+
+4. In particular, for a fixed $x \in \IR^n$ the Taylor series of the 1-dimensional function $[t \mapsto a(x \cdot t)]\in \AINF^1$ is the restriction of the full Taylor series of $a$:
+
+   $$
+   T[t \mapsto a(x \cdot t)] (t) = T[a] (x \cdot t). 
+   $$
+
+??? note "Proof"
+
+    All three statements are proved via direct comuptation. Statement (2) follows from the iterated product 
+    rule stated above.
+
+    To prove (3) one verifies that both sides are equal to: 
+    $$ 
+    \sum_{M \in \IN^{n \times m}, \sigma_1(M)=J, \sigma_2(M)=I} \del^I [a] (0) \cdot \frac{A^M}{M!} \cdot y^J 
+    $$ 
+    
+    Here the sum runs over all two-dimensional multi-indices $M \in \IN^{n \times m}$. 
+    And we denote by $\sigma_i$ the summation of the $i$-th index: 
+    $\sigma_1(M) = \sum_i M_{i,j} \in \IN^m$, $\sigma_2(M)=\sum_j M_{i,j} \in \IN^n$. 
+    Furthermore $A^M = \prod_{i,j}A_{i,j}^{M_{i,j}}$ and $M! = \prod_{i,j} M_{i,j}!$.
+
+**Theorem (Residuals)** 
+For any $a \in \AINF$ on any convex set $U$ of definition we set $R_{k+1} = a - T_k[a]$.
+
+1. (Qualitative Residual). For all $I \in \IN^n$ with $|I| \leq k$ we have 
+
+   $$ 
+   \del^I [R_{k+1}] (0) = 0. 
+   $$
+
+2. (Integral Residual) 
+
+   $$
+   R_{k+1}(x) = (k+1) \sum_{|I| = k+1} \frac{x^I}{I!} \int_0^1 \del^I[a] (t \cdot x) \cdot (1-t)^k dt. 
+   $$
+
+3. (Lagrange Residual) For all $x \in U$ there exists a $t \in [0,1]$ so that 
+
+   $$ 
+   R_{k+1}(x) = \sum_{|I| = k+1} \frac{x^I}{I!} \del^I[a] (x \cdot t).
+   $$
+
+??? note "Proof"
+
+    Property (1) follows from $\del^I[x^J](0) = I! \cdot \delta_{I,J}$.
+    For (2), (3) we reduce to the one-dimensional case using Property 4 above.
+    Let $a_x(t) = a(x \cdot t) \in \AINF^1$.
+    We compute the derivatives to
+    $$
+      \del [a_x] = \sum_i \del_i [a] (x\cdot t) x_i, \qtext{and}
+      \del^n[a_x] = \sum_{|I|=n} \frac{n!}{I!} \cdot \del^I[a] (x \cdot t) \cdot x^I.
+    $$
+
+    Then $R_{k+1}(x) = a(x) - T_k [a] (x) = a_x(1) - T_k [a_x] (1)$.
+    Now by the 1-dimensional result and iterated chain rule we have:
+    $$
+      R_{k+1}(x)
+      = \int_0^1 \del^{k+1} [a_x] (t) \frac{(1-t)^k}{k!} dt 
+      = \sum_{|I| = k+1 } \int_0^1 \del^{I} [a] (x \cdot t) \cdot x^I \cdot \frac{(k+1)!}{I!} \cdot \frac{(1-t)^k}{k!} dt.
+    $$
+
+    Similarly, by the 1-d Lagrange residual formula, there exists a $t \in [0,1]$ with
+    $$ 
+      R_{k+1}(x)
+      = \frac{ \del^{k+1} [a_x]  (t) }{(k+1)!}
+      = \sum_{|I| = k+1 } \del^{I} [a] (x \cdot t) \frac{x^I}{I!} dt.
+    $$
+
+**Theorem (Borel).** For every power series $p \in \IR\dbrackets{ x^1, \dots, x^n }$ there exists a $C^\infty$ function $a \in \AINF^n$ with $T(a) = p$. In other words, the map $T : \AINF^n \ra \IR\dbrackets{ x^1, \dots, x^n }$ is surjective, and hence $\IR\dbrackets{ x^1, \dots, x^n } \isom \AINF^n / \ker(T)$.
+
+For a proof see Ieke Moerdijk, Gonzalo E. Reyes: Models for Smooth Infinitesimal Analysis, p13. or [ncatlab](https://ncatlab.org).
 
 ## Commutative Algebra
 
@@ -210,8 +296,8 @@ constant function $1$.
 
 - The structure maps $\rho_0: \CINF(U,\IR) \ra \AINF^n$ are morphisms of $\IR$-algebras.
 - The pullback maps $f^*$ are morphisms of $\IR$-algebras.
-- The "constants map" $c$ is a morphism of $\IR$-algebras.
-- The evaluation map $e$ is a morphism of $\IR$-algebras.
+- The "constants map" $\lambda \mapsto \underline{\lambda}$ is a morphism of $\IR$-algebras.
+- The evaluation map $ev_0: a \mapsto a(0)$ is a morphism of $\IR$-algebras.
 
 **Locality**
 
@@ -221,27 +307,30 @@ constant function $1$.
 * The pullback maps $\vphi^*: \AINF^m \ra \AINF^n$ induced by $\vphi: \IR^n \ra \IR^m$ are local,
    in the sense that $\vphi^*(\fm_m) \subset \fm_n$ or [equivalently](https://stacks.math.columbia.edu/tag/07BJ) $\vphi^{-1}(\fm_n) = \fm_m$.
 
-**Proof.** 
-The ideal $\fm \subset \AINF^n$ is maximal, since every element not in $\fm$ is a unit.
+??? note "Proof" 
 
-Let $\fn \subset \AINF^n$ be another maximal ideal. We have $\fn \subset \fm$ since otherwise $\fn$ would contain a unit. Since $\fn$ is maximal it follows that $\fn = \fm$.
+    The ideal $\fm \subset \AINF^n$ is maximal, since every element not in $\fm$ is a unit.
 
-If $b(0)$, then $\vphi^*[b](0) = (b \circ \vphi) (0) = 0$, since $\vphi(0) = 0$.
-Conversely if $\vphi^*[b](0) = 0$ then $b(0) = b \circ \vphi(0) = \vphi^*b(0) = 0$. 
+    Let $\fn \subset \AINF^n$ be another maximal ideal. We have $\fn \subset \fm$ since otherwise $\fn$ would contain a unit. Since $\fn$ is maximal it follows that $\fn = \fm$.
+
+    If $b(0)$, then $\vphi^*[b](0) = (b \circ \vphi) (0) = 0$, since $\vphi(0) = 0$.
+    Conversely if $\vphi^*[b](0) = 0$ then $b(0) = b \circ \vphi(0) = \vphi^*b(0) = 0$. 
 
 **[Hadamard Lemma](https://en.wikipedia.org/wiki/Hadamard%27s_lemma).** 
 The maxiamal $\fm$ ideal is generated by the coordinate fuctions $x^i$, i.e. every element $a \in \fm$
 can be written in the form $a = \sum_{i=1}^n x^i \cdot a_i$ with $a_i \in \AINF^n$.
 
-**Proof**. Let $a \in \fm$, and set $a_i(x) = \int_0^1 \del_i[a](t \cdot x) dt$.
-Now $\frac{\del}{\del t} a(t \cdot x) = \sum_{i=1}^n \del_i[a](tx) \cdot x^i(x)$, hence 
+??? note "Proof"
 
-$$
-\sum_{i=1}^n x^i \cdot a_i 
-= \int_0^1 \sum_{i=1}^n \del_i[a](tx) \cdot x^i(x) dt 
-= \int_0^1 \frac{\del}{\del t} a(t \cdot x) dt
-= a(x) - a(0) = a(x). qed.
-$$
+    Let $a \in \fm$, and set $a_i(x) = \int_0^1 \del_i[a](t \cdot x) dt$.
+    Now $\frac{\del}{\del t} a(t \cdot x) = \sum_{i=1}^n \del_i[a](tx) \cdot x^i(x)$, hence 
+
+    $$
+    \sum_{i=1}^n x^i \cdot a_i 
+    = \int_0^1 \sum_{i=1}^n \del_i[a](tx) \cdot x^i(x) dt 
+    = \int_0^1 \frac{\del}{\del t} a(t \cdot x) dt
+    = a(x) - a(0) = a(x). qed.
+    $$
 
 **Corollary.**
 
@@ -261,20 +350,22 @@ let $\fm_0 \subset C^\infty(U, \IR)$ be the kernel of the evaluation map at $0$.
 * $\rho$ is surjective and induces and isomorphism $C^\infty(U, \IR) / \ker(\rho) \isom \AINF^n$.
 * $\rho$ induces an isomophism $C^\infty(U, \IR)_{\fm_0} \isom \AINF^n$.
 
-**Proof.** To prove the first claim choose a representative $(V, a) \in \AINF^n$, with $V \subset U$.
-Choose $\eps > 0$ small enough so that the ball $B_{2\eps}$ lies in $V$.
-Choose a bump function $\delta$ with $\delta = 1$ on $B_{\eps}$ and $\delta = 0$ outside of $B_{2\eps}$.
-Then $a \cdot \delta$ is defined on $V$ and equal to zero outside of $B_{2\eps}$, and hence extends to U.
+??? note "Proof"
 
-To prove the second claim we first note that $b(0) \neq 0$ implies that $b(x)
-\neq 0$ for $x$ in an open subset of $0$, hence $b$ is invertible in $\AINF^n$.
-This shows that $\rho$ induces a map from the localization.
-The map is surjective by the claim we just proved.
-To show the map is injective, assume that the formal quotient $(a,b)$ maps to $a/b = 0 \in \AINF^n$.
-This means that $a = 0$ in an open neightbourhood $V$ of $0$.
-Let $\delta$ be a bump function with $\delta(1) = 1$ and $\delta(x) = 0$ outside of $V$.
-Then $\delta \notin \fm_0$ but $\delta a = 0 \in  C^\infty(U, \IR)$, showing that
-$(a,b) = 0 \in  C^\infty(U, \IR)_{\fm_0}$.
+    To prove the first claim choose a representative $(V, a) \in \AINF^n$, with $V \subset U$.
+    Choose $\eps > 0$ small enough so that the ball $B_{2\eps}$ lies in $V$.
+    Choose a bump function $\delta$ with $\delta = 1$ on $B_{\eps}$ and $\delta = 0$ outside of $B_{2\eps}$.
+    Then $a \cdot \delta$ is defined on $V$ and equal to zero outside of $B_{2\eps}$, and hence extends to U.
+
+    To prove the second claim we first note that $b(0) \neq 0$ implies that $b(x)
+    \neq 0$ for $x$ in an open subset of $0$, hence $b$ is invertible in $\AINF^n$.
+    This shows that $\rho$ induces a map from the localization.
+    The map is surjective by the claim we just proved.
+    To show the map is injective, assume that the formal quotient $(a,b)$ maps to $a/b = 0 \in \AINF^n$.
+    This means that $a = 0$ in an open neightbourhood $V$ of $0$.
+    Let $\delta$ be a bump function with $\delta(1) = 1$ and $\delta(x) = 0$ outside of $V$.
+    Then $\delta \notin \fm_0$ but $\delta a = 0 \in  C^\infty(U, \IR)$, showing that
+    $(a,b) = 0 \in  C^\infty(U, \IR)_{\fm_0}$.
 
 ## Tangent Vectors
 
@@ -295,15 +386,18 @@ In order to study higher differentials like $\del_i^2$ we will also need to cons
   $dx_i := e \del_i a \mapsto \del_i[a](0)$:
   $$ T_0 = \IR< dx_1, \dots, dx_n>. $$ 
 
+
+We will prove the last statement in the next paragraph.
+
 **Cotangent Space**
   
 The co-tangent space of $\AINF^n$ at $0$ is defined as $\Omega_0 := \Omega_0^n := \Omega_0 \AINF^n := \fm/\fm^2$.  
-It comes with a canonical map $d: \AINF^n \ra \Omega_0, a \mapsto a - a(0) = a - ce[a]$, called the exterior differential.
+It comes with a canonical map $d: \AINF^n \ra \Omega_0, a \mapsto a  - \underline{ev_0[a]} = a - a(0)$, called the exterior differential.
+
+* The exterior differential $d: \AINF^n \ra \Omega_0$ is a derivation.
 
 * The cotangent space is a finite dimensional $\IR$ vector space with basis $dx^i = d[x^i]$.
   $$ \Omega_0 = \IR< dx^1, \dots, dx^n> $$ 
-
-* The exterior differential $d: \AINF^n \ra \Omega_0$ is a derivation.
 
 * The cotangent space has the following universal property. For every $\IR$
   vectors space $V$, the map
@@ -314,22 +408,23 @@ It comes with a canonical map $d: \AINF^n \ra \Omega_0, a \mapsto a - a(0) = a -
   between tangent and co-tangent space as: 
   $$ (\delta, \omega) = \delta[\omega] \in \IR $$
 
-**Proof.** 
-To show that the exterior differential is a derivation, note that
-$d[a b] - e[b] d[a] - e[a] d[b] = \dots = - d[a] \cdot d[b] \in \fm^2$.
+??? note "Proof"
 
-Let $\delta$ be a derivation.
-Note that $\delta[1] = \delta[1 1] = 2 \delta[1]$, hence $\delta[1] = 0$.
-For $a,b \in \fm$ we have $d[a b] = \delta[a]e[b] + e[a] \delta[b] = 0$, hence $\delta = 0$ on $\fm^2$.
-This shows that $\delta$ factors through $d: \AINF^n \ra \fm/\fm^2$.
+    To show that the exterior differential is a derivation we calculate:
+    $d[a b] - b(0) d[a] - a(0) d[b] = \dots = - d[a] \cdot d[b] =  0 \in \fm/\fm^2$.
 
-Conversely, every linear map $\alpha: \fm/\fm^2 \ra \IR$ defines a derivation $\alpha \circ d$.
-This shows the universal property of the co-tangent space.
+    Let $\delta$ be a derivation.
+    Note that $\delta[1] = \delta[1 1] = 2 \delta[1]$, hence $\delta[1] = 0$.
+    For $a,b \in \fm$ we have $d[a b] = \delta[a]e[b] + e[a] \delta[b] = 0$, hence $\delta = 0$ on $\fm^2$.
+    This shows that $\delta$ factors through $d: \AINF^n \ra \fm/\fm^2$.
 
-By Hadamard's lemma we have $\Omega_0 = \fm/\fm^2 = \IR<dx^1, \dots, dx^n>.$ 
+    Conversely, every linear map $\alpha: \fm/\fm^2 \ra \IR$ defines a derivation $\alpha \circ d$.
+    This shows the universal property of the co-tangent space.
 
-Hence $T_0 \isom Der_\IR(\AINF^n, \IR) \isom Hom_\IR(\Omega_0, \IR)$.
-Under this identification $dx_i$ and $dx^i$ are dual to each other:  $dx_i[dx^j] = e \del_i[x^j] = \delta_{i,j}$. QED.
+    By Hadamard's lemma we have $\Omega_0 = \fm/\fm^2 = \IR<dx^1, \dots, dx^n>.$.
+    Hence $T_0 \isom Der_\IR(\AINF^n, \IR) \isom Hom_\IR(\Omega_0, \IR)$.
+    Under this identification $dx_i$ and $dx^i$ are dual to each other:
+    $dx_i[dx^j] = e \del_i[x^j] = \delta_{i,j}$.
 
 **Naturality.** 
 
@@ -381,9 +476,15 @@ Under this identification $dx_i$ and $dx^i$ are dual to each other:  $dx_i[dx^j]
 ## Implicit Functions
 
 **Germs of Functions.** The category $G$ of germs of $C^\infty$-spaces has objects $\IR^n_{,0}$ for $n \in \IN_0$ and morphisms germs of $C^\infty$-functions:
-$$ Mor(\IR^n_{,0},\IR^m_{,0}) = \lim_{\lra} \Set{ C^\infty_0(U, \IR^m) }{ 0 \in U \subset \IR^n },  $$
+
+$$ 
+Mor(\IR^n_{,0},\IR^m_{,0}) = \lim_{\lra} \Set{ C^\infty_0(U, \IR^m) }{ 0 \in U \subset \IR^n },  
+$$
+
 where $C^\infty_0(U, \IR^m)$ is the set of $C^\infty$-functions $\IR^n \ra \IR^m$ mapping $0$ to $0$.
 Composition of functions descends to an associative composition operations on $G$.
+
+**Properties**
 
 * Every function $\vphi: \IR^n \ra \IR^m$ with $\vphi(0) = 0$ defines a germ $\vphi \in Mor(\IR^n_{,0},\IR^m_{,0})$.
 
@@ -392,21 +493,21 @@ Composition of functions descends to an associative composition operations on $G
 
 * Germs $\vphi \in Mor(\IR^n_{,0},\IR^m_{,0})$ induce algebra morphisms $\vphi^*: \AINF^m \ra \AINF^n$.
 
-**Theorem (Inverese Functions).** If $\vphi: \IR^n_{,0} \ra \IR^n_{,0}$ is a function germ, then
+**Theorem (Inverese Functions).** 
+
+If $\vphi: \IR^n_{,0} \ra \IR^n_{,0}$ is a function germ, then
 $\vphi$ is invertible as a germ if $D_0 \vphi$ is invertible as a linear endomorphism of $T_0$. 
 In this case $D_0 \vphi^{-1} = (D_0\vphi)^{-1}$.
 
-**Theorem (Implicit Function).** If $a \in \AINF^n$ is a function with $a(0) = 0$, $da \neq 0$, then $\AINF^n / a \AINF^n \isom \AINF^{n-1}$.
+**Theorem (Implicit Function).** 
 
-More precisely, if $dx_1[a] \neq 0$ then $\pi: \IR^{n} \ra \IR^{n-1}, (x_1,\dots,x_n) n\mapsto (x_2, \dots, x_n)$ induces an isomorphism $\pi^*: \AINF^{n-1} \ra \AINF^n / a$.
+Let $a \in \AINF^n$ be a function with $a(0) = 0$ and $dx_n \cdot a \neq 0$, then:
 
-**Proof** Assume that $dx_1[a] \neq 0$, by the inverse function theorem, the germ $a \circ x_1: \IR^1_{,0} \ra \IR^1_{,0}$ is invertible
+* There exists a function $\vphi: \IR^{n-1}_{,0}) \ra  \IR^{n}_{,0})$, 
+  with $a(x_1, \dots, x_n) = 0$ if and only if $x_n = \vphi(x_1,\dots,x_{n-1}).$
 
-
-and let $a = \sum_i x_i a_i$ be a Hadamard representation.
-We have $dx_1 a = a_1(0) \neq 0$, hence $a(1)$ is invertible and we can write $x_1 = a/a(1) - \sum_{i>1}x_i a_i \in \AINF^n$.
-
-To construct an inverse to $\pi^*$, we map $b \in \AINF^n$ to $(x_2)$
+* The projetion $\pi: \IR^{n} \ra \IR^{n-1}, (x_1,\dots,x_n) n\mapsto (x_2, \dots, x_n)$ 
+  induces an isomorphism $\pi^*: \AINF^{n-1} \ra \AINF^n / a$.
 
 
 ## Invariant Theory
@@ -417,12 +518,13 @@ Elements $\varphi \in \mathrm{Diff}_0^n$ are represented by diffeomorophisms $\v
 Two representatives $\varphi: U \ra V, \varphi': U' \ra V'$ are equivalent if they agree on $U \cap U'$.
 
 Evenry element $\varphi \in \mathrm{Diff}_0^n$ gives rise to an liear isomorphism 
-$ \varphi^* $ of $\AINF^n$ via the pullback operation.
+$\varphi^*$ of $\AINF^n$ via the pullback operation.
 In this way we optain a group action $\mathrm{Diff}_0^n \ra GL(\AINF^n), \varphi \mapsto \varphi^*$.
 
 **Question:** For any any natural "structure" $F$ on $\AINF^n$, classify elements of $F$ up to diffeomorphism.
 
-Examples: 
-- $F = id$: Classify local functions up to diffeomorphism. In the case $n=1$ we claim that $\AINF^1 / \mathrm{Diff}_0^n = c(\IR) \union \\{ x^1 \\}$. For $n > 2$
-- $F = T$ tangent space: Classify tangent vectors up to diffeopmorphis. We have $T(\AINF^n) / \mathrm{Diff}_0^n = \\{ 0, \del_1 \\}$, reflecting the fact that two non-zero tangent vector can be transformed into each other via a (linear) diffeomorphism.
+**Examples:** 
 
+- $F = id$: Classify local functions up to diffeomorphism. In the case $n=1$ we claim that $\AINF^1 / \mathrm{Diff}_0^1 = c(\IR) \union \\{ x^1 \\}$
+
+- $F = T$ (Tangent space). Classify tangent vectors up to diffeopmorphis. We have $T(\AINF^n) / \mathrm{Diff}_0^n = \\{ 0, \del_1 \\}$, reflecting the fact that two non-zero tangent vector can be transformed into each other via a (linear) diffeomorphism.

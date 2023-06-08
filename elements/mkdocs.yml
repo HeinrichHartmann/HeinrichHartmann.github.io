@@ -34,15 +34,20 @@ plugins:
 markdown_extensions:
   - meta
   - footnotes
+  - admonition
   - pymdownx.highlight
   - pymdownx.superfences
+  - pymdownx.details
   - def_list
   - mdx_truly_sane_lists # https://github.com/mkdocs/mkdocs/issues/545#issuecomment-522196661
   - md_in_html
+  - attr_list # allow continuation of lists with  { start = 4 } syntax
   - pymdownx.arithmatex:
       generic: true
 
 extra_javascript:
-  - javascripts/config.js
+  # MathJax via Arithmatex
+  # https://facelessuser.github.io/pymdown-extensions/extensions/arithmatex/#loading-mathjax
   - https://polyfill.io/v3/polyfill.min.js?features=es6
   - https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js
+  - javascript/config.js
