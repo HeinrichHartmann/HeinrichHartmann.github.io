@@ -126,6 +126,7 @@ const est_err_rate_err = ref()
 
 const req_rate = ref(10)
 const twindow = ref()
+const sim_toggle = ref()
 
 function combinations(n,k) {
   if (n < 0) return 0;
@@ -275,6 +276,7 @@ var X = [];
 var S = [];
 
 function do_simulate() {
+  if (! sim_toggle.value) { return; }
   sim_generation += 1;
   var my_generation = sim_generation;
   const N = twindow.value * req_rate.value;
@@ -531,6 +533,10 @@ onMounted(() => {
     </tr>
 </tbody>
 </table>
+
+<label class="toggle" style="clear:both">
+  <input class="toggle-checkbox" type="checkbox" checked="true" v-model="sim_toggle"> Toggle Calculation
+</label>
 
 </template>
 <style>
