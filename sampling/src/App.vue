@@ -97,6 +97,8 @@ function plot_histogram(data1, data2, percentile_value) {
         .text("Percentile")
 };
 
+const warning = ref()
+
 const sampling_rate = ref(50)
 const req_rate_raw = ref(10)
 const req_rate_unit = ref("rps")
@@ -126,7 +128,6 @@ const est_err_rate_err = ref()
 
 const req_rate = ref(10)
 const twindow = ref()
-const sim_toggle = ref()
 
 function combinations(n,k) {
   if (n < 0) return 0;
@@ -156,6 +157,7 @@ function sampling_error(N, p) {
   return Math.sqrt(N * (1 - p) / p);
 }
 function sampling_rate_error(N,K,p) {
+  if (N > 50000) { return 0/0; }
   var s = 0;
   for(let n=1;n < N;n++){
     s += binomial(N,p,n) * (N-n) / n;
@@ -276,10 +278,25 @@ var X = [];
 var S = [];
 
 function do_simulate() {
-  if (! sim_toggle.value) { return; }
   sim_generation += 1;
   var my_generation = sim_generation;
   const N = twindow.value * req_rate.value;
+  if (N > 200000) {
+    console.log("Too many requests %d", N)
+    warning.value = `WARNING: Too many requests (${N}). Simulation skipped.`
+    sim_count.value = 0/0;
+    sim_count_err.value = 0/0;
+    sim_err_count.value = 0/0;
+    sim_err_count_err.value = 0/0;
+    sim_err_rate.value = 0/0;
+    sim_err_rate_err.value = 0/0;
+    sim_lat.value = 0/0;
+    sim_lat_err.value = 0/0;
+    sim_iteration.value = 0/0;
+    return;
+  } else {
+    warning.value = ""
+  }
   const K = N * error_rate.value / 100;
   const p = sampling_rate.value/100;
   const q = percentile_var.value / 100;
@@ -322,6 +339,11 @@ function do_simulate() {
 var mounted = false;
 function update_latency() {
   const N = twindow.value * req_rate.value;
+  if (N > 10000) {
+    percentile_value.value = -1;
+    plot_histogram([], [], 0);
+    return;
+  }
   const p = sampling_rate.value/100;
   const q = percentile_var.value / 100;
   const X = new_set(N, 0);
@@ -365,6 +387,9 @@ onMounted(() => {
 <h1>Sampling Error Calculator</h1>
 <p class="meta" style="color:#aaa; float:right">Stemwede, 2022-05-29</p>
 <p class="meta" style="color:#aaa; float:left"><a href="https://github.com/HeinrichHartmann/HeinrichHartmann.github.io/tree/source/sampling">View Source</a></p>
+
+<span style="text-align:left; color:red; float:left; clear:both; width:100%; padding-bottom: 20pt;">{{ warning }}</span>
+
 
 <table>
   <tbody>
@@ -533,10 +558,6 @@ onMounted(() => {
     </tr>
 </tbody>
 </table>
-
-<label class="toggle" style="clear:both">
-  <input class="toggle-checkbox" type="checkbox" checked="true" v-model="sim_toggle"> Toggle Calculation
-</label>
 
 </template>
 <style>
