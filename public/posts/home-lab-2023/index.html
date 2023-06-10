@@ -1,0 +1,1438 @@
+<!DOCTYPE html>
+<html lang="en-us">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title>Home Lab Setup</title>
+	
+	
+	
+  
+  <link rel="icon" type="image/png" href="/favicon.png">
+  <style>
+    
+   header a {
+  text-align: center;
+  width: 100%;
+  font-family: Helvetica, arial, sans-serif;
+  font-size: 20px;
+  color: #a00;
+  font-weight: bold;
+  margin-top: 2em;
+  text-decoration: none;
+  display: block;
+}
+
+header a {
+  color: #00a;
+}
+
+header a:hover {
+  color: black;
+}
+
+header a:visited {
+  color: #a00;
+}
+
+.sticker {
+  color:red;
+  display: block;
+  border-style:solid !important;
+  border-color:red !important;
+  border-radius:0.2em !important;
+  border-width: 3px !important;
+  padding: 0px !important;
+  text-align: center !important;
+  margin-top: 50px !important;
+  margin-bottom: 50px !important;
+}
+
+    
+   /* Background */ .chroma { background-color: #f8f8f8 }
+/* Other */ .chroma .x { color: #000000 }
+/* Error */ .chroma .err { color: #a40000 }
+/* LineTableTD */ .chroma .lntd { vertical-align: top; padding: 0; margin: 0; border: 0; }
+/* LineTable */ .chroma .lntable { border-spacing: 0; padding: 0; margin: 0; border: 0; width: auto; overflow: auto; display: block; }
+/* LineHighlight */ .chroma .hl { display: block; width: 100%;background-color: #ffffcc }
+/* LineNumbersTable */ .chroma .lnt { margin-right: 0.4em; padding: 0 0.4em 0 0.4em;color: #7f7f7f }
+/* LineNumbers */ .chroma .ln { margin-right: 0.4em; padding: 0 0.4em 0 0.4em;color: #7f7f7f }
+/* Keyword */ .chroma .k { color: #204a87; font-weight: bold }
+/* KeywordConstant */ .chroma .kc { color: #204a87; font-weight: bold }
+/* KeywordDeclaration */ .chroma .kd { color: #204a87; font-weight: bold }
+/* KeywordNamespace */ .chroma .kn { color: #204a87; font-weight: bold }
+/* KeywordPseudo */ .chroma .kp { color: #204a87; font-weight: bold }
+/* KeywordReserved */ .chroma .kr { color: #204a87; font-weight: bold }
+/* KeywordType */ .chroma .kt { color: #204a87; font-weight: bold }
+/* Name */ .chroma .n { color: #000000 }
+/* NameAttribute */ .chroma .na { color: #c4a000 }
+/* NameBuiltin */ .chroma .nb { color: #204a87 }
+/* NameBuiltinPseudo */ .chroma .bp { color: #3465a4 }
+/* NameClass */ .chroma .nc { color: #000000 }
+/* NameConstant */ .chroma .no { color: #000000 }
+/* NameDecorator */ .chroma .nd { color: #5c35cc; font-weight: bold }
+/* NameEntity */ .chroma .ni { color: #ce5c00 }
+/* NameException */ .chroma .ne { color: #cc0000; font-weight: bold }
+/* NameFunction */ .chroma .nf { color: #000000 }
+/* NameFunctionMagic */ .chroma .fm { color: #000000 }
+/* NameLabel */ .chroma .nl { color: #f57900 }
+/* NameNamespace */ .chroma .nn { color: #000000 }
+/* NameOther */ .chroma .nx { color: #000000 }
+/* NameProperty */ .chroma .py { color: #000000 }
+/* NameTag */ .chroma .nt { color: #204a87; font-weight: bold }
+/* NameVariable */ .chroma .nv { color: #000000 }
+/* NameVariableClass */ .chroma .vc { color: #000000 }
+/* NameVariableGlobal */ .chroma .vg { color: #000000 }
+/* NameVariableInstance */ .chroma .vi { color: #000000 }
+/* NameVariableMagic */ .chroma .vm { color: #000000 }
+/* Literal */ .chroma .l { color: #000000 }
+/* LiteralDate */ .chroma .ld { color: #000000 }
+/* LiteralString */ .chroma .s { color: #4e9a06 }
+/* LiteralStringAffix */ .chroma .sa { color: #4e9a06 }
+/* LiteralStringBacktick */ .chroma .sb { color: #4e9a06 }
+/* LiteralStringChar */ .chroma .sc { color: #4e9a06 }
+/* LiteralStringDelimiter */ .chroma .dl { color: #4e9a06 }
+/* LiteralStringDoc */ .chroma .sd { color: #8f5902; font-style: italic }
+/* LiteralStringDouble */ .chroma .s2 { color: #4e9a06 }
+/* LiteralStringEscape */ .chroma .se { color: #4e9a06 }
+/* LiteralStringHeredoc */ .chroma .sh { color: #4e9a06 }
+/* LiteralStringInterpol */ .chroma .si { color: #4e9a06 }
+/* LiteralStringOther */ .chroma .sx { color: #4e9a06 }
+/* LiteralStringRegex */ .chroma .sr { color: #4e9a06 }
+/* LiteralStringSingle */ .chroma .s1 { color: #4e9a06 }
+/* LiteralStringSymbol */ .chroma .ss { color: #4e9a06 }
+/* LiteralNumber */ .chroma .m { color: #0000cf; font-weight: bold }
+/* LiteralNumberBin */ .chroma .mb { color: #0000cf; font-weight: bold }
+/* LiteralNumberFloat */ .chroma .mf { color: #0000cf; font-weight: bold }
+/* LiteralNumberHex */ .chroma .mh { color: #0000cf; font-weight: bold }
+/* LiteralNumberInteger */ .chroma .mi { color: #0000cf; font-weight: bold }
+/* LiteralNumberIntegerLong */ .chroma .il { color: #0000cf; font-weight: bold }
+/* LiteralNumberOct */ .chroma .mo { color: #0000cf; font-weight: bold }
+/* Operator */ .chroma .o { color: #ce5c00; font-weight: bold }
+/* OperatorWord */ .chroma .ow { color: #204a87; font-weight: bold }
+/* Punctuation */ .chroma .p { color: #000000; font-weight: bold }
+/* Comment */ .chroma .c { color: #8f5902; font-style: italic }
+/* CommentHashbang */ .chroma .ch { color: #8f5902; font-style: italic }
+/* CommentMultiline */ .chroma .cm { color: #8f5902; font-style: italic }
+/* CommentSingle */ .chroma .c1 { color: #8f5902; font-style: italic }
+/* CommentSpecial */ .chroma .cs { color: #8f5902; font-style: italic }
+/* CommentPreproc */ .chroma .cp { color: #8f5902; font-style: italic }
+/* CommentPreprocFile */ .chroma .cpf { color: #8f5902; font-style: italic }
+/* Generic */ .chroma .g { color: #000000 }
+/* GenericDeleted */ .chroma .gd { color: #a40000 }
+/* GenericEmph */ .chroma .ge { color: #000000; font-style: italic }
+/* GenericError */ .chroma .gr { color: #ef2929 }
+/* GenericHeading */ .chroma .gh { color: #000080; font-weight: bold }
+/* GenericInserted */ .chroma .gi { color: #00a000 }
+/* GenericOutput */ .chroma .go { color: #000000; font-style: italic }
+/* GenericPrompt */ .chroma .gp { color: #8f5902 }
+/* GenericStrong */ .chroma .gs { color: #000000; font-weight: bold }
+/* GenericSubheading */ .chroma .gu { color: #800080; font-weight: bold }
+/* GenericTraceback */ .chroma .gt { color: #a40000; font-weight: bold }
+/* GenericUnderline */ .chroma .gl { color: #000000; text-decoration: underline }
+/* TextWhitespace */ .chroma .w { color: #f8f8f8; text-decoration: underline }
+
+   
+      
+     .markdown-container {
+  width: 48em;
+  margin-right: auto;
+  margin-left: auto;
+  box-sizing: border-box;
+  padding: 45px 45px 5px 45px;
+}
+
+
+/**
+ * Responsive
+ **/
+@media only screen and (max-width: 48em) {
+    .markdown-container {
+        text-align: left;
+        width: 100%;
+        margin: 0;
+        margin-top: 3em;
+        padding: 0.1em;
+    }
+}
+
+.markdown-container:after {
+  display:table;
+  clear:both;
+}
+.markdown-container:before {
+  display:table;
+  content:" ";
+}
+
+.markdown-body .octicon {
+  display: inline-block;
+  fill: currentColor;
+  vertical-align: text-bottom;
+}
+
+.markdown-body .anchor {
+  float: left;
+  line-height: 1;
+  margin-left: -20px;
+  padding-right: 4px;
+}
+
+.markdown-body .anchor:focus {
+  outline: none;
+}
+
+.markdown-body h1 .octicon-link,
+.markdown-body h2 .octicon-link,
+.markdown-body h3 .octicon-link,
+.markdown-body h4 .octicon-link,
+.markdown-body h5 .octicon-link,
+.markdown-body h6 .octicon-link {
+  color: #1b1f23;
+  vertical-align: middle;
+  visibility: hidden;
+}
+
+.markdown-body h1:hover .anchor,
+.markdown-body h2:hover .anchor,
+.markdown-body h3:hover .anchor,
+.markdown-body h4:hover .anchor,
+.markdown-body h5:hover .anchor,
+.markdown-body h6:hover .anchor {
+  text-decoration: none;
+}
+
+.markdown-body h1:hover .anchor .octicon-link,
+.markdown-body h2:hover .anchor .octicon-link,
+.markdown-body h3:hover .anchor .octicon-link,
+.markdown-body h4:hover .anchor .octicon-link,
+.markdown-body h5:hover .anchor .octicon-link,
+.markdown-body h6:hover .anchor .octicon-link {
+  visibility: visible;
+}
+
+.markdown-body h1:hover .anchor .octicon-link:before,
+.markdown-body h2:hover .anchor .octicon-link:before,
+.markdown-body h3:hover .anchor .octicon-link:before,
+.markdown-body h4:hover .anchor .octicon-link:before,
+.markdown-body h5:hover .anchor .octicon-link:before,
+.markdown-body h6:hover .anchor .octicon-link:before {
+  width: 16px;
+  height: 16px;
+  content: ' ';
+  display: inline-block;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' version='1.1' width='16' height='16' aria-hidden='true'%3E%3Cpath fill-rule='evenodd' d='M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z'%3E%3C/path%3E%3C/svg%3E");
+}.markdown-body {
+  -ms-text-size-adjust: 100%;
+  -webkit-text-size-adjust: 100%;
+  line-height: 1.5;
+  color: #24292e;
+  font-family: -apple-system,BlinkMacSystemFont,Segoe UI,Helvetica,Arial,sans-serif,Apple Color Emoji,Segoe UI Emoji;
+  font-size: 16px;
+  line-height: 1.5;
+  word-wrap: break-word;
+}
+
+.markdown-body details {
+  display: block;
+}
+
+.markdown-body summary {
+  display: list-item;
+}
+
+.markdown-body a {
+  background-color: initial;
+}
+
+.markdown-body a:active,
+.markdown-body a:hover {
+  outline-width: 0;
+}
+
+.markdown-body strong {
+  font-weight: inherit;
+  font-weight: bolder;
+}
+
+.markdown-body h1 {
+  font-size: 2em;
+  margin: .67em 0;
+}
+
+.markdown-body img {
+  border-style: none;
+}
+
+.markdown-body code,
+.markdown-body kbd,
+.markdown-body pre {
+  font-family: monospace,monospace;
+  font-size: 1em;
+}
+
+.markdown-body hr {
+  box-sizing: initial;
+  height: 0;
+  overflow: visible;
+}
+
+.markdown-body input {
+  font: inherit;
+  margin: 0;
+}
+
+.markdown-body input {
+  overflow: visible;
+}
+
+.markdown-body [type=checkbox] {
+  box-sizing: border-box;
+  padding: 0;
+}
+
+.markdown-body * {
+  box-sizing: border-box;
+}
+
+.markdown-body input {
+  font-family: inherit;
+  font-size: inherit;
+  line-height: inherit;
+}
+
+.markdown-body a {
+  color: #0366d6;
+  text-decoration: none;
+}
+
+.markdown-body a:hover {
+  text-decoration: underline;
+}
+
+.markdown-body strong {
+  font-weight: 600;
+}
+
+.markdown-body hr {
+  height: 0;
+  margin: 15px 0;
+  overflow: hidden;
+  background: transparent;
+  border: 0;
+  border-bottom: 1px solid #dfe2e5;
+}
+
+.markdown-body hr:after,
+.markdown-body hr:before {
+  display: table;
+  content: "";
+}
+
+.markdown-body hr:after {
+  clear: both;
+}
+
+.markdown-body table {
+  border-spacing: 0;
+  border-collapse: collapse;
+}
+
+.markdown-body td,
+.markdown-body th {
+  padding: 0;
+}
+
+.markdown-body details summary {
+  cursor: pointer;
+}
+
+.markdown-body kbd {
+  display: inline-block;
+  padding: 3px 5px;
+  font: 11px SFMono-Regular,Consolas,Liberation Mono,Menlo,monospace;
+  line-height: 10px;
+  color: #444d56;
+  vertical-align: middle;
+  background-color: #fafbfc;
+  border: 1px solid #d1d5da;
+  border-radius: 3px;
+  box-shadow: inset 0 -1px 0 #d1d5da;
+}
+
+.markdown-body h1,
+.markdown-body h2,
+.markdown-body h3,
+.markdown-body h4,
+.markdown-body h5,
+.markdown-body h6 {
+  margin-top: 0;
+  margin-bottom: 0;
+}
+
+.markdown-body h1 {
+  font-size: 32px;
+}
+
+.markdown-body h1,
+.markdown-body h2 {
+  font-weight: 600;
+}
+
+.markdown-body h2 {
+  font-size: 24px;
+}
+
+.markdown-body h3 {
+  font-size: 20px;
+}
+
+.markdown-body h3,
+.markdown-body h4 {
+  font-weight: 600;
+}
+
+.markdown-body h4 {
+  font-size: 16px;
+}
+
+.markdown-body h5 {
+  font-size: 14px;
+}
+
+.markdown-body h5,
+.markdown-body h6 {
+  font-weight: 600;
+}
+
+.markdown-body h6 {
+  font-size: 12px;
+}
+
+.markdown-body p {
+  margin-top: 0;
+  margin-bottom: 10px;
+}
+
+.markdown-body blockquote {
+  margin: 0;
+}
+
+.markdown-body ol,
+.markdown-body ul {
+  padding-left: 0;
+  margin-top: 0;
+  margin-bottom: 0;
+}
+
+.markdown-body ol ol,
+.markdown-body ul ol {
+  list-style-type: lower-roman;
+}
+
+.markdown-body ol ol ol,
+.markdown-body ol ul ol,
+.markdown-body ul ol ol,
+.markdown-body ul ul ol {
+  list-style-type: lower-alpha;
+}
+
+.markdown-body dd {
+  margin-left: 0;
+}
+
+.markdown-body code,
+.markdown-body pre {
+  font-family: SFMono-Regular,Consolas,Liberation Mono,Menlo,monospace;
+  font-size: 12px;
+}
+
+.markdown-body pre {
+  margin-top: 0;
+  margin-bottom: 0;
+}
+
+.markdown-body input::-webkit-inner-spin-button,
+.markdown-body input::-webkit-outer-spin-button {
+  margin: 0;
+  -webkit-appearance: none;
+  appearance: none;
+}
+
+.markdown-body :checked+.radio-label {
+  position: relative;
+  z-index: 1;
+  border-color: #0366d6;
+}
+
+.markdown-body .border {
+  border: 1px solid #e1e4e8!important;
+}
+
+.markdown-body .border-0 {
+  border: 0!important;
+}
+
+.markdown-body .border-bottom {
+  border-bottom: 1px solid #e1e4e8!important;
+}
+
+.markdown-body .rounded-1 {
+  border-radius: 3px!important;
+}
+
+.markdown-body .bg-white {
+  background-color: #fff!important;
+}
+
+.markdown-body .bg-gray-light {
+  background-color: #fafbfc!important;
+}
+
+.markdown-body .text-gray-light {
+  color: #6a737d!important;
+}
+
+.markdown-body .mb-0 {
+  margin-bottom: 0!important;
+}
+
+.markdown-body .my-2 {
+  margin-top: 8px!important;
+  margin-bottom: 8px!important;
+}
+
+.markdown-body .pl-0 {
+  padding-left: 0!important;
+}
+
+.markdown-body .py-0 {
+  padding-top: 0!important;
+  padding-bottom: 0!important;
+}
+
+.markdown-body .pl-1 {
+  padding-left: 4px!important;
+}
+
+.markdown-body .pl-2 {
+  padding-left: 8px!important;
+}
+
+.markdown-body .py-2 {
+  padding-top: 8px!important;
+  padding-bottom: 8px!important;
+}
+
+.markdown-body .pl-3,
+.markdown-body .px-3 {
+  padding-left: 16px!important;
+}
+
+.markdown-body .px-3 {
+  padding-right: 16px!important;
+}
+
+.markdown-body .pl-4 {
+  padding-left: 24px!important;
+}
+
+.markdown-body .pl-5 {
+  padding-left: 32px!important;
+}
+
+.markdown-body .pl-6 {
+  padding-left: 40px!important;
+}
+
+.markdown-body .f6 {
+  font-size: 12px!important;
+}
+
+.markdown-body .lh-condensed {
+  line-height: 1.25!important;
+}
+
+.markdown-body .text-bold {
+  font-weight: 600!important;
+}
+
+.markdown-body .pl-c {
+  color: #6a737d;
+}
+
+.markdown-body .pl-c1,
+.markdown-body .pl-s .pl-v {
+  color: #005cc5;
+}
+
+.markdown-body .pl-e,
+.markdown-body .pl-en {
+  color: #6f42c1;
+}
+
+.markdown-body .pl-s .pl-s1,
+.markdown-body .pl-smi {
+  color: #24292e;
+}
+
+.markdown-body .pl-ent {
+  color: #22863a;
+}
+
+.markdown-body .pl-k {
+  color: #d73a49;
+}
+
+.markdown-body .pl-pds,
+.markdown-body .pl-s,
+.markdown-body .pl-s .pl-pse .pl-s1,
+.markdown-body .pl-sr,
+.markdown-body .pl-sr .pl-cce,
+.markdown-body .pl-sr .pl-sra,
+.markdown-body .pl-sr .pl-sre {
+  color: #032f62;
+}
+
+.markdown-body .pl-smw,
+.markdown-body .pl-v {
+  color: #e36209;
+}
+
+.markdown-body .pl-bu {
+  color: #b31d28;
+}
+
+.markdown-body .pl-ii {
+  color: #fafbfc;
+  background-color: #b31d28;
+}
+
+.markdown-body .pl-c2 {
+  color: #fafbfc;
+  background-color: #d73a49;
+}
+
+.markdown-body .pl-c2:before {
+  content: "^M";
+}
+
+.markdown-body .pl-sr .pl-cce {
+  font-weight: 700;
+  color: #22863a;
+}
+
+.markdown-body .pl-ml {
+  color: #735c0f;
+}
+
+.markdown-body .pl-mh,
+.markdown-body .pl-mh .pl-en,
+.markdown-body .pl-ms {
+  font-weight: 700;
+  color: #005cc5;
+}
+
+.markdown-body .pl-mi {
+  font-style: italic;
+  color: #24292e;
+}
+
+.markdown-body .pl-mb {
+  font-weight: 700;
+  color: #24292e;
+}
+
+.markdown-body .pl-md {
+  color: #b31d28;
+  background-color: #ffeef0;
+}
+
+.markdown-body .pl-mi1 {
+  color: #22863a;
+  background-color: #f0fff4;
+}
+
+.markdown-body .pl-mc {
+  color: #e36209;
+  background-color: #ffebda;
+}
+
+.markdown-body .pl-mi2 {
+  color: #f6f8fa;
+  background-color: #005cc5;
+}
+
+.markdown-body .pl-mdr {
+  font-weight: 700;
+  color: #6f42c1;
+}
+
+.markdown-body .pl-ba {
+  color: #586069;
+}
+
+.markdown-body .pl-sg {
+  color: #959da5;
+}
+
+.markdown-body .pl-corl {
+  text-decoration: underline;
+  color: #032f62;
+}
+
+.markdown-body .mb-0 {
+  margin-bottom: 0!important;
+}
+
+.markdown-body .my-2 {
+  margin-bottom: 8px!important;
+}
+
+.markdown-body .my-2 {
+  margin-top: 8px!important;
+}
+
+.markdown-body .pl-0 {
+  padding-left: 0!important;
+}
+
+.markdown-body .py-0 {
+  padding-top: 0!important;
+  padding-bottom: 0!important;
+}
+
+.markdown-body .pl-1 {
+  padding-left: 4px!important;
+}
+
+.markdown-body .pl-2 {
+  padding-left: 8px!important;
+}
+
+.markdown-body .py-2 {
+  padding-top: 8px!important;
+  padding-bottom: 8px!important;
+}
+
+.markdown-body .pl-3 {
+  padding-left: 16px!important;
+}
+
+.markdown-body .pl-4 {
+  padding-left: 24px!important;
+}
+
+.markdown-body .pl-5 {
+  padding-left: 32px!important;
+}
+
+.markdown-body .pl-6 {
+  padding-left: 40px!important;
+}
+
+.markdown-body .pl-7 {
+  padding-left: 48px!important;
+}
+
+.markdown-body .pl-8 {
+  padding-left: 64px!important;
+}
+
+.markdown-body .pl-9 {
+  padding-left: 80px!important;
+}
+
+.markdown-body .pl-10 {
+  padding-left: 96px!important;
+}
+
+.markdown-body .pl-11 {
+  padding-left: 112px!important;
+}
+
+.markdown-body .pl-12 {
+  padding-left: 128px!important;
+}
+
+.markdown-body hr {
+  border-bottom-color: #eee;
+}
+
+.markdown-body kbd {
+  display: inline-block;
+  padding: 3px 5px;
+  font: 11px SFMono-Regular,Consolas,Liberation Mono,Menlo,monospace;
+  line-height: 10px;
+  color: #444d56;
+  vertical-align: middle;
+  background-color: #fafbfc;
+  border: 1px solid #d1d5da;
+  border-radius: 3px;
+  box-shadow: inset 0 -1px 0 #d1d5da;
+}
+
+.markdown-body:after,
+.markdown-body:before {
+  display: table;
+  content: "";
+}
+
+.markdown-body:after {
+  clear: both;
+}
+
+.markdown-body>:first-child {
+  margin-top: 0!important;
+}
+
+.markdown-body>:last-child {
+  margin-bottom: 0!important;
+}
+
+.markdown-body a:not([href]) {
+  color: inherit;
+  text-decoration: none;
+}
+
+.markdown-body blockquote,
+.markdown-body details,
+.markdown-body dl,
+.markdown-body ol,
+.markdown-body p,
+.markdown-body pre,
+.markdown-body table,
+.markdown-body ul {
+  margin-top: 0;
+  margin-bottom: 16px;
+}
+
+.markdown-body hr {
+  height: .25em;
+  padding: 0;
+  margin: 24px 0;
+  background-color: #e1e4e8;
+  border: 0;
+}
+
+.markdown-body blockquote {
+  padding: 0 1em;
+  color: #6a737d;
+  border-left: .25em solid #dfe2e5;
+}
+
+.markdown-body blockquote>:first-child {
+  margin-top: 0;
+}
+
+.markdown-body blockquote>:last-child {
+  margin-bottom: 0;
+}
+
+.markdown-body h1,
+.markdown-body h2,
+.markdown-body h3,
+.markdown-body h4,
+.markdown-body h5,
+.markdown-body h6 {
+  margin-top: 24px;
+  margin-bottom: 16px;
+  font-weight: 600;
+  line-height: 1.25;
+}
+
+.markdown-body h1 {
+  font-size: 2em;
+}
+
+.markdown-body h1,
+.markdown-body h2 {
+  padding-bottom: .3em;
+  border-bottom: 1px solid #eaecef;
+}
+
+.markdown-body h2 {
+  font-size: 1.5em;
+}
+
+.markdown-body h3 {
+  font-size: 1.25em;
+}
+
+.markdown-body h4 {
+  font-size: 1em;
+}
+
+.markdown-body h5 {
+  font-size: .875em;
+}
+
+.markdown-body h6 {
+  font-size: .85em;
+  color: #6a737d;
+}
+
+.markdown-body ol,
+.markdown-body ul {
+  padding-left: 2em;
+}
+
+.markdown-body ol ol,
+.markdown-body ol ul,
+.markdown-body ul ol,
+.markdown-body ul ul {
+  margin-top: 0;
+  margin-bottom: 0;
+}
+
+.markdown-body li {
+  word-wrap: break-all;
+}
+
+.markdown-body li>p {
+  margin-top: 16px;
+}
+
+.markdown-body li+li {
+  margin-top: .25em;
+}
+
+.markdown-body dl {
+  padding: 0;
+}
+
+.markdown-body dl dt {
+  padding: 0;
+  margin-top: 16px;
+  font-size: 1em;
+  font-style: italic;
+  font-weight: 600;
+}
+
+.markdown-body dl dd {
+  padding: 0 16px;
+  margin-bottom: 16px;
+}
+
+.markdown-body table {
+  display: block;
+  width: 100%;
+  overflow: auto;
+}
+
+.markdown-body table th {
+  font-weight: 600;
+}
+
+.markdown-body table td,
+.markdown-body table th {
+  padding: 6px 13px;
+  border: 1px solid #dfe2e5;
+}
+
+.markdown-body table tr {
+  background-color: #fff;
+  border-top: 1px solid #c6cbd1;
+}
+
+.markdown-body table tr:nth-child(2n) {
+  background-color: #f6f8fa;
+}
+
+.markdown-body img {
+  max-width: 100%;
+  box-sizing: initial;
+  background-color: #fff;
+}
+
+.markdown-body img[align=right] {
+  padding-left: 20px;
+}
+
+.markdown-body img[align=left] {
+  padding-right: 20px;
+}
+
+.markdown-body code {
+  padding: .2em .4em;
+  margin: 0;
+  font-size: 85%;
+  background-color: rgba(27,31,35,.05);
+  border-radius: 3px;
+}
+
+.markdown-body pre {
+  word-wrap: normal;
+}
+
+.markdown-body pre>code {
+  padding: 0;
+  margin: 0;
+  font-size: 100%;
+  word-break: normal;
+  white-space: pre;
+  background: transparent;
+  border: 0;
+}
+
+.markdown-body .highlight {
+  margin-bottom: 16px;
+}
+
+.markdown-body .highlight pre {
+  margin-bottom: 0;
+  word-break: normal;
+}
+
+.markdown-body .highlight pre,
+.markdown-body pre {
+  padding: 16px;
+  overflow: auto;
+  font-size: 85%;
+  line-height: 1.45;
+  background-color: #f6f8fa;
+  border-radius: 3px;
+}
+
+.markdown-body pre code {
+  display: inline;
+  max-width: auto;
+  padding: 0;
+  margin: 0;
+  overflow: visible;
+  line-height: inherit;
+  word-wrap: normal;
+  background-color: initial;
+  border: 0;
+}
+
+.markdown-body .commit-tease-sha {
+  display: inline-block;
+  font-family: SFMono-Regular,Consolas,Liberation Mono,Menlo,monospace;
+  font-size: 90%;
+  color: #444d56;
+}
+
+.markdown-body .full-commit .btn-outline:not(:disabled):hover {
+  color: #005cc5;
+  border-color: #005cc5;
+}
+
+.markdown-body .blob-wrapper {
+  overflow-x: auto;
+  overflow-y: hidden;
+}
+
+.markdown-body .blob-wrapper-embedded {
+  max-height: 240px;
+  overflow-y: auto;
+}
+
+.markdown-body .blob-num {
+  width: 1%;
+  min-width: 50px;
+  padding-right: 10px;
+  padding-left: 10px;
+  font-family: SFMono-Regular,Consolas,Liberation Mono,Menlo,monospace;
+  font-size: 12px;
+  line-height: 20px;
+  color: rgba(27,31,35,.3);
+  text-align: right;
+  white-space: nowrap;
+  vertical-align: top;
+  cursor: pointer;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+.markdown-body .blob-num:hover {
+  color: rgba(27,31,35,.6);
+}
+
+.markdown-body .blob-num:before {
+  content: attr(data-line-number);
+}
+
+.markdown-body .blob-code {
+  position: relative;
+  padding-right: 10px;
+  padding-left: 10px;
+  line-height: 20px;
+  vertical-align: top;
+}
+
+.markdown-body .blob-code-inner {
+  overflow: visible;
+  font-family: SFMono-Regular,Consolas,Liberation Mono,Menlo,monospace;
+  font-size: 12px;
+  color: #24292e;
+  word-wrap: normal;
+  white-space: pre;
+}
+
+.markdown-body .pl-token.active,
+.markdown-body .pl-token:hover {
+  cursor: pointer;
+  background: #ffea7f;
+}
+
+.markdown-body .tab-size[data-tab-size="1"] {
+  -moz-tab-size: 1;
+  tab-size: 1;
+}
+
+.markdown-body .tab-size[data-tab-size="2"] {
+  -moz-tab-size: 2;
+  tab-size: 2;
+}
+
+.markdown-body .tab-size[data-tab-size="3"] {
+  -moz-tab-size: 3;
+  tab-size: 3;
+}
+
+.markdown-body .tab-size[data-tab-size="4"] {
+  -moz-tab-size: 4;
+  tab-size: 4;
+}
+
+.markdown-body .tab-size[data-tab-size="5"] {
+  -moz-tab-size: 5;
+  tab-size: 5;
+}
+
+.markdown-body .tab-size[data-tab-size="6"] {
+  -moz-tab-size: 6;
+  tab-size: 6;
+}
+
+.markdown-body .tab-size[data-tab-size="7"] {
+  -moz-tab-size: 7;
+  tab-size: 7;
+}
+
+.markdown-body .tab-size[data-tab-size="8"] {
+  -moz-tab-size: 8;
+  tab-size: 8;
+}
+
+.markdown-body .tab-size[data-tab-size="9"] {
+  -moz-tab-size: 9;
+  tab-size: 9;
+}
+
+.markdown-body .tab-size[data-tab-size="10"] {
+  -moz-tab-size: 10;
+  tab-size: 10;
+}
+
+.markdown-body .tab-size[data-tab-size="11"] {
+  -moz-tab-size: 11;
+  tab-size: 11;
+}
+
+.markdown-body .tab-size[data-tab-size="12"] {
+  -moz-tab-size: 12;
+  tab-size: 12;
+}
+
+.markdown-body .task-list-item {
+  list-style-type: none;
+}
+
+.markdown-body .task-list-item+.task-list-item {
+  margin-top: 3px;
+}
+
+.markdown-body .task-list-item input {
+  margin: 0 .2em .25em -1.6em;
+  vertical-align: middle;
+}
+
+/* Center inline tweets */
+.twitter-tweet {
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.Box-header {
+  display: flex !important;
+  padding: 16px;
+  padding-top: 16px;
+  padding-bottom: 16px;
+  margin: -1px -1px 0;
+  background-color: #f6f8fa;
+  border: 1px solid #d1d5da;
+  border-top-left-radius: 3px;
+  border-top-right-radius: 3px;
+}
+
+.markdown-frame {
+  border: 1px solid #ddd;
+  border-radius: 3px;
+}
+
+   
+  </style>
+</head>
+<body>
+	<header>
+	<a href="/">HeinrichHartmann.com</a>
+</header>
+
+	
+  <main class="markdown-container">
+    <article class="markdown-body">
+      <h1 class="sticker"> UNPUBLISHED DRAFT </h1>
+      <h1>Home Lab Setup</h1>
+      <p class="meta" style="color:#aaa; float:right">
+         Boltenhagen, 
+        2023-06-10
+        
+      </p>
+      <div style="clear:both">
+	<style>
+.admonition {
+    padding: 15px;
+    margin-bottom: 21px;
+    border-left: 3px solid transparent;
+}
+.admonition .title {
+    font-weight: bold;
+    padding-bottom: 3pt;
+    /* border: 1px solid; border-style: hidden hidden solid; */
+}
+.note {
+    border-color: #9d9d9d;
+    background-color: #f2f2f2;
+}
+</style>
+<p>I have recently published the full configuration of my home-lab setup on <a href="https://github.com/HeinrichHartmann/svc">GitHub</a>.
+In this post, I will give you a brief overview about the setup.</p>
+<p><strong>Goals</strong></p>
+<ul>
+<li>Quick on-boarding of containerized services.</li>
+<li>Family members can use the services on any of their devices.</li>
+<li>No fiddling with IPs and Port names. Services have their own DNS names.</li>
+<li>Stored data is backed-up safely.</li>
+</ul>
+<p>We realize all those goals, with the following technologies:</p>
+<ul>
+<li>Services are on-boarded by creating a directory with a <code>docker-compose.yaml</code> and a <code>Makefile</code></li>
+<li>Access to services is gated on the network level. Only trusted individuals have access to the LAN and the VPN.
+Additionally BasicAuth can be added to all web-services with an extra line of configuration.</li>
+<li>Global DNS settings, hosted on AWS configured with Terraform
+<ul>
+<li>Services are available under <code>$service.heinrichhartmann.net</code> on tailscale VPN.</li>
+<li>Services are available under <code>$service.lan.heinrichhartmann.net</code> on the LAN.</li>
+<li>All web services are secured using https via Letsencrypt.</li>
+</ul>
+</li>
+<li>Data is stored ZFS on a pair of mirrored HDDs and backed up to <a href="https://www.backblaze.com/">backblaze</a> every night.</li>
+</ul>
+<p>The published setup is not intended to be 100% re-usable on the spot. I share this as inspiration for others, that want to get a similar setup going. Also I invite you to provide feedback to me on how to improve.</p>
+<p><strong>Outline</strong></p>
+<nav id="TableOfContents">
+  <ul>
+    <li><a href="#host-configuration-with-nixos">Host Configuration with NixOS</a></li>
+    <li><a href="#secret-management-with-git-crypt">Secret Management with Git-Crypt</a></li>
+    <li><a href="#dns-via-aws-and-terraform">DNS via AWS and Terraform</a></li>
+    <li><a href="#certificates-with-lets-encrypt">Certificates with Let&rsquo;s Encrypt</a></li>
+    <li><a href="#ingress-proxy-with-traefik">Ingress Proxy with Traefik</a></li>
+    <li><a href="#service-configuration-with-docker-compose">Service Configuration with Docker Compose</a></li>
+    <li><a href="#storage-with-zfs">Storage with ZFS</a></li>
+    <li><a href="#next-steps">Next Steps</a></li>
+  </ul>
+</nav>
+
+<h2 id="host-configuration-with-nixos">Host Configuration with NixOS</h2>
+<p>All services are hosted on a single machine.
+This configuration is designed to work in different environments including RPI and Linux Desktop machines, but the main server is running NixOS.</p>
+<p>NixOS allows the machine to be configured descriptively with a small number of <a href="https://github.com/HeinrichHartmann/svc/tree/master/nixos">config files</a>.
+This avoids the need for any bare-metal provisioning tools like Ansible.
+Moving the setup to a new host is a matter of copying the config files to <code>/etc/nixos/</code> and running <code>nixos-rebuild</code>.</p>
+<p>We use the nix configuration to manage networking, and install a small number of global packages including docker.
+We also include some basic <a href="https://github.com/HeinrichHartmann/svc/blob/master/nixos/etc/svc-configuration.nix">systemd services</a> that trigger startup and shutdown scripts, as well as a cron target that is executed hourly for maintenance tasks.</p>
+<p><strong>Learning</strong>  Systemd services are very quick to setup on NixOS.</p>
+<details>
+<p>Here is an example config from for promtail:</p>
+<pre tabindex="0"><code>  systemd.services.promtail = {
+    description = &#34;Promtail service for Loki&#34;;
+    wantedBy = [ &#34;multi-user.target&#34; ];
+    serviceConfig = {
+      ExecStart =  &#34;${pkgs.grafana-loki}/bin/promtail --config.file ${./promtail.yaml}&#34;;
+    };
+  };
+</code></pre><ul>
+<li>Executables are referenced with their package location <code>${pkgs.grafana-loki}/bin/promtail</code>, and automatically made available in the environment.</li>
+<li>Config files are referenced from a relative path <code>${./promtail.yaml}</code> and installed into the <code>/nix</code> tree once the configuration is activated (<code>nixos-rebuild</code>).</li>
+</ul>
+</details>
+<h2 id="secret-management-with-git-crypt">Secret Management with Git-Crypt</h2>
+<p>Secret management is the first problem that needs to be addressed before we can configure any services.
+We choose to keep secrets inside the repository using <a href="https://github.com/AGWA/git-crypt">git-crypt</a>.</p>
+<p>The trust model works as follows:</p>
+<ol>
+<li>On a new host, generate GPG keys and add the public key to the repository, then push to GitHub.</li>
+<li>On an already trusted host, pull in the public keys and mark them as trusted, then push.</li>
+<li>On the new host, pull latest version. It now has access to the secrets.</li>
+</ol>
+<p>Thee steps are automated with a few small scripts. See <a href="https://github.com/HeinrichHartmann/svc/tree/master/crypt/README.md">/crypt/README.md</a> for more details.</p>
+<p><strong>Open ends</strong></p>
+<ul>
+<li>There is no way to revoke keys for the repository at this point in time.</li>
+</ul>
+<h2 id="dns-via-aws-and-terraform">DNS via AWS and Terraform</h2>
+<p>The configuration now relies on AWS services for <a href="https://us-east-1.console.aws.amazon.com/route53/v2/hostedzones#ListRecordSets/Z01776191I9YNA03Q8DIE">DNS</a>.</p>
+<p>All required AWS configuration is managed using terraform located in <code>/infra/aws</code>.</p>
+<ul>
+<li>DNS records for <code>*.heinrichhartmann.net</code> point to the server node inside the tailscale network.</li>
+<li>DNS records for <code>*.lan.heinrichhartmann.net</code> point to the server node inside the local netowrk.</li>
+</ul>
+<p><strong>Learnings.</strong> Earlier version of this repository had self-hosted DHCP, DNS and
+PKI (Private Key Infrastructure for https certificates) included in the config.
+This has the obvious drawback that all clients have to install a self-signed
+certificate. But even once this is done, there are more difficulties caused by
+various clients decided to ignore the DHCP provided DNS services and/or ignore
+the root certificates installed by the OS. Repeated offenders were Firefox,
+Firefox on Android, Safari on iPhone.</p>
+<p>At some point I stopped trying and accepted the fact, that I will be using an
+external service for DNS and PKI.</p>
+<h2 id="certificates-with-lets-encrypt">Certificates with Let&rsquo;s Encrypt</h2>
+<p>Certificates are generated by <a href="https://letsencrypt.org/">Let&rsquo;s Encrypt</a> and use DNS authentification faciliated by AWS.
+Generated certificates are stored under <code>/svc/var</code>.</p>
+<p>Reneawal is performed using <code>make certs</code> from <code>/svc</code> and triggered every week via cron.</p>
+<h2 id="ingress-proxy-with-traefik">Ingress Proxy with Traefik</h2>
+<p>Our main host only has a sinlg IP address on each network.
+To route requests to the correct backend, we use an ingerss proxy that routes
+requests based on the HTTP HOST header.</p>
+<p>We use <a href="https://traefik.io/">Traefik</a> for this purpose.</p>
+<p>In addition to routing request, traefik terminates HTTPS for us, and provides an optional authentification layer (BasicAuth).
+Service discovery is dynamic, and configured using labels associated to docker containers.</p>
+<p>Example:</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-yaml" data-lang="yaml"><span class="line"><span class="cl"><span class="w">   </span><span class="nt">labels</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">      </span>- <span class="s2">&#34;traefik.enable=true&#34;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">      </span>- <span class="s2">&#34;traefik.http.routers.books.rule=HostRegexp(`books.{domain:.*}`)&#34;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">      </span>- <span class="s2">&#34;traefik.http.routers.books.entrypoints=https&#34;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">      </span>- <span class="s2">&#34;traefik.http.routers.books.tls=true&#34;</span><span class="w">
+</span></span></span></code></pre></div><p><strong>Learnings.</strong> Prior iterations used Nginx and HAProxy as for routing requests.
+I found these solutions harder to maintain, as they required to keep the config files in sync, and the syntax (in particular of HAProxy) was hard to manage.
+Traefik offers a good out-of-the box experiences for the standard use-cases.
+Debugging of the docker labels is sometimes a little bit tedious, as there is no linting or syntax checking.</p>
+<p><strong>Open ends.</strong></p>
+<ul>
+<li>I would really like to have OAuth in front of all my services, so I can safely connect and give others the ability to connect without manually managing passwords. Unfortunately the Traefik OAuth plugin is proprietary, and they don&rsquo;t have pricing information on thier page.</li>
+<li>At Zalando we maintain an in-house solution <a href="https://github.com/zalando/skipper">Skipper</a> which comes with OAuth support. I want to try this out at some point.</li>
+</ul>
+<h2 id="service-configuration-with-docker-compose">Service Configuration with Docker Compose</h2>
+<p>Service configurations are stored in <code>./services/$name</code> they typically consists of two files:</p>
+<ul>
+<li>A <code>docker-compose.yaml</code> containing the actual service configuration</li>
+<li>A <code>Makefile</code> exposing targets <code>start</code>, <code>stop</code>, <code>test</code> (defaults can be imported)</li>
+</ul>
+<div class="admonition note">
+    <div class="title">Example</div>
+    <div class="content"><p>Here is a complete example I use for <code>blog.heinrichhartmann.net</code> <a href="https://github.com/HeinrichHartmann/svc/tree/master/services/blog">/services/blog</a></p>
+<p><em>docker-compose.yaml</em></p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-yaml" data-lang="yaml"><span class="line"><span class="cl"><span class="nt">networks</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="nt">traefik</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l">traefik</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="nt">external</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="nt">services</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="nt">blog</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="nt">image</span><span class="p">:</span><span class="w"> </span><span class="l">docker.heinrichhartmann.net/heinrichhartmann.com:latest</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="nt">networks</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">      </span>- <span class="l">traefik</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="nt">labels</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">      </span>- <span class="s2">&#34;traefik.http.routers.blog.rule=HostRegexp(`blog.{domain:.*}`)&#34;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">      </span>- <span class="s2">&#34;traefik.http.routers.blog.entrypoints=https&#34;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">      </span>- <span class="s2">&#34;traefik.http.routers.blog.tls=true&#34;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">      </span>- <span class="s2">&#34;traefik.enable=true&#34;</span><span class="w">
+</span></span></span></code></pre></div><p><em>Makefile</em></p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-Makefile" data-lang="Makefile"><span class="line"><span class="cl"><span class="nv">URL</span><span class="o">=</span>blog.heinrichhartmann.net
+</span></span><span class="line"><span class="cl"><span class="err">include</span> <span class="err">/svc/lib/include.mk</span>
+</span></span></code></pre></div></div>
+</div>
+
+<p>Services can be selectively enabled/disabled by adding symlinks to the <code>services.enabled</code> directory.
+Only enabled services are started on <code>make start</code> and on boot.</p>
+<p>We provide the following scripts for managing services:</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">./svc.sh new <span class="nv">$name</span> <span class="c1"># create new service scaffolding from template</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">./svc.sh <span class="nb">enable</span> <span class="nv">$name</span> <span class="c1"># enable service with given name</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">./svc.sh list-available <span class="c1"># list available services</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">./svc.sh list <span class="c1"># list enabled services</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">make start <span class="c1"># start all enabled services</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">make stop <span class="c1"># stop all enabled services</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">make <span class="nb">test</span> <span class="c1"># test status of all services and print results</span>
+</span></span></code></pre></div><h2 id="storage-with-zfs">Storage with ZFS</h2>
+<p>The main server where this configuration is running is equipped with two 8TB HDD drives.
+Those are configured as a ZFS pool with a RAID 0 configuration, allowing us to compensate for the loss of one of the disks.</p>
+<p>We use <a href="https://github.com/HeinrichHartmann/svc/blob/master/nixos/etc/zfs-configuration.nix#L19">zfs-autosnapshot</a> to protect against accidental deletion.
+Off-site backup is realized via <a href="services/restic">restic</a> to backblaze for selected datasets.</p>
+<p>There are three main filesystems on the pool, that differ in backup and replication strategy.</p>
+<ul>
+<li>
+<p><code>/share/shelf</code>.
+Data in the attic is snapshotted and backed-up and replicated to working machines.
+Content includes work-in-progress documents.</p>
+</li>
+<li>
+<p><code>/share/attic</code>.
+Data in the attic is snapshotted and backed-up.
+Content includes archived projects, private photo collection, important media.</p>
+</li>
+<li>
+<p><code>/share/garage</code>.
+Data in garage is snapshotted but not backed-up.
+Here goes the long-tail of less valuable data I wound not too much mind loosing.</p>
+</li>
+</ul>
+<p>The naming of the datasets is reflecting the different storage tiers, that I use for personal stuff:</p>
+<ul>
+<li>Things in the garage are subject to moisture and my easily get stolen when I inadvertently leave the door open.</li>
+<li>Things in the attic are safe from the elements. Here I keep things of value that I don&rsquo;t want to loose.</li>
+<li>Things on the shelf are used for daily operations. Those may get bumped and scratched, and I can easily replace them.</li>
+</ul>
+<p><strong>Learning.</strong>
+Retrieving backups with restic gets extermely slow when keeping around 100s of versions and working over slow networks.
+Restoring even small amounts of data takes hours to complete.
+I need to improve the retention policy of the restic backups.</p>
+<p><strong>Learning.</strong> In recent days I have moved to away from using the <code>shelf</code> dataset and only rely on <code>attic</code> and <code>garage</code>.
+This is for the following reasons:</p>
+<ul>
+<li>I moved away from Dropbox for replicating data due to their dropping of zfs support (since reverted), and their questionable product strategy.</li>
+<li>I lost trust in  Syncthing for replication since I suffered multiple painful data-loss incidents.</li>
+<li>With <a href="https://tailscale.com/">tailscale</a> I can get access to all files from any network. This grealy reduces the need to keep files around locally.</li>
+</ul>
+<h2 id="next-steps">Next Steps</h2>
+<p>Working in the monitoring domain, I of-course have a fairly elaborate monitoring/observability setup for my home-lab.
+In the next post, I am going to walk you thrhough what&rsquo;s going on there. Stay tuned.</p>
+<h1 id="comments">Comments</h1>
+<script src="https://utteranc.es/client.js"
+        repo="HeinrichHartmann/comments"
+        issue-term="title"
+        label="Comment"
+        theme="github-light"
+        crossorigin="anonymous"
+        async>
+</script>
+
+      </div>
+    </article>
+  </main>
+
+	<footer style="float:right; margin: 20px auto 20px auto; color:#AAA">&copy; 2023 Heinrich Hartmann. All rights reserved.</footer>
+
+</body>
+
+</html>

@@ -6,13 +6,24 @@
     <description>Recent content in Posts on HeinrichHartmann.com</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Wed, 07 Jun 2023 00:00:00 +0000</lastBuildDate><atom:link href="/posts/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Sat, 10 Jun 2023 00:00:00 +0000</lastBuildDate><atom:link href="/posts/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Home Lab Setup</title>
+      <link>/posts/home-lab-2023/</link>
+      <pubDate>Sat, 10 Jun 2023 00:00:00 +0000</pubDate>
+      
+      <guid>/posts/home-lab-2023/</guid>
+      <description>I have recently published the full configuration of my home-lab setup on GitHub. In this post, I will give you a brief overview about the setup.
+Goals
+Quick on-boarding of containerized services. Family members can use the services on any of their devices. No fiddling with IPs and Port names. Services have their own DNS names. Stored data is backed-up safely. We realize all those goals, with the following technologies:</description>
+    </item>
+    
     <item>
       <title>The Calculus of Local Smooth Functions</title>
-      <link>/posts/post-16/</link>
+      <link>/posts/2023-06-08-smooth-functions/</link>
       <pubDate>Wed, 07 Jun 2023 00:00:00 +0000</pubDate>
       
-      <guid>/posts/post-16/</guid>
+      <guid>/posts/2023-06-08-smooth-functions/</guid>
       <description></description>
     </item>
     
