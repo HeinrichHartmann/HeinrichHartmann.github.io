@@ -6,14 +6,16 @@
     <description>Recent content in mon, post on HeinrichHartmann.com</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Sat, 10 Jun 2023 00:00:00 +0000</lastBuildDate><atom:link href="/tags/mon-post/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Sun, 11 Jun 2023 00:00:00 +0000</lastBuildDate><atom:link href="/tags/mon-post/index.xml" rel="self" type="application/rss+xml" />
     <item>
-      <title>Home Lab Setup</title>
+      <title>Home Lab Infrastructure</title>
       <link>/posts/home-lab-2023/</link>
-      <pubDate>Sat, 10 Jun 2023 00:00:00 +0000</pubDate>
+      <pubDate>Sun, 11 Jun 2023 00:00:00 +0000</pubDate>
       
       <guid>/posts/home-lab-2023/</guid>
-      <description>I have recently published the full configuration of my home-lab setup on GitHub. In this post, I will give you a brief overview about the setup.
+      <description>I have recently published the full configuration of my home-lab infrastructure on GitHub:
+https://github.com/HeinrichHartmann/svc
+In this post, I will give you a brief overview about the setup.
 Goals
 Quick on-boarding of containerized services. Family members can use the services on any of their devices. No fiddling with IPs and Port names. Services have their own DNS names. Stored data is backed-up safely. We realize all those goals, with the following technologies:</description>
     </item>

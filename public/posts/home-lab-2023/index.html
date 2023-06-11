@@ -4,7 +4,7 @@
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<title>Home Lab Setup</title>
+	<title>Home Lab Infrastructure</title>
 	
 	
 	
@@ -1186,17 +1186,17 @@ header a:visited {
 	
   <main class="markdown-container">
     <article class="markdown-body">
-      <h1 class="sticker"> UNPUBLISHED DRAFT </h1>
-      <h1>Home Lab Setup</h1>
+      
+      <h1>Home Lab Infrastructure</h1>
       <p class="meta" style="color:#aaa; float:right">
          Boltenhagen, 
-        2023-06-10
+        2023-06-11
         
       </p>
       <div style="clear:both">
 	<style>
 .admonition {
-    padding: 15px;
+    padding: 0px 0px 0px 10pt;
     margin-bottom: 21px;
     border-left: 3px solid transparent;
 }
@@ -1207,11 +1207,11 @@ header a:visited {
 }
 .note {
     border-color: #9d9d9d;
-    background-color: #f2f2f2;
 }
 </style>
-<p>I have recently published the full configuration of my home-lab setup on <a href="https://github.com/HeinrichHartmann/svc">GitHub</a>.
-In this post, I will give you a brief overview about the setup.</p>
+<p>I have recently published the full configuration of my home-lab infrastructure on GitHub:</p>
+<p><a href="https://github.com/HeinrichHartmann/svc">https://github.com/HeinrichHartmann/svc</a></p>
+<p>In this post, I will give you a brief overview about the setup.</p>
 <p><strong>Goals</strong></p>
 <ul>
 <li>Quick on-boarding of containerized services.</li>
@@ -1222,22 +1222,25 @@ In this post, I will give you a brief overview about the setup.</p>
 <p>We realize all those goals, with the following technologies:</p>
 <ul>
 <li>Services are on-boarded by creating a directory with a <code>docker-compose.yaml</code> and a <code>Makefile</code></li>
-<li>Access to services is gated on the network level. Only trusted individuals have access to the LAN and the VPN.
+<li>Servies are available on the home network (LAN) and remotely via a Tailscale VPN.</li>
+<li>Access to services is mainly gated on the network level.
+Only trusted individuals have access to the LAN and the VPN.
 Additionally BasicAuth can be added to all web-services with an extra line of configuration.</li>
-<li>Global DNS settings, hosted on AWS configured with Terraform
+<li>DNS entries are hosted on AWS and configured with Terraform.
 <ul>
-<li>Services are available under <code>$service.heinrichhartmann.net</code> on tailscale VPN.</li>
+<li>Services are available under <code>$service.heinrichhartmann.net</code> on the VPN.</li>
 <li>Services are available under <code>$service.lan.heinrichhartmann.net</code> on the LAN.</li>
-<li>All web services are secured using https via Letsencrypt.</li>
+<li>All web services are secured using https via Let&rsquo;s Encrypt.</li>
 </ul>
 </li>
-<li>Data is stored ZFS on a pair of mirrored HDDs and backed up to <a href="https://www.backblaze.com/">backblaze</a> every night.</li>
+<li>Data is stored ZFS on a pair of mirrored HDDs and backed up to Backblaze every night.</li>
 </ul>
 <p>The published setup is not intended to be 100% re-usable on the spot. I share this as inspiration for others, that want to get a similar setup going. Also I invite you to provide feedback to me on how to improve.</p>
 <p><strong>Outline</strong></p>
 <nav id="TableOfContents">
   <ul>
     <li><a href="#host-configuration-with-nixos">Host Configuration with NixOS</a></li>
+    <li><a href="#networking-with-tailscale">Networking with Tailscale</a></li>
     <li><a href="#secret-management-with-git-crypt">Secret Management with Git-Crypt</a></li>
     <li><a href="#dns-via-aws-and-terraform">DNS via AWS and Terraform</a></li>
     <li><a href="#certificates-with-lets-encrypt">Certificates with Let&rsquo;s Encrypt</a></li>
@@ -1271,6 +1274,17 @@ We also include some basic <a href="https://github.com/HeinrichHartmann/svc/blob
 <li>Config files are referenced from a relative path <code>${./promtail.yaml}</code> and installed into the <code>/nix</code> tree once the configuration is activated (<code>nixos-rebuild</code>).</li>
 </ul>
 </details>
+<h2 id="networking-with-tailscale">Networking with Tailscale</h2>
+<p>In we leverage a <a href="https://tailscale.com/">tailscale</a> VPN to safely connect to the machine when outisde of the home network.
+In contrast to traditional VPN solutions, tailscale VPNs don&rsquo;t need a central &ldquo;hub&rdquo; node that is reachable
+from the internet. Instead, Tailscale establishes direct peer-2-peer connections between participants
+of the network by <a href="https://tailscale.com/blog/how-nat-traversal-works/">traversing NAT walls</a>. A central server is only needed for authentification and
+with setting up the initial connection.</p>
+<p>The central server is configured as a tailscale node, and comes with a static IP
+address. Tailscale clients are installed on all devices that I use remotely,
+including iPhones and Android Phones as well as Mac and Linux Laptops.</p>
+<p><strong>Learning</strong> Tailscale is not entirely frictionless on mobile devices.
+The Tailscale connections are regularly stopped by the OS, and need to be re-established when I want to e.g. sync Photos to the home-server.</p>
 <h2 id="secret-management-with-git-crypt">Secret Management with Git-Crypt</h2>
 <p>Secret management is the first problem that needs to be addressed before we can configure any services.
 We choose to keep secrets inside the repository using <a href="https://github.com/AGWA/git-crypt">git-crypt</a>.</p>
@@ -1312,7 +1326,7 @@ requests based on the HTTP HOST header.</p>
 <p>We use <a href="https://traefik.io/">Traefik</a> for this purpose.</p>
 <p>In addition to routing request, traefik terminates HTTPS for us, and provides an optional authentification layer (BasicAuth).
 Service discovery is dynamic, and configured using labels associated to docker containers.</p>
-<p>Example:</p>
+<p>Example: This is the relevant snippet from a docker-compose file.</p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-yaml" data-lang="yaml"><span class="line"><span class="cl"><span class="w">   </span><span class="nt">labels</span><span class="p">:</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w">      </span>- <span class="s2">&#34;traefik.enable=true&#34;</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w">      </span>- <span class="s2">&#34;traefik.http.routers.books.rule=HostRegexp(`books.{domain:.*}`)&#34;</span><span class="w">
@@ -1335,7 +1349,7 @@ Debugging of the docker labels is sometimes a little bit tedious, as there is no
 </ul>
 <div class="admonition note">
     <div class="title">Example</div>
-    <div class="content"><p>Here is a complete example I use for <code>blog.heinrichhartmann.net</code> <a href="https://github.com/HeinrichHartmann/svc/tree/master/services/blog">/services/blog</a></p>
+    <div class="content"><p>Here is a complete example I use for <code>blog.heinrichhartmann.net</code> (see <a href="https://github.com/HeinrichHartmann/svc/tree/master/services/blog">/services/blog</a> for the original).</p>
 <p><em>docker-compose.yaml</em></p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-yaml" data-lang="yaml"><span class="line"><span class="cl"><span class="nt">networks</span><span class="p">:</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="nt">traefik</span><span class="p">:</span><span class="w">
@@ -1359,7 +1373,7 @@ Debugging of the docker labels is sometimes a little bit tedious, as there is no
 </div>
 
 <p>Services can be selectively enabled/disabled by adding symlinks to the <code>services.enabled</code> directory.
-Only enabled services are started on <code>make start</code> and on boot.</p>
+Only enabled services are started on boot.</p>
 <p>We provide the following scripts for managing services:</p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">./svc.sh new <span class="nv">$name</span> <span class="c1"># create new service scaffolding from template</span>
 </span></span><span class="line"><span class="cl">
@@ -1374,11 +1388,23 @@ Only enabled services are started on <code>make start</code> and on boot.</p>
 </span></span><span class="line"><span class="cl">make stop <span class="c1"># stop all enabled services</span>
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl">make <span class="nb">test</span> <span class="c1"># test status of all services and print results</span>
-</span></span></code></pre></div><h2 id="storage-with-zfs">Storage with ZFS</h2>
-<p>The main server where this configuration is running is equipped with two 8TB HDD drives.
-Those are configured as a ZFS pool with a RAID 0 configuration, allowing us to compensate for the loss of one of the disks.</p>
-<p>We use <a href="https://github.com/HeinrichHartmann/svc/blob/master/nixos/etc/zfs-configuration.nix#L19">zfs-autosnapshot</a> to protect against accidental deletion.
-Off-site backup is realized via <a href="services/restic">restic</a> to backblaze for selected datasets.</p>
+</span></span></code></pre></div><p><strong>Learning.</strong>  Docker does not provide any facilities to map user-ids from the host to the container.
+This is a problem when sharing between containers that hold oppinions on which user-id should own files.
+In our case, the <code>samba</code> service expects files to have owner 1000:1000, and Photo Prism writes files under a differen user-id by default.</p>
+<p>To solve this proble we are using <a href="https://bindfs.org/">bindfs</a> mounts.
+The reason we need to keep additional Makefiles around, is so that we can manage these bindmounts.
+Bindfs is a FUSE file system, that allows flexible user-id mappings.
+FUSE filesystems require a process to run while using the file system, and can&rsquo;t be configured in fstab.
+We start the bindfs processes from the <code>make start</code> targets before running docker-compose.
+Similarly with <code>make stop</code>.</p>
+<h2 id="storage-with-zfs">Storage with ZFS</h2>
+<p>The home-lab server is equipped with 8TB HDD drives for long term storage.
+Those are configured as a ZFS pool with a mirror configuration, allowing us to compensate for the loss of one of the disks.</p>
+<ul>
+<li>We use <a href="https://github.com/HeinrichHartmann/svc/blob/master/nixos/etc/zfs-configuration.nix#L19">zfs-autosnapshot</a> to protect against accidental deletion.</li>
+<li>We perform <a href="https://openzfs.github.io/openzfs-docs/man/8/zpool-scrub.8.html?highlight=scrub">zfs scrubs</a> weekly to protect data against bit-rot.</li>
+<li>Off-site backup is realized via <a href="services/restic">restic</a> to backblaze for selected datasets.</li>
+</ul>
 <p>There are three main filesystems on the pool, that differ in backup and replication strategy.</p>
 <ul>
 <li>
@@ -1399,9 +1425,9 @@ Here goes the long-tail of less valuable data I wound not too much mind loosing.
 </ul>
 <p>The naming of the datasets is reflecting the different storage tiers, that I use for personal stuff:</p>
 <ul>
-<li>Things in the garage are subject to moisture and my easily get stolen when I inadvertently leave the door open.</li>
-<li>Things in the attic are safe from the elements. Here I keep things of value that I don&rsquo;t want to loose.</li>
-<li>Things on the shelf are used for daily operations. Those may get bumped and scratched, and I can easily replace them.</li>
+<li>Things in the <em>garage</em> are subject to moisture and my easily get stolen when I inadvertently leave the door open.</li>
+<li>Things in the <em>attic</em> are safe from the elements. Here I keep things of value that I don&rsquo;t want to loose.</li>
+<li>Things on the <em>shelf</em> are used for daily operations, and need to be available at all times.</li>
 </ul>
 <p><strong>Learning.</strong>
 Retrieving backups with restic gets extermely slow when keeping around 100s of versions and working over slow networks.
