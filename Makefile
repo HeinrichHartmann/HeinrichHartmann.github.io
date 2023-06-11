@@ -10,7 +10,7 @@ build:
 	date > ./public/last-update.txt
 	cd hugo && make build
 	# Rebuilds of the individual sub-projects are not necessary, as the content of public is chcekd in
-	cd elements && make build
+	# cd elements && make build
 	# cd latency && make build
 
 serve:

@@ -1,17 +1,16 @@
 ---
-title: Home Lab Setup
-date: 2023-06-10
+title: Home Lab Infrastructure
+date: 2023-06-11
 author: Heinrich Hartmann
 location: Boltenhagen
 style: markdown
 tags: mon, post
 url: /posts/home-lab-2023
-Draft: false
 ---
 
 <style>
 .admonition {
-    padding: 15px;
+    padding: 0px 0px 0px 10pt;
     margin-bottom: 21px;
     border-left: 3px solid transparent;
 }
@@ -22,11 +21,13 @@ Draft: false
 }
 .note {
     border-color: #9d9d9d;
-    background-color: #f2f2f2;
 }
 </style>
 
-I have recently published the full configuration of my home-lab setup on [GitHub](https://github.com/HeinrichHartmann/svc).
+I have recently published the full configuration of my home-lab infrastructure on GitHub:
+
+https://github.com/HeinrichHartmann/svc
+
 In this post, I will give you a brief overview about the setup.
 
 **Goals**
@@ -38,13 +39,15 @@ In this post, I will give you a brief overview about the setup.
 We realize all those goals, with the following technologies:
 
 * Services are on-boarded by creating a directory with a `docker-compose.yaml` and a `Makefile`
-* Access to services is gated on the network level. Only trusted individuals have access to the LAN and the VPN.
-   Additionally BasicAuth can be added to all web-services with an extra line of configuration.
-* Global DNS settings, hosted on AWS configured with Terraform
-  - Services are available under `$service.heinrichhartmann.net` on tailscale VPN.
+* Servies are available on the home network (LAN) and remotely via a Tailscale VPN. 
+* Access to services is mainly gated on the network level.
+  Only trusted individuals have access to the LAN and the VPN.
+  Additionally BasicAuth can be added to all web-services with an extra line of configuration.
+* DNS entries are hosted on AWS and configured with Terraform.
+  - Services are available under `$service.heinrichhartmann.net` on the VPN.
   - Services are available under `$service.lan.heinrichhartmann.net` on the LAN.
-  - All web services are secured using https via Letsencrypt.
-* Data is stored ZFS on a pair of mirrored HDDs and backed up to [backblaze](https://www.backblaze.com/) every night.
+  - All web services are secured using https via Let's Encrypt.
+* Data is stored ZFS on a pair of mirrored HDDs and backed up to Backblaze every night.
 
 The published setup is not intended to be 100% re-usable on the spot. I share this as inspiration for others, that want to get a similar setup going. Also I invite you to provide feedback to me on how to improve.
 
@@ -83,6 +86,21 @@ Here is an example config from for promtail:
 * Config files are referenced from a relative path `${./promtail.yaml}` and installed into the `/nix` tree once the configuration is activated (`nixos-rebuild`).
 
 </details>
+
+## Networking with Tailscale
+
+In we leverage a [tailscale](https://tailscale.com/) VPN to safely connect to the machine when outisde of the home network.
+In contrast to traditional VPN solutions, tailscale VPNs don't need a central "hub" node that is reachable
+from the internet. Instead, Tailscale establishes direct peer-2-peer connections between participants
+of the network by [traversing NAT walls](https://tailscale.com/blog/how-nat-traversal-works/). A central server is only needed for authentification and
+with setting up the initial connection.
+
+The central server is configured as a tailscale node, and comes with a static IP
+address. Tailscale clients are installed on all devices that I use remotely,
+including iPhones and Android Phones as well as Mac and Linux Laptops.
+
+**Learning** Tailscale is not entirely frictionless on mobile devices.
+The Tailscale connections are regularly stopped by the OS, and need to be re-established when I want to e.g. sync Photos to the home-server.
 
 ## Secret Management with Git-Crypt
 
@@ -139,7 +157,7 @@ We use [Traefik](https://traefik.io/) for this purpose.
 In addition to routing request, traefik terminates HTTPS for us, and provides an optional authentification layer (BasicAuth).
 Service discovery is dynamic, and configured using labels associated to docker containers.
 
-Example:
+Example: This is the relevant snippet from a docker-compose file.
 ```yaml
    labels:
       - "traefik.enable=true"
@@ -165,7 +183,7 @@ Service configurations are stored in `./services/$name` they typically consists 
 - A `Makefile` exposing targets `start`, `stop`, `test` (defaults can be imported)
 
 {{< note title="Example" >}}
-Here is a complete example I use for `blog.heinrichhartmann.net` [/services/blog](https://github.com/HeinrichHartmann/svc/tree/master/services/blog)
+Here is a complete example I use for `blog.heinrichhartmann.net` (see [/services/blog](https://github.com/HeinrichHartmann/svc/tree/master/services/blog) for the original). 
 
 _docker-compose.yaml_
 ```yaml
@@ -194,7 +212,7 @@ include /svc/lib/include.mk
 {{< /note >}}
 
 Services can be selectively enabled/disabled by adding symlinks to the `services.enabled` directory.
-Only enabled services are started on `make start` and on boot.
+Only enabled services are started on boot.
 
 We provide the following scripts for managing services:
 
@@ -214,13 +232,26 @@ make stop # stop all enabled services
 make test # test status of all services and print results
 ```
 
+**Learning.**  Docker does not provide any facilities to map user-ids from the host to the container.
+This is a problem when sharing between containers that hold oppinions on which user-id should own files.
+In our case, the `samba` service expects files to have owner 1000:1000, and Photo Prism writes files under a differen user-id by default.
+
+To solve this proble we are using [bindfs](https://bindfs.org/) mounts.
+The reason we need to keep additional Makefiles around, is so that we can manage these bindmounts. 
+Bindfs is a FUSE file system, that allows flexible user-id mappings.
+FUSE filesystems require a process to run while using the file system, and can't be configured in fstab.
+We start the bindfs processes from the `make start` targets before running docker-compose.
+Similarly with `make stop`.
+
+
 ## Storage with ZFS
 
-The main server where this configuration is running is equipped with two 8TB HDD drives.
-Those are configured as a ZFS pool with a RAID 0 configuration, allowing us to compensate for the loss of one of the disks.
+The home-lab server is equipped with 8TB HDD drives for long term storage.
+Those are configured as a ZFS pool with a mirror configuration, allowing us to compensate for the loss of one of the disks.
 
-We use [zfs-autosnapshot](https://github.com/HeinrichHartmann/svc/blob/master/nixos/etc/zfs-configuration.nix#L19) to protect against accidental deletion.
-Off-site backup is realized via [restic](services/restic) to backblaze for selected datasets.
+- We use [zfs-autosnapshot](https://github.com/HeinrichHartmann/svc/blob/master/nixos/etc/zfs-configuration.nix#L19) to protect against accidental deletion.
+- We perform [zfs scrubs](https://openzfs.github.io/openzfs-docs/man/8/zpool-scrub.8.html?highlight=scrub) weekly to protect data against bit-rot.
+- Off-site backup is realized via [restic](services/restic) to backblaze for selected datasets.
 
 There are three main filesystems on the pool, that differ in backup and replication strategy.
 
@@ -238,9 +269,9 @@ There are three main filesystems on the pool, that differ in backup and replicat
 
 The naming of the datasets is reflecting the different storage tiers, that I use for personal stuff:
 
-- Things in the garage are subject to moisture and my easily get stolen when I inadvertently leave the door open.
-- Things in the attic are safe from the elements. Here I keep things of value that I don't want to loose. 
-- Things on the shelf are used for daily operations. Those may get bumped and scratched, and I can easily replace them.
+- Things in the _garage_ are subject to moisture and my easily get stolen when I inadvertently leave the door open.
+- Things in the _attic_ are safe from the elements. Here I keep things of value that I don't want to loose. 
+- Things on the _shelf_ are used for daily operations, and need to be available at all times.
 
 **Learning.**
 Retrieving backups with restic gets extermely slow when keeping around 100s of versions and working over slow networks.
