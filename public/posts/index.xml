@@ -16,8 +16,9 @@
       <description>I have recently published the full configuration of my home-lab infrastructure on GitHub:
 https://github.com/HeinrichHartmann/svc
 In this post, I will give you a brief overview about the setup.
-Goals
-Quick on-boarding of containerized services. Family members can use the services on any of their devices. No fiddling with IPs and Port names. Services have their own DNS names. Stored data is backed-up safely. We realize all those goals, with the following technologies:</description>
+Design Goals:
+Quick on-boarding of containerized services. Family members can use the services on any of their devices. No fiddling with IPs and Port names. Services have their own DNS names. Stored data is backed-up safely. Solution Summary:
+Services are on-boarded by creating a directory with a docker-compose.</description>
     </item>
     
     <item>

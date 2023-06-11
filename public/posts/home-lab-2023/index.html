@@ -1188,6 +1188,7 @@ header a:visited {
     <article class="markdown-body">
       
       <h1>Home Lab Infrastructure</h1>
+      <img class="backdrop" src="/posts/2023-06-10-home-lab/backdrop.png"></img>
       <p class="meta" style="color:#aaa; float:right">
          Boltenhagen, 
         2023-06-11
@@ -1208,20 +1209,23 @@ header a:visited {
 .note {
     border-color: #9d9d9d;
 }
+.backdrop {
+    opacity: 0.80;
+}
 </style>
 <p>I have recently published the full configuration of my home-lab infrastructure on GitHub:</p>
 <p><a href="https://github.com/HeinrichHartmann/svc">https://github.com/HeinrichHartmann/svc</a></p>
 <p>In this post, I will give you a brief overview about the setup.</p>
-<p><strong>Goals</strong></p>
+<p><strong>Design Goals:</strong></p>
 <ul>
 <li>Quick on-boarding of containerized services.</li>
 <li>Family members can use the services on any of their devices.</li>
 <li>No fiddling with IPs and Port names. Services have their own DNS names.</li>
 <li>Stored data is backed-up safely.</li>
 </ul>
-<p>We realize all those goals, with the following technologies:</p>
+<p><strong>Solution Summary:</strong></p>
 <ul>
-<li>Services are on-boarded by creating a directory with a <code>docker-compose.yaml</code> and a <code>Makefile</code></li>
+<li>Services are on-boarded by creating a directory with a <code>docker-compose.yaml</code> and a <code>Makefile</code>.</li>
 <li>Servies are available on the home network (LAN) and remotely via a Tailscale VPN.</li>
 <li>Access to services is mainly gated on the network level.
 Only trusted individuals have access to the LAN and the VPN.
@@ -1240,7 +1244,7 @@ Additionally BasicAuth can be added to all web-services with an extra line of co
 <nav id="TableOfContents">
   <ul>
     <li><a href="#host-configuration-with-nixos">Host Configuration with NixOS</a></li>
-    <li><a href="#networking-with-tailscale">Networking with Tailscale</a></li>
+    <li><a href="#virtual-private-network-with-tailscale">Virtual Private Network with Tailscale</a></li>
     <li><a href="#secret-management-with-git-crypt">Secret Management with Git-Crypt</a></li>
     <li><a href="#dns-via-aws-and-terraform">DNS via AWS and Terraform</a></li>
     <li><a href="#certificates-with-lets-encrypt">Certificates with Let&rsquo;s Encrypt</a></li>
@@ -1274,10 +1278,10 @@ We also include some basic <a href="https://github.com/HeinrichHartmann/svc/blob
 <li>Config files are referenced from a relative path <code>${./promtail.yaml}</code> and installed into the <code>/nix</code> tree once the configuration is activated (<code>nixos-rebuild</code>).</li>
 </ul>
 </details>
-<h2 id="networking-with-tailscale">Networking with Tailscale</h2>
+<h2 id="virtual-private-network-with-tailscale">Virtual Private Network with Tailscale</h2>
 <p>In we leverage a <a href="https://tailscale.com/">tailscale</a> VPN to safely connect to the machine when outisde of the home network.
-In contrast to traditional VPN solutions, tailscale VPNs don&rsquo;t need a central &ldquo;hub&rdquo; node that is reachable
-from the internet. Instead, Tailscale establishes direct peer-2-peer connections between participants
+In contrast to traditional VPN solutions, tailscale VPNs don&rsquo;t need a central hub node that is reachable
+from the internet. Instead, tailscale establishes direct peer-2-peer connections between participants
 of the network by <a href="https://tailscale.com/blog/how-nat-traversal-works/">traversing NAT walls</a>. A central server is only needed for authentification and
 with setting up the initial connection.</p>
 <p>The central server is configured as a tailscale node, and comes with a static IP
