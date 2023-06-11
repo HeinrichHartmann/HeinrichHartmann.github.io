@@ -6,6 +6,7 @@ location: Boltenhagen
 style: markdown
 tags: mon, post
 url: /posts/home-lab-2023
+backdrop: /posts/2023-06-10-home-lab/backdrop.png
 ---
 
 <style>
@@ -22,6 +23,9 @@ url: /posts/home-lab-2023
 .note {
     border-color: #9d9d9d;
 }
+.backdrop {
+    opacity: 0.80;
+}
 </style>
 
 I have recently published the full configuration of my home-lab infrastructure on GitHub:
@@ -30,15 +34,15 @@ https://github.com/HeinrichHartmann/svc
 
 In this post, I will give you a brief overview about the setup.
 
-**Goals**
+**Design Goals:**
 * Quick on-boarding of containerized services.
 * Family members can use the services on any of their devices.
 * No fiddling with IPs and Port names. Services have their own DNS names.
 * Stored data is backed-up safely.
 
-We realize all those goals, with the following technologies:
+**Solution Summary:**
 
-* Services are on-boarded by creating a directory with a `docker-compose.yaml` and a `Makefile`
+* Services are on-boarded by creating a directory with a `docker-compose.yaml` and a `Makefile`.
 * Servies are available on the home network (LAN) and remotely via a Tailscale VPN. 
 * Access to services is mainly gated on the network level.
   Only trusted individuals have access to the LAN and the VPN.
@@ -87,11 +91,11 @@ Here is an example config from for promtail:
 
 </details>
 
-## Networking with Tailscale
+## Virtual Private Network with Tailscale
 
 In we leverage a [tailscale](https://tailscale.com/) VPN to safely connect to the machine when outisde of the home network.
-In contrast to traditional VPN solutions, tailscale VPNs don't need a central "hub" node that is reachable
-from the internet. Instead, Tailscale establishes direct peer-2-peer connections between participants
+In contrast to traditional VPN solutions, tailscale VPNs don't need a central hub node that is reachable
+from the internet. Instead, tailscale establishes direct peer-2-peer connections between participants
 of the network by [traversing NAT walls](https://tailscale.com/blog/how-nat-traversal-works/). A central server is only needed for authentification and
 with setting up the initial connection.
 
