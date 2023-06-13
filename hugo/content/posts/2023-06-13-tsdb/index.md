@@ -117,13 +117,10 @@ From the list I have first-hand experience with Prometheus, Influx, KairosDB, RR
 
 ## OpenTelemetry
 
-So far I know, that Prometheus and InfluxDB do support ingesting data with OpenTelemetry, 
-and the process has been straight-forward.
+So far I know, that Prometheus and InfluxDB do support ingesting data with OpenTelemetry, and the process has been straight-forward.
 
-I am looking at trying ou Cortex, VictoriaMetrics and TimescaleDB for the next
-project with OpenTelemetry. I will keep the post updated as I make progress.
-Please let me know in the comments, if you have experience with any of this
-solutions as OpenTelemetry storage backend.
+I am looking at trying to trying Cortex, VictoriaMetrics and TimescaleDB for some experiments with OpenTelemetry. 
+Please let me know in the comments, if you have experience with any of this solutions as OpenTelemetry storage backend.
 
 ## Comments
 
