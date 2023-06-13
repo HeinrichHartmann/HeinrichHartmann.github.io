@@ -90,6 +90,7 @@ with "a little" aid of [ChatGPT](https://chat.openai.com/share/3e0e187b-05f9-44f
 | [TimescaleDB](https://github.com/timescale/timescaledb) | 2016 | Apache 2.0 | SQL | 9800 |
 | [TDengine](https://github.com/taosdata/TDengine) | 2017 | AGPL 3.0 | SQL | 6600 |
 | [Thanos](https://github.com/thanos-io/thanos) | 2018 | Apache 2.0 | PromQL | 5800 |
+| [Cortex](https://github.com/cortexproject/cortex) | 2016 | Apache 2.0 | PromQL | 5100 |
 | [QuestDB](https://github.com/questdb/questdb) | 2020 | Apache 2.0 | SQL | 4200 |
 | [Graphite](https://github.com/graphite-project/graphite-web) | 2008 | Apache 2.0 | Graphite | 4600 |
 | [OpenTSDB](https://github.com/OpenTSDB/opentsdb) | 2010 | LGPL 2.1 | OpenTSDB SQL | 3500 |

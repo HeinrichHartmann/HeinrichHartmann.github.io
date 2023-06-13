@@ -28,3 +28,4 @@
 | [Warpscript](https://github.com/senx/warp10-platform) | 2014 | Apache 2.0 | WarpScript | 180 |
 | [Warp 10](https://github.com/senx/warp10-platform) | 2014 | Apache 2.0 | WarpScript | 500 |
 | [Gnocchi (OpenStack)](https://github.com/gnocchixyz/gnocchi) | 2014 | Apache 2.0 | Gnocchi Query Language | 700 |
+| [Cortex](https://github.com/cortexproject/cortex) | 2016 | Apache 2.0 | PromQL | 5,100 |
