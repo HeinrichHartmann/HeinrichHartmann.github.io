@@ -4,7 +4,7 @@
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<title>Open-Source Time Series Databases List</title>
+	<title>Home Lab Observability</title>
 	
 	
 	
@@ -1186,295 +1186,220 @@ header a:visited {
 	
   <main class="markdown-container">
     <article class="markdown-body">
-      
-      <h1>Open-Source Time Series Databases List</h1>
-      
+      <h1 class="sticker"> UNPUBLISHED DRAFT </h1>
+      <h1>Home Lab Observability</h1>
+      <img class="backdrop" src="/posts/2023-06-10-home-lab/backdrop2.png"></img>
       <p class="meta" style="color:#aaa; float:right">
          Boltenhagen, 
-        2023-06-13
+        2023-06-12
         
       </p>
       <div style="clear:both">
-	<script>
-window.addEventListener('DOMContentLoaded', function() {
-  var tables = document.querySelectorAll('table');
-
-  tables.forEach(function(table) {
-    var headers = table.querySelectorAll('th');
-    headers.forEach(function(header, index) {
-      header.style.cursor = 'pointer';
-      header.addEventListener('click', function() {
-        sortTable(table, index);
-      });
-    });
-  });
-
-  var sortOrder = 1;
-  function sortTable(table, columnIndex) {
-    var rows = Array.from(table.rows).slice(1); // Exclude the header row
-    var shouldSwitch = true; // Initial value to trigger sorting
-
-    rows.sort(function(a, b) {
-      var x = a.cells[columnIndex].innerHTML.trim();
-      var y = b.cells[columnIndex].innerHTML.trim();
-
-      var xNumber = parseFloat(x);
-      var yNumber = parseFloat(y);
-
-      if (!isNaN(xNumber) && !isNaN(yNumber)) {
-        return (xNumber - yNumber) * sortOrder;
-      } else {
-        return (x.toLowerCase().localeCompare(y.toLowerCase())) * sortOrder;
-      }
-    });
-
-    rows.forEach(function(row) {
-      table.appendChild(row);
-    });
-
-    // Reverse the sorting order for next click
-    if (shouldSwitch) {
-      sortOrder *= -1;
-    }
-  }
-});
-</script>
-<style>
-main {
-  width: 52em !important;
+	<style>
+.admonition {
+    padding: 0px 0px 0px 10pt;
+    margin-bottom: 21px;
+    border-left: 3px solid transparent;
 }
-table {
-  border-collapse: collapse;
-  border-width: 0px !important;
+.admonition .title {
+    font-weight: bold;
+    padding-bottom: 3pt;
+    /* border: 1px solid; border-style: hidden hidden solid; */
 }
-
-table th {
-  background-color: #f2f2f2;
-  border-width: 0px !important;
+.note {
+    border-color: #9d9d9d;
 }
-
-table td,
-table tr,
-table th {
-  padding: 8px;
-  border-width: 0px !important;
+.backdrop {
+    opacity: 1.0;
 }
 </style>
-<p>I took some time today, to compile a list of open-source Time Series Databases,
-with &ldquo;a little&rdquo; aid of <a href="https://chat.openai.com/share/3e0e187b-05f9-44fe-a9db-bf09c015b6cc">ChatGPT</a>.</p>
-<!-- TABLE_START -->
-<table>
-<thead>
-<tr>
-<th style="text-align:left">Name</th>
-<th>Year</th>
-<th>License</th>
-<th>Query Languages</th>
-<th style="text-align:right">GitHub Stars</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align:left"><a href="https://github.com/prometheus/prometheus">Prometheus</a></td>
-<td>2012</td>
-<td>Apache 2.0</td>
-<td>PromQL</td>
-<td style="text-align:right">34000</td>
-</tr>
-<tr>
-<td style="text-align:left"><a href="https://github.com/influxdata/influxdb">InfluxDB</a></td>
-<td>2013</td>
-<td>MIT</td>
-<td>InfluxQL, Flux</td>
-<td style="text-align:right">21000</td>
-</tr>
-<tr>
-<td style="text-align:left"><a href="https://github.com/ClickHouse/ClickHouse">ClickHouse</a></td>
-<td>2016</td>
-<td>Apache 2.0</td>
-<td>SQL</td>
-<td style="text-align:right">16700</td>
-</tr>
-<tr>
-<td style="text-align:left"><a href="https://github.com/VictoriaMetrics/VictoriaMetrics">VictoriaMetrics</a></td>
-<td>2018</td>
-<td>Apache 2.0</td>
-<td>MetricsQL</td>
-<td style="text-align:right">9600</td>
-</tr>
-<tr>
-<td style="text-align:left"><a href="https://github.com/apache/druid">Druid</a></td>
-<td>2012</td>
-<td>Apache 2.0</td>
-<td>Druid SQL</td>
-<td style="text-align:right">9300</td>
-</tr>
-<tr>
-<td style="text-align:left"><a href="https://github.com/timescale/timescaledb">TimescaleDB</a></td>
-<td>2016</td>
-<td>Apache 2.0</td>
-<td>SQL</td>
-<td style="text-align:right">9800</td>
-</tr>
-<tr>
-<td style="text-align:left"><a href="https://github.com/taosdata/TDengine">TDengine</a></td>
-<td>2017</td>
-<td>AGPL 3.0</td>
-<td>SQL</td>
-<td style="text-align:right">6600</td>
-</tr>
-<tr>
-<td style="text-align:left"><a href="https://github.com/thanos-io/thanos">Thanos</a></td>
-<td>2018</td>
-<td>Apache 2.0</td>
-<td>PromQL</td>
-<td style="text-align:right">5800</td>
-</tr>
-<tr>
-<td style="text-align:left"><a href="https://github.com/questdb/questdb">QuestDB</a></td>
-<td>2020</td>
-<td>Apache 2.0</td>
-<td>SQL</td>
-<td style="text-align:right">4200</td>
-</tr>
-<tr>
-<td style="text-align:left"><a href="https://github.com/graphite-project/graphite-web">Graphite</a></td>
-<td>2008</td>
-<td>Apache 2.0</td>
-<td>Graphite</td>
-<td style="text-align:right">4600</td>
-</tr>
-<tr>
-<td style="text-align:left"><a href="https://github.com/OpenTSDB/opentsdb">OpenTSDB</a></td>
-<td>2010</td>
-<td>LGPL 2.1</td>
-<td>OpenTSDB SQL</td>
-<td style="text-align:right">3500</td>
-</tr>
-<tr>
-<td style="text-align:left"><a href="https://github.com/crate/crate">CrateDB</a></td>
-<td>2013</td>
-<td>Apache 2.0</td>
-<td>SQL</td>
-<td style="text-align:right">3500</td>
-</tr>
-<tr>
-<td style="text-align:left"><a href="https://github.com/apache/incubator-pinot">Pinot (Apache)</a></td>
-<td>2015</td>
-<td>Apache 2.0</td>
-<td>SQL</td>
-<td style="text-align:right">3600</td>
-</tr>
-<tr>
-<td style="text-align:left"><a href="https://github.com/m3db/m3">M3DB</a></td>
-<td>2018</td>
-<td>Apache 2.0</td>
-<td>M3QL</td>
-<td style="text-align:right">2800</td>
-</tr>
-<tr>
-<td style="text-align:left"><a href="https://github.com/man-group/arctic">Arctic (Python)</a></td>
-<td>2015</td>
-<td>Apache 2.0</td>
-<td>Python API</td>
-<td style="text-align:right">2500</td>
-</tr>
-<tr>
-<td style="text-align:left"><a href="https://github.com/facebookarchive/beringei">Beringei (from Facebook)</a></td>
-<td>2016</td>
-<td>BSD</td>
-<td>Thrift API</td>
-<td style="text-align:right">2500</td>
-</tr>
-<tr>
-<td style="text-align:left"><a href="https://github.com/grafana/metrictank">Metrictank</a></td>
-<td>2015</td>
-<td>Apache 2.0</td>
-<td>n/a</td>
-<td style="text-align:right">1600</td>
-</tr>
-<tr>
-<td style="text-align:left"><a href="https://github.com/kairosdb/kairosdb">KairosDB</a></td>
-<td>2012</td>
-<td>Apache 2.0</td>
-<td>CQL, REST API</td>
-<td style="text-align:right">1200</td>
-</tr>
-<tr>
-<td style="text-align:left"><a href="https://github.com/akumuli/Akumuli">Akumuli</a></td>
-<td>2014</td>
-<td>GPL 3.0</td>
-<td>SQL-like Query Language</td>
-<td style="text-align:right">1200</td>
-</tr>
-<tr>
-<td style="text-align:left"><a href="https://github.com/spotify/heroic">Heroic</a></td>
-<td>2015</td>
-<td>Apache 2.0</td>
-<td>Heroic Query Language</td>
-<td style="text-align:right">1000</td>
-</tr>
-<tr>
-<td style="text-align:left"><a href="https://github.com/rackerlabs/blueflood">Blueflood</a></td>
-<td>2012</td>
-<td>Apache 2.0</td>
-<td>Blueflood Query Language</td>
-<td style="text-align:right">1000</td>
-</tr>
-<tr>
-<td style="text-align:left"><a href="https://github.com/oetiker/rrdtool-1.x">RRDtool</a></td>
-<td>1999</td>
-<td>GPL 2.0</td>
-<td>RRDtool</td>
-<td style="text-align:right">1000</td>
-</tr>
-<tr>
-<td style="text-align:left"><a href="https://github.com/SiriDB/siridb-server">SiriDB</a></td>
-<td>2016</td>
-<td>MIT</td>
-<td>SiriQL</td>
-<td style="text-align:right">100</td>
-</tr>
-<tr>
-<td style="text-align:left"><a href="https://github.com/OpenNMS/newts">Newts</a></td>
-<td>2014</td>
-<td>Apache 2.0</td>
-<td>CQL</td>
-<td style="text-align:right">100</td>
-</tr>
-<tr>
-<td style="text-align:left"><a href="https://github.com/ChronixDB/chronix.server">Chronix</a></td>
-<td>2015</td>
-<td>Apache 2.0</td>
-<td>Chronix Query Language</td>
-<td style="text-align:right">200</td>
-</tr>
-<tr>
-<td style="text-align:left"><a href="https://github.com/senx/warp10-platform">Warpscript</a></td>
-<td>2014</td>
-<td>Apache 2.0</td>
-<td>WarpScript</td>
-<td style="text-align:right">180</td>
-</tr>
-<tr>
-<td style="text-align:left"><a href="https://github.com/senx/warp10-platform">Warp 10</a></td>
-<td>2014</td>
-<td>Apache 2.0</td>
-<td>WarpScript</td>
-<td style="text-align:right">500</td>
-</tr>
-<tr>
-<td style="text-align:left"><a href="https://github.com/gnocchixyz/gnocchi">Gnocchi (OpenStack)</a></td>
-<td>2014</td>
-<td>Apache 2.0</td>
-<td>Gnocchi Query Language</td>
-<td style="text-align:right">700</td>
-</tr>
-</tbody>
-</table>
-<!-- TABLE_END -->
-<p>From the list I have first-hand experience with Prometheus, Influx, KairosDB, RRDTool.
-I am looking at trying out: Cortex, VictoriaMetrics and TimescaleDB for the next project.</p>
+<p>In this post, I will walk you through the observability tooling I am using form my home-lab.
+I have recently explained the infrastructure setup in <a href="/posts/home-lab-2023/">this blog post</a>.</p>
+<p><strong>Design Goals for the Observability Setup</strong></p>
+<ul>
+<li>Explore and try-out modern open-source observability tooling: OpenTelemetry, Prometheus, Loki, Jaeger, Grafana, &hellip;</li>
+<li>Try out free-tier SaaS Observability Solutions: GrafanaCloud, LightStep, NewRelic, DataDog, &hellip;</li>
+<li>Esablish best-practice observability for home-lab including:
+<ul>
+<li>Synthetic availability measurements for all exposed web-services</li>
+<li>Log aggregation and query capabilities for docker and systemd logs</li>
+<li>Distributed tracing for the Ingress Proxy</li>
+<li>RED Metrics for all Web APIs</li>
+<li>Resource monitoring for all running containers</li>
+</ul>
+</li>
+</ul>
+<p><strong>Outline</strong></p>
+<nav id="TableOfContents">
+  <ul>
+    <li><a href="#the-opentelemetry-collector">The OpenTelemetry Collector</a></li>
+    <li><a href="#host-availability">Host Availability</a></li>
+    <li><a href="#synthetic-probing">Synthetic Probing</a></li>
+    <li><a href="#container-logs">Container Logs</a></li>
+    <li><a href="#access-logs">Access Logs</a></li>
+    <li><a href="#host-telemetry">Host Telemetry</a></li>
+  </ul>
+</nav>
+<h2 id="the-opentelemetry-collector">The OpenTelemetry Collector</h2>
+<p>The central hub of the setup is the OpenTelemetry (OTEL) Collector.</p>
+<p>OpenTelemetry is a industry standard, that is bridging across a large number of vendors and open source tools and covers all three telemetry pillars (logs, metrics and traces).
+The open telemetry collector is a general data-broker, that accepts telemetry from a large variety of sources (aka. <a href="https://github.com/open-telemetry/opentelemetry-collector-contrib/tree/main/receiver">receivers</a>) and is able to forward telemetry to a large variety of telemetry backend systems (see <a href="https://github.com/open-telemetry/opentelemetry-collector-contrib/tree/main/exporter">exporters</a>).</p>
+<p><img src="/posts/2023-06-10-home-lab/d963aec2-a5d0-42de-8f3f-388f1354ad71.png" alt="image"></p>
+<!-- flowchart LR -->
+<!--     subgraph "Telemetry Sources" -->
+<!--         A1[App1] -->
+<!--         A2[App2] -->
+<!--         A3[App3] -->
+<!--     end -->
+<!--     OtelCollector(("OpenTelemetry Collector")) -->
+<!--     subgraph "Telemetry Backends" -->
+<!--         B1[Backend1] -->
+<!--         B2[Backend2] -->
+<!--         B3[Backend3] -->
+<!--     end -->
+<!--     A1 -.-> |Traces, Metrics, Logs| OtelCollector -->
+<!--     A2 -.-> |Traces, Metrics, Logs| OtelCollector -->
+<!--     A3 -.-> |Traces, Metrics, Logs| OtelCollector -->
+<!--     OtelCollector -.-> |Traces, Metrics, Logs| B1 -->
+<!--     OtelCollector -.-> |Traces, Metrics, Logs| B2 -->
+<!--     OtelCollector -.-> |Traces, Metrics, Logs| B3 -->
+<p>This means that:</p>
+<ol>
+<li>By sending all all telemetry sources (logs, metrics, traces) to the Otel collector, we are making them generally available in all backend systems.</li>
+<li>By integrating backend systems against the Otel collector, it gains access to all telemetry data at once.</li>
+</ol>
+<p>The second property has something quite magical, as it makes experimenting with vendors extremely straight-forward. Example: There four config lines is all that is needed to send all telemetry to a LightStep account:</p>
+<pre tabindex="0"><code>  otlp/ls:
+     endpoint: ingest.lightstep.com:443
+     headers:
+       &#34;lightstep-access-token&#34; : ${env:LIGHTSTEP_TOKEN}
+</code></pre><p>The source <a href="https://github.com/HeinrichHartmann/svc/blob/master/services/monitoring/otel/otel-collector-config.yaml">config file</a> has more examples. While some of them required some more fine tuning to make work, the process of on-boarding a new backed systems is a matter of a few minutes or hours in the worst case. Contrast this with the days before OTel where switching a vendor, required to deploy new agents across all hosts and possible re-do all instrumentation.</p>
+<h2 id="host-availability">Host Availability</h2>
+<p><img src="/posts/2023-06-10-home-lab/hosts-2.png" alt="image"></p>
+<p><img src="/posts/2023-06-10-home-lab/hosts.png" alt="image"></p>
+<h2 id="synthetic-probing">Synthetic Probing</h2>
+<p>The most important question any telemetry system has to answer is: &ldquo;Is it up right now?&rdquo;.</p>
+<p>The way I choose to check this in my setup is to probe each HTTP API every 15 seconds, and see if I get back a 200 OK or (401 Unauthorized) response. For other services (e.g. samba), I check that a tcp connection can be established.
+This is how I present this information on the dashboard:</p>
+<p><img src="/posts/2023-06-10-home-lab/dbcd6446-b8af-4b8f-babe-cd803f3fb9d0.png" alt="image"></p>
+<p><strong>Implementation</strong></p>
+<ul>
+<li>Services are discovered form the local configuration with a <a href="https://github.com/HeinrichHartmann/svc/blob/master/services/monitoring/Makefile#L4-L11">small shell script</a> that scans my docker-compose files for load-balancer configuration. The shell script is run every hour from cron, and keeps a file <a href="https://github.com/HeinrichHartmann/svc/blob/master/services/monitoring/otel/pinghosts.yaml">pinghosts.yaml</a> up to date.</li>
+<li>Prometheus + Blackbox exporter are used to probe all the APIS. This results in metrics <code>probe_success</code> being published for each target that take values 1 or 0 corresponding to the availability status.</li>
+<li>Grafana State Timeline panel is used for the final visualization.</li>
+</ul>
+<p><strong>Open Ends</strong></p>
+<ul>
+<li>Prometheus metrics actually do not go through the OTel collector at the moment. Surprisingly there is no good way to send Prometheus data to an OTel Collector. The official way seems to be to scrape metrics directly from the OTel collector, with a builtin prometheus receiver module. However, I do have working Prometheus setup, and copying the config 1o1 did not work on the spot. Given that Prometheus supports <a href="https://grafana.com/docs/grafana-cloud/kubernetes-monitoring/other-methods/prometheus/remote_write_operator/">remote write</a> developing the corresponding receiver should be a relatively straight forward project.</li>
+<li>Deploy a second probing location to get a look from the outside. As all services are only exposed on a trusted network (VPN, LAN) we can&rsquo;t use SaaS tools for this, but need to deploy another Prometheus instance on the network.</li>
+</ul>
+<h2 id="container-logs">Container Logs</h2>
+<p>When a service becomes unavailable the next step is usually to check the logs.
+This is the view that I built out for this purpose:</p>
+<p><img src="/posts/2023-06-10-home-lab/0cd1d70e-64b6-4176-8528-dd5c80d0d000.png" alt="image"></p>
+<p>The graph on the top shows the log volume we have for each container. The listing below the graph, shows logs.
+The variable on the top allows for isolation of individual containers. If a container is selected, both panels are filtered for the specific container.</p>
+<p><strong>Implementation</strong></p>
+<ul>
+<li>Logs are exported by the docker daemon using the <a href="https://docs.docker.com/config/containers/logging/fluentd/">fluentd log driver</a> as configured <a href="https://github.com/HeinrichHartmann/svc/blob/master/nixos/etc/configuration.nix#L68-L73">here</a></li>
+<li>The OTel collector has a <a href="https://github.com/HeinrichHartmann/svc/blob/master/services/monitoring/otel/otel-collector-config.yaml#L23C24-L25">fluentd receiver</a> configured and forwards this logs to Loki</li>
+<li>Loki is used for storage and retrieval of logs</li>
+<li>The Grafana dashboard makes use of the Loki DataSource</li>
+</ul>
+<p><strong>Alternative</strong></p>
+<ul>
+<li><a href="https://dozzle.dev/">Dozzle</a> provide a simple turn-key solution for viewing container logs</li>
+</ul>
+<p><strong>Open Ends</strong></p>
+<ul>
+<li>A Live trail function is missing.</li>
+</ul>
+<h2 id="access-logs">Access Logs</h2>
+<p>The next piece in our observability journey, is to gain information about which requests have been made to HTTP apis.
+Emitting access logs to a logging is a problematic practice, since they are quite expensive to index easily leak PII, and are hard to correlate across different services. Of course these issues are not that relevant for a home-lab setup. However, with distributed tracing we have a much more powerful telemetry type at our disposal that covers accesslogs as a special case.</p>
+<p>This is how this looks like:
+<img src="/posts/2023-06-10-home-lab/01a7cce0-2aea-4063-8557-53d994afa141.png" alt="image"></p>
+<p><strong>Implementation</strong></p>
+<ul>
+<li>We are collecting tracing data from the ingress proxy traefik (<a href="https://github.com/HeinrichHartmann/svc/blob/master/services/traefik/traefik.toml#L46">config</a>)</li>
+<li>Data is received by a jaeger receiver on the OTel collector (<a href="https://github.com/HeinrichHartmann/svc/blob/master/services/monitoring/otel/otel-collector-config.yaml">config</a>) and forward to three different tracing backends:
+<ul>
+<li>A local Jaeger installation</li>
+<li>Grafana Cloud (providing Temo-aaS)</li>
+<li>LightStep</li>
+</ul>
+</li>
+<li>The screenshot above is taken from the LightStep UI (using the Explorer function)</li>
+</ul>
+<p><strong>Shortcomings</strong>
+Somewhat surprisingly the tracing back-ends I have tried do not seem to cater towards the access logs use-case particularly well. Ideally I would like to have a &ldquo;Access Log Tail&rdquo; widget on a Grafana Dashboards, that gives me a
+live view about what requests are being served. With the said backends I did not get very far:</p>
+<ul>
+<li>
+<p>Jaeger and Tempo on Grafana Cloud currently has no no possibility to show basic meta data about traces in the list.
+They allow to filter spans on basic metadata and present a list of span-ids with only minimal context information.
+This is not suitable for the acesslog use-case which needs URL and HTTP return code information at the very least.</p>
+</li>
+<li>
+<p>The LightStep Explorer above is the closest I have been able to get. It still has some gaps:</p>
+<ul>
+<li>No possibility to add more than one attribute to the list</li>
+<li>No ability to save or embed an explorer view</li>
+<li>No ability to keep a live-trail of data (only snapshots are collected when &ldquo;play&rdquo; is pressed</li>
+<li>LightStep seems to be moving away from the Explorer without suitable replacements (see <a href="https://app.lightstep.com/play/explorer">https://app.lightstep.com/play/explorer</a>)</li>
+</ul>
+</li>
+<li>
+<p>There is also no OTel Processor available, that is allowing to covert spans into logs. This would only be a workaround since we don&rsquo;t want to index access logs in a logging backend, but the feature is super straight forward and provides the requested features.</p>
+</li>
+</ul>
+<p><strong>Open Ends</strong></p>
+<ul>
+<li>It would be great to have access log information for tcp services (like samba) as well.</li>
+<li>From the ~20 services I run internally only one (Grafana) is currently configured for tracing and provices internal spans about the interactions.</li>
+</ul>
+<h2 id="host-telemetry">Host Telemetry</h2>
+<h1 id="gaps">Gaps</h1>
+<p><strong>Active Operations.</strong> Tracing systems have information about which operations are currently ongoing. This is most relevant information. Just the count of open HTTP operations is already very valuable. Yet, I don&rsquo;t see any tooling that exposes this information.</p>
+<p>Examples:</p>
+<ul>
+<li><a href="https://github.com/open-telemetry/opentelemetry-specification/blob/main/experimental/trace/zpages.md#tracez">otel-collector/zpages</a> has information of running traces</li>
+<li><a href="https://www.postgresql.org/docs/current/monitoring-stats.html#MONITORING-PG-STAT-ACTIVITY-VIEW">pg_stats_activity</a></li>
+<li><a href="https://www.heinrichhartmann.com/posts/crash/#salvaging-active-http-requests">Circonus IRONdb</a> HTTP Observer / Crash Reporter</li>
+</ul>
+<p><strong>Access Logs.</strong></p>
+<p>Which operations completed in the last minutes is the next interesting question you may ask about a system. Give me a list of requested URLs and the return codes. Again, tracing systems have this information but they don&rsquo;t cater to this use case.</p>
+<ul>
+<li>
+<p>Tempo on Grafana Cloud
+<img src="/posts/2023-06-10-home-lab/b36ebf12-e033-4ec2-8f5d-e49edea943fd.png" alt="image"></p>
+<ul>
+<li>No possibility to show basic meta data about traces in the list</li>
+</ul>
+</li>
+<li>
+<p>LightStep Explorer
+<img src="/posts/2023-06-10-home-lab/5b4fc976-d509-4edc-aee6-105c97e2097a.png" alt="image"></p>
+<ul>
+<li>No possibility to add more than one attribute to the list</li>
+<li>No ability to save or embed an explorer view</li>
+<li>No ability to keep a live-trail of data (only snapshots are collected when &ldquo;play&rdquo; is pressed</li>
+<li>LightStep seems to be moving away from the Explorer without suitable replacements (see <a href="https://app.lightstep.com/play/explorer">https://app.lightstep.com/play/explorer</a>)</li>
+</ul>
+</li>
+<li>
+<p>There is also no OTel Processor available, that is allowing to covert spans into logs. This would only be a workaround since we don&rsquo;t want to index access logs in a logging backend, but the feature is super straight forward and provides the requested features.</p>
+</li>
+</ul>
+<h1 id="comments">Comments</h1>
+<script src="https://utteranc.es/client.js"
+        repo="HeinrichHartmann/comments"
+        issue-term="title"
+        label="Comment"
+        theme="github-light"
+        crossorigin="anonymous"
+        async>
+</script>
 
       </div>
     </article>

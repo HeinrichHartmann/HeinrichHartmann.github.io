@@ -1,0 +1,6 @@
+wget 'https://github.com/HeinrichHartmann/svc/assets/2446981/d963aec2-a5d0-42de-8f3f-388f1354ad71'
+wget 'https://github.com/HeinrichHartmann/svc/assets/2446981/dbcd6446-b8af-4b8f-babe-cd803f3fb9d0'
+wget 'https://github.com/HeinrichHartmann/svc/assets/2446981/0cd1d70e-64b6-4176-8528-dd5c80d0d000'
+wget 'https://github.com/HeinrichHartmann/svc/assets/2446981/01a7cce0-2aea-4063-8557-53d994afa141'
+wget 'https://github.com/HeinrichHartmann/svc/assets/2446981/b36ebf12-e033-4ec2-8f5d-e49edea943fd'
+wget 'https://github.com/HeinrichHartmann/svc/assets/2446981/5b4fc976-d509-4edc-aee6-105c97e2097a'
