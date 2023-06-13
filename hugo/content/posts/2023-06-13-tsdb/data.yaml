@@ -62,6 +62,13 @@ data:
   github_stars: 5_800
   github_link: https://github.com/thanos-io/thanos
 
+- name: Cortex
+  founding_year: 2016
+  license: Apache 2.0
+  query_languages: [PromQL]
+  github_stars: 5,100
+  github_link: https://github.com/cortexproject/cortex
+
 - name: QuestDB
   founding_year: 2020
   license: Apache 2.0

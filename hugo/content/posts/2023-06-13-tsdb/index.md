@@ -113,4 +113,24 @@ with "a little" aid of [ChatGPT](https://chat.openai.com/share/3e0e187b-05f9-44f
 <!-- TABLE_END -->
 
 From the list I have first-hand experience with Prometheus, Influx, KairosDB, RRDTool.
-I am looking at trying out: Cortex, VictoriaMetrics and TimescaleDB for the next project.
+
+## OpenTelemetry
+
+So far I know, that Prometheus and InfluxDB do support ingesting data with OpenTelemetry, 
+and the process has been straight-forward.
+
+I am looking at trying ou Cortex, VictoriaMetrics and TimescaleDB for the next
+project with OpenTelemetry. I will keep the post updated as I make progress.
+Please let me know in the comments, if you have experience with any of this
+solutions as OpenTelemetry storage backend.
+
+## Comments
+
+<script src="https://utteranc.es/client.js"
+        repo="HeinrichHartmann/comments"
+        issue-term="title"
+        label="Comment"
+        theme="github-light"
+        crossorigin="anonymous"
+        async>
+</script>
