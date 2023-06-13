@@ -1,0 +1,203 @@
+header:
+  name: Name
+  founding_year: Year
+  license: License
+  query_languages: Query Languages
+  github_stars: GitHub Stars
+
+data:
+- name: Prometheus
+  founding_year: 2012
+  license: Apache 2.0
+  query_languages: [PromQL]
+  github_stars: 34_000
+  github_link: https://github.com/prometheus/prometheus
+
+- name: InfluxDB
+  founding_year: 2013
+  license: MIT
+  query_languages: [InfluxQL, Flux]
+  github_stars: 21_000
+  github_link: https://github.com/influxdata/influxdb
+
+- name: ClickHouse
+  founding_year: 2016
+  license: Apache 2.0
+  query_languages: [SQL]
+  github_stars: 16_700
+  github_link: https://github.com/ClickHouse/ClickHouse
+
+- name: VictoriaMetrics
+  founding_year: 2018
+  license: Apache 2.0
+  query_languages: [MetricsQL]
+  github_stars: 9_600
+  github_link: https://github.com/VictoriaMetrics/VictoriaMetrics
+
+- name: Druid
+  founding_year: 2012
+  license: Apache 2.0
+  query_languages: [Druid SQL]
+  github_stars: 9_300
+  github_link: https://github.com/apache/druid
+
+- name: TimescaleDB
+  founding_year: 2016
+  license: Apache 2.0
+  query_languages: [SQL]
+  github_stars: 9_800
+  github_link: https://github.com/timescale/timescaledb
+
+- name: TDengine
+  founding_year: 2017
+  license: AGPL 3.0
+  query_languages: [SQL]
+  github_stars: 6_600
+  github_link: https://github.com/taosdata/TDengine
+
+- name: Thanos
+  founding_year: 2018
+  license: Apache 2.0
+  query_languages: [PromQL]
+  github_stars: 5_800
+  github_link: https://github.com/thanos-io/thanos
+
+- name: QuestDB
+  founding_year: 2020
+  license: Apache 2.0
+  query_languages: [SQL]
+  github_stars: 4_200
+  github_link: https://github.com/questdb/questdb
+
+- name: Graphite
+  founding_year: 2008
+  license: Apache 2.0
+  query_languages: [Graphite]
+  github_stars: 4_600
+  github_link: https://github.com/graphite-project/graphite-web
+
+- name: OpenTSDB
+  founding_year: 2010
+  license: LGPL 2.1
+  query_languages: [OpenTSDB SQL]
+  github_stars: 3_500
+  github_link: https://github.com/OpenTSDB/opentsdb
+
+- name: CrateDB
+  founding_year: 2013
+  license: Apache 2.0
+  query_languages: [SQL]
+  github_stars: 3_500
+  github_link: https://github.com/crate/crate
+
+- name: Pinot (Apache)
+  founding_year: 2015
+  license: Apache 2.0
+  query_languages: [SQL]
+  github_stars: 3_600
+  github_link: https://github.com/apache/incubator-pinot
+
+- name: M3DB
+  founding_year: 2018
+  license: Apache 2.0
+  query_languages: [M3QL]
+  github_stars: 2_800
+  github_link: https://github.com/m3db/m3
+
+- name: Arctic (Python)
+  founding_year: 2015
+  license: Apache 2.0
+  query_languages: [Python API]
+  github_stars: 2_500
+  github_link: https://github.com/man-group/arctic
+
+- name: Beringei (from Facebook)
+  founding_year: 2016
+  license: BSD
+  query_languages: [Thrift API]
+  github_stars: 2_500
+  github_link: https://github.com/facebookarchive/beringei
+
+- name: Metrictank
+  founding_year: 2015
+  license: Apache 2.0
+  query_languages: [n/a]
+  github_stars: 1_600
+  github_link: https://github.com/grafana/metrictank
+
+- name: KairosDB
+  founding_year: 2012
+  license: Apache 2.0
+  query_languages: [CQL, REST API]
+  github_stars: 1_200
+  github_link: https://github.com/kairosdb/kairosdb
+
+- name: Akumuli
+  founding_year: 2014
+  license: GPL 3.0
+  query_languages: [SQL-like Query Language]
+  github_stars: 1_200
+  github_link: https://github.com/akumuli/Akumuli
+
+- name: Heroic
+  founding_year: 2015
+  license: Apache 2.0
+  query_languages: [Heroic Query Language]
+  github_stars: 1_000
+  github_link: https://github.com/spotify/heroic
+
+- name: Blueflood
+  founding_year: 2012
+  license: Apache 2.0
+  query_languages: [Blueflood Query Language]
+  github_stars: 1_000
+  github_link: https://github.com/rackerlabs/blueflood
+
+- name: RRDtool
+  founding_year: 1999
+  license: GPL 2.0
+  query_languages: [RRDtool]
+  github_stars: 1_000
+  github_link: https://github.com/oetiker/rrdtool-1.x
+
+- name: SiriDB
+  founding_year: 2016
+  license: MIT
+  query_languages: [SiriQL]
+  github_stars: 100
+  github_link: https://github.com/SiriDB/siridb-server
+
+- name: Newts
+  founding_year: 2014
+  license: Apache 2.0
+  query_languages: [CQL]
+  github_stars: 100
+  github_link: https://github.com/OpenNMS/newts
+
+- name: Chronix
+  founding_year: 2015
+  license: Apache 2.0
+  query_languages: [Chronix Query Language]
+  github_stars: 200
+  github_link: https://github.com/ChronixDB/chronix.server
+
+- name: Warpscript
+  founding_year: 2014
+  license: Apache 2.0
+  query_languages: [WarpScript]
+  github_stars: 180
+  github_link: https://github.com/senx/warp10-platform
+
+- name: Warp 10
+  founding_year: 2014
+  license: Apache 2.0
+  query_languages: [WarpScript]
+  github_stars: 500
+  github_link: https://github.com/senx/warp10-platform
+
+- name: Gnocchi (OpenStack)
+  founding_year: 2014
+  license: Apache 2.0
+  query_languages: [Gnocchi Query Language]
+  github_stars: 700
+  github_link: https://github.com/gnocchixyz/gnocchi
