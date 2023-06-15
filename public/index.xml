@@ -6,7 +6,17 @@
     <description>Recent content on HeinrichHartmann.com</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Tue, 13 Jun 2023 00:00:00 +0000</lastBuildDate><atom:link href="/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Wed, 14 Jun 2023 00:00:00 +0000</lastBuildDate><atom:link href="/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Home-Lab Observability with OpenTelemetry</title>
+      <link>/posts/home-lab-observability/</link>
+      <pubDate>Wed, 14 Jun 2023 00:00:00 +0000</pubDate>
+      
+      <guid>/posts/home-lab-observability/</guid>
+      <description>In this post, I will walk you through the Observability Setup I am using form my home-lab. The full infrastructure setup is explained in this blog post, and available on GitHub. In this post, we will zone-in on the Observability configuration and tooling, which is contained in this folder.
+We will conduct this exercise top-down, and focus on the key questions that we want to answer about our services in the order of importance, and briefly comment on the implementation details and open-ends.</description>
+    </item>
+    
     <item>
       <title>Open-Source Time Series Databases List</title>
       <link>/posts/tsdb/</link>
@@ -15,17 +25,6 @@
       <guid>/posts/tsdb/</guid>
       <description>I took some time today, to compile a list of open-source Time Series Databases, with &amp;ldquo;a little&amp;rdquo; aid of ChatGPT.
 Name Year License Query Languages GitHub Stars Prometheus 2012 Apache 2.0 PromQL 34000 InfluxDB 2013 MIT InfluxQL, Flux 21000 ClickHouse 2016 Apache 2.0 SQL 16700 VictoriaMetrics 2018 Apache 2.0 MetricsQL 9600 Druid 2012 Apache 2.0 Druid SQL 9300 TimescaleDB 2016 Apache 2.0 SQL 9800 TDengine 2017 AGPL 3.0 SQL 6600 Thanos 2018 Apache 2.</description>
-    </item>
-    
-    <item>
-      <title>Home Lab Observability</title>
-      <link>/posts/home-lab-observability-2023/</link>
-      <pubDate>Mon, 12 Jun 2023 00:00:00 +0000</pubDate>
-      
-      <guid>/posts/home-lab-observability-2023/</guid>
-      <description>In this post, I will walk you through the observability tooling I am using form my home-lab. I have recently explained the infrastructure setup in this blog post.
-Design Goals for the Observability Setup
-Explore and try-out modern open-source observability tooling: OpenTelemetry, Prometheus, Loki, Jaeger, Grafana, &amp;hellip; Try out free-tier SaaS Observability Solutions: GrafanaCloud, LightStep, NewRelic, DataDog, &amp;hellip; Esablish best-practice observability for home-lab including: Synthetic availability measurements for all exposed web-services Log aggregation and query capabilities for docker and systemd logs Distributed tracing for the Ingress Proxy RED Metrics for all Web APIs Resource monitoring for all running containers Outline</description>
     </item>
     
     <item>
