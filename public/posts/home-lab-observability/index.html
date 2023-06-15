@@ -1229,13 +1229,13 @@ in <a href="https://github.com/HeinrichHartmann/svc/tree/master/services/monitor
 want to answer about our services in the order of importance, and briefly
 comment on the implementation details and open-ends.
 For the full technical details the reader welcome to study the full configuration on GitHub.</p>
-<p>As you will see, the presented setup is highly over-engineered for the set purpose - and a work-in-progress.
-I use the Home Lab systems as a demo use case to try out a variety of open source technologies, and vendor products.
+<p>As you will see, the presented setup is highly over-engineered for the set purpose and a work-in-progress.
+I use the Home Lab systems as a toy use-case to try out a variety of open-source technologies and vendor products.
 At the end we highlight some of the existing gaps in the ecosystem, we experienced along the way.</p>
 <p><strong>Outline</strong></p>
 <nav id="TableOfContents">
   <ul>
-    <li><a href="#architecture-puts-opentelemetry-collector-in-the-center">Architecture puts OpenTelemetry Collector in the center</a></li>
+    <li><a href="#architecture-evolves-around-the-opentelemetry-collector">Architecture evolves around the OpenTelemetry Collector</a></li>
     <li><a href="#service-availability-with-synthetic-probing">Service Availability with Synthetic Probing</a></li>
     <li><a href="#host-availability-with-node-exporter">Host Availability with Node Exporter</a></li>
     <li><a href="#network-connectivity-with-blackbox-exporter">Network Connectivity with BlackBox Exporter</a></li>
@@ -1249,13 +1249,13 @@ At the end we highlight some of the existing gaps in the ecosystem, we experienc
     <li><a href="#gaps">Gaps</a></li>
   </ul>
 </nav>
-<h2 id="architecture-puts-opentelemetry-collector-in-the-center">Architecture puts OpenTelemetry Collector in the center</h2>
-<p>As explained in my <a href="/posts/home-lab-2023/">Home Lab Infrastructure</a> post, the services we are
-monitoring are running on a single host (Linux/NixOS/Systemd), and are fully
-containerized (using docker-compose).</p>
-<p>The central hub of the setup is the <a href="https://github.com/open-telemetry/opentelemetry-collector">OpenTelemetry Collector</a>.</p>
-<p>OpenTelemetry is a industry standard, that is bridging across a large number of vendors and open source tools and covers all three telemetry pillars (logs, metrics and traces).
-The open telemetry collector is a general data-broker, that accepts telemetry from a large variety of sources (aka. <a href="https://github.com/open-telemetry/opentelemetry-collector-contrib/tree/main/receiver">receivers</a>) and is able to forward telemetry to a large variety of telemetry backend systems (see <a href="https://github.com/open-telemetry/opentelemetry-collector-contrib/tree/main/exporter">exporters</a>).</p>
+<h2 id="architecture-evolves-around-the-opentelemetry-collector">Architecture evolves around the OpenTelemetry Collector</h2>
+<p>As explained in my <a href="/posts/home-lab-2023/">Home Lab Infrastructure</a> post,
+we are interested in monitoring around 20 containerized services that are running on a single host (Linux/NixOS/Systemd).</p>
+<p>The central hub of the telemetry collection setup is the <a href="https://github.com/open-telemetry/opentelemetry-collector">OpenTelemetry Collector</a>.</p>
+<p><a href="https://opentelemetry.io/">OpenTelemetry</a> is a industry standard, that is bridging across a large number of vendors and open source tools and covers all three telemetry pillars (logs, metrics and traces).
+The <a href="https://github.com/open-telemetry/opentelemetry-collector-contrib/">OpenTelemetry Collector</a> is a general data-broker, that accepts telemetry from a large variety of sources (aka. <a href="https://github.com/open-telemetry/opentelemetry-collector-contrib/tree/main/receiver">receivers</a>)
+and is able to forward telemetry to a large variety of telemetry backend systems (see <a href="https://github.com/open-telemetry/opentelemetry-collector-contrib/tree/main/exporter">exporters</a>).</p>
 <p>In <a href="https://github.com/HeinrichHartmann/svc/blob/master/services/monitoring/otel/otel-collector-config.yaml">our configuration</a>, the collector accepts metrics, logs and traces in various formats and exports telemetry data to three telmetry backends:</p>
 <ol>
 <li>Self Hosted Backends - Consisting of Prometheus, Loki, Jaeger and Grafana services (<a href="https://github.com/HeinrichHartmann/svc/blob/master/services/monitoring/docker-compose.yaml">config</a>).</li>
@@ -1299,8 +1299,13 @@ The shell script is run every hour from cron, and keeps a file <a href="https://
 </ul>
 <p><strong>Open Ends</strong></p>
 <ul>
-<li>Prometheus metrics actually do not go through the OTel collector at the moment.</li>
-<li>Deploy a second probing location to get a look from the outside. As all services are only exposed on a trusted network (VPN, LAN) we can&rsquo;t use SaaS tools for this, but need to deploy another Prometheus instance on the network.</li>
+<li>
+<p>Prometheus metrics actually do not go through the OTel collector at the moment.
+Surprisingly there is no good way to send metric data from Prometheus scrapers to an OTel Collector.</p>
+</li>
+<li>
+<p>Deploy a second probing location to get a look from the outside. As all services are only exposed on a trusted network (VPN, LAN) we can&rsquo;t use SaaS tools for this, but need to deploy another Prometheus instance on the network.</p>
+</li>
 </ul>
 <h2 id="host-availability-with-node-exporter">Host Availability with Node Exporter</h2>
 <div class="center">
@@ -1325,7 +1330,7 @@ This simple panel shows the total uptime of the host, together with a bar plot t
 We keep track of local connectivity by probing the local router, and public DNS servers on the internet every minute.</p>
 <p><strong>Implementation</strong></p>
 <ul>
-<li>Network connectivity is monitored with the blackbox-exporter that sends ICMP pings to the respective hosts (<a href="https://github.com/HeinrichHartmann/svc/blob/master/services/monitoring/prometheus/prometheus.yml#L80">config</a>).</li>
+<li>Network connectivity is monitored with the blackbox-exporter that sends ICMP &ldquo;pings&rdquo; to the respective hosts (<a href="https://github.com/HeinrichHartmann/svc/blob/master/services/monitoring/prometheus/prometheus.yml#L80">config</a>).</li>
 <li>Visualization uses a &ldquo;State Timeline&rdquo; Grafana Panel.</li>
 </ul>
 <h2 id="container-logs-with-loki">Container Logs with Loki</h2>
@@ -1357,10 +1362,9 @@ A few containers are logging more than 10 log lines per minute, this is indicati
   <strong>Question:</strong> How many requests is the application serving?
 </div>
 
-<p><img src="/posts/2023-06-10-home-lab/red.png" alt="image"></p>
-<p>The next piece in our observability journey, is to gain information about which requests have been made to HTTP apis.
-More specifically, we care about: The request rate, the error rate and the duration of those requests.
+<p>More specifically, we care about: The request rate, the error rate and the duration of those requests.
 These metrics are known as the 3 Golden Signals (there is a 4th one: saturation) or &ldquo;RED&rdquo; Monitoring.</p>
+<p><img src="/posts/2023-06-10-home-lab/red.png" alt="image"></p>
 <p><strong>Implementation</strong></p>
 <ul>
 <li>We are collecting tracing data from the ingress proxy traefik (<a href="https://github.com/HeinrichHartmann/svc/blob/master/services/traefik/traefik.toml#L46">config</a>).</li>
@@ -1462,23 +1466,22 @@ The remaining steps are taken mutatis-mutandis from the Container Log dashboard.
 
 <p><img src="/posts/2023-06-10-home-lab/hosts.png" alt="image"></p>
 <p>This panel, that shows the availability of all 256 IPs in my /24 LAN.
-When debugging issues with gear deployed on the network (printers, routers) or DHCP, it is
+When debugging issues with gear deployed on the network (printers, routers, etc.) it bis
 useful to know which devices have been available on the network at which points in time.</p>
 <p><strong>Implementation</strong></p>
 <ul>
-<li>Prometheus blackbox-exporter is configured with a static list of all hosts in the network (<a href="https://github.com/HeinrichHartmann/svc/blob/master/services/monitoring/prometheus/prometheus.yml#L110">config</a>).</li>
+<li>Prometheus blackbox-exporter/ICMP module is configured with a static list of all hosts in the network (<a href="https://github.com/HeinrichHartmann/svc/blob/master/services/monitoring/prometheus/prometheus.yml#L110">config</a>).</li>
 <li>Visualization uses a Grafana &ldquo;State Timeline&rdquo; Panel.</li>
 </ul>
 <p><strong>Open Ends</strong></p>
 <ul>
 <li>Sort the entries in the panel. (Who knows how to do this? Did not find a solution online.)</li>
-<li>Visualize historic values.</li>
 </ul>
 <h2 id="gaps">Gaps</h2>
 <p><strong>(1) List Active Operations.</strong>
 The current observability tooling does not allow to answer the question: What is the system doing, right now?
 One possible answer to this question are stack traces from the live process (pstack).
-A better answer, would be a list of &ldquo;active operations&rdquo; i.e. open spans, that the process holds in-memory.
+A better answer, would be a list of &ldquo;active operations&rdquo; as represted by open spans in a tracing system.
 Tracing libraries have information about which operations are currently ongoing available, but I don&rsquo;t see any tooling that exposes this information.</p>
 <p>Examples where this has been done include (1) <a href="https://github.com/open-telemetry/opentelemetry-specification/blob/main/experimental/trace/zpages.md#tracez">otel-collector/zpages</a> has information of running traces,
 (2) <a href="https://www.postgresql.org/docs/current/monitoring-stats.html#MONITORING-PG-STAT-ACTIVITY-VIEW">pg_stats_activity</a> (3) <a href="https://www.heinrichhartmann.com/posts/crash/#salvaging-active-http-requests">Circonus IRONdb</a> HTTP Observer / Crash Reporter.</p>
@@ -1486,12 +1489,12 @@ Tracing libraries have information about which operations are currently ongoing 
 The tracing back-ends I have tried do not seem to cater towards the access logs use-case particularly well.
 Ideally I would like to have a &ldquo;Access Log Tail&rdquo; widget on a Grafana Dashboards, that gives me a live view about what requests are being served.
 The closest I was able to get to this, is the LightStep Explorer view I presented above.
-The best approach with open source tooling</p>
+The best approach with open source tooling I know of, is to write a custom processor for the OTel Collector that converts traces to logs.</p>
 <p><strong>(3) Forward Metric data from Prometheus to OTel Collector.</strong>
-Surprisingly there is no good way to send Prometheus data to an OTel Collector.
-The official way seems to be to scrape metrics directly from the OTel collector, with a builtin prometheus receiver module.
-However, I do have working Prometheus setup, and copying the config 1o1 did not work on the spot.
-Given that Prometheus supports <a href="https://grafana.com/docs/grafana-cloud/kubernetes-monitoring/other-methods/prometheus/remote_write_operator/">remote write</a> developing the corresponding receiver should be a relatively straight forward project.</p>
+There is no good way to send Prometheus data to an OTel Collector.
+The official way seems to be to scrape metrics directly using the OTel collector and avoid running Prometheus alltogether.
+I am not a great fan of this approach, since there is a fair bit of complexity in Prometheus and I would like to keep the battle-tested version that has been working well for me around.
+Given that Prometheus supports <a href="https://grafana.com/docs/grafana-cloud/kubernetes-monitoring/other-methods/prometheus/remote_write_operator/">remote write</a>, I was surprised to learn that there is no corresponding receiver available on the OTel collector side.</p>
 <h1 id="comments">Comments</h1>
 <script src="https://utteranc.es/client.js"
         repo="HeinrichHartmann/comments"
