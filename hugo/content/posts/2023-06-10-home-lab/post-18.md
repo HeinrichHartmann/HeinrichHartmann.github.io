@@ -94,7 +94,7 @@ Key benefits of outsourcing telemetry backends include:
 I was happy to learn that both Grafana Cloud and LightStep accounts are fairly generous when it comes to usage quotas.
 I know that more vendors offer similar free-tier services, and I plan to expand this experiment in the near future.
 
-## Observability Tasks
+## Monitoring Objectives
 
 ### Service Availability with Synthetic Probing 
 
