@@ -13,8 +13,8 @@
       <pubDate>Sat, 17 Jun 2023 00:00:00 +0000</pubDate>
       
       <guid>/posts/home-lab-observability/</guid>
-      <description>In this post, I will walk you through the Observability setup I am using form my home-lab. The full infrastructure setup is explained in this blog post, and available on GitHub. In this post, we will zone-in on the Observability configuration and tooling, which is contained in this folder.
-We will conduct this exercise top-down, and focus on the key questions that we want to answer about our services in the order of importance, and briefly comment on the implementation details and open-ends.</description>
+      <description>In this post, I will walk you through the Observability setup I am using form my home-lab. The full infrastructure setup is explained in this blog post, and available on GitHub. In this post, we will zone-in on the observability configuration and tooling.
+We will conduct this exercise top-down, and focus on the key questions (&amp;ldquo;Monitoring Objectives&amp;rdquo;) we want to answer about our services in the order of importance, and briefly comment on the implementation details and open-ends.</description>
     </item>
     
     <item>

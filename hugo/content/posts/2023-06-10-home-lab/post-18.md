@@ -43,12 +43,11 @@ h3 {
 
 In this post, I will walk you through the Observability setup I am using form my home-lab.
 The full infrastructure setup is explained in [this blog post](/posts/home-lab-2023/), and available on [GitHub](https://github.com/HeinrichHartmann/svc).
-In this post, we will zone-in on the Observability configuration and tooling, which is contained
-in [this folder](https://github.com/HeinrichHartmann/svc/tree/master/services/monitoring).
+In this post, we will zone-in on the [observability configuration](https://github.com/HeinrichHartmann/svc/tree/master/services/monitoring) and tooling.
 
-We will conduct this exercise top-down, and focus on the key questions that we
-want to answer about our services in the order of importance, and briefly
-comment on the implementation details and open-ends.
+We will conduct this exercise top-down, and focus on the key questions
+("Monitoring Objectives") we want to answer about our services in the order of
+importance, and briefly comment on the implementation details and open-ends.
 
 As you will see, the presented setup is highly over-engineered for the set purpose.
 I use the Home Lab systems as a toy use-case to try out a variety of open-source technologies and vendor products.
