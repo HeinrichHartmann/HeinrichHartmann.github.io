@@ -309,7 +309,7 @@ useful to know which devices have been available on the network at which points 
 
 Building out this home-lab observability setup, has been a great learning experience for me.
 I deepened my knowledge of established technologies like Prometheus and Grafana, and got to play
-with some newer tools, like the OpenTelemetry collector, and Grafana Cloud.
+with some newer tools, like the OpenTelemetry collector and LightStep.
 
 One major take-away for me is, the great flexibility that the OpenTelemetry
 collector is giving us for plumbing and evolving the telemetry setup. On-boarding
