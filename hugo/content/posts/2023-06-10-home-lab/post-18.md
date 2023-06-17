@@ -1,8 +1,8 @@
 ---
 title: Home-Lab Observability with OpenTelemetry
-date: 2023-06-14
+date: 2023-06-17
 author: Heinrich Hartmann
-location: Boltenhagen
+location: Stemwede
 style: markdown
 tags: mon, post
 url: /posts/home-lab-observability
