@@ -6,7 +6,26 @@
     <description>Recent content on HeinrichHartmann.com</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Sat, 17 Jun 2023 00:00:00 +0000</lastBuildDate><atom:link href="/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Sat, 12 Aug 2023 00:00:00 +0000</lastBuildDate><atom:link href="/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Investment Calculator</title>
+      <link>/ic/</link>
+      <pubDate>Sat, 12 Aug 2023 00:00:00 +0000</pubDate>
+      
+      <guid>/ic/</guid>
+      <description>&lt;!DOCTYPE html&gt; InvestementCalculator HeinrichHartmann.com # @CX-REMOVE import ipynbname nb_name = ipynbname.path().name %%script bash -s $nb_name # @CX-REMOVE # # Export Notebook as Blogpost # ./render.sh ./$1 ./nb.html cat &amp;lt;&amp;lt;EOF &amp;gt; fm.html --- title: Investment Calculator date: 2023-08-12 url: /ic outputs: - RawHTML --- EOF cat fm.html nb.html \ &amp;gt; /host/root/home/hhartmann/src/HeinrichHartmann.github.io/hugo/content/posts/raw/ic.html [NbConvertApp] Converting notebook ./InvestementCalculator.ipynb to HTML [NbConvertApp] Writing 938760 bytes to nb.html Investment Calculator&amp;#182;Stemwede, 2022-08-12
+This note contains several &amp;quot;calculator&amp;quot; notebooks, that can be used to evaluate the value of investments.</description>
+    </item>
+    
+    <item>
+      <title>Solar Plant Investment</title>
+      <link>/solar/</link>
+      <pubDate>Sat, 12 Aug 2023 00:00:00 +0000</pubDate>
+      
+      <guid>/solar/</guid>
+      <description>&lt;!DOCTYPE html&gt; SolarPlant HeinrichHartmann.com # @CX-REMOVE import ipynbname nb_name = ipynbname.path().name %%script bash -s $nb_name # @CX-REMOVE # # Export Notebook as Blogpost # ./render.sh ./$1 ./nb.html cat &amp;lt;&amp;lt;EOF &amp;gt; fm.html --- title: Solar Plant Investment date: 2023-08-12 url: /solar outputs: - RawHTML --- EOF cat fm.html nb.html \ &amp;gt; /host/root/home/hhartmann/src/HeinrichHartmann.github.io/hugo/content/posts/raw/solar.html [NbConvertApp] Converting notebook ./SolarPlant.ipynb to HTML [NbConvertApp] Writing 1403484 bytes to nb.html Sat Aug 12 11:56:32 AM UTC 2023 The Solar Plant Investment&amp;#182;In this note, we are going to explore the economic value of investments, in the example of a Solar Plant, aka.</description>
+    </item>
+    
     <item>
       <title>Home-Lab Observability with OpenTelemetry</title>
       <link>/posts/home-lab-observability/</link>
