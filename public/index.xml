@@ -13,7 +13,7 @@
       <pubDate>Sat, 12 Aug 2023 00:00:00 +0000</pubDate>
       
       <guid>/ic/</guid>
-      <description>&lt;!DOCTYPE html&gt; InvestementCalculator HeinrichHartmann.com # @CX-REMOVE import ipynbname nb_name = ipynbname.path().name %%script bash -s $nb_name # @CX-REMOVE # # Export Notebook as Blogpost # ./render.sh ./$1 ./nb.html cat &amp;lt;&amp;lt;EOF &amp;gt; fm.html --- title: Investment Calculator date: 2023-08-12 url: /ic outputs: - RawHTML --- EOF cat fm.html nb.html \ &amp;gt; /host/root/home/hhartmann/src/HeinrichHartmann.github.io/hugo/content/posts/raw/ic.html [NbConvertApp] Converting notebook ./InvestementCalculator.ipynb to HTML [NbConvertApp] Writing 938264 bytes to nb.html Investment Calculator&amp;#182;Stemwede, 2022-08-12
+      <description>&lt;!DOCTYPE html&gt; InvestementCalculator HeinrichHartmann.com # @CX-REMOVE import ipynbname nb_name = ipynbname.path().name %%script bash -s $nb_name # @CX-REMOVE # # Export Notebook as Blogpost # ./render.sh ./$1 ./nb.html cat &amp;lt;&amp;lt;EOF &amp;gt; fm.html --- title: Investment Calculator date: 2023-08-12 url: /ic outputs: - RawHTML --- EOF cat fm.html nb.html \ &amp;gt; /host/root/home/hhartmann/src/HeinrichHartmann.github.io/hugo/content/posts/raw/ic.html [NbConvertApp] Converting notebook ./InvestementCalculator.ipynb to HTML [NbConvertApp] Writing 938910 bytes to nb.html Investment Calculator&amp;#182;Stemwede, 2022-08-12
 This note contains several &amp;quot;calculator&amp;quot; notebooks, that can be used to evaluate the value of investments.</description>
     </item>
     
