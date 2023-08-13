@@ -15317,6 +15317,7 @@ The example use-case we demonstrate in this note, is a Solar Plant with the foll
 <p>We assume here a fixed interest rate of 6% (CREDIT_INTEREST) indepdendent of the two variables.
 We consider a credit as optimal, if it maximizes the return on the equity we needed to invest ourselves.</p>
 <p>The model optimizes the credit by searching over a given range or credit amounts and credit durations.</p>
+<p>As a boundary condition, we require that we don't need more than 12,000 EUR (EQUITY_LIMIT) free equity to finance the investment.</p>
 <h2 id="Opportunity-Costs">Opportunity Costs<a class="anchor-link" href="#Opportunity-Costs">&#182;</a></h2><p>Instead of buying a solar plant, we could have invested our equity into the stock market. Variables to cosider here are:</p>
 <ul>
 <li>The long-term stock interest rate 5% (EQ_INTEREST)</li>
@@ -16022,7 +16023,7 @@ cat fm.html nb.html \
 
 <div class="jp-RenderedText jp-OutputArea-output" data-mime-type="application/vnd.jupyter.stderr">
 <pre>[NbConvertApp] Converting notebook ./InvestementCalculator_v3.ipynb to HTML
-[NbConvertApp] Writing 814711 bytes to nb.html
+[NbConvertApp] Writing 815169 bytes to nb.html
 </pre>
 </div>
 </div>
