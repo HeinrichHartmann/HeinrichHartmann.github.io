@@ -15212,13 +15212,13 @@ function refresh_cell(cell) {
     if( !cell.classList.contains('jp-CodeCell')) { return; }
     var inputArea = cell.querySelector('.jp-InputArea');
     var inputText = inputArea.innerText;
-    if (inputText.indexOf('@CX-NO-OUTPUT') >= 0) {
+    if (inputText.indexOf('@CX-NO-INPUT') >= 0) {
         var area = cell.querySelector('.jp-Cell-inputWrapper');
         if (area) {
           area.remove();
         }
     }
-    if (inputText.indexOf('@CX-NO-INPUT') >= 0) {
+    if (inputText.indexOf('@CX-NO-OUTPUT') >= 0) {
         var outputArea = cell.querySelector('.jp-Cell-outputWrapper');
         if (outputArea) {
           outputArea.remove();
