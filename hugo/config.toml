@@ -14,3 +14,14 @@ publishDir="../public"
 [params]
   # Only posts from mainSections appear in index
   mainSections = ["posts"]
+
+
+#
+# Output format to publish raw HTML posts
+#
+[outputFormats]
+  [outputFormats.RawHTML]
+    mediaType = "text/html"
+    baseName = "index"
+    isPlainText = false
+    notAlternative = true

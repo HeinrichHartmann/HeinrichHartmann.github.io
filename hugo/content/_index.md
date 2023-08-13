@@ -1,9 +1,5 @@
 ---
 content:
-- tags: calc
-  date: 2023-08-07
-  href: "/ic.html"
-  title: "Investment Calculator"
 
 - tags: tool, mon, calc
   date: 2022-06-26
