@@ -13,7 +13,9 @@
       <pubDate>Sun, 13 Aug 2023 00:00:00 +0000</pubDate>
       
       <guid>/ic/</guid>
-      <description>&lt;!DOCTYPE html&gt; InvestementCalculator-full_ingestion HeinrichHartmann.com # @CX-REMOVE import ipynbname nb_name = ipynbname.path().name %%script bash -s $nb_name # @CX-REMOVE # # Export Notebook as Blogpost # ./render.sh ./$1 ./nb.html cat &amp;lt;&amp;lt;EOF &amp;gt; fm.html --- title: Investment Calculator - Solar Plant date: 2023-08-13 tags: inv, post url: /ic outputs: - RawHTML --- EOF cat fm.html nb.html \ &amp;gt; /host/root/home/hhartmann/src/HeinrichHartmann.github.io/hugo/content/posts/raw/ic.html [NbConvertApp] Converting notebook ./InvestementCalculator-full_ingestion.ipynb to HTML [NbConvertApp] Writing 826841 bytes to nb.html # Install Dependencies # @CX-TOGGLE # Run once, then comment out # !</description>
+      <description>&lt;!DOCTYPE html&gt; InvestementCalculator_v3 HeinrichHartmann.com Investment Calculator - Solar Plant&amp;#182;Stemwede, 2022-08-13
+This blog post contains a re-usable &amp;quot;calculator notebook&amp;quot; that can be used to model financial investment. The example use-case we demonstrate in this note, is a Solar Plant with the following parameters:
+20,000 EUR are the costs of the system (INV_AMOUNT) 1,520 EUR are the annual returns (INV_ANNUAL_RETURN) 20 years expected lifetime the system (INV_LIFETIME) The question we seek to answer is (a) Is this worth buying?</description>
     </item>
     
   </channel>

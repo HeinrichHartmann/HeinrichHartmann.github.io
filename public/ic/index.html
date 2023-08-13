@@ -3,7 +3,7 @@
 <head><meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>InvestementCalculator-full_ingestion</title><script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.1.10/require.min.js"></script>
+<title>InvestementCalculator_v3</title><script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.1.10/require.min.js"></script>
 
 
 
@@ -15293,79 +15293,43 @@ h3 {
 </style>
 
 <header><a id="headline" href="https://heinrichhartmann.com">HeinrichHartmann.com</a></header>
-<main id="main"><div id="cell-id=4890fb88-c7db-4a33-89d2-86996105cf9a" class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs  ">
+<main id="main">
+<div id="cell-id=1e4f8ec2-ef81-4714-8a3b-70428fd56f69" class="jp-Cell jp-MarkdownCell jp-Notebook-cell">
 <div class="jp-Cell-inputWrapper">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
-<div class="jp-InputArea jp-Cell-inputArea">
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
+<h1 id="Investment-Calculator---Solar-Plant">Investment Calculator - Solar Plant<a class="anchor-link" href="#Investment-Calculator---Solar-Plant">&#182;</a></h1><p class="meta" style="color:#aaa; float:right">Stemwede, 2022-08-13</p>
+<br style="clear:both"/>
+<p>This blog post contains a re-usable &quot;calculator notebook&quot; that can be used to model financial investment.
+The example use-case we demonstrate in this note, is a Solar Plant with the following parameters:</p>
+<ul>
+<li>20,000 EUR are the costs of the system (INV_AMOUNT)</li>
+<li>1,520 EUR are the annual returns (INV_ANNUAL_RETURN)</li>
+<li>20 years expected lifetime the system (INV_LIFETIME)</li>
+</ul>
+<p>The question we seek to answer is (a) Is this worth buying? and (2) How much credit should I take?</p>
+<h2 id="Optimize-Credit-Leverage">Optimize Credit Leverage<a class="anchor-link" href="#Optimize-Credit-Leverage">&#182;</a></h2><p>When leveraging investments with a credit, we have two variables at hand, that we can control:</p>
+<ul>
+<li>The credit amount, e.g. 10,000 EUR (CREDIT_AMOUNT)</li>
+<li>The credit duration, e.g. 10 years (CREDIT_YEARS)</li>
+</ul>
+<p>We assume here a fixed interest rate of 6% (CREDIT_INTEREST) indepdendent of the two variables.
+We consider a credit as optimal, if it maximizes the return on the equity we needed to invest ourselves.</p>
+<p>The model optimizes the credit by searching over a given range or credit amounts and credit durations.</p>
+<h2 id="Opportunity-Costs">Opportunity Costs<a class="anchor-link" href="#Opportunity-Costs">&#182;</a></h2><p>Instead of buying a solar plant, we could have invested our equity into the stock market. Variables to cosider here are:</p>
+<ul>
+<li>The long-term stock interest rate 5% (EQ_INTEREST)</li>
+<li>The long-term inflation 2% (EQ_INFLATION)</li>
+</ul>
+<h2 id="Usage">Usage<a class="anchor-link" href="#Usage">&#182;</a></h2><ul>
+<li>The source notbooks for these calculators are available on <a href="https://github.com/HeinrichHartmann/pub/blob/master/InvestementCalculator.ipynb">GitHub</a>.</li>
+<li>Launch Interactive Version on Binder: <a href="https://mybinder.org/v2/gh/HeinrichHartmann/pub/master?labpath=InvestementCalculator.ipynb"><img src="https://mybinder.org/badge_logo.svg" alt="Binder" /></a></li>
+</ul>
 
-<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
-     <div class="CodeMirror cm-s-jupyter">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># @CX-REMOVE</span>
-<span class="kn">import</span> <span class="nn">ipynbname</span>
-<span class="n">nb_name</span> <span class="o">=</span> <span class="n">ipynbname</span><span class="o">.</span><span class="n">path</span><span class="p">()</span><span class="o">.</span><span class="n">name</span>
-</pre></div>
-
-     </div>
-</div>
-</div>
-</div>
-
-</div><div id="cell-id=73db94ac-b129-4b21-a105-626fecc60149" class="jp-Cell jp-CodeCell jp-Notebook-cell   ">
-<div class="jp-Cell-inputWrapper">
-<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
-</div>
-<div class="jp-InputArea jp-Cell-inputArea">
-
-<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
-     <div class="CodeMirror cm-s-jupyter">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="o">%%</span><span class="k">script</span> bash -s $nb_name
-# @CX-REMOVE
-#
-# Export Notebook as Blogpost
-#
-./render.sh ./$1 ./nb.html
-cat &lt;&lt;EOF &gt; fm.html
----
-title: Investment Calculator - Solar Plant
-date: 2023-08-13
-tags: inv, post
-url: /ic
-outputs:
-  - RawHTML
----
-EOF
-
-cat fm.html nb.html \
-    &gt; /host/root/home/hhartmann/src/HeinrichHartmann.github.io/hugo/content/posts/raw/ic.html
-</pre></div>
-
-     </div>
 </div>
 </div>
 </div>
-
-<div class="jp-Cell-outputWrapper">
-<div class="jp-Collapser jp-OutputCollapser jp-Cell-outputCollapser">
-</div>
-
-
-<div class="jp-OutputArea jp-Cell-outputArea">
-<div class="jp-OutputArea-child">
-    
-
-
-<div class="jp-RenderedText jp-OutputArea-output" data-mime-type="application/vnd.jupyter.stderr">
-<pre>[NbConvertApp] Converting notebook ./InvestementCalculator-full_ingestion.ipynb to HTML
-[NbConvertApp] Writing 826841 bytes to nb.html
-</pre>
-</div>
-</div>
-
-</div>
-
-</div>
-
 </div><div id="cell-id=509082ca-6f06-4e9d-9edb-c09b8c7256d2" class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs  ">
 <div class="jp-Cell-inputWrapper">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
@@ -15716,44 +15680,7 @@ def test_discounted_cc():
 
 </div>
 
-</div>
-<div id="cell-id=1e4f8ec2-ef81-4714-8a3b-70428fd56f69" class="jp-Cell jp-MarkdownCell jp-Notebook-cell">
-<div class="jp-Cell-inputWrapper">
-<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
-</div>
-<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<h1 id="Investment-Calculator---Solar-Plant">Investment Calculator - Solar Plant<a class="anchor-link" href="#Investment-Calculator---Solar-Plant">&#182;</a></h1><p class="meta" style="color:#aaa; float:right">Stemwede, 2022-08-13</p>
-<br style="clear:both"/>
-<p>This blog post contains a re-usable &quot;calculator notebook&quot; that can be used to model financial investment.
-The example use-case we demonstrate in this note, is a Solar Plant with the following parameters:</p>
-<ul>
-<li>20,000 EUR are the costs of the system (INV_AMOUNT)</li>
-<li>1,520 EUR are the annual returns (INV_ANNUAL_RETURN)</li>
-<li>20 years expected lifetime the system (INV_LIFETIME)</li>
-</ul>
-<p>The question we seek to answer is (a) Is this worth buying? and (2) How much credit should I take?</p>
-<h2 id="Optimize-Credit-Leverage">Optimize Credit Leverage<a class="anchor-link" href="#Optimize-Credit-Leverage">&#182;</a></h2><p>When leveraging investments with a credit, we have two variables at hand, that we can control:</p>
-<ul>
-<li>The credit amount, e.g. 10,000 EUR (CREDIT_AMOUNT)</li>
-<li>The credit duration, e.g. 10 years (CREDIT_YEARS)</li>
-</ul>
-<p>We assume here a fixed interest rate of 6% (CREDIT_INTEREST) indepdendent of the two variables.
-We consider a credit as optimal, if it maximizes the return on the equity we needed to invest ourselves.</p>
-<p>The model optimizes the credit by searching over a given range or credit amounts and credit durations.</p>
-<h2 id="Opportunity-Costs">Opportunity Costs<a class="anchor-link" href="#Opportunity-Costs">&#182;</a></h2><p>Instead of buying a solar plant, we could have invested our equity into the stock market. Variables to cosider here are:</p>
-<ul>
-<li>The long-term stock interest rate 5% (EQ_INTEREST)</li>
-<li>The long-term inflation 2% (EQ_INFLATION)</li>
-</ul>
-<h2 id="Usage">Usage<a class="anchor-link" href="#Usage">&#182;</a></h2><ul>
-<li>The source notbooks for these calculators are available on <a href="https://github.com/HeinrichHartmann/pub/blob/master/InvestementCalculator.ipynb">GitHub</a>.</li>
-<li>Launch Interactive Version on Binder: <a href="https://mybinder.org/v2/gh/HeinrichHartmann/pub/master?labpath=InvestementCalculator.ipynb"><img src="https://mybinder.org/badge_logo.svg" alt="Binder" /></a></li>
-</ul>
-
-</div>
-</div>
-</div>
-</div><div id="cell-id=808fc4af-e769-4cd6-8739-01ea484f443c" class="jp-Cell jp-CodeCell jp-Notebook-cell   ">
+</div><div id="cell-id=775fc1fa-bc37-479b-a5c3-9bec0b55cad7" class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs  ">
 <div class="jp-Cell-inputWrapper">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
@@ -15777,6 +15704,22 @@ We consider a credit as optimal, if it maximizes the return on the equity we nee
 
 <span class="n">EQ_INFLATION</span> <span class="o">=</span> <span class="mf">0.02</span>
 <span class="n">EQ_INTEREST</span> <span class="o">=</span> <span class="mf">0.05</span>
+</pre></div>
+
+     </div>
+</div>
+</div>
+</div>
+
+</div><div id="cell-id=e4cb1372-87f4-4a26-879a-94d57d4f8d0c" class="jp-Cell jp-CodeCell jp-Notebook-cell   ">
+<div class="jp-Cell-inputWrapper">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea">
+
+<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+     <div class="CodeMirror cm-s-jupyter">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># Analysis ...</span>
 <span class="c1"># @CX-TOGGLE</span>
 <span class="c1">#</span>
 <span class="c1"># Model</span>
@@ -16031,7 +15974,59 @@ class="
 </div>
 </div>
 
-</div><div id="cell-id=01b72332-9906-49b3-9b5f-453f20382920" class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs  ">
+</div><div id="cell-id=4890fb88-c7db-4a33-89d2-86996105cf9a" class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs  ">
+<div class="jp-Cell-inputWrapper">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea">
+
+<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+     <div class="CodeMirror cm-s-jupyter">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># @CX-REMOVE</span>
+<span class="kn">import</span> <span class="nn">ipynbname</span>
+<span class="n">nb_name</span> <span class="o">=</span> <span class="n">ipynbname</span><span class="o">.</span><span class="n">path</span><span class="p">()</span><span class="o">.</span><span class="n">name</span>
+</pre></div>
+
+     </div>
+</div>
+</div>
+</div>
+
+</div><div id="cell-id=73db94ac-b129-4b21-a105-626fecc60149" class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs  ">
+<div class="jp-Cell-inputWrapper">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea">
+
+<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+     <div class="CodeMirror cm-s-jupyter">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="o">%%</span><span class="k">script</span> bash -s $nb_name
+# @CX-REMOVE
+#
+# Export Notebook as Blogpost
+#
+./render.sh ./$1 ./nb.html
+cat &lt;&lt;EOF &gt; fm.html
+---
+title: Investment Calculator - Solar Plant
+date: 2023-08-13
+tags: inv, post
+url: /ic
+outputs:
+  - RawHTML
+---
+EOF
+
+cat fm.html nb.html \
+    &gt; /host/root/home/hhartmann/src/HeinrichHartmann.github.io/hugo/content/posts/raw/ic.html
+</pre></div>
+
+     </div>
+</div>
+</div>
+</div>
+
+</div><div id="cell-id=4673229b-e8d1-4a68-aa34-31a5afe0df5d" class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs  ">
 <div class="jp-Cell-inputWrapper">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
