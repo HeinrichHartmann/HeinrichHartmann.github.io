@@ -8,7 +8,7 @@
     <language>en-us</language>
     <lastBuildDate>Sun, 13 Aug 2023 00:00:00 +0000</lastBuildDate><atom:link href="/index.xml" rel="self" type="application/rss+xml" />
     <item>
-      <title>Investment Calculator - Solar Plant</title>
+      <title>Investment Calculator</title>
       <link>/ic/</link>
       <pubDate>Sun, 13 Aug 2023 00:00:00 +0000</pubDate>
       
@@ -16,6 +16,16 @@
       <description>&lt;!DOCTYPE html&gt; InvestementCalculator_v3 HeinrichHartmann.com Investment Calculator - Solar Plant&amp;#182;Stemwede, 2022-08-13
 This blog post contains a re-usable &amp;quot;calculator notebook&amp;quot; that can be used to model financial investment. The example use-case we demonstrate in this note, is a Solar Plant with the following parameters:
 20,000 EUR are the costs of the system (INV_AMOUNT) 1,520 EUR are the annual returns (INV_ANNUAL_RETURN) 20 years expected lifetime the system (INV_LIFETIME) The question we seek to answer is (a) Is this worth buying?</description>
+    </item>
+    
+    <item>
+      <title>Theo Solar Plant Investment</title>
+      <link>/solar/</link>
+      <pubDate>Sat, 12 Aug 2023 00:00:00 +0000</pubDate>
+      
+      <guid>/solar/</guid>
+      <description>&lt;!DOCTYPE html&gt; SolarPlant HeinrichHartmann.com The Solar Plant Investment&amp;#182;In this note, we are going to explore the economic value of investments, in the example of a Solar Plant, aka. Photovoltaic (PV) System:
+20,000 EUR are the costs of the system. 1,250 EUR are the annual returns in reductions to my power bill, and gains from selling electricity. 30 years, is the expected lifetime the system. Question: Is this system worth buying?</description>
     </item>
     
     <item>
