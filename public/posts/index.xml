@@ -13,7 +13,7 @@
       <pubDate>Sun, 13 Aug 2023 00:00:00 +0000</pubDate>
       
       <guid>/ic/</guid>
-      <description>&lt;!DOCTYPE html&gt; InvestementCalculator_v3 HeinrichHartmann.com Investment Calculator - Solar Plant&amp;#182;Stemwede, 2022-08-13
+      <description>&lt;!DOCTYPE html&gt; 2023-08-13 InvestementCalculator_v3 HeinrichHartmann.com Investment Calculator - Solar Plant&amp;#182;Stemwede, 2022-08-13
 This blog post contains a re-usable &amp;quot;calculator notebook&amp;quot; that can be used to model financial investment. The example use-case we demonstrate in this note, is a Solar Plant with the following parameters:
 20,000 EUR are the costs of the system (INV_AMOUNT) 1,520 EUR are the annual returns (INV_ANNUAL_RETURN) 20 years expected lifetime the system (INV_LIFETIME) The question we seek to answer is (a) Is this worth buying?</description>
     </item>
