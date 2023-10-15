@@ -2,15 +2,6 @@
 content:
 
 - type: talk
-  occasion: SRECon23EMEA
-  location: Dublin
-  date: 2023-10-11
-  title: "Statistics for Engineers"
-  href: "https://www.usenix.org/conference/srecon23emea/presentation/hartmann"
-  notes: "https://github.com/HeinrichHartmann/Statistics-for-Engineers"
-  slides: "/pdf/Statistics for Engineers SRECon EMEA 2023.pdf"
-
-- type: talk
   occasion: SRECon22EMEA
   location: Amsterdam
   date: 2022-10-25
