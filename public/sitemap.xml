@@ -3,7 +3,19 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
     <loc>/</loc>
-    <lastmod>2023-08-13T00:00:00+00:00</lastmod>
+    <lastmod>2023-10-15T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>/posts/</loc>
+    <lastmod>2023-10-15T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>/srecon-emea-2023/</loc>
+    <lastmod>2023-10-15T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>/tags/</loc>
+    <lastmod>2023-10-15T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>/tags/talk-post/</loc>
+    <lastmod>2023-10-15T00:00:00+00:00</lastmod>
   </url><url>
     <loc>/tags/inv-post/</loc>
     <lastmod>2023-08-13T00:00:00+00:00</lastmod>
@@ -11,10 +23,7 @@
     <loc>/ic/</loc>
     <lastmod>2023-08-13T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>/posts/</loc>
-    <lastmod>2023-08-13T00:00:00+00:00</lastmod>
-  </url><url>
-    <loc>/tags/</loc>
+    <loc>/test/</loc>
     <lastmod>2023-08-13T00:00:00+00:00</lastmod>
   </url><url>
     <loc>/solar/</loc>
@@ -63,6 +72,9 @@
     <lastmod>2021-02-09T00:00:00+00:00</lastmod>
   </url><url>
     <loc>/about/</loc>
+    <lastmod>2021-02-01T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>/talks/</loc>
     <lastmod>2021-02-01T00:00:00+00:00</lastmod>
   </url><url>
     <loc>/consulting/</loc>
