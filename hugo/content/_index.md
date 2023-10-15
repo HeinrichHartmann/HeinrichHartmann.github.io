@@ -1,6 +1,25 @@
 ---
 content:
 
+- type: talk
+  occasion: SRECon23EMEA
+  location: Dublin
+  date: 2023-10-11
+  title: "Statistics for Engineers"
+  href: "https://www.usenix.org/conference/srecon23emea/presentation/hartmann"
+  notes: "https://github.com/HeinrichHartmann/Statistics-for-Engineers"
+  slides: "/pdf/Statistics for Engineers SRECon EMEA 2023.pdf"
+
+- type: talk
+  occasion: SRECon22EMEA
+  location: Amsterdam
+  date: 2022-10-25
+  title: "Statistics for Engineers"
+  href: "https://www.usenix.org/conference/srecon22emea/presentation/hartmann"
+  notes: "https://github.com/HeinrichHartmann/Statistics-for-Engineers"
+  video: "https://www.youtube.com/watch?v=awrMqCXZunc"
+  slides: "/pdf/Statistics for Engineers SRECon EMEA 2022.pdf"
+
 - tags: tool, mon, calc
   date: 2022-06-26
   href: "/percentile-explorer"
