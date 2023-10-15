@@ -491,7 +491,7 @@ content:
 
 - type: talk
   occasion: SRECon17Europe
-  location: Duesseldorf
+  location: Dubiln
   date: 2017-09-01
   title: "Workshop: Statistics for Engineers"
   href: "https://srecon17emea.sched.com/event/Bzv4/statistics-for-engineers"
@@ -515,15 +515,14 @@ content:
   notes: "https://github.com/HeinrichHartmann/Statistics-for-Engineers"
 
 - type: talk
-  occasion: SRECon19Europe
+  occasion: SRECon19EMEA
   location: Dublin
   date: 2019-10-02
   title: 'Latency SLOs done right'
   href: "https://www.usenix.org/conference/srecon19emea/presentation/hartmann-latency"
 
-
 - type: talk
-  occasion: SRECon18Europe
+  occasion: SRECon19EMEA
   location: Duesseldorf
   date: 2019-10-03
   title: "Statistics for Engineers"
