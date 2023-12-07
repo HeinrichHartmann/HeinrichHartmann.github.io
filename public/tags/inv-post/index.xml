@@ -18,15 +18,5 @@ This blog post contains a re-usable &amp;quot;calculator notebook&amp;quot; that
 20,000 EUR are the costs of the system (INV_AMOUNT) 1,520 EUR are the annual returns (INV_ANNUAL_RETURN) 20 years expected lifetime the system (INV_LIFETIME) The question we seek to answer is (a) Is this worth buying?</description>
     </item>
     
-    <item>
-      <title>Investment Calculator</title>
-      <link>/test/</link>
-      <pubDate>Sun, 13 Aug 2023 00:00:00 +0000</pubDate>
-      
-      <guid>/test/</guid>
-      <description>&lt;!DOCTYPE html&gt; Untitled HeinrichHartmann.com SRECon EMEA 2023&amp;#182;Abstract:
-Gathering all kinds of telemetry data is key to operating reliable distributed systems at scale. Once you have set-up your telemetry systems and recorded all relevant data, the challenge becomes to make sense of it and extract valuable information. Statistics is the art of extracting information from data. In this talk we will discuss mathematical methods, that will help you in your daily work as SRE.</description>
-    </item>
-    
   </channel>
 </rss>

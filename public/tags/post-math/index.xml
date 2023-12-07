@@ -6,7 +6,17 @@
     <description>Recent content in post, math on HeinrichHartmann.com</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Mon, 08 Mar 2021 00:00:00 +0000</lastBuildDate><atom:link href="/tags/post-math/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Mon, 23 Oct 2023 00:00:00 +0000</lastBuildDate><atom:link href="/tags/post-math/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Convolution Algebras and Discrete Geometry - a Study</title>
+      <link>/conv23/</link>
+      <pubDate>Mon, 23 Oct 2023 00:00:00 +0000</pubDate>
+      
+      <guid>/conv23/</guid>
+      <description>&lt;!DOCTYPE html&gt; 2023-10-21 Geometry HeinrichHartmann.com # @CX-REMOVE !pip install Pillow Requirement already satisfied: Pillow in /opt/conda/lib/python3.11/site-packages (10.1.0) Convolution Algebras and Discrete Geometry - a Study¶We start our exploration of numerical geometry with a function on a plane. We represent this function by an array: F[x,y] where x,y are points on an equidistant grid with step size h.
+# Example Function #@CX-TOGGLE import numpy as np import matplotlib.pyplot as plt def f(x, y): return (np.</description>
+    </item>
+    
     <item>
       <title>Effective Rank Decomposition of Linear Maps</title>
       <link>/posts/2021-03-08-rank-decomposition/</link>

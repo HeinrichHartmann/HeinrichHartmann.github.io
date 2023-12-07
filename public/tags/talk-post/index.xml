@@ -13,7 +13,7 @@
       <pubDate>Sun, 15 Oct 2023 00:00:00 +0000</pubDate>
       
       <guid>/srecon-emea-2023/</guid>
-      <description>&lt;!DOCTYPE html&gt; 2023-10-15 SREConEMEA 2023 HeinrichHartmann.com Statistics for Engineers @ SRECon EMEA 2023&amp;#182;
+      <description>&lt;!DOCTYPE html&gt; 2023-10-15 SREConEMEA 2023 HeinrichHartmann.com Statistics for Engineers @ SRECon EMEA 2023¶
 Abstract:
 Gathering all kinds of telemetry data is key to operating reliable distributed systems at scale. Once you have set-up your telemetry systems and recorded all relevant data, the challenge becomes to make sense of it and extract valuable information. Statistics is the art of extracting information from data. In this talk we will discuss mathematical methods, that will help you in your daily work as SRE.</description>
     </item>
